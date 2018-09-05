@@ -2,8 +2,6 @@ let GridHtSlider, SunRotationSlider;
 let cnv;
 
 function setup() {
-  //createCanvas(800, 500, SVG);
-  //createCanvas(800, 500);
   cnv = createCanvas(800,500);
    // Move the canvas so it’s inside our <div id="sketch-holder">.
   cnv.parent('sketch');
@@ -16,7 +14,7 @@ function draw() {
     clear();
     background(255);
 
-    let Hour = 10.5;
+    let Hour = 10.5; // NOT CURRENTLY USED
 
     let Lon = document.getElementById("long").value;
     document.getElementsByName("long")[0].addEventListener('change', reload);
@@ -69,6 +67,7 @@ function draw() {
     let distanceWindows = document.getElementById("distWindow").value;
     document.getElementsByName("distWindow")[0].addEventListener('change', reload);
 
+	
     //sunVectors
     var solar = solarCalculator([Lon, Lat]);
 
@@ -87,6 +86,8 @@ function draw() {
 	 for (i = 1; i <= (24*timestep)-1; i++) {
 	coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
 }
+	
+  //RESULTS FROM GEO.JS
 
   var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), parseFloat(wallDepVal), glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows));
   var r = {}
@@ -99,6 +100,9 @@ function draw() {
   r.centLineDist = geoResult.centLineDist;
 
   fill(255, 150);
+	
+// MAKE SUN PATH CORNER GRAPHIC	
+	
 push();
 translate(650,400);
 rotate(45);
@@ -120,12 +124,9 @@ pop();
   }
   pop();
 
-
-  //let CeilHt = CeilingSlider.value();//Ceiling Height (ft) - this moves the whole grid down.
-  let gridX = wallLen; // number of y grids - should be fixed size normally at 60
-  let gridY = wallDepVal-1; // number of x grids - should be fixed size normally at 30
+  let gridX = wallLen; // number of y grids - should be fixed size normally at 60 and grid changed
+  let gridY = wallDepVal-1; // number of x grids - should be fixed size normally at 30 and grid changed
   let gridHt = gridHeightValue;
-  //let sunRotation = SunRotationSlider.value() * (3.1415926/180);
 
 
   //ISOMETRIC BASED ON SQUARE OF 200px x 120px - the x and y numbers below change if not square grid
@@ -190,7 +191,7 @@ pop();
   quad(x2, y2, (x2+(xNext*(gridX))), (y2+(y*(gridX))), ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY))), x, (y*(gridY+2))+Ceil);
   pop();
 
-    //WINDOW ON WALL
+  //WINDOW ON WALL
 
     let FullRoomWidthX = x2-x;
     let FullRoomWidthY = (y*(gridY+2))-(y2-Ceil);
@@ -222,8 +223,6 @@ pop();
   let angleHeightTest = [];
 
   //START PYTHAGOREAM THEORM FOR Z
-  //console.log(coordinates);
-  //console.log((coordinates[12][0])+float(roomOrientationValue));
 
   let a;
   let Ztest = [];
@@ -282,7 +281,7 @@ pop();
   }
   //END PYTHAGOREM THEORM FOR XY
 
-  //START XY and Z check
+  //START XY and Z CHECK
   let gridColor;
   let gridColorArray = []
   for (let i = 0; i < XYtest.length; i++){
