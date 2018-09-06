@@ -309,7 +309,7 @@ pop();
     let X4 = (x3+(xNext*i));
     let Y4 = (y3+(y*i));
 
-      let mySun = int(gridColorArray[i*gridY]/2);
+      let mySun = int(gridColorArray[i*gridY]/timestep);
       if(mySun == 0){
           fill(255,200);
       }else if(mySun == 1){
@@ -349,7 +349,7 @@ pop();
       let newY3 = (Y3+(yNext*(j+1)));
       let newX4 = (X4-(x*(j+1)));
       let newY4 = (Y4+(yNext*(j+1)));
-        mySun = int(gridColorArray[(i*gridY)+j]/2);
+        mySun = int(gridColorArray[(i*gridY)+j]/timestep);
         if(mySun == 0){
             fill(255,200);
         }else if(mySun == 1){
