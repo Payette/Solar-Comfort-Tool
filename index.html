@@ -118,54 +118,47 @@
 
 
 		</fieldset>
-
-
 		<fieldset class="inputgroup">
-			<legend class="heading">Facade Louvers</legend>
+			<legend class="heading">Shade Geometry</legend>
 			<hr>
 
-			<div id="uvaluePop" class="alert">
-				<img src="static/images/close.png" alt="close" class="close">
- 				<p><b>Warning!</b> Thermal comfort cannot be achieved given the current glazing geometry and space/occupancy conditions, regardless of glazing performance. This is commonly due to low indoor air temperatures or low clothing values.</p>
- 			</div>
 
-			<label for="uvalue">Window U-Value (<span class="unitsUVal IP">Btu/ft&sup2;hr&deg;F</span>)<sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="uvalue" id="uvalue" min="0" value="0.35" step="0.01" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="uvalue2" id="uvalue2" min="0" value="0.35" step="0.01" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="uvalue3" id="uvalue3" min="0" value="0.35" step="0.01" class="case3 unselected"></div><br>
+			<label>Horizontal Shade Depth</label>
+			<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4"  value="0" step="1"><br>
 
-			<label class="grey" id="calcUValQuestion">U-Value that meets the target PPD<sup id="fnref:9" class="uValAlert"><a href="#fn:9" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="calcuvalue" id="calcuvalue" value="0.29" class="inactive case1"  disabled></div>
-			<div class="inputWrapperCenter"><input type="text" name="calcuvalue2" id="calcuvalue2" value="0.29" class="inactive case2 unselected"  disabled></div>
-			<div class="inputWrapperRight"><input type="text" name="calcuvalue3" id="calcuvalue3" value="0.29" class="inactive case3 unselected"  disabled></div><br>
+			<label>&emsp;Number of Shades</label>
+			<input type="number" name="hShadeNum" id="hShadeNum" min="0" max="100"  value="12" step="1"><br>
 
-			<label class="grey" id="condRisk">Is there a risk of condensation?<sup id="fnref:10"><a href="#fn:10" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="condRisk1" id="condRisk1" value="NO" class="inactive case1"  disabled></div>
-			<div class="inputWrapperCenter"><input type="text" name="condRisk2" id="condRisk2" value="NO" class="inactive case2 unselected"  disabled></div>
-			<div class="inputWrapperRight"><input type="text" name="condRisk3" id="condRisk3" value="NO" class="inactive case3 unselected"  disabled></div><br>
+			<label>&emsp;Spacing</label>
+			<input type="number" name="hShadeSpace" id="hShadeSpace" min="1" max="10"  value="3" step="1"><br>
 
+			<label>&emsp;Distance from Facade</label>
+			<input type="number" name="hShadeDist" id="hShadeDist" min="0" max="10"  value="0" step="1"><br>
 
-		</fieldset>
+			<label>&emsp;Height Above Window</label>
+			<input type="number" name="hShadeHeight" id="hShadeHeight" min="0" max="10"  value="3" step="1"><br>
 
+			<label>&emsp;Angle</label>
+			<input type="number" name="hShadeAngle" id="hShadeAngle" min="-90" max="90"  value="0" step="1"><br><br>
 
+			<label>Vertical Shade Depth</label>
+			<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4"  value="0" step="1"><br>
 
-		<fieldset class="inputgroup">
-			<legend class="heading">Window Frame Depth</legend>
-			<hr>
+			<label>&emsp;Number of Shades</label>
+			<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100"  value="12" step="1"><br>
 
-			<label for="airtemp">Indoor Temperature (<span class="unitsTemp IP">&deg;F</span>)<sup id="fnref:12"><a href="#fn:12" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="airtemp" id="airtemp" value="72" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="airtemp2" id="airtemp2" value="72" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="airtemp3" id="airtemp3" value="72" class="case3 unselected"></div><br>
+			<label>&emsp;Spacing</label>
+			<input type="number" name="vShadeSpace" id="vShadeSpace" min="1" max="10"  value="3" step="1"><br>
 
-			<label for="humidity">Relative Humidity (%)<sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
-			<div class="inputWrapperLeft"><input type="text" name="humidity" id="humidity" min="0" max="100" value="20" class="case1"></div>
-			<div class="inputWrapperCenter"><input type="text" name="humidity2" id="humidity2" min="0" max="100" value="20" class="case2 unselected"></div>
-			<div class="inputWrapperRight"><input type="text" name="humidity3" id="humidity3" min="0" max="100" value="20" class="case3 unselected"></div><br>
-		</fieldset>
+			<label>&emsp;Distance from Facade</label>
+			<input type="number" name="vShadeDist" id="vShadeDist" min="0" max="10"  value="0" step="1"><br>
 
+			<label>&emsp;Height Above Window</label>
+			<input type="number" name="vShadeHeight" id="vShadeHeight" min="0" max="10"  value="3" step="1"><br>
 
-			</div>
+			<label>&emsp;Angle</label>
+			<input type="number" name="vShadeAngle" id="vShadeAngle" min="-90" max="90"  value="0" step="1"><br>
+
 
 		</fieldset>
 		</form>
