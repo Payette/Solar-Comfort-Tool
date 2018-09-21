@@ -270,7 +270,7 @@ pop();
         AHArray.push(coordinates[k][1]);
         if (coordinates[k][1] < 0 ){
           a = 0;
-        }else if (angleHeight > sillHeightValue-gridHt && angleHeight < (windowHeightValue + (sillHeightValue-gridHt))){
+        }else if (angleHeight > r.glzCoords[0][0][2]-gridHt && angleHeight < (r.glzCoords[0][2][2] -gridHt)){
           a = 1;
         }else{
           a = 0;
