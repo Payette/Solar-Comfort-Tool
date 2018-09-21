@@ -403,5 +403,4 @@ for (let k = 0; k<coordinates.length; k++){
 
 function reload(){
   loop();
-  noLoop();
 }
