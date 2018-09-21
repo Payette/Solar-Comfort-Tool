@@ -1,3 +1,21 @@
+d3.select("#visualization").append('svg')
+var vis = d3.select("svg")
+var arr = d3.range(13)
+var ColorScaleArray = [];
+
+//position scale
+var xScale = d3.scale.linear().domain([0, 13]).range([0,240])
+
+//The mystical polylinear color scale
+var colorScale = d3.scale.linear().domain([0, 6, 13])
+    .range([d3.rgb(255,255,255,200), d3.rgb(226,112,106,200), d3.rgb(137,49,50,200)])
+
+vis.selectAll('rect').data(arr).enter()
+    .append('rect')
+    .attr({
+        fill: function(d) { ColorScaleArray.push(d3.rgb(colorScale(d))); return colorScale(d)}
+    });
+
 let GridHtSlider, SunRotationSlider;
 let cnv;
 
@@ -13,6 +31,21 @@ function setup() {
 function draw() {
     clear();
     background(255);
+	
+	text("Hours of the Day in Direct Sun",500,12);
+    push();
+
+    for (let i = 0; i < ColorScaleArray.length; i++){
+      fill(ColorScaleArray[i].r,ColorScaleArray[i].g,ColorScaleArray[i].b);
+      strokeWeight(1);
+      stroke(0);
+      rect(500+(i*20),20,20,13);
+    }
+    for (let i = 0; i < ColorScaleArray.length; i=i+2){
+      textSize(10);
+      text(i,505+(i*20), 50);
+    }
+    pop();
 
     let Hour = 10.5; // NOT CURRENTLY USED
 
@@ -247,13 +280,26 @@ pop();
   }
 //END PYTHAGOREAM THEROM FOR Z
 
+
+let newCoordinateArray = [];
+for (let k = 0; k<coordinates.length; k++){
+  //console.log(coordinates[k][0]+float(roomOrientationValue-180))
+  if (coordinates[k][0]+float(roomOrientationValue-180)<-180){
+    newCoordinateArray.push(coordinates[k][0]+float(roomOrientationValue-180)+360);
+  }else if (coordinates[k][0]+float(roomOrientationValue-180)>180){
+    newCoordinateArray.push(coordinates[k][0]+float(roomOrientationValue-180)-360);
+  }else{
+    newCoordinateArray.push(coordinates[k][0]+float(roomOrientationValue-180));
+  }
+}
+
 //START PYTHAGOREAM THEORM FOR XY
 //ASSUME +Y IS DUE NORTH and is the wall opposite the windowwall is N (windowwall is S)
 
   let b;
   let Xloc = []
   let XYtest = []
-  AWArray = []
+    AWArray = []
   for (let i = 0; i<gridX; i++) {
     let YdistanceFromWall = (i+1);
     b = 0;
@@ -261,8 +307,8 @@ pop();
       b = 0;
       for (let k = 0; k<coordinates.length; k++){
         let XlocationOnWall = 180;
-        if ((coordinates[k][0]+float(roomOrientationValue-180))<88.0 && (coordinates[k][0]+float(roomOrientationValue-180))> -88.0){
-            XlocationOnWall = Math.tan((coordinates[k][0]+float(roomOrientationValue-180))*(3.1415926 / 180))*YdistanceFromWall;
+        if (newCoordinateArray[k]<88.0 && newCoordinateArray[k]> -88.0){
+            XlocationOnWall = Math.tan(newCoordinateArray[k]*(3.1415926 / 180))*YdistanceFromWall;
         }
         AWArray.push(XlocationOnWall);
         let xCoord = 0;
@@ -309,34 +355,9 @@ pop();
     let X4 = (x3+(xNext*i));
     let Y4 = (y3+(y*i));
 
-      let mySun = int(gridColorArray[i*gridY]/timestep);
-      if(mySun == 0){
-          fill(255,200);
-      }else if(mySun == 1){
-          fill(241,229,230,200);
-      }else if(mySun == 2){
-          fill(243,206,206,200);
-      }else if(mySun == 3){
-          fill(237,184,184,200);
-      }else if(mySun == 4){
-          fill(236,163,162,200);
-      }else if(mySun == 5){
-          fill(233,143,140,200);
-      }else if(mySun == 6){
-          fill(231,123,120,200);
-      }else if(mySun == 7){
-          fill(226,112,106,200);
-      }else if(mySun == 8){
-          fill(210,97,93,200);
-      }else if(mySun == 9){
-          fill(191,82,79,200);
-      }else if(mySun == 10){
-          fill(172,63,67,200);
-      }else if(mySun == 11){
-          fill(156,62,60,200);
-      }else{
-          fill(137,49,50,200);
-      }
+      let mySun = int(gridColorArray[i*gridY]/timestep); // CHANGE THIS TO BE A d3 COLOR CHART
+      fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
+
       quad(X1, Y1-GridHt, X2, Y2-GridHt, X3, Y3-GridHt, X4, Y4-GridHt);
 
     //GRID Y ROW
@@ -350,33 +371,8 @@ pop();
       let newX4 = (X4-(x*(j+1)));
       let newY4 = (Y4+(yNext*(j+1)));
         mySun = int(gridColorArray[(i*gridY)+j]/timestep);
-        if(mySun == 0){
-            fill(255,200);
-        }else if(mySun == 1){
-            fill(241,229,230,200);
-        }else if(mySun == 2){
-            fill(243,206,206,200);
-        }else if(mySun == 3){
-            fill(237,184,184,200);
-        }else if(mySun == 4){
-            fill(236,163,162,200);
-        }else if(mySun == 5){
-            fill(233,143,140,200);
-        }else if(mySun == 6){
-            fill(231,123,120,200);
-        }else if(mySun == 7){
-            fill(226,112,106,200);
-        }else if(mySun == 8){
-            fill(210,97,93,200);
-        }else if(mySun == 9){
-            fill(191,82,79,200);
-        }else if(mySun == 10){
-            fill(172,63,67,200);
-        }else if(mySun == 11){
-            fill(156,62,60,200);
-        }else{
-            fill(137,49,50,200);
-        }
+        fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
+
       quad(newX1, newY1-GridHt, newX2, newY2-GridHt, newX3, newY3-GridHt, newX4, newY4-GridHt);
     }
   }
