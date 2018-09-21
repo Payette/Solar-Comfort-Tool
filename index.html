@@ -29,26 +29,12 @@
  </div>
 
 	<div id="inputs">
-		<div id="description">
-		<h1>Summertime Comfort Tool</h1>
-		<hr>
-		<p>This tool displays the impact of glazing geometry and U-value on occupant thermal comfort during winter months. It shows when it is possible to eliminate perimeter heat in cases where the U-value is low and windows are small.</p>
-
-		<p class="survey">Email the <a href="mailto:cmackey@payette.com?Subject=RE:%20Glazing%20Winter%20Comfort%20Tool" target="_top">developers</a>, visit our <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/" target="_blank">github</a>, and read the <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/blob/master/License_GPL.md" target="_blank">license</a>.</p>
-		<p><strong>We've updated!</strong> See the <a href="https://github.com/PayettePeople/Thermal-Comfort-Tool/blob/master/resources/ReleaseNotes_Feb2017.md" target="_blank">release notes,</a> to learn about this tool's improved downdraft comfort model and interface updates.</p>
-
-		</div>
-
-
-		<form id="form" autocomplete="off">
-
-
-		</fieldset>
+		
 
 
 	<fieldset class="inputgroup">
 		<legend class="heading">Climate</legend>
-		<hr>
+		
 		<label>Longitude</label>
 		<input type="number" name="long" id="long" min="-180" max="180" value="-72" step="1"><br>
 
@@ -64,7 +50,7 @@
 
 	<fieldset class="inputgroup">
 		<legend class="heading">Study Type</legend>
-		<hr>
+		
 		<label>Day</label>
 		<input type="number" name="day" id="day" min="1" max="31" value="13" step="1"><br>
 
@@ -80,7 +66,7 @@
 
 		<fieldset class="inputgroup">
 			<legend class="heading">Fa&ccedil;ade Geometry</legend>
-			<hr>
+			
 			<label>Room Orientation</label>
 			<input type="number" name="north" id="north" min="-360" max="360"  value="0" step="1"><br><br>
 
@@ -120,9 +106,7 @@
 		</fieldset>
 		<fieldset class="inputgroup">
 			<legend class="heading">Shade Geometry</legend>
-			<hr>
-
-
+			
 			<label>Horizontal Shade Depth</label>
 			<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4"  value="0" step="1"><br>
 
@@ -162,6 +146,8 @@
 
 		</fieldset>
 		</form>
+	</div>
+	<div id="visualization"></div>
 
 
 		<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
