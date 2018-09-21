@@ -32,7 +32,7 @@ function draw() {
     clear();
     background(255);
 	
-	text("Hours of the Day in Direct Sun",500,12);
+	
     push();
 
     for (let i = 0; i < ColorScaleArray.length; i++){
@@ -42,6 +42,7 @@ function draw() {
       rect(500+(i*20),20,20,13);
     }
     for (let i = 0; i < ColorScaleArray.length; i=i+2){
+	  text("Hours of the Day in Direct Sun",500,12);
       textSize(10);
       text(i,505+(i*20), 50);
     }
