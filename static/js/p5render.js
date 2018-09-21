@@ -41,9 +41,9 @@ function draw() {
       stroke(0);
       rect(500+(i*20),20,20,13);
     }
+		text("Hours of the Day in Direct Sun",500,12);
     for (let i = 0; i < ColorScaleArray.length; i=i+2){
-	  text("Hours of the Day in Direct Sun",500,12);
-      textSize(10);
+	    textSize(10);
       text(i,505+(i*20), 50);
     }
     pop();
