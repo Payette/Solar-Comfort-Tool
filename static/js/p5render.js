@@ -100,6 +100,24 @@ function draw() {
 
     let distanceWindows = document.getElementById("distWindow").value;
     document.getElementsByName("distWindow")[0].addEventListener('change', reload);
+	
+    let horzShadeDep = document.getElementById("hShadeDep").value;
+    document.getElementsByName("hShadeDep")[0].addEventListener('change', reload);
+
+    let horzShadeNum = document.getElementById("hShadeNum").value;
+    document.getElementsByName("hShadeNum")[0].addEventListener('change', reload);
+
+    let horzShadeSpace = document.getElementById("hShadeSpace").value;
+    document.getElementsByName("hShadeSpace")[0].addEventListener('change', reload);
+
+    let horzShadeDist = document.getElementById("hShadeDist").value;
+    document.getElementsByName("hShadeDist")[0].addEventListener('change', reload);
+
+    let horzShadeHeight = document.getElementById("hShadeHeight").value;
+    document.getElementsByName("hShadeHeight")[0].addEventListener('change', reload);
+
+    let horzShadeAngle = document.getElementById("hShadeAngle").value;
+    document.getElementsByName("hShadeAngle")[0].addEventListener('change', reload);
 
 	
     //sunVectors
@@ -246,6 +264,33 @@ pop();
       //console.log(arrayX[0] + ", " + arrayY[0]+ ", " + arrayX[1]+ ", " + arrayY[1]+ ", " + arrayX[2]+ ", " + arrayY[2]+ ", " + arrayX[3]+ ", " + arrayY[3]);
     }
     pop();
+	
+//HORIZONTAL SHADE LOUVERS
+  push();
+  strokeWeight(1);
+  stroke(0);
+  fill(50,50);
+
+  for (let i = 0; i < r.glzCoords.length; i++){
+    let arrayX = [];
+    let arrayY = [];
+    for (let j = 0; j < 4; j++){
+      arrayX.push(((1-(r.glzCoords[i][j][0]+(wallDepVal/2))/wallDepVal)*FullRoomWidthX)+x);
+      arrayY.push(((((r.glzCoords[i][j][0]+(wallDepVal/2))/wallDepVal)*FullRoomWidthY)+y2)-(((r.glzCoords[i][j][2])/ceilingHeightValue)*Ceil));
+    }
+    for (let k = 0; k<horzShadeNum; k++){
+      let hSX1 = arrayX[2]-(((200*m)-x)*horzShadeDep)-(((200*m)-x)*horzShadeDist);
+      let hSY1 = arrayY[2]-(y*horzShadeDep)+(k*y*horzShadeSpace)-(horzShadeHeight*y)-(y*horzShadeDist);
+      let hSX2 = arrayX[3]-(((200*m)-x)*horzShadeDep)-(((200*m)-x)*horzShadeDist);
+      let hSY2 = arrayY[3]-(y*horzShadeDep)+(k*y*horzShadeSpace)-(horzShadeHeight*y)-(y*horzShadeDist);
+      let hSX3 = arrayX[3]-(((200*m)-x)*horzShadeDist);
+      let hSY3 = arrayY[3]+(k*y*horzShadeSpace)-(horzShadeHeight*y)-(y*horzShadeDist);
+      let hSX4 = arrayX[2]-(((200*m)-x)*horzShadeDist);
+      let hSY4 = arrayY[2]+(k*y*horzShadeSpace)-(horzShadeHeight*y)-(y*horzShadeDist);
+      quad(hSX1, hSY1, hSX2, hSY2, hSX3, hSY3, hSX4, hSY4);  
+      }
+    }
+  pop();
   //END ITEMS THAT EXIST BEHIND GRID PLANE
 
   //TIME FOR SOME TRIG
