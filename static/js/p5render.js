@@ -280,14 +280,20 @@ pop();
     }
     for (let k = 0; k<horzShadeNum; k++){
       let hSX1 = arrayX[2]-(((200*m)-x)*horzShadeDep)-(((200*m)-x)*horzShadeDist);
-      let hSY1 = arrayY[2]-(y*horzShadeDep)+(k*y*horzShadeSpace)-(horzShadeHeight*y)-(y*horzShadeDist);
+      let hSY1 = arrayY[2]-(y*horzShadeDep)+(k*y*horzShadeSpace*2)-(horzShadeHeight*y)-(y*horzShadeDist);
       let hSX2 = arrayX[3]-(((200*m)-x)*horzShadeDep)-(((200*m)-x)*horzShadeDist);
-      let hSY2 = arrayY[3]-(y*horzShadeDep)+(k*y*horzShadeSpace)-(horzShadeHeight*y)-(y*horzShadeDist);
+      let hSY2 = arrayY[3]-(y*horzShadeDep)+(k*y*horzShadeSpace*2)-(horzShadeHeight*y)-(y*horzShadeDist);
       let hSX3 = arrayX[3]-(((200*m)-x)*horzShadeDist);
-      let hSY3 = arrayY[3]+(k*y*horzShadeSpace)-(horzShadeHeight*y)-(y*horzShadeDist);
+      let hSY3 = arrayY[3]+(k*y*horzShadeSpace*2)-(horzShadeHeight*y)-(y*horzShadeDist);
       let hSX4 = arrayX[2]-(((200*m)-x)*horzShadeDist);
-      let hSY4 = arrayY[2]+(k*y*horzShadeSpace)-(horzShadeHeight*y)-(y*horzShadeDist);
-      quad(hSX1, hSY1, hSX2, hSY2, hSX3, hSY3, hSX4, hSY4);  
+      let hSY4 = arrayY[2]+(k*y*horzShadeSpace*2)-(horzShadeHeight*y)-(y*horzShadeDist);
+
+      let rotHSX1 = arrayX[2]-(((200*m)-x)*horzShadeDist)+(x*horzShadeDep) + (x*2*horzShadeDep*Math.sin(((-horzShadeAngle*2/3)-30)*TWO_PI/360));
+      let rotHSY1 = arrayY[2]+(k*y*horzShadeSpace*2)-(horzShadeHeight*y)-(y*horzShadeDist) -(y*horzShadeDep) + (x*2*horzShadeDep*Math.cos(((-horzShadeAngle*2/3)-30)*TWO_PI/360))
+      let rotHSX2 = arrayX[3]-(((200*m)-x)*horzShadeDist)+(x*horzShadeDep) + (x*2*horzShadeDep*Math.sin(((-horzShadeAngle*2/3)-30)*TWO_PI/360));
+      let rotHSY2 = arrayY[3]+(k*y*horzShadeSpace*2)-(horzShadeHeight*y)-(y*horzShadeDist) -(y*horzShadeDep) + (x*2*horzShadeDep*Math.cos(((-horzShadeAngle*2/3)-30)*TWO_PI/360))
+
+      quad(rotHSX1, rotHSY1, rotHSX2, rotHSY2, hSX3, hSY3, hSX4, hSY4);
       }
     }
   pop();
