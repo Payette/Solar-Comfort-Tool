@@ -20,7 +20,7 @@ let GridHtSlider, SunRotationSlider;
 let cnv;
 
 function setup() {
-  cnv = createCanvas(430,360);
+  cnv = createCanvas(410,300);
    // Move the canvas so it’s inside our <div id="sketch-holder">.
   cnv.parent('sketch');
   noStroke();
@@ -39,13 +39,13 @@ function draw() {
       fill(ColorScaleArray[i].r,ColorScaleArray[i].g,ColorScaleArray[i].b);
       strokeWeight(1);
       stroke(0);
-      rect(285+(i*10),10,10,6);
+      rect(265+(i*10),10,10,6);
     }
     textSize(8);
-    text("Hours of the Day in Direct Sun",285,8);
+    text("Hours of the Day in Direct Sun",265,8);
     for (let i = 0; i < ColorScaleArray.length; i=i+2){
       textSize(6);
-      text(i,287+(i*10), 24);
+      text(i,267+(i*10), 24);
     }
     pop();
 
@@ -158,7 +158,7 @@ function draw() {
 	
 fill(255, 150);
 push();
-translate(370,320);
+translate(350,260);
 rotate(45);
 push();
 
@@ -205,8 +205,8 @@ pop();
 
   //RE-DO THE MULTIPLIER TO FILL THE CANVAS
   let newMult = 0;
-  let newYMult = 340/((y3+(y*(gridX)))+(yNext*(gridY)));
-  let newXMult = 380/(x2+(xNext*(gridX)));
+  let newYMult = 300/((y3+(y*(gridX)))+(yNext*(gridY)));
+  let newXMult = 340/(x2+(xNext*(gridX)));
   if (newXMult>newYMult) {
     newMult = newYMult;
   } else {
