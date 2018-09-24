@@ -164,16 +164,17 @@ push();
 
 strokeWeight(1);
 stroke(0);
-rect(15,wallDepVal/-6,wallLen/3,wallDepVal/3);
+rect(20,wallDepVal/-4,wallLen/2,wallDepVal/2);
 pop();
-	
+
+
   for (let i = 0; i < coordinates.length; i++){
     if (coordinates[i][1]>0){
       push();
       strokeWeight(2);
       stroke(0);
       rotate(((coordinates[i][0])-float(roomOrientationValue))*(3.1415926 / 180));
-      point(30,0);
+      point(50,0);
       pop();
     }
   }
