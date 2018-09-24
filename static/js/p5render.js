@@ -20,7 +20,7 @@ let GridHtSlider, SunRotationSlider;
 let cnv;
 
 function setup() {
-  cnv = createCanvas(540,400);
+  cnv = createCanvas(450,360);
    // Move the canvas so it’s inside our <div id="sketch-holder">.
   cnv.parent('sketch');
   noStroke();
@@ -39,13 +39,13 @@ function draw() {
       fill(ColorScaleArray[i].r,ColorScaleArray[i].g,ColorScaleArray[i].b);
       strokeWeight(1);
       stroke(0);
-      rect(350+(i*10),20,10,7);
+      rect(305+(i*10),14,10,7);
     }
     textSize(8);
-    text("Hours of the Day in Direct Sun",350,12);
+    text("Hours of the Day in Direct Sun",305,10);
     for (let i = 0; i < ColorScaleArray.length; i=i+2){
       textSize(8);
-      text(i,352+(i*10), 40);
+      text(i,307+(i*10), 30);
     }
     pop();
 
@@ -157,13 +157,13 @@ function draw() {
 // MAKE SUN PATH CORNER GRAPHIC	
 	
 push();
-translate(500,350);
+translate(400,320);
 rotate(45);
 push();
 
 strokeWeight(1);
 stroke(0);
-rect(25,wallDepVal/-4,wallLen/2,wallDepVal/2);
+rect(15,wallDepVal/-6,wallLen/3,wallDepVal/3);
 pop();
   for (let i = 0; i < coordinates.length; i++){
     if (coordinates[i][1]>0){
@@ -171,7 +171,7 @@ pop();
       strokeWeight(2);
       stroke(0);
       rotate(((coordinates[i][0])-float(roomOrientationValue))*(3.1415926 / 180));
-      point(50,0);
+      point(30,0);
       pop();
     }
   }
@@ -203,8 +203,8 @@ pop();
 
   //RE-DO THE MULTIPLIER TO FILL THE CANVAS
   let newMult = 0;
-  let newYMult = 370/((y3+(y*(gridX)))+(yNext*(gridY)));
-  let newXMult = 520/(x2+(xNext*(gridX)));
+  let newYMult = 340/((y3+(y*(gridX)))+(yNext*(gridY)));
+  let newXMult = 420/(x2+(xNext*(gridX)));
   if (newXMult>newYMult) {
     newMult = newYMult;
   } else {
