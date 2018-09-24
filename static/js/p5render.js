@@ -1,4 +1,4 @@
-d3.select("#visualization").append('svg')
+d3.select("#visualization").append('svg').attr("height", 10)
 var vis = d3.select("svg")
 var arr = d3.range(13)
 var ColorScaleArray = [];
