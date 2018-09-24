@@ -121,6 +121,24 @@ var sketch1 = function(p) {
 
       let horzShadeAngle = document.getElementById("hShadeAngle").value;
       document.getElementsByName("hShadeAngle")[0].addEventListener('change', p.reload);
+       
+       let vertShadeDep = document.getElementById("vShadeDep").value;
+      document.getElementsByName("vShadeDep")[0].addEventListener('change', p.reload);
+
+      let vertShadeNum = document.getElementById("vShadeNum").value;
+      document.getElementsByName("vShadeNum")[0].addEventListener('change', p.reload);
+
+      let vertShadeSpace = document.getElementById("vShadeSpace").value;
+      document.getElementsByName("vShadeSpace")[0].addEventListener('change', p.reload);
+
+      let vertShadeDist = document.getElementById("vShadeDist").value;
+      document.getElementsByName("vShadeDist")[0].addEventListener('change', p.reload);
+
+      let vertShadeHeight = document.getElementById("vShadeHeight").value;
+      document.getElementsByName("vShadeHeight")[0].addEventListener('change', p.reload);
+
+      let vertShadeStart = document.getElementById("vShadeStart").value;
+      document.getElementsByName("vShadeStart")[0].addEventListener('change', p.reload);
 
 
 
@@ -304,6 +322,52 @@ var sketch1 = function(p) {
         p.quad(rotHSX1, rotHSY1, rotHSX2, rotHSY2, hSX3, hSY3, hSX4, hSY4);
         }
       }
+    p.pop();
+       
+       p.push();
+    p.strokeWeight(1);
+    p.stroke(0);
+    p.fill(50,50);
+
+    //VERTICAL SHADE LOUVERS
+    for (let i = 0; i < r.glzCoords.length; i++){
+      let arrayX = [];
+      let arrayY = [];
+      for (let j = 0; j < 4; j++){
+        arrayX.push(((1-(r.glzCoords[i][j][0]+(wallDepVal/2))/wallDepVal)*FullRoomWidthX)+x);
+        arrayY.push(((((r.glzCoords[i][j][0]+(wallDepVal/2))/wallDepVal)*FullRoomWidthY)+y2)-(((r.glzCoords[i][j][2])/ceilingHeightValue)*Ceil));
+      }
+
+      if(vertShadeStart == "L"){
+      for (let k = 0; k<vertShadeNum; k++){
+      let vSX1 = arrayX[2]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist);
+      let vSY1 = arrayY[2]-(y*vertShadeDep)-(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      let vSX2 = arrayX[2]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist);
+      let vSY2 = arrayY[2]-(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      let vSX4 = arrayX[1]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist);
+      let vSY4 = arrayY[1]-(y*vertShadeDep)-(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      let vSX3 = arrayX[1]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist);
+      let vSY3 = arrayY[1]-(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      //p.line(vSX1, vSY1, vSX2, vSY2);
+      //p.line(vSX3, vSY3, vSX4, vSY4);
+      p.quad(vSX1, vSY1, vSX2, vSY2,vSX3, vSY3, vSX4, vSY4)
+    }
+  }else{
+      for (let k = 0; k<vertShadeNum; k++){
+      let vSX1 = arrayX[3]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist);
+      let vSY1 = arrayY[3]-(y*vertShadeDep)+(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      let vSX2 = arrayX[3]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist);
+      let vSY2 = arrayY[3]+(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      let vSX4 = arrayX[0]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist);
+      let vSY4 = arrayY[0]-(y*vertShadeDep)+(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      let vSX3 = arrayX[0]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist);
+      let vSY3 = arrayY[0]+(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      //p.line(vSX1, vSY1, vSX2, vSY2);
+      //p.line(vSX3, vSY3, vSX4, vSY4);
+      p.quad(vSX1, vSY1, vSX2, vSY2,vSX3, vSY3, vSX4, vSY4)
+    }
+    }
+    }
     p.pop();
 
 
