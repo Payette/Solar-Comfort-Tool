@@ -157,7 +157,7 @@ function draw() {
 // MAKE SUN PATH CORNER GRAPHIC	
 	
 push();
-translate(650,400);
+translate(500,350);
 rotate(45);
 push();
 
@@ -203,8 +203,8 @@ pop();
 
   //RE-DO THE MULTIPLIER TO FILL THE CANVAS
   let newMult = 0;
-  let newYMult = 470/((y3+(y*(gridX)))+(yNext*(gridY)));
-  let newXMult = 780/(x2+(xNext*(gridX)));
+  let newYMult = 370/((y3+(y*(gridX)))+(yNext*(gridY)));
+  let newXMult = 520/(x2+(xNext*(gridX)));
   if (newXMult>newYMult) {
     newMult = newYMult;
   } else {
