@@ -399,7 +399,22 @@ var sketch1 = function(p) {
           if (coordinates[k][1] < 0 ){
             a = 0;
           }else if (angleHeight > r.glzCoords[0][0][2]-gridHt && angleHeight < (r.glzCoords[0][2][2] -gridHt)){
-            a = 1;
+            let testArray1 = [1];
+            for (let n = 0; n < horzShadeNum; n++){
+              let sinLaw = (horzShadeDep*(Math.sin(3.1415926-((coordinates[k][1])*(3.1415926 / 180))-(horzShadeAngle*(3.1415926 / 180)))))/Math.sin((coordinates[k][1])*(3.1415926 / 180));
+              //console.log(sinLaw);
+              if (angleHeight < ((r.glzCoords[0][2][2]-gridHt) - (horzShadeSpace*n)) && angleHeight > ((r.glzCoords[0][2][2]-gridHt) - (horzShadeSpace*n)-(sinLaw))){
+                testArray1.push(0);
+              }else{
+                testArray1.push(1);
+              }
+            }
+            let SortedArray = testArray1.sort();
+            let SALength = testArray1.length;
+            let itemArray = SortedArray[0];
+            a = itemArray;
+
+            //console.log(SortedArray);
           }else{
             a = 0;
           }Ztest.push(a);
