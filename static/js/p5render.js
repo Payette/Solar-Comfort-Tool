@@ -20,7 +20,7 @@ let GridHtSlider, SunRotationSlider;
 let cnv;
 
 function setup() {
-  cnv = createCanvas(450,360);
+  cnv = createCanvas(430,360);
    // Move the canvas so it’s inside our <div id="sketch-holder">.
   cnv.parent('sketch');
   noStroke();
@@ -39,13 +39,13 @@ function draw() {
       fill(ColorScaleArray[i].r,ColorScaleArray[i].g,ColorScaleArray[i].b);
       strokeWeight(1);
       stroke(0);
-      rect(305+(i*10),14,10,7);
+      rect(285+(i*10),10,10,6);
     }
     textSize(8);
-    text("Hours of the Day in Direct Sun",305,10);
+    text("Hours of the Day in Direct Sun",285,8);
     for (let i = 0; i < ColorScaleArray.length; i=i+2){
-      textSize(8);
-      text(i,307+(i*10), 30);
+      textSize(6);
+      text(i,287+(i*10), 24);
     }
     pop();
 
@@ -156,8 +156,9 @@ function draw() {
 	
 // MAKE SUN PATH CORNER GRAPHIC	
 	
+fill(255, 150);
 push();
-translate(400,320);
+translate(370,320);
 rotate(45);
 push();
 
@@ -165,6 +166,7 @@ strokeWeight(1);
 stroke(0);
 rect(15,wallDepVal/-6,wallLen/3,wallDepVal/3);
 pop();
+	
   for (let i = 0; i < coordinates.length; i++){
     if (coordinates[i][1]>0){
       push();
@@ -188,7 +190,7 @@ pop();
   let xNext = 200-x;
   let yNext = 120-y;
   let Ceil = ceilingHeightValue * 120;
-  let yShift = x * gridY;
+  let yShift = 0; //x * gridY
 
   //SINGLE GRID BLOCK - NOT VISIBLE
   //CLOCKWISE STARTING @ TOP LEFT
@@ -204,7 +206,7 @@ pop();
   //RE-DO THE MULTIPLIER TO FILL THE CANVAS
   let newMult = 0;
   let newYMult = 340/((y3+(y*(gridX)))+(yNext*(gridY)));
-  let newXMult = 420/(x2+(xNext*(gridX)));
+  let newXMult = 380/(x2+(xNext*(gridX)));
   if (newXMult>newYMult) {
     newMult = newYMult;
   } else {
