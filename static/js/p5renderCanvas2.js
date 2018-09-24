@@ -55,23 +55,23 @@ p.setup = function() {
     document.getElementsByName("timeStep1")[0].addEventListener('change', p.reload);
 
 
-    let roomOrientationValue = document.getElementById("north").value;
-    document.getElementsByName("north")[0].addEventListener('change', p.reload);
+    let roomOrientationValue = document.getElementById("north1").value;
+    document.getElementsByName("north1")[0].addEventListener('change', p.reload);
 
-    let gridHeightValue = document.getElementById("gridHt").value;
-    document.getElementsByName("gridHt")[0].addEventListener('change', p.reload);
+    let gridHeightValue = document.getElementById("gridHt1").value;
+    document.getElementsByName("gridHt1")[0].addEventListener('change', p.reload);
 
-    let ceilingHeightValue = document.getElementById("ceiling").value;
-    document.getElementsByName("ceiling")[0].addEventListener('change', p.reload);
+    let ceilingHeightValue = document.getElementById("ceiling1").value;
+    document.getElementsByName("ceiling1")[0].addEventListener('change', p.reload);
 
-    let wallLen = document.getElementById("wallWidth").value;
-    document.getElementsByName("wallWidth")[0].addEventListener('change', p.reload);
+    let wallLen = document.getElementById("wallWidth1").value;
+    document.getElementsByName("wallWidth1")[0].addEventListener('change', p.reload);
 
-    let wallDepVal = document.getElementById("wallDep").value;
-    document.getElementsByName("wallDep")[0].addEventListener('change', p.reload);
+    let wallDepVal = document.getElementById("wallDep1").value;
+    document.getElementsByName("wallDep1")[0].addEventListener('change', p.reload);
 
-    let windowHeightValue = document.getElementById("windowHeight").value*10;
-    document.getElementsByName("windowHeight")[0].addEventListener('change', p.reload);
+    let windowHeightValue = document.getElementById("windowHeight1").value*10;
+    document.getElementsByName("windowHeight1")[0].addEventListener('change', p.reload);
     windowHeightValue = windowHeightValue/10;
 
     let windowWidthValue = document.getElementById("windowWidth").value;
@@ -80,31 +80,49 @@ p.setup = function() {
     let glzRatioValue = document.getElementById("glazing").value;
     document.getElementsByName("glazing")[0].addEventListener('change', p.reload);
 
-    let sillHeightValue = document.getElementById("sill").value;
-    document.getElementsByName("sill")[0].addEventListener('change', p.reload);
+    let sillHeightValue = document.getElementById("sill1").value;
+    document.getElementsByName("sill1")[0].addEventListener('change', p.reload);
 
-    let distanceWindows = document.getElementById("distWindow").value;
-    document.getElementsByName("distWindow")[0].addEventListener('change', p.reload);
+    let distanceWindows = document.getElementById("distWindow1").value;
+    document.getElementsByName("distWindow1")[0].addEventListener('change', p.reload);
 
 
 
-    let horzShadeDep = document.getElementById("hShadeDep").value;
-    document.getElementsByName("hShadeDep")[0].addEventListener('change', p.reload);
+    let horzShadeDep = document.getElementById("hShadeDep1").value;
+    document.getElementsByName("hShadeDep1")[0].addEventListener('change', p.reload);
 
-    let horzShadeNum = document.getElementById("hShadeNum").value;
-    document.getElementsByName("hShadeNum")[0].addEventListener('change', p.reload);
+    let horzShadeNum = document.getElementById("hShadeNum1").value;
+    document.getElementsByName("hShadeNum1")[0].addEventListener('change', p.reload);
 
-    let horzShadeSpace = document.getElementById("hShadeSpace").value;
-    document.getElementsByName("hShadeSpace")[0].addEventListener('change', p.reload);
+    let horzShadeSpace = document.getElementById("hShadeSpace1").value;
+    document.getElementsByName("hShadeSpace1")[0].addEventListener('change', p.reload);
 
-    let horzShadeDist = document.getElementById("hShadeDist").value;
-    document.getElementsByName("hShadeDist")[0].addEventListener('change', p.reload);
+    let horzShadeDist = document.getElementById("hShadeDist1").value;
+    document.getElementsByName("hShadeDist1")[0].addEventListener('change', p.reload);
 
-    let horzShadeHeight = document.getElementById("hShadeHeight").value;
-    document.getElementsByName("hShadeHeight")[0].addEventListener('change', p.reload);
+    let horzShadeHeight = document.getElementById("hShadeHeight1").value;
+    document.getElementsByName("hShadeHeight1")[0].addEventListener('change', p.reload);
 
-    let horzShadeAngle = document.getElementById("hShadeAngle").value;
-    document.getElementsByName("hShadeAngle")[0].addEventListener('change', p.reload);
+    let horzShadeAngle = document.getElementById("hShadeAngle1").value;
+    document.getElementsByName("hShadeAngle1")[0].addEventListener('change', p.reload);
+
+    let vertShadeDep = document.getElementById("vShadeDep1").value;
+    document.getElementsByName("vShadeDep1")[0].addEventListener('change', p.reload);
+
+    let vertShadeNum = document.getElementById("vShadeNum1").value;
+    document.getElementsByName("vShadeNum1")[0].addEventListener('change', p.reload);
+
+    let vertShadeSpace = document.getElementById("vShadeSpace1").value;
+    document.getElementsByName("vShadeSpace1")[0].addEventListener('change', p.reload);
+
+    let vertShadeDist = document.getElementById("vShadeDist1").value;
+    document.getElementsByName("vShadeDist1")[0].addEventListener('change', p.reload);
+
+    let vertShadeHeight = document.getElementById("vShadeHeight1").value;
+    document.getElementsByName("vShadeHeight1")[0].addEventListener('change', p.reload);
+
+    let vertShadeStart = document.getElementById("vShadeStart1").value;
+    document.getElementsByName("vShadeStart1")[0].addEventListener('change', p.reload);
 
 
 
