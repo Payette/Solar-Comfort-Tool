@@ -20,7 +20,7 @@ let GridHtSlider, SunRotationSlider;
 let cnv;
 
 function setup() {
-  cnv = createCanvas(440,300);
+  cnv = createCanvas(440,350);
    // Move the canvas so it’s inside our <div id="sketch-holder">.
   cnv.parent('sketch');
   noStroke();
@@ -158,7 +158,7 @@ function draw() {
 	
 fill(255, 150);
 push();
-translate(360,260);
+translate(360, 280);
 rotate(45);
 push();
 
