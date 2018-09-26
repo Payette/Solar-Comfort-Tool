@@ -218,7 +218,7 @@ var sketch1 = function(p) {
         p.strokeWeight(2);
         p.stroke(light_black);
         p.rotate(((coordinates[i][0])-p.float(roomOrientationValue))*(3.1415926 / 180));
-        p.point(50,0);
+        //p.point(50,0);
         p.pop();
       }
     }
