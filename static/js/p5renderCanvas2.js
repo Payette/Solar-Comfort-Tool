@@ -16,23 +16,6 @@ p.setup = function() {
     p.clear();
     p.background(255);
 
-
-    p.push();
-
-    for (let i = 0; i < ColorScaleArray.length; i++){
-      p.fill(ColorScaleArray[i].r,ColorScaleArray[i].g,ColorScaleArray[i].b);
-      p.strokeWeight(1);
-      p.stroke(0);
-      p.rect(275+(i*10),10,10,6);
-    }
-    p.textSize(8);
-    p.text("Hours of the Day in Direct Sun",275,8);
-    for (let i = 0; i < ColorScaleArray.length; i=i+2){
-      p.textSize(6);
-      p.text(i,277+(i*10), 24);
-    }
-    p.pop();
-
     let Hour = 10.5;
 
     let Lon = document.getElementById("long1").value;
