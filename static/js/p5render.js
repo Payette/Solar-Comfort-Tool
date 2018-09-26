@@ -43,6 +43,7 @@ vis.selectAll('rect').data(arr).enter()
                  .attr("font-size", "12px")
 var sketch1 = function(p) {
   let GridHtSlider, SunRotationSlider;
+   let light_black = 150;
   //let cnv;
 
   p.setup = function() {
@@ -191,7 +192,7 @@ var sketch1 = function(p) {
   p.push();
 
   p.strokeWeight(1);
-  p.stroke(0);
+  p.stroke(light_black);
   p.rect(20,wallDepVal/-4,wallLen/2,wallDepVal/2);
   p.pop();
 
@@ -200,7 +201,7 @@ var sketch1 = function(p) {
       if (coordinates[i][1]>0){
         p.push();
         p.strokeWeight(2);
-        p.stroke(0);
+        p.stroke(light_black);
         p.rotate(((coordinates[i][0])-p.float(roomOrientationValue))*(3.1415926 / 180));
         p.point(50,0);
         p.pop();
@@ -270,7 +271,7 @@ var sketch1 = function(p) {
     //FAR WALL LINE
     p.push();
     p.noFill();
-    p.stroke(0);
+    p.stroke(light_black);
     p.strokeWeight(1);
     p.line(x2, y2, x2, y2-Ceil);
 
@@ -285,7 +286,7 @@ var sketch1 = function(p) {
 
     p.push();
     p.fill(230,230,245);
-    p.stroke(0);
+    p.stroke(light_black);
     p.strokeWeight(1);
 
     for (let i = 0; i < r.glzCoords.length; i++){
@@ -303,7 +304,7 @@ var sketch1 = function(p) {
     //HORIZONTAL SHADE LOUVERS
     p.push();
     p.strokeWeight(1);
-    p.stroke(0);
+    p.stroke(light_black);
     p.fill(50,50);
 
     for (let i = 0; i < r.glzCoords.length; i++){
@@ -335,7 +336,7 @@ var sketch1 = function(p) {
        
        p.push();
     p.strokeWeight(1);
-    p.stroke(0);
+    p.stroke(light_black);
     p.fill(50,50);
 
     //VERTICAL SHADE LOUVERS
@@ -536,7 +537,7 @@ var sketch1 = function(p) {
     //FLOOR GRID PLANE/OUTLINE
     p.push();
     p.noFill();
-    p.stroke(0);
+    p.stroke(light_black);
     p.strokeWeight(1);
     p.quad(x2, y2-GridHt, (x2+(xNext*(gridX))), (y2+(y*(gridX)))-GridHt, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-GridHt, x, (y*(gridY+2))+Ceil-GridHt);
 
