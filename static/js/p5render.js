@@ -1,4 +1,4 @@
-d3.select("#visualization").append('svg').attr("height", 40)
+d3.select("#visualization").append('svg').attr("height", 80)
 var vis = d3.select("svg")
 var arr = d3.range(13)
 var ColorScaleArray = [];
@@ -30,7 +30,7 @@ vis.selectAll('rect').data(arr).enter()
       .text(function(d) {return d;})
       .attr("text-anchor", "middle")
       .attr("font-family", "sans-serif")
-      .attr("font-size", "11px")
+      .attr("font-size", "9px")
       .attr({
           x : function(d) { return xScale(d) + 10 },
           y : 40});
@@ -410,10 +410,11 @@ var sketch1 = function(p) {
           }else if (angleHeight > r.glzCoords[0][0][2]-gridHt && angleHeight < (r.glzCoords[0][2][2] -gridHt)){
             let testArray1 = [1];
             for (let n = 0; n < horzShadeNum; n++){
+              let sinLawDist = (horzShadeDist*(Math.sin(3.1415926-(((90)-coordinates[k][1])*(3.1415926 / 180))-(90*(3.1415926 / 180)))))/Math.sin(((90)-coordinates[k][1])*(3.1415926 / 180));
+              let sinLawAngle = (horzShadeDep*(Math.sin(3.1415926-(((90)-coordinates[k][1])*(3.1415926 / 180))-(horzShadeAngle*(3.1415926 / 180)))))/Math.sin(((90)-coordinates[k][1])*(3.1415926 / 180));
 
-              let sinLaw = (horzShadeDep*(Math.sin(3.1415926-(((90)-coordinates[k][1])*(3.1415926 / 180))-(horzShadeAngle*(3.1415926 / 180)))))/Math.sin(((90)-coordinates[k][1])*(3.1415926 / 180));
-
-              if (angleHeight < ((r.glzCoords[0][2][2]-gridHt) - (horzShadeSpace*n)+(p.float(horzShadeHeight)*.5)) && angleHeight > ((r.glzCoords[0][2][2]-gridHt) - (horzShadeSpace*n)-(sinLaw)+(p.float(horzShadeHeight)*.5))){                testArray1.push(0);
+              if (angleHeight < ((r.glzCoords[0][2][2]-gridHt)-(horzShadeSpace*n)-(sinLawDist)+(p.float(horzShadeHeight)*.5) && angleHeight > ((r.glzCoords[0][2][2]-gridHt)-(horzShadeSpace*n)-(sinLawDist)-(sinLawAngle)+(p.float(horzShadeHeight)*.5))){
+                testArray1.push(0);
               }else{
                 testArray1.push(1);
               }
