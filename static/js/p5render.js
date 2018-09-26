@@ -188,12 +188,27 @@ var sketch1 = function(p) {
     p.fill(255, 150);
   p.push();
   p.translate(360,280);
+  p.push();
+  p.fill(light_black);
+  p.text("N", 50,-35);
+  p.pop();
+  p.ellipse(200,120);
   p.rotate(45);
   p.push();
 
   p.strokeWeight(1);
   p.stroke(light_black);
-  p.rect(20,wallDepVal/-4,wallLen/2,wallDepVal/2);
+  //p.rect(20,wallDepVal/-4,wallLen/2,wallDepVal/2);
+
+  p.rotate(-45);
+  p.ellipse(0,0,100,60);
+  //p.rotate(roomOrientationValue);
+  p.line(-50,-30,50,30);
+  p.rotate(90);
+  p.line(-50,-30,50,30);
+  p.strokeWeight(3);
+  p.line(-50,-30,0,0);
+
   p.pop();
 
 
