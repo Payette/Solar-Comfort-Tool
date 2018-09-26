@@ -1,10 +1,11 @@
-d3.select("#visualization").append('svg').attr("height", 10)
+d3.select("#visualization").append('svg').attr("height", 40)
 var vis = d3.select("svg")
 var arr = d3.range(13)
 var ColorScaleArray = [];
+var dataset = [0,2,4,6,8,10,12];
 
 //position scale
-var xScale = d3.scale.linear().domain([0, 13]).range([0,240])
+var xScale = d3.scale.linear().domain([0, 13]).range([0,260])
 
 //The mystical polylinear color scale
 var colorScale = d3.scale.linear().domain([0, 6, 13])
@@ -13,9 +14,33 @@ var colorScale = d3.scale.linear().domain([0, 6, 13])
 vis.selectAll('rect').data(arr).enter()
     .append('rect')
     .attr({
+        x : function(d) { return xScale(d) +1 },
+        y : 16,
+        height: 12,
+        width: 20,
+        stroke: d3.rgb(0,0,0),
         fill: function(d) { ColorScaleArray.push(d3.rgb(colorScale(d))); return colorScale(d)}
     });
 
+
+    vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
+      .data(dataset)
+      .enter()
+      .append("text") // <-- Same here!
+      .text(function(d) {return d;})
+      .attr("text-anchor", "middle")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "11px")
+      .attr({
+          x : function(d) { return xScale(d) + 10 },
+          y : 40});
+
+    vis.append("text")
+                 .attr("x", 0)
+                 .attr("y", 12)
+                 .text( "Hours of Day in Direct Sun")
+                 .attr("font-family", "sans-serif")
+                 .attr("font-size", "12px")
 var sketch1 = function(p) {
   let GridHtSlider, SunRotationSlider;
   //let cnv;
@@ -32,22 +57,6 @@ var sketch1 = function(p) {
    p.draw = function() {
       p.clear();
       p.background(255);
-
-      p.push();
-
-      for (let i = 0; i < ColorScaleArray.length; i++){
-        p.fill(ColorScaleArray[i].r,ColorScaleArray[i].g,ColorScaleArray[i].b);
-        p.strokeWeight(1);
-        p.stroke(0);
-        p.rect(275+(i*10),10,10,6);
-      }
-      p.textSize(8);
-      p.text("Hours of the Day in Direct Sun",275,8);
-      for (let i = 0; i < ColorScaleArray.length; i=i+2){
-        p.textSize(6);
-        p.text(i,277+(i*10), 24);
-      }
-      p.pop();
 
       let Hour = 10.5;
 
