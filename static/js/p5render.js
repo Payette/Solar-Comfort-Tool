@@ -1,11 +1,11 @@
-d3.select("#visualization").append('svg').attr("height", 80)
+d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327)
 var vis = d3.select("svg")
 var arr = d3.range(13)
 var ColorScaleArray = [];
 var dataset = [0,2,4,6,8,10,12];
 
 //position scale
-var xScale = d3.scale.linear().domain([0, 13]).range([0,260])
+var xScale = d3.scale.linear().domain([0, 13]).range([0,325])
 
 //The mystical polylinear color scale
 var colorScale = d3.scale.linear().domain([0, 6, 13])
@@ -17,7 +17,7 @@ vis.selectAll('rect').data(arr).enter()
         x : function(d) { return xScale(d) +1 },
         y : 16,
         height: 12,
-        width: 20,
+        width: 25,
         stroke: d3.rgb(0,0,0),
         fill: function(d) { ColorScaleArray.push(d3.rgb(colorScale(d))); return colorScale(d)}
     });
@@ -32,7 +32,7 @@ vis.selectAll('rect').data(arr).enter()
       .attr("font-family", "sans-serif")
       .attr("font-size", "9px")
       .attr({
-          x : function(d) { return xScale(d) + 10 },
+          x : function(d) { return xScale(d) + 12 },
           y : 40});
 
     vis.append("text")
@@ -41,6 +41,7 @@ vis.selectAll('rect').data(arr).enter()
                  .text( "Hours of Day in Direct Sun")
                  .attr("font-family", "sans-serif")
                  .attr("font-size", "12px")
+
 var sketch1 = function(p) {
   let GridHtSlider, SunRotationSlider;
    let light_black = 150;
