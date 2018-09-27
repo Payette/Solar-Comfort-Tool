@@ -44,7 +44,7 @@ vis.selectAll('rect').data(arr).enter()
 
 var sketch1 = function(p) {
   let GridHtSlider, SunRotationSlider;
-   let light_black = 150;
+   let light_black = 100;
   //let cnv;
 
   p.setup = function() {
@@ -198,7 +198,7 @@ var sketch1 = function(p) {
   p.push();
 
   p.strokeWeight(1);
-  p.stroke(light_black);
+  p.stroke(light_black+50);
   //p.rect(20,wallDepVal/-4,wallLen/2,wallDepVal/2);
 
   p.rotate(-45);
@@ -553,10 +553,11 @@ var sketch1 = function(p) {
     //FLOOR GRID PLANE/OUTLINE
     p.push();
     p.noFill();
-    p.stroke(light_black);
+    p.stroke(light_black+50);
     p.strokeWeight(1);
     p.quad(x2, y2-GridHt, (x2+(xNext*(gridX))), (y2+(y*(gridX)))-GridHt, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-GridHt, x, (y*(gridY+2))+Ceil-GridHt);
 
+    p.stroke(light_black);
     //CEILING PLANE
     p.quad(x2, y2-Ceil, (x2+(xNext*(gridX))), (y2+(y*(gridX)))-Ceil, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-Ceil, x, (y*(gridY+2)));
 
