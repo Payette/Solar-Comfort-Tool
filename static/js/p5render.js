@@ -42,9 +42,10 @@ vis.selectAll('rect').data(arr).enter()
                  .attr("font-family", "sans-serif")
                  .attr("font-size", "12px")
 
+
 var sketch1 = function(p) {
   let GridHtSlider, SunRotationSlider;
-   let light_black = 100;
+  let light_black = 100;
   //let cnv;
 
   p.setup = function() {
@@ -54,102 +55,126 @@ var sketch1 = function(p) {
      // Move the canvas so it’s inside the <div id="sketch-holder">.
     p.cnv.parent('sketch');
     p.noStroke();
+
   };
 
    p.draw = function() {
       p.clear();
       p.background(255);
 
+      /*
+
+      p.push();
+
+      for (let i = 0; i < ColorScaleArray.length; i++){
+        p.fill(ColorScaleArray[i].r,ColorScaleArray[i].g,ColorScaleArray[i].b);
+        p.strokeWeight(1);
+        p.stroke(0);
+        p.rect(275+(i*10),10,10,6);
+      }
+      p.textSize(8);
+      p.text("Hours of the Day in Direct Sun",275,8);
+      for (let i = 0; i < ColorScaleArray.length; i=i+2){
+        p.textSize(6);
+        p.text(i,277+(i*10), 24);
+      }
+      p.pop();
+      */
+
       let Hour = 10.5;
 
       let Lon = document.getElementById("long").value;
-      document.getElementsByName("long")[0].addEventListener('change', p.reload);
+      document.getElementsByName("long")[0].addEventListener('input', p.reload);
 
       let Lat = document.getElementById("lat").value;
-      document.getElementsByName("lat")[0].addEventListener('change', p.reload);
+      document.getElementsByName("lat")[0].addEventListener('input', p.reload);
 
       let TimeZone = document.getElementById("timeZone").value;
-      document.getElementsByName("timeZone")[0].addEventListener('change', p.reload);
+      document.getElementsByName("timeZone")[0].addEventListener('input', p.reload);
 
 
       let Day = document.getElementById("day").value;
-      document.getElementsByName("day")[0].addEventListener('change', p.reload);
+      document.getElementsByName("day")[0].addEventListener('input', p.reload);
 
       let Month = document.getElementById("mon").value;
-      document.getElementsByName("mon")[0].addEventListener('change', p.reload);
+      document.getElementsByName("mon")[0].addEventListener('input', p.reload);
 
       let timestep = document.getElementById("timeStep").value;
-      document.getElementsByName("timeStep")[0].addEventListener('change', p.reload);
+      document.getElementsByName("timeStep")[0].addEventListener('input', p.reload);
 
 
       let roomOrientationValue = document.getElementById("north").value;
-      document.getElementsByName("north")[0].addEventListener('change', p.reload);
+      document.getElementsByName("north")[0].addEventListener('input', p.reload);
 
       let gridHeightValue = document.getElementById("gridHt").value;
-      document.getElementsByName("gridHt")[0].addEventListener('change', p.reload);
+      document.getElementsByName("gridHt")[0].addEventListener('input', p.reload);
 
       let ceilingHeightValue = document.getElementById("ceiling").value;
-      document.getElementsByName("ceiling")[0].addEventListener('change', p.reload);
+      document.getElementsByName("ceiling")[0].addEventListener('input', p.reload);
 
       let wallLen = document.getElementById("wallWidth").value;
-      document.getElementsByName("wallWidth")[0].addEventListener('change', p.reload);
+      document.getElementsByName("wallWidth")[0].addEventListener('input', p.reload);
 
       let wallDepVal = document.getElementById("wallDep").value;
-      document.getElementsByName("wallDep")[0].addEventListener('change', p.reload);
+      document.getElementsByName("wallDep")[0].addEventListener('input', p.reload);
 
       let windowHeightValue = document.getElementById("windowHeight").value*10;
-      document.getElementsByName("windowHeight")[0].addEventListener('change', p.reload);
+      document.getElementsByName("windowHeight")[0].addEventListener('input', p.reload);
       windowHeightValue = windowHeightValue/10;
 
       let windowWidthValue = document.getElementById("windowWidth").value;
-      document.getElementsByName("windowWidth")[0].addEventListener('change', p.reload);
+      document.getElementsByName("windowWidth")[0].addEventListener('input', p.reload);
 
       let glzRatioValue = document.getElementById("glazing").value;
-      document.getElementsByName("glazing")[0].addEventListener('change', p.reload);
+      document.getElementsByName("glazing")[0].addEventListener('input', p.reload);
 
       let sillHeightValue = document.getElementById("sill").value;
-      document.getElementsByName("sill")[0].addEventListener('change', p.reload);
+      document.getElementsByName("sill")[0].addEventListener('input', p.reload);
 
       let distanceWindows = document.getElementById("distWindow").value;
-      document.getElementsByName("distWindow")[0].addEventListener('change', p.reload);
+      document.getElementsByName("distWindow")[0].addEventListener('input', p.reload);
 
 
 
       let horzShadeDep = document.getElementById("hShadeDep").value;
-      document.getElementsByName("hShadeDep")[0].addEventListener('change', p.reload);
+      document.getElementsByName("hShadeDep")[0].addEventListener('input', p.reload);
 
       let horzShadeNum = document.getElementById("hShadeNum").value;
-      document.getElementsByName("hShadeNum")[0].addEventListener('change', p.reload);
+      document.getElementsByName("hShadeNum")[0].addEventListener('input', p.reload);
 
       let horzShadeSpace = document.getElementById("hShadeSpace").value;
-      document.getElementsByName("hShadeSpace")[0].addEventListener('change', p.reload);
+      document.getElementsByName("hShadeSpace")[0].addEventListener('input', p.reload);
 
       let horzShadeDist = document.getElementById("hShadeDist").value;
-      document.getElementsByName("hShadeDist")[0].addEventListener('change', p.reload);
+      document.getElementsByName("hShadeDist")[0].addEventListener('input', p.reload);
 
       let horzShadeHeight = document.getElementById("hShadeHeight").value;
-      document.getElementsByName("hShadeHeight")[0].addEventListener('change', p.reload);
+      document.getElementsByName("hShadeHeight")[0].addEventListener('input', p.reload);
 
       let horzShadeAngle = document.getElementById("hShadeAngle").value;
-      document.getElementsByName("hShadeAngle")[0].addEventListener('change', p.reload);
-       
-       let vertShadeDep = document.getElementById("vShadeDep").value;
-      document.getElementsByName("vShadeDep")[0].addEventListener('change', p.reload);
+      document.getElementsByName("hShadeAngle")[0].addEventListener('input', p.reload);
+
+
+
+      let vertShadeDep = document.getElementById("vShadeDep").value;
+      document.getElementsByName("vShadeDep")[0].addEventListener('input', p.reload);
 
       let vertShadeNum = document.getElementById("vShadeNum").value;
-      document.getElementsByName("vShadeNum")[0].addEventListener('change', p.reload);
+      document.getElementsByName("vShadeNum")[0].addEventListener('input', p.reload);
 
       let vertShadeSpace = document.getElementById("vShadeSpace").value;
-      document.getElementsByName("vShadeSpace")[0].addEventListener('change', p.reload);
+      document.getElementsByName("vShadeSpace")[0].addEventListener('input', p.reload);
 
       let vertShadeDist = document.getElementById("vShadeDist").value;
-      document.getElementsByName("vShadeDist")[0].addEventListener('change', p.reload);
+      document.getElementsByName("vShadeDist")[0].addEventListener('input', p.reload);
 
       let vertShadeHeight = document.getElementById("vShadeHeight").value;
-      document.getElementsByName("vShadeHeight")[0].addEventListener('change', p.reload);
+      document.getElementsByName("vShadeHeight")[0].addEventListener('input', p.reload);
 
       let vertShadeStart = document.getElementById("vShadeStart").value;
-      document.getElementsByName("vShadeStart")[0].addEventListener('change', p.reload);
+      document.getElementsByName("vShadeStart")[0].addEventListener('input', p.reload);
+
+
 
 
 
@@ -186,32 +211,82 @@ var sketch1 = function(p) {
 
     // MAKE SUN PATH CORNER GRAPHIC
 
-    p.fill(255, 150);
+    let IsoROV = 0;
+    roomOrientationValue = roomOrientationValue*-1
+    if (roomOrientationValue > -1 && roomOrientationValue < 90){
+    	IsoROV = roomOrientationValue/90*62.5;
+    }else if (roomOrientationValue > 89 && roomOrientationValue < 180){
+    	IsoROV = ((roomOrientationValue - 90)/90*117.5)+62.5;
+    }else if (roomOrientationValue > 179 && roomOrientationValue < 270){
+    	IsoROV = ((roomOrientationValue - 180)/90*62.5) + 180;
+    }else if (roomOrientationValue > 269){
+    	IsoROV = ((roomOrientationValue - 270)/90*117.5) + 242.5;
+    }else if (roomOrientationValue > -90 && roomOrientationValue <0){
+      IsoROV = roomOrientationValue/90*117.5;
+    }else if (roomOrientationValue > -180 && roomOrientationValue <-89){
+      IsoROV = ((roomOrientationValue + 90)/90*62.5)-117.5;
+    }else if (roomOrientationValue > -270 && roomOrientationValue < -179){
+    IsoROV = ((roomOrientationValue + 180)/90*117.5)-180;
+  }else{
+    IsoROV = ((roomOrientationValue + 270)/90*62.5) - 297.5;
+  }
+
+    let IsoROV2 = 0;
+    if (roomOrientationValue > -1 && roomOrientationValue < 90){
+    	IsoROV2 = roomOrientationValue/90*117.5;
+    }else if (roomOrientationValue > 89 && roomOrientationValue < 180){
+    	IsoROV2 = ((roomOrientationValue - 90)/90*62.5)+117.5;
+    }else if (roomOrientationValue > 179 && roomOrientationValue < 270){
+    	IsoROV2 = ((roomOrientationValue - 180)/90*117.5) + 180;
+    }else if (roomOrientationValue > 269){
+    	IsoROV2 = ((roomOrientationValue - 270)/90*62.5) + 297.5;
+    }else if (roomOrientationValue > -90 && roomOrientationValue < 0){
+      IsoROV2 = roomOrientationValue/90*62.5;
+    }else if (roomOrientationValue > -180 && roomOrientationValue < -89){
+    	IsoROV2 = ((roomOrientationValue + 90)/90*117.5)-62.5;
+    }else if (roomOrientationValue > -270 && roomOrientationValue < -179){
+    	IsoROV2 = ((roomOrientationValue + 180)/90*62.5)-180;
+    }else{
+      IsoROV2 = ((roomOrientationValue + 270)/90*117.5) - 242.5;
+    }
+
+  p.fill(255, 150);
   p.push();
-  p.translate(360,280);
-  p.push();
-  p.fill(light_black);
-  p.text("N", 50,-35);
-  p.pop();
-  p.ellipse(200,120);
-  p.rotate(45);
-  p.push();
+    p.translate(360,280);
+    p.push();
+      p.rotate(IsoROV*(3.1415926/180));
+      p.push();
+        p.rotate(IsoROV*(-3.1415926/180));
+        p.rotate(IsoROV2*(3.1415926/180));
+        p.translate(59,35);
 
-  p.strokeWeight(1);
-  p.stroke(light_black+50);
-  //p.rect(20,wallDepVal/-4,wallLen/2,wallDepVal/2);
+        p.rotate(IsoROV2*(-3.1415926/180));
+        p.fill(light_black);
+        p.text("N", -5,5);
+      p.pop();
+      p.rotate(45);
+        p.push();
+        p.strokeWeight(1);
+        p.stroke(light_black+50);
+        p.rotate(-45);
+        p.push();
+          p.rotate(IsoROV*(-3.1415926/180));
+          p.ellipse(0,0,100,60); //main circle
+        p.pop();
+        p.push();
+          p.rotate(IsoROV*(-3.1415926/180));
+          p.push();
+          p.rotate(IsoROV2*(3.1415926/180));
+          p.line(-50,-30,50,30);
+          p.strokeWeight(3);
+          p.line(50,30,0,0);
+          p.pop();
+        p.pop();
+        p.rotate(90);
+        p.line(-50,-30,50,30);
 
-  p.rotate(-45);
-  p.ellipse(0,0,100,60);
-  //p.rotate(roomOrientationValue);
-  p.line(-50,-30,50,30);
-  p.rotate(90);
-  p.line(-50,-30,50,30);
-  p.strokeWeight(3);
-  p.line(-50,-30,0,0);
-
-  p.pop();
-
+      p.pop();
+    p.pop();
 
     for (let i = 0; i < coordinates.length; i++){
       if (coordinates[i][1]>0){
@@ -223,7 +298,9 @@ var sketch1 = function(p) {
         p.pop();
       }
     }
-    p.pop();
+  p.pop();
+  roomOrientationValue = roomOrientationValue*-1
+
 
 
     //let CeilHt = CeilingSlider.value();//Ceiling Height (ft) - this moves the whole grid down.
@@ -320,7 +397,7 @@ var sketch1 = function(p) {
     //HORIZONTAL SHADE LOUVERS
     p.push();
     p.strokeWeight(1);
-    p.stroke(light_black);
+    p.stroke(150);
     p.fill(50,50);
 
     for (let i = 0; i < r.glzCoords.length; i++){
@@ -349,8 +426,9 @@ var sketch1 = function(p) {
         }
       }
     p.pop();
-       
-       p.push();
+
+
+    p.push();
     p.strokeWeight(1);
     p.stroke(light_black);
     p.fill(50,50);
@@ -408,8 +486,9 @@ var sketch1 = function(p) {
     let angleHeightTest = [];
 
     //START PYTHAGOREAM THEORM FOR Z
-    //console.log(coordinates);
-    //console.log((coordinates[12][0])+float(roomOrientationValue));
+
+
+
 
     let a;
     let Ztest = [];
@@ -450,7 +529,7 @@ var sketch1 = function(p) {
     }
   //END PYTHAGOREAM THEROM FOR Z
 
-
+  //THIS ALLOWS THE ROOM ORIENTATION TO ROTATE A FULL 360 DEGREES
   let newCoordinateArray = [];
   for (let k = 0; k<coordinates.length; k++){
     //console.log(coordinates[k][0]+float(roomOrientationValue-180))
@@ -466,6 +545,7 @@ var sketch1 = function(p) {
 
   //START PYTHAGOREAM THEORM FOR XY
   //ASSUME +Y IS DUE NORTH and is the wall opposite the windowwall is N (windowwall is S)
+  //HERE IS WHERE YOU WILL NEED TO LOOK AT THE VERTICAL SHADES
 
     let b;
     let Xloc = []
@@ -516,6 +596,7 @@ var sketch1 = function(p) {
 
   // CREATE GRID
     //GRID X ROW
+    console.log(gridColorArray[0]);
     for (let i = 0; i<gridX; i++) {
       let X1 = (x2+(xNext*i));
       let Y1 = (y2+(y*i));
@@ -525,8 +606,14 @@ var sketch1 = function(p) {
       let Y3 = (y3+(y*(i+1)));
       let X4 = (x3+(xNext*i));
       let Y4 = (y3+(y*i));
+      let mySun = 0;
+      if(i == 0){
+        mySun = (p.int(gridColorArray[1*gridY]/timestep));
+      }else{
+        mySun = (p.int(gridColorArray[i*gridY]/timestep));
+      }
 
-        let mySun = p.int(gridColorArray[i*gridY]/timestep);
+
         p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
 
         p.quad(X1, Y1-GridHt, X2, Y2-GridHt, X3, Y3-GridHt, X4, Y4-GridHt);
@@ -541,7 +628,12 @@ var sketch1 = function(p) {
         let newY3 = (Y3+(yNext*(j+1)));
         let newX4 = (X4-(x*(j+1)));
         let newY4 = (Y4+(yNext*(j+1)));
+        if(j == 0){
+          mySun = (p.int(gridColorArray[(i*gridY)+1]/timestep));
+        }else{
           mySun = p.int(gridColorArray[(i*gridY)+j]/timestep);
+        }
+
           p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
 
         p.quad(newX1, newY1-GridHt, newX2, newY2-GridHt, newX3, newY3-GridHt, newX4, newY4-GridHt);
@@ -556,8 +648,8 @@ var sketch1 = function(p) {
     p.stroke(light_black+50);
     p.strokeWeight(1);
     p.quad(x2, y2-GridHt, (x2+(xNext*(gridX))), (y2+(y*(gridX)))-GridHt, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-GridHt, x, (y*(gridY+2))+Ceil-GridHt);
-
     p.stroke(light_black);
+
     //CEILING PLANE
     p.quad(x2, y2-Ceil, (x2+(xNext*(gridX))), (y2+(y*(gridX)))-Ceil, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-Ceil, x, (y*(gridY+2)));
 
