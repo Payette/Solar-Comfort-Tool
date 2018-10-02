@@ -74,13 +74,49 @@
 						</form>
 					</div>
 
+					<div id="inputs">
+
+		<div id="options">
+			<div id="units">
+				<h2>Units</h2><br>
+				<input type="button" name="IP" id="IP" value="IP" class="optionButton selected">
+				<input type="button" name="SI" id="SI" value="SI" class="optionButton unselected">
+				<div style="clear:both;"></div>
+			</div>
+			<div id="share">
+				<h2>Share</h2><br>
+				<input type="button" name="PDF" id="PDF" value="Save PDF" class="optionButton unselected">
+				<input type="button" name="CSV" id="CSV" value="Save CSV" class="optionButton unselected">
+				<input type="button" name="URL" id="URL" value="Copy URL" class="optionButton unselected">
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+
+	</div>
+
 
 
 
 					 <div id="inputs">
 
  					<fieldset class="inputgroup">
- 						<legend class="heading">Climate</legend>
+						<div>
+							<fieldset class="inputgroup">
+								<div id="caseWrapper">
+									<legend class="heading first">CLIMATE</legend>
+									<div  id="caseSelection">
+										<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
+										<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>Case 2</h2>
+										<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+
+									</div>
+								</div>
+								<div id="citySearch">
+					<input type="button" name="CitySearch" id="CitySearch" value="Location Lookup" class="optionButton unselected">
+					<div style="clear:both;"></div>
+				</div><br>
+							</div>
+
 
  						<label>Longitude</label>
  						<input type="number" name="long" id="long" min="-180" max="180" value="-72" step="1">
@@ -120,10 +156,29 @@
  				</div>
 	        </div>
 	        <div class="col-lg-12 col-xl-4 col-sm-12">
+
+
+
+
+
 						<div id="inputs">
 
+							<div>
 								<fieldset class="inputgroup">
-									<legend class="heading">Fa&ccedil;ade Geometry</legend>
+									<div id="caseWrapper">
+										<legend class="heading first">Fa&ccedil;ade Geometry</legend>
+										<div  id="caseSelection">
+											<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
+											<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>Case 2</h2>
+											<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+
+										</div>
+									</div>
+								</div>
+
+
+
+
 
 									<label>Room Orientation</label>
 									<input type="number" name="north" id="north" min="-360" max="360"  value="0" step="1">
@@ -166,7 +221,7 @@
 
 									<label>Window Seperation</label>
 									<input type="number" name="distWindow" id="distWindow" min="0"  value="12" step="1">
-									<input type="number" name="distWindow1" id="distWindow1" min="0"  value="12" step="1" disabled><br>
+									<input type="number" name="distWindow1" id="distWindow1" min="0"  value="12" step="1" disabled><br><br>
 
 
 								</fieldset>
@@ -176,7 +231,18 @@
 						<div id="inputs">
 
 		 				<fieldset class="inputgroup">
-		 					<legend class="heading">Shade Geometry</legend>
+							<div>
+								<fieldset class="inputgroup">
+									<div id="caseWrapper">
+										<legend class="heading first">Shade Geometry</legend>
+										<div  id="caseSelection">
+											<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
+											<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>Case 2</h2>
+											<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+
+										</div>
+									</div>
+								</div>
 
 
 		 					<label>Horizontal Shade Depth</label>
@@ -236,7 +302,6 @@
 	    </div>
 	  </div>
 	</div>
-
 
 
 
