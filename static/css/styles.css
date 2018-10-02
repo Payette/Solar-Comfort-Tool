@@ -480,15 +480,18 @@ input[type=range]#fal::-moz-range-progress, input[type=range]#mdst::-moz-range-p
 	overflow: hidden;
 	width: 100%;
 	display: inline-block;
-	height: 16px;
+	height: 15px;
 	padding-bottom: 0;
+
 }
 
 #caseSelection {
 	display: block;
 	float: right;
-	padding-bottom: 5px;
+	padding-bottom: 0px;
 }
+
+
 
 #caseSelection h2 {
 	display: inline-block;
@@ -750,7 +753,7 @@ br.glzBR {
 
 #citySearch {
 	float: left;
-	width: 65px;
+	width: 165px;
 }
 
 #inputs #designConditWrapper label {
@@ -964,7 +967,7 @@ div#units {
 }
 
 div#share {
-	float: right;
+
 }
 
 #options h2 {
@@ -983,7 +986,7 @@ div#share {
 	padding: 1px 2px;
 	height: 20px;
 	margin: 0 3px;
-	border-radius: 10px;
+	border-radius: 0px;
 	border: 1px solid #777;
 	cursor: pointer;
 	text-align: center;
@@ -998,7 +1001,7 @@ div#share {
 	height: 22px;
 	width:125px;
 	margin: 0 3px;
-	border-radius: 10px;
+	border-radius: 0px;
 	border: 1px solid #777;
 	cursor: pointer;
 	text-align: center;
@@ -1019,7 +1022,7 @@ div#share {
 }
 
 #inputs input[type=button].optionButton#CitySearch{
-	width:50px;
+	width:110px;
 }
 
 #options input[type=button].optionButton:hover, #citySearch input[type=button].optionButton:hover, #Outdoorpop input[type=button].activeButton:hover{
