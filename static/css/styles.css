@@ -420,7 +420,7 @@ input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-
 }
 
 input[type=range]#fal::-ms-fill-lower, input[type=range]#mdst::-ms-fill-lower {
-	background: rgb(147,229,0);
+	background: #e4537f;
 }
 
 input[type=range]#distFromFacade::-ms-fill-lower, input[type=range]#occupantDist::-ms-fill-lower, input[type=range]#occupantDist2::-ms-fill-lower, input[type=range]#occupantDist3::-ms-fill-lower {
@@ -430,12 +430,12 @@ input[type=range]#distFromFacade::-ms-fill-lower, input[type=range]#occupantDist
 #occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #fal::-moz-range-track, #mdst::-moz-range-track, #distFromFacade::-moz-range-track {
 	-moz-appearance: none;
 	height: 3px;
-	background-color: #d5d5d5;
+	background-color: #939598;
 	margin-right: 3px;
 }
 
 input[type=range]#fal::-moz-range-progress, input[type=range]#mdst::-moz-range-progress{
-	background-color: rgb(147,229,0);
+	background: #e4537f;
 }
 
 #occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #fal::-webkit-slider-runnable-track, #mdst::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
