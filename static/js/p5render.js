@@ -48,6 +48,13 @@ var sketch1 = function(p) {
   let light_black = 100;
   //let cnv;
 
+  var imgCheck;
+  var imgNope;
+p.preload = function() {
+  imgCheck = p.loadImage('static/images/check.png');
+  imgNope = p.loadImage('static/images/x.png');
+}
+
   p.setup = function() {
     //createCanvas(800, 500, SVG);
     //createCanvas(800, 500);
@@ -685,14 +692,18 @@ var sketch1 = function(p) {
     p.push();
     if(MDTPercentage < valFal){
       p.fill(0,255,0);
+      p.image(imgCheck,280,2,30,30);
     }    else{
       p.fill(255,0,0);
+      p.image(imgNope,280,2,30,30);
     }
 
+    p.fill(0);
     p.textSize(50);
+
     p.text(MDTPercentage +"%", 320,42);
     p.textSize(10);
-    p.text("> Max Direct Time", 320,55);
+    p.text("> max direct sun time", 320,55);
     p.pop();
   }
 
