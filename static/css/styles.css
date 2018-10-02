@@ -1,3 +1,5 @@
+
+
 #wrapper {
 	width: 960px;
 	margin: 0 auto;
@@ -352,14 +354,14 @@ form#occupantSliders div.occSlider {
 	display: inline-block;
 }
 
-#ppd, #distFromFacade, #ppd2 {
+#fal, #distFromFacade, #mdst {
 	display: inline-block;
 	float: left;
 	margin: 0;
 	padding-top: 0;
 }
 
-#ppd p, #ppd2 p {
+#fal p, #mdst p {
 	margin: 0;
 }
 
@@ -383,7 +385,7 @@ output #occupantImage, output #occupantImage2, output #occupantImage3 {
 }
 
 
-input[type=range]#ppd, input[type=range]#ppd2, input[type=range]#distFromFacade {
+input[type=range]#fal, input[type=range]#mdst, input[type=range]#distFromFacade {
 	-webkit-appearance: none;
 	-ms-appearance: none;
 	position: absolute;
@@ -405,7 +407,7 @@ input[type=range]:focus {
   outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
 }
 
-input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#ppd::-ms-track, input[type=range]#ppd2::-ms-track, input[type=range]#distFromFacade::-ms-track {
+input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#fal::-ms-track, input[type=range]#mdst::-ms-track, input[type=range]#distFromFacade::-ms-track {
 	-ms-appearance: none;
 	height: 3px;
 	background-color: #d5d5d5;
@@ -417,7 +419,7 @@ input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-
 	width: 150%;
 }
 
-input[type=range]#ppd::-ms-fill-lower, input[type=range]#ppd2::-ms-fill-lower {
+input[type=range]#fal::-ms-fill-lower, input[type=range]#mdst::-ms-fill-lower {
 	background: rgb(147,229,0);
 }
 
@@ -425,18 +427,18 @@ input[type=range]#distFromFacade::-ms-fill-lower, input[type=range]#occupantDist
 	background: #d5d5d5;
 }
 
-#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #ppd::-moz-range-track, #ppd2::-moz-range-track, #distFromFacade::-moz-range-track {
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #fal::-moz-range-track, #mdst::-moz-range-track, #distFromFacade::-moz-range-track {
 	-moz-appearance: none;
 	height: 3px;
 	background-color: #d5d5d5;
 	margin-right: 3px;
 }
 
-input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-progress{
+input[type=range]#fal::-moz-range-progress, input[type=range]#mdst::-moz-range-progress{
 	background-color: rgb(147,229,0);
 }
 
-#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #ppd::-webkit-slider-runnable-track, #ppd2::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #fal::-webkit-slider-runnable-track, #mdst::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
 	height: 3px;
 	background-color: #d5d5d5;
@@ -444,7 +446,7 @@ input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-p
 	margin-top: 7px;
 }
 
-#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #ppd::-ms-thumb, #ppd2::-ms-thumb, #distFromFacade::-ms-thumb {
+#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #fal::-ms-thumb, #mdst::-ms-thumb, #distFromFacade::-ms-thumb {
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
     border-radius: 5px;
@@ -452,7 +454,7 @@ input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-p
     width: 5px;
 }
 
-#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #ppd::-moz-range-thumb, #ppd2::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #fal::-moz-range-thumb, #mdst::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
 	-moz-appearance: none;
     background-color: #FFF;
     border: 3px solid rgb(150,150,150);
@@ -461,7 +463,7 @@ input[type=range]#ppd::-moz-range-progress, input[type=range]#ppd2::-moz-range-p
     width: 5px;
 }
 
-#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #ppd::-webkit-slider-thumb, #ppd2::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #fal::-webkit-slider-thumb, #mdst::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	position: relative;
   background-color: #FFF;
@@ -553,7 +555,7 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 }
 
 #occupantSliders {
-	width: 550px;
+	width: 450px;
 	font-family: "museo-sans", sans-serif;
 }
 
@@ -797,7 +799,7 @@ br.glzBR {
 
 #occupantSliders label {
 	color: #000;
-	width: 230px;
+	width: 125px;
 }
 
 #occupantSliders label p {
