@@ -175,6 +175,13 @@ var sketch1 = function(p) {
       document.getElementsByName("vShadeStart")[0].addEventListener('input', p.reload);
 
 
+      let valFal = document.getElementById("fal").value;
+      document.getElementsByName("fal")[0].addEventListener('input', p.reload);
+
+      let valMDST = document.getElementById("mdst").value;
+      document.getElementsByName("mdst")[0].addEventListener('input', p.reload);
+
+
 
 
 
@@ -596,7 +603,9 @@ var sketch1 = function(p) {
 
   // CREATE GRID
     //GRID X ROW
-    console.log(gridColorArray[0]);
+    let MDT = []; //Max Direct Time
+    let Percentage = valMDST;
+
     for (let i = 0; i<gridX; i++) {
       let X1 = (x2+(xNext*i));
       let Y1 = (y2+(y*i));
@@ -611,6 +620,9 @@ var sketch1 = function(p) {
         mySun = (p.int(gridColorArray[1*gridY]/timestep));
       }else{
         mySun = (p.int(gridColorArray[i*gridY]/timestep));
+      }
+      if(mySun > Percentage){
+        MDT = MDT + 1;
       }
 
 
@@ -633,6 +645,10 @@ var sketch1 = function(p) {
         }else{
           mySun = p.int(gridColorArray[(i*gridY)+j]/timestep);
         }
+        if(mySun > Percentage){
+          MDT = p.int(MDT) + 1;
+        }
+
 
           p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
 
@@ -660,6 +676,24 @@ var sketch1 = function(p) {
     p.line(x, (y*(gridY+2)), x, (y*(gridY+2)+Ceil));
     p.pop();
     p.noLoop();
+
+    //CHECK IF MEETS CONDITION TEXT
+
+    let MDTPercentage = p.int((p.float(MDT)/(wallLen * wallDepVal))*100);
+
+
+    p.push();
+    if(MDTPercentage < valFal){
+      p.fill(0,255,0);
+    }    else{
+      p.fill(255,0,0);
+    }
+
+    p.textSize(50);
+    p.text(MDTPercentage +"%", 320,42);
+    p.textSize(10);
+    p.text("> Max Direct Time", 320,55);
+    p.pop();
   }
 
 
