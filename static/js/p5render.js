@@ -1,6 +1,49 @@
+//THIS UPDATES THE FLOOR AREA LOSS, MAX DIRECT SUNTIME AND TIMESTEP PER HOUR VALUES
+//IT ALSO REMEMBERS THEM SO THEY CAN BE USED IN THE D3 COLOR CHART BEFORE THE DRAW LOOP
+
+let timeStepValue = 4;
+let ppdValue1 = 4;
+$("#timeStep").on("input", function(event) {
+        timeStepValue = $(this).val();
+        $("#ppdOutput2").text(Number.parseFloat(ppdValue1/timeStepValue).toFixed(2) + " Hr");
+    });
+
+$("#fal").on("input", function(event) {
+      if ($(this).val() <= 0) {
+        ppdValue = 1;
+        $("#fal").val(1);
+        $("#ppdOutput").text("0%");
+      }
+      else if ($(this).val() >100) {
+        ppdValue = 100;
+        $("#fal").val(100);
+        $("#ppdOutput").text("99%");
+      }
+      else {
+        ppdValue = $(this).val();
+        $("#fal").attr("value",ppdValue);
+        $("#ppdOutput").text(ppdValue + "%");
+      }
+    });
+
+$("#mdst").on("input", function(event) {
+      if ($(this).val() == 1) {
+        ppdValue1 = 1;
+        $("#mdst").val(1);
+        $("#ppdOutput2").text(Number.parseFloat(ppdValue1/timeStepValue).toFixed(2) + " Hr");
+      }
+      else{
+      ppdValue1 = $(this).val();
+      $("#mdst").attr("value",ppdValue1);
+      $("#ppdOutput2").text(Number.parseFloat(ppdValue1/timeStepValue).toFixed(2) + " Hr");
+    }
+    });
+
+//D3 COLOR CHART
+
 d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327)
 var vis = d3.select("svg")
-var arr = d3.range(13)
+var arr = d3.range(13*timeStepValue)
 var ColorScaleArray = [];
 var dataset = [0,2,4,6,8,10,12];
 
@@ -8,8 +51,10 @@ var dataset = [0,2,4,6,8,10,12];
 var xScale = d3.scale.linear().domain([0, 13]).range([0,325])
 
 //The mystical polylinear color scale
+// var colorScale = d3.scale.linear().domain([0, 2, 3, 5, 12])
+//     .range([d3.rgb(255,255,255), d3.rgb(255,222,60), d3.rgb(218,93,127), d3.rgb(220,26,85), d3.rgb(220,26,85)])
 var colorScale = d3.scale.linear().domain([0, 6, 13])
-    .range([d3.rgb(255,255,255,200), d3.rgb(226,112,106,200), d3.rgb(137,49,50,200)])
+    .range(["#ffffff", "#e2706a", "#893132"])
 
 vis.selectAll('rect').data(arr).enter()
     .append('rect')
@@ -43,6 +88,9 @@ vis.selectAll('rect').data(arr).enter()
                  .attr("font-size", "12px")
 
 
+
+//INIT SKETCH1 P5 CANVAS
+
 var sketch1 = function(p) {
   let GridHtSlider, SunRotationSlider;
   let light_black = 100;
@@ -69,6 +117,8 @@ p.preload = function() {
       p.clear();
       p.background(255);
 
+      //console.log(timeStepValue);
+
       /*
 
       p.push();
@@ -87,6 +137,8 @@ p.preload = function() {
       }
       p.pop();
       */
+
+      //RELOAD THE PAGE ONLY WHEN VALUES ARE CHANGED
 
       let Hour = 10.5;
 
@@ -172,11 +224,17 @@ p.preload = function() {
       let vertShadeSpace = document.getElementById("vShadeSpace").value;
       document.getElementsByName("vShadeSpace")[0].addEventListener('input', p.reload);
 
+      let vertShadeShift = document.getElementById("vShadeShift").value;
+      document.getElementsByName("vShadeShift")[0].addEventListener('input', p.reload);
+
       let vertShadeDist = document.getElementById("vShadeDist").value;
       document.getElementsByName("vShadeDist")[0].addEventListener('input', p.reload);
 
       let vertShadeHeight = document.getElementById("vShadeHeight").value;
       document.getElementsByName("vShadeHeight")[0].addEventListener('input', p.reload);
+
+      let vertShadeScale = document.getElementById("vShadeScale").value;
+      document.getElementsByName("vShadeScale")[0].addEventListener('input', p.reload);
 
       let vertShadeStart = document.getElementById("vShadeStart").value;
       document.getElementsByName("vShadeStart")[0].addEventListener('input', p.reload);
@@ -192,7 +250,7 @@ p.preload = function() {
 
 
 
-      //SunVectors
+      //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
       var solar = solarCalculator([Lon, Lat]);
 
   	offset = (new Date().getTimezoneOffset())/60
@@ -212,7 +270,7 @@ p.preload = function() {
   }
 
 
-    //GEO Result
+    //GEO Result - TAKES DATA FROM THE GEO.JS FILE
     var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), parseFloat(wallDepVal), glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows));
     var r = {}
     r.wallCoords = geoResult.wallCoords;
@@ -223,8 +281,9 @@ p.preload = function() {
     r.sillHeight = geoResult.sillHeight;
     r.centLineDist = geoResult.centLineDist;
 
-    // MAKE SUN PATH CORNER GRAPHIC
 
+
+    // MAKE SUN PATH CORNER GRAPHIC
     let IsoROV = 0;
     roomOrientationValue = roomOrientationValue*-1
     if (roomOrientationValue > -1 && roomOrientationValue < 90){
@@ -266,13 +325,13 @@ p.preload = function() {
 
   p.fill(255, 150);
   p.push();
-    p.translate(360,280);
+    p.translate(380,280);
     p.push();
       p.rotate(IsoROV*(3.1415926/180));
       p.push();
         p.rotate(IsoROV*(-3.1415926/180));
         p.rotate(IsoROV2*(3.1415926/180));
-        p.translate(59,35);
+        p.translate(47,27);
 
         p.rotate(IsoROV2*(-3.1415926/180));
         p.fill(light_black);
@@ -285,19 +344,19 @@ p.preload = function() {
         p.rotate(-45);
         p.push();
           p.rotate(IsoROV*(-3.1415926/180));
-          p.ellipse(0,0,100,60); //main circle
+          p.ellipse(0,0,75,45); //main circle
         p.pop();
         p.push();
           p.rotate(IsoROV*(-3.1415926/180));
           p.push();
           p.rotate(IsoROV2*(3.1415926/180));
-          p.line(-50,-30,50,30);
+          p.line(-38,-22,38,22);
           p.strokeWeight(3);
-          p.line(50,30,0,0);
+          p.line(38,22,0,0);
           p.pop();
         p.pop();
         p.rotate(90);
-        p.line(-50,-30,50,30);
+        p.line(-38,-22,38,22);
 
       p.pop();
     p.pop();
@@ -315,7 +374,8 @@ p.preload = function() {
   p.pop();
   roomOrientationValue = roomOrientationValue*-1
 
-
+  //DETERMINE HOW LARGE THE ISOMETRIC GRAPHIC WILL BE.
+  //FIRST MAKE IT, THEN RE-DO IT USING A MULTIPLIER TO INCREASE OR DECREASE THE SCALE SO IT STAYS WITHIN THE BOUNDS OF THE CANVAS
 
     //let CeilHt = CeilingSlider.value();//Ceiling Height (ft) - this moves the whole grid down.
     let gridX = wallLen; // number of y grids - should be fixed size normally at 60
@@ -384,7 +444,62 @@ p.preload = function() {
 
     //FLOOR PLANE
     p.quad(x2, y2, (x2+(xNext*(gridX))), (y2+(y*(gridX))), ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY))), x, (y*(gridY+2))+Ceil);
+    p.push();
+    p.stroke(150,150,150);
+    //p.line((x2+(xNext*(gridX)))+10, (y2+(y*(gridX)))+6, ((x3+(xNext*(gridX)))-(x*(gridY)))+10, ((y3+(y*(gridX)))+(yNext*(gridY)))+6);
+    p.line((x2+(xNext*(gridX)))+10-(x/2), (y2+(y*(gridX)))+6-(y/2), ((x3+(xNext*(gridX)))-(x*(gridY)))+10-(x/2), ((y3+(y*(gridX)))+(yNext*(gridY)))+6-(y/2));
+    p.line(((x3+(xNext*(gridX)))-(x*(gridY)))-10+(x/2), ((y3+(y*(gridX)))+(yNext*(gridY)))+6-(y/2), x-10+(x/2), (y*(gridY+2))+Ceil+6-(y/2));
+
+
+    //XY GRID LEGEND ALONG BOTTOM AND RIGHT EDGE OF ROOM
+    //p.line(((x3+(xNext*(gridX)))-(x*(gridY)))-10, ((y3+(y*(gridX)))+(yNext*(gridY)))+6, x-10, (y*(gridY+2))+Ceil+6);
+    p.textSize(10);
+    p.fill(0);
+    p.noStroke();
+    p.text(wallDepVal, ((x3+(xNext*(gridX)))-(x*(gridY)))+10, ((y3+(y*(gridX)))+(yNext*(gridY)))+16 );
+    p.text(wallLen, ((x3+(xNext*(gridX)))-(x*(gridY)))-24, ((y3+(y*(gridX)))+(yNext*(gridY)))+16 );
+    p.stroke(150,150,150);
+    p.strokeWeight(1);
+    //p.point(((x3+(xNext*(gridX)))-(x*(gridY)))+10, ((y3+(y*(gridX)))+(yNext*(gridY)))+6);
+    p.line(((x3+(xNext*(gridX)))-(x*(gridY)))+10, ((y3+(y*(gridX)))+(yNext*(gridY)))+6,((x3+(xNext*(gridX)))-(x*(gridY)))+10-x, ((y3+(y*(gridX)))+(yNext*(gridY)))+6-y);
+    p.line(((x3+(xNext*(gridX)))-(x*(gridY)))-10, ((y3+(y*(gridX)))+(yNext*(gridY)))+6,((x3+(xNext*(gridX)))-(x*(gridY)))-10+x, ((y3+(y*(gridX)))+(yNext*(gridY)))+6-y);
+    //p.point(((x3+(xNext*(gridX)))-(x*(gridY)))-10, ((y3+(y*(gridX)))+(yNext*(gridY)))+6);
+    for (let RLen = 0; RLen < wallDepVal; RLen = RLen + 5){
+      p.stroke(150,150,150);
+      p.strokeWeight(1);
+      let myNewX = ((x2+(xNext*(gridX)))+10) - (((x3+(xNext*(gridX)))-(x*(gridY)))+10);
+      let myNewY = (((y3+(y*(gridX)))+(yNext*(gridY)))+6) - ((y2+(y*(gridX)))+6);
+      myNewX = myNewX/(wallDepVal);
+      myNewX = myNewX * RLen;
+      myNewY = myNewY/(wallDepVal);
+      myNewY = myNewY * RLen;
+      //p.point((x2+(xNext*(gridX)))+10-myNewX, (y2+(y*(gridX)))+6+myNewY);
+      p.line((x2+(xNext*(gridX)))+10-myNewX, (y2+(y*(gridX)))+6+myNewY,(x2+(xNext*(gridX)))+10-myNewX-x, (y2+(y*(gridX)))+6+myNewY-y);
+      p.fill(0);
+      p.noStroke();
+      p.text(RLen, (x2+(xNext*(gridX)))+12-myNewX, (y2+(y*(gridX)))+16+myNewY);
+    }
+    for (let RDep = 0; RDep < wallLen; RDep = RDep + 5){
+      p.stroke(150,150,150);
+      p.strokeWeight(1);
+      let myNewX = ((x3+(xNext*(gridX)))-(x*(gridY)))-10 - (x-10);
+      let myNewY = (y*(gridY+2))+Ceil - ((y3+(y*(gridX)))+(yNext*(gridY)));
+      myNewX = myNewX/(wallLen);
+      myNewX = myNewX * RDep;
+      myNewY = myNewY/(wallLen);
+      myNewY = myNewY * RDep;
+      //p.point( x-10 + myNewX, (y*(gridY+2))+Ceil+6  - myNewY);
+      if (RDep > 0){
+      p.line(x-10 + myNewX, (y*(gridY+2))+Ceil+6  - myNewY,x-10 + myNewX+x, (y*(gridY+2))+Ceil+6  - myNewY-y);
+      }
+      p.fill(0);
+      p.noStroke();
+      p.text(RDep, x-24 + myNewX, (y*(gridY+2))+Ceil+16  - myNewY);
+    }
     p.pop();
+    p.pop();
+
+
 
     //WINDOW ON WALL
 
@@ -458,38 +573,39 @@ p.preload = function() {
 
       if(vertShadeStart == "L"){
       for (let k = 0; k<vertShadeNum; k++){
-      let vSX1 = arrayX[2]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist);
-      let vSY1 = arrayY[2]-(y*vertShadeDep)-(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
-      let vSX2 = arrayX[2]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist);
-      let vSY2 = arrayY[2]-(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
-      let vSX4 = arrayX[1]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist);
-      let vSY4 = arrayY[1]-(y*vertShadeDep)-(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
-      let vSX3 = arrayX[1]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist);
-      let vSY3 = arrayY[1]-(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      let vSX1 = arrayX[2]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist)-(vertShadeShift*x);
+      let vSY1 = arrayY[2]-(y*vertShadeDep)-(k*y*vertShadeSpace)-(vertShadeHeight*y*2)-(y*vertShadeDist)+(vertShadeShift*y);
+      let vSX2 = arrayX[2]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist)-(vertShadeShift*x);
+      let vSY2 = arrayY[2]-(k*y*vertShadeSpace)-(vertShadeHeight*y*2)-(y*vertShadeDist)+(vertShadeShift*y);
+      let vSX4 = arrayX[1]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist)-(vertShadeShift*x);
+      let vSY4 = arrayY[1]-(y*vertShadeDep)-(k*y*vertShadeSpace)-(vertShadeHeight*y*2)-(y*vertShadeDist)+(vertShadeScale*y*2)+(vertShadeShift*y);
+      let vSX3 = arrayX[1]+(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist)-(vertShadeShift*x);
+      let vSY3 = arrayY[1]-(k*y*vertShadeSpace)-(vertShadeHeight*y*2)-(y*vertShadeDist)+(vertShadeScale*y*2)+(vertShadeShift*y);
       //p.line(vSX1, vSY1, vSX2, vSY2);
       //p.line(vSX3, vSY3, vSX4, vSY4);
       p.quad(vSX1, vSY1, vSX2, vSY2,vSX3, vSY3, vSX4, vSY4)
     }
   }else{
       for (let k = 0; k<vertShadeNum; k++){
-      let vSX1 = arrayX[3]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist);
-      let vSY1 = arrayY[3]-(y*vertShadeDep)+(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
-      let vSX2 = arrayX[3]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist);
-      let vSY2 = arrayY[3]+(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
-      let vSX4 = arrayX[0]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist);
-      let vSY4 = arrayY[0]-(y*vertShadeDep)+(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
-      let vSX3 = arrayX[0]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist);
-      let vSY3 = arrayY[0]+(k*y*vertShadeSpace)-(vertShadeHeight*y)-(y*vertShadeDist);
+      let vSX1 = arrayX[3]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist)+(vertShadeShift*x);
+      let vSY1 = arrayY[3]-(y*vertShadeDep)+(k*y*vertShadeSpace)-(vertShadeHeight*y*2)-(y*vertShadeDist)-(vertShadeShift*y);
+      let vSX2 = arrayX[3]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist)+(vertShadeShift*x);
+      let vSY2 = arrayY[3]+(k*y*vertShadeSpace)-(vertShadeHeight*y*2)-(y*vertShadeDist)-(vertShadeShift*y);
+      let vSX4 = arrayX[0]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDep)-(((200*m)-x)*vertShadeDist)+(vertShadeShift*x);
+      let vSY4 = arrayY[0]-(y*vertShadeDep)+(k*y*vertShadeSpace)-(vertShadeHeight*y*2)-(y*vertShadeDist)+(vertShadeScale*y*2)-(vertShadeShift*y);
+      let vSX3 = arrayX[0]-(k*x*vertShadeSpace)-(((200*m)-x)*vertShadeDist)+(vertShadeShift*x);
+      let vSY3 = arrayY[0]+(k*y*vertShadeSpace)-(vertShadeHeight*y*2)-(y*vertShadeDist)+(vertShadeScale*y*2)-(vertShadeShift*y);
       //p.line(vSX1, vSY1, vSX2, vSY2);
       //p.line(vSX3, vSY3, vSX4, vSY4);
       p.quad(vSX1, vSY1, vSX2, vSY2,vSX3, vSY3, vSX4, vSY4)
+
     }
     }
     }
     p.pop();
 
-
     //END ITEMS THAT EXIST BEHIND GRID PLANE
+
 
     //TIME FOR SOME TRIG
     let VecXArray = [];
@@ -499,10 +615,170 @@ p.preload = function() {
     let angleHeight; //the height of the sun vector starting from the grid sq
     let angleHeightTest = [];
 
+
+
+  //THIS IS A FIX THAT ALLOWS THE ROOM ORIENTATION TO ROTATE A FULL 360 DEGREES
+  let newCoordinateArray = [];
+  for (let k = 0; k<coordinates.length; k++){
+    //console.log(coordinates[k][0]+float(roomOrientationValue-180))
+    if (coordinates[k][0]+p.float(roomOrientationValue-180)<-180){
+      newCoordinateArray.push(coordinates[k][0]+p.float(roomOrientationValue-180)+360);
+    }else if (coordinates[k][0]+p.float(roomOrientationValue-180)>180){
+      newCoordinateArray.push(coordinates[k][0]+p.float(roomOrientationValue-180)-360);
+    }else{
+      newCoordinateArray.push(coordinates[k][0]+p.float(roomOrientationValue-180));
+    }
+  }
+
+
+
+  // THIS IS WHERE YOU WILL NEED TO LOOK AT THE VERTICAL SHADES pt1
+  let XYLouverTest = [];
+    //if(vertShadeNum > 0){
+    //  if(vertShadeStart == "L"){
+        let b1;
+        let Xloc1 = [];
+        let XYtest1 = [];
+        let AWArray1 = [];
+        let ZAdd = [];
+        let bigB = 0;
+
+        for (let i = 0; i<gridX; i++) {
+          let YdistanceFromWall = (i+1); // grid distance from window wall in Y direction
+          b1 = 0;
+          for (let j = 0; j<gridY; j++){
+            b1 = 0;
+
+            for (let k = 0; k<coordinates.length; k++){
+              let XYLouver1 = 0;
+              let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
+              if (newCoordinateArray[k]<88.0 && newCoordinateArray[k]> -88.0){
+                  XlocationOnWall = Math.tan(newCoordinateArray[k]*(3.1415926 / 180))*YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+              }
+              AWArray1.push(XlocationOnWall);
+              let xCoord = 0;
+              let bigBArray = [];
+
+              for (let n = 0; n<r.glzCoords.length; n++){ //cycle through each window
+                if (XlocationOnWall+(j+1) > r.glzCoords[n][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[n][1][0]+(wallDepVal/2)){ //cycle through all the windows, check if the wall position exists within the bounds of the window
+                  xCoord = n+1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
+                }
+              }if(xCoord > 0){ //if this specific gridpoint and sun angle goes through a window...
+                  for (let p = 0; p<parseInt(vertShadeNum); p++){ //for each shade in this window...
+
+                    let angleA = abs(newCoordinateArray[k]);
+                    let angleB = 90.0-abs(newCoordinateArray[k]);
+                    if (newCoordinateArray[k] > 0){
+                      angleB = angleB * -1;
+                    }
+                    let bigA;
+                    if(vertShadeStart == "L"){
+                      bigA = ((XlocationOnWall+(j+1)+(r.glzCoords[xCoord-1][0][0]-(wallDepVal/2))+(p*parseInt(vertShadeSpace)-vertShadeShift)));
+                    }else{
+                      bigA = ((XlocationOnWall+(j+1)-(r.glzCoords[xCoord-1][0][0]+(wallDepVal/2))+(-p*parseInt(vertShadeSpace)-vertShadeShift)));
+                    }
+                    bigB = ((Math.sin(angleB*(3.1415926 / 180))*bigA)/(Math.sin(angleA*(3.1415926 / 180))));
+                    bigBArray.push(bigB);
+                  }
+
+              }//console.log(bigBArray);
+              for (let q = 0; q < bigBArray.length; q++){
+                if (bigBArray[q] > parseInt(vertShadeDist) && bigBArray[q] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))){
+                  XYLouver1 = XYLouver1 + 1;
+                }
+              }ZAdd.push(bigB)
+
+              if (XYLouver1 > 0){
+                b1 = 1;
+              }else{
+                b1 =  0;
+              }XYLouverTest.push(b1);
+            }
+
+          }
+        }//console.log(XYLouverTest);
+
+
+
+
+        let a1;
+        let Ztest1 = [];
+        let AHArray1 = [];
+        let angleHeightList = [];
+        let angleHeightList1 = [];
+        let count = 0;
+        for (let i = 0; i<gridX; i++) {
+          let distanceFromWall = (i+1)/4;
+          a1 = 0;
+          for (let j = 0; j<gridY; j++){
+            a1 = 0;
+            for (let k = 0; k<coordinates.length; k++){
+              let distanceFromWindow = abs(ZAdd[count]);
+              let angleHeight = Math.tan((coordinates[k][1])*(3.1415926 / 180))*(distanceFromWall+distanceFromWindow);
+              let angleHeight1 = Math.tan((coordinates[k][1])*(3.1415926 / 180))*(distanceFromWall);
+              angleHeightList.push(angleHeight);
+              angleHeightList1.push(angleHeight1);
+              //AHArray1.push(coordinates[k][1]);
+              count = count + 1;
+            }
+         }
+       }
+       //console.log(angleHeightList[20000]);
+       //console.log(angleHeightList1[20000]);
+
+
+
+
+
+
+    //START PYTHAGOREAM THEORM FOR XY
+    //ASSUME +Y IS DUE NORTH and is the wall opposite the windowwall is N (windowwall is S)
+
+    let b;
+    let Xloc = []
+    let XYtest = []
+    let AWArray = []
+    for (let i = 0; i<gridX; i++) {
+      let YdistanceFromWall = (i+1); // grid distance from window wall in Y direction
+      b = 0;
+      for (let j = 0; j<gridY; j++){
+        b = 0;
+        for (let k = 0; k<coordinates.length; k++){
+          let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
+          if (newCoordinateArray[k]<88.0 && newCoordinateArray[k]> -88.0){
+              XlocationOnWall = Math.tan(newCoordinateArray[k]*(3.1415926 / 180))*YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+              //console.log(XlocationOnWall);
+          }
+          AWArray.push(XlocationOnWall);
+          let xCoord = 0;
+          let vertLouverXdistance = [];
+          for (let m = 0; m<r.glzCoords.length; m++){
+
+            if (XlocationOnWall+(j+1) > r.glzCoords[m][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[m][1][0]+(wallDepVal/2)){ //cycle through all the windows, check if the wall position exists within the bounds of the window
+              xCoord = xCoord + 1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
+            }
+            // if(xCoord > 0){ //if this specific gridpoint and sun angle goes through this window...
+            //   if (vertShadeStart == "L" && vertShadeNum > 0){ //do this if the vert louvers start at the left and there is at least 1 vert louver
+            //     for (let r = 0; r<vertShadeNum; r++){ //for each shade in this window...
+            //       vertLouverXdistance.push((XlocationOnWall+(j+1)+);
+            //     }
+            //   }
+            // }
+          }
+          if (xCoord > 0){
+            b = 1;
+          }else{
+            b =  0;
+          }XYtest.push(b);
+
+        }
+      }
+    }//console.log(parseInt(vertShadeDist) + parseInt(vertShadeDep));
+    //END PYTHAGOREM THEORM FOR XY
+
+
     //START PYTHAGOREAM THEORM FOR Z
-
-
-
+    //THIS IS WHERE YOU WILL NEED TO LOOK AT THE VERTICAL SHADES pt2
 
     let a;
     let Ztest = [];
@@ -543,62 +819,22 @@ p.preload = function() {
     }
   //END PYTHAGOREAM THEROM FOR Z
 
-  //THIS ALLOWS THE ROOM ORIENTATION TO ROTATE A FULL 360 DEGREES
-  let newCoordinateArray = [];
-  for (let k = 0; k<coordinates.length; k++){
-    //console.log(coordinates[k][0]+float(roomOrientationValue-180))
-    if (coordinates[k][0]+p.float(roomOrientationValue-180)<-180){
-      newCoordinateArray.push(coordinates[k][0]+p.float(roomOrientationValue-180)+360);
-    }else if (coordinates[k][0]+p.float(roomOrientationValue-180)>180){
-      newCoordinateArray.push(coordinates[k][0]+p.float(roomOrientationValue-180)-360);
-    }else{
-      newCoordinateArray.push(coordinates[k][0]+p.float(roomOrientationValue-180));
-    }
-  }
-
-
-  //START PYTHAGOREAM THEORM FOR XY
-  //ASSUME +Y IS DUE NORTH and is the wall opposite the windowwall is N (windowwall is S)
-  //HERE IS WHERE YOU WILL NEED TO LOOK AT THE VERTICAL SHADES
-
-    let b;
-    let Xloc = []
-    let XYtest = []
-    AWArray = []
-    for (let i = 0; i<gridX; i++) {
-      let YdistanceFromWall = (i+1);
-      b = 0;
-      for (let j = 0; j<gridY; j++){
-        b = 0;
-        for (let k = 0; k<coordinates.length; k++){
-          let XlocationOnWall = 180;
-          if (newCoordinateArray[k]<88.0 && newCoordinateArray[k]> -88.0){
-              XlocationOnWall = Math.tan(newCoordinateArray[k]*(3.1415926 / 180))*YdistanceFromWall;
-          }
-          AWArray.push(XlocationOnWall);
-          let xCoord = 0;
-          for (let m = 0; m<r.glzCoords.length; m++){
-            if (XlocationOnWall+(j+1) > r.glzCoords[m][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[m][1][0]+(wallDepVal/2)){
-              xCoord = xCoord + 1;
-            }
-          }
-          if (xCoord > 0){
-            b = 1;
-          }else{
-            b =  0;
-          }XYtest.push(b);
-        }
-      }
-    }
-    //END PYTHAGOREM THEORM FOR XY
-
     //START XY and Z check
     let gridColor;
     let gridColorArray = []
     for (let i = 0; i < XYtest.length; i++){
+      //let vertZTestItem = vertZTest[i];
+      let XYLouv = XYLouverTest[i];
       let XYcolor = XYtest[i];
       let Zcolor = Ztest[i];
-      if (XYcolor == 1 && Zcolor == 1){
+      if (XYLouv == 1){
+        if (angleHeightList[i] > r.glzCoords[0][0][2]-gridHt-vertShadeScale-(vertShadeHeight*-1) && angleHeightList[i] < (r.glzCoords[0][2][2] -gridHt-(vertShadeHeight*-1))){
+          XYLouv = 1;
+        }else{
+          XYLouv = 0;
+        }
+    }
+      if (XYcolor == 1 && Zcolor == 1 && XYLouv == 0){
         gridColor = gridColor + 1;
       }else{
         gridColor = gridColor + 0;
@@ -608,10 +844,19 @@ p.preload = function() {
     }
   }
 
+  for (let i = 0; i < gridColorArray; i++){
+    if (gridColorArray[i] < valMDST && gridColorArray[i+1] > valMDST){
+
+    }
+  }
+
+  //END OF TRIG
+
   // CREATE GRID
     //GRID X ROW
-    let MDT = []; //Max Direct Time
+    let MDT; //Max Direct Time
     let Percentage = valMDST;
+    //console.log(gridColorArray);
 
     for (let i = 0; i<gridX; i++) {
       let X1 = (x2+(xNext*i));
@@ -624,18 +869,52 @@ p.preload = function() {
       let Y4 = (y3+(y*i));
       let mySun = 0;
       if(i == 0){
-        mySun = (p.int(gridColorArray[1*gridY]/timestep));
+        // mySun = (p.int(gridColorArray[1*gridY]/timestep));
+        mySun = gridColorArray[1*gridY];
       }else{
-        mySun = (p.int(gridColorArray[i*gridY]/timestep));
+        // mySun = (p.int(gridColorArray[i*gridY]/timestep));
+        mySun = gridColorArray[i*gridY];
       }
-      if(mySun > Percentage){
+      if(mySun > Percentage/timestep){
         MDT = MDT + 1;
       }
+
+      mySun = p.int(mySun/timestep);
 
 
         p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
 
         p.quad(X1, Y1-GridHt, X2, Y2-GridHt, X3, Y3-GridHt, X4, Y4-GridHt);
+
+        // if (gridColorArray[i*gridY]/(timestep-.1) < valMDST && gridColorArray[(i*gridY)-1]/(timestep-.1) > valMDST){
+        //   p.push();
+        //   p.strokeWeight(1);
+        //   p.stroke(50);
+        //   p.line(X3, Y3-GridHt, X4, Y4-GridHt);
+        //   p.pop();
+        // }
+
+        if (gridColorArray[i*gridY]/(timestep-.1) > valMDST/timestep && gridColorArray[(i*gridY)+1]/(timestep-.1) < valMDST/timestep){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(X3, Y3-GridHt, X4, Y4-GridHt);
+          p.pop();
+        }
+        if (gridColorArray[(i*gridY)]/(timestep-.1) < valMDST/timestep && gridColorArray[(i*gridY)+gridY]/(timestep-.1) > valMDST/timestep){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(X2, Y2-GridHt, X3, Y3-GridHt);
+          p.pop();
+        }
+        if (gridColorArray[(i*gridY)]/(timestep-.1) > valMDST/timestep && gridColorArray[(i*gridY)+gridY]/(timestep-.1) < valMDST/timestep){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(X2, Y2-GridHt, X3, Y3-GridHt);
+          p.pop();
+        }
 
       //GRID Y ROW
       for (let j = 0; j<gridY; j++) {
@@ -648,22 +927,54 @@ p.preload = function() {
         let newX4 = (X4-(x*(j+1)));
         let newY4 = (Y4+(yNext*(j+1)));
         if(j == 0){
-          mySun = (p.int(gridColorArray[(i*gridY)+1]/timestep));
+          // mySun = (p.int(gridColorArray[(i*gridY)+1]/timestep));
+          mySun = gridColorArray[(i*gridY)+1];
         }else{
-          mySun = p.int(gridColorArray[(i*gridY)+j]/timestep);
+          // mySun = p.int(gridColorArray[(i*gridY)+j]/timestep);
+          mySun = gridColorArray[(i*gridY)+j];
         }
-        if(mySun > Percentage){
-          MDT = p.int(MDT) + 1;
+        if( mySun/timestep > Percentage/timestep){
+           MDT = p.int(MDT) + 1;
         }
+        //console.log(mySun);
+        mySun = p.int(mySun/timestep);
 
 
           p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
 
         p.quad(newX1, newY1-GridHt, newX2, newY2-GridHt, newX3, newY3-GridHt, newX4, newY4-GridHt);
+        if (gridColorArray[(i*gridY)+j]/(timestep-.1) < valMDST/timestep && gridColorArray[(i*gridY)+j+1]/(timestep-.1) > valMDST/timestep){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(newX3, newY3-GridHt, newX4, newY4-GridHt);
+          p.pop();
+        }
+        if (gridColorArray[(i*gridY)+j]/(timestep-.1) > valMDST/timestep && gridColorArray[(i*gridY)+j+1]/(timestep-.1) < valMDST/timestep){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(newX3, newY3-GridHt, newX4, newY4-GridHt);
+          p.pop();
+        }
+        if (gridColorArray[(i*gridY)+j]/(timestep-.1) < valMDST/timestep && gridColorArray[(i*gridY)+j+gridY]/(timestep-.1) > valMDST/timestep){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(newX2, newY2-GridHt, newX3, newY3-GridHt);
+          p.pop();
+        }
+        if (gridColorArray[(i*gridY)+j]/(timestep-.1) > valMDST/timestep && gridColorArray[(i*gridY)+j+gridY]/(timestep-.1) < valMDST/timestep){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(newX2, newY2-GridHt, newX3, newY3-GridHt);
+          p.pop();
+        }
       }
     }
 
-  // END GRID
+  // END OF GRID
 
     //FLOOR GRID PLANE/OUTLINE
     p.push();
@@ -692,18 +1003,18 @@ p.preload = function() {
     p.push();
     if(MDTPercentage < valFal){
       p.fill(0,255,0);
-      p.image(imgCheck,280,2,30,30);
+      p.image(imgCheck,310,2,30,30);
     }    else{
       p.fill(255,0,0);
-      p.image(imgNope,280,2,30,30);
+      p.image(imgNope,310,2,30,30);
     }
 
     p.fill(0);
     p.textSize(50);
 
-    p.text(MDTPercentage +"%", 320,42);
+    p.text(MDTPercentage +"%", 340,38);
     p.textSize(10);
-    p.text("> max direct sun time", 320,55);
+    p.text("> max direct sun time", 340,50);
     p.pop();
   }
 
