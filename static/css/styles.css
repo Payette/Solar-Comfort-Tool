@@ -756,6 +756,7 @@ br.glzBR {
 	width: 165px;
 }
 
+
 #inputs #designConditWrapper label {
 	width: 160px;
 }
@@ -1027,6 +1028,10 @@ div#share {
 
 #inputs input[type=button].optionButton#CitySearch{
 	width:110px;
+}
+
+#inputs input[type=button].optionButton#bHour{ 
+	width:60px;
 }
 
 #options input[type=button].optionButton:hover, #citySearch input[type=button].optionButton:hover, #Outdoorpop input[type=button].activeButton:hover{
