@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<title>Summertime Comfort Tool</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="static/css/styles.css"/>
 
 
@@ -17,7 +17,6 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
 		<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
   <script language="javascript" type="text/javascript" src="libraries/p5.svg.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.2/iframeResizer.contentWindow.min.js" defer></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -47,7 +46,7 @@
 					 </div>
 	        </div>
 	        <div class="col-lg-12 col-xl-6 col-sm-12">
-						<!-- <div id="sketch1"> -->
+						<div id="sketch1">
 					 	<!-- The canvas goes here! -->
 					 </div>
 	        </div>
@@ -135,6 +134,17 @@
 
  					<fieldset class="inputgroup">
  						<legend class="heading">Study Type</legend>
+
+						<div id="citySearch">
+							<input type="button" name="bHour" id="bHour" value="Single Hour" class="optionButton unselected">
+							<input type="button" name="bDay" id="bDay" value="Day" class="optionButton selected">
+							<input type="button" name="bAnnual" id="bAnnual" value="Annual" class="optionButton unselected"><br>
+							<div style="clear:both;"></div>
+						</div>
+
+						<label>Hour</label>
+ 						<input type="number" name="hour" id="hour" min="0" max="24" value="12" step="1">
+ 						<input type="number" name="hour1" id="hour1" min="0" max="24" value="12" step="1"><br>
 
  						<label>Day</label>
  						<input type="number" name="day" id="day" min="1" max="31" value="13" step="1">
