@@ -347,7 +347,7 @@ rect.blue {
 }
 
 form#occupantSliders div.occSlider {
-	width: 193px;
+	width: 203px;
 	height: 20px;
 	float: left;
 	padding: 0px;
@@ -821,6 +821,10 @@ br.glzBR {
 }
 
 input[type=checkbox] {
+	visibility: hidden;
+}
+
+input[type=radio] {
 	visibility: hidden;
 }
 
