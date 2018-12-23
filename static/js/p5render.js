@@ -140,7 +140,7 @@ p.preload = function() {
 
       //RELOAD THE PAGE ONLY WHEN VALUES ARE CHANGED
 
-      let Hour = 10.5;
+      //let Hour = 10.5;
 
       let Lon = document.getElementById("long").value;
       document.getElementsByName("long")[0].addEventListener('input', p.reload);
@@ -151,6 +151,9 @@ p.preload = function() {
       let TimeZone = document.getElementById("timeZone").value;
       document.getElementsByName("timeZone")[0].addEventListener('input', p.reload);
 
+
+      let Hour = document.getElementById("hour").value;
+      document.getElementsByName("hour")[0].addEventListener('input', p.reload);
 
       let Day = document.getElementById("day").value;
       document.getElementsByName("day")[0].addEventListener('input', p.reload);
@@ -240,10 +243,10 @@ p.preload = function() {
       document.getElementsByName("vShadeStart")[0].addEventListener('input', p.reload);
 
 
-      let valFal = document.getElementById("fal").value;
+      let valFal = document.getElementById("fal").value; //FLOOR AREA LOSS
       document.getElementsByName("fal")[0].addEventListener('input', p.reload);
 
-      let valMDST = document.getElementById("mdst").value;
+      let valMDST = document.getElementById("mdst").value; // MAX DIRECT SUN TIME
       document.getElementsByName("mdst")[0].addEventListener('input', p.reload);
 
 
@@ -632,23 +635,65 @@ p.preload = function() {
 
 
 
-  // THIS IS WHERE YOU WILL NEED TO LOOK AT THE VERTICAL SHADES pt1
+  // VERTICAL SHADES XY
   let XYLouverTest = [];
-    //if(vertShadeNum > 0){
-    //  if(vertShadeStart == "L"){
         let b1;
         let Xloc1 = [];
         let XYtest1 = [];
         let AWArray1 = [];
         let ZAdd = [];
         let bigB = 0;
+        let superB = [];
+        let superD = [];
+        let filledList = [];
+        let filledListI = [];
+        for (let i = 0; i<gridX; i++) {
+          let filledListJ = [];
+          for (let j = 0; j<gridY; j++){
+            let filledListK = [];
+            for (let k = 0; k<coordinates.length; k++){
+              let filledListN = [];
+              for (let n = 0; n<r.glzCoords.length; n++){
+                let filledListP = [];
+                for (let p = 0; p<parseInt(vertShadeNum); p++){
+                  filledListP.push(0);
+                }
+                filledListN.push(filledListP);
+              }
+              filledListK.push(filledListN);
+            }
+            filledListJ.push(filledListK);
+          }
+          filledListI.push(filledListJ);
+        }
+
+        let filledListZ = [];
+        for (let i = 0; i<gridX; i++) {
+          let filledListJ = [];
+          for (let j = 0; j<gridY; j++){
+            let filledListK = [];
+            for (let k = 0; k<coordinates.length; k++){
+              let filledListN = [];
+              for (let n = 0; n<r.glzCoords.length; n++){
+                let filledListP = [];
+                for (let p = 0; p<parseInt(vertShadeNum); p++){
+                  filledListP.push(0);
+                }
+                filledListN.push(filledListP);
+              }
+              filledListK.push(filledListN);
+            }
+            filledListJ.push(filledListK);
+          }
+          filledListZ.push(filledListJ);
+        }
 
         for (let i = 0; i<gridX; i++) {
           let YdistanceFromWall = (i+1); // grid distance from window wall in Y direction
           b1 = 0;
+          filledList.push(0);
           for (let j = 0; j<gridY; j++){
             b1 = 0;
-
             for (let k = 0; k<coordinates.length; k++){
               let XYLouver1 = 0;
               let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
@@ -658,12 +703,15 @@ p.preload = function() {
               AWArray1.push(XlocationOnWall);
               let xCoord = 0;
               let bigBArray = [];
+              let superC = [];
 
               for (let n = 0; n<r.glzCoords.length; n++){ //cycle through each window
-                if (XlocationOnWall+(j+1) > r.glzCoords[n][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[n][1][0]+(wallDepVal/2)){ //cycle through all the windows, check if the wall position exists within the bounds of the window
-                  xCoord = n+1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
-                }
-              }if(xCoord > 0){ //if this specific gridpoint and sun angle goes through a window...
+                // if (XlocationOnWall+(j+1) > r.glzCoords[n][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[n][1][0]+(wallDepVal/2)){ //cycle through all the windows, check if the wall position exists within the bounds of the window
+                //   xCoord = n+1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
+                // }
+                // xCoord = 1;
+              //}if(xCoord > 0){ //if this specific gridpoint and sun angle goes through a window...
+              let newBigBArray = [];
                   for (let p = 0; p<parseInt(vertShadeNum); p++){ //for each shade in this window...
 
                     let angleA = abs(newCoordinateArray[k]);
@@ -673,60 +721,112 @@ p.preload = function() {
                     }
                     let bigA;
                     if(vertShadeStart == "L"){
-                      bigA = ((XlocationOnWall+(j+1)+(r.glzCoords[xCoord-1][0][0]-(wallDepVal/2))+(p*parseInt(vertShadeSpace)-vertShadeShift)));
+                      bigA = ((XlocationOnWall+(j+1)+(r.glzCoords[n][0][0]-(wallDepVal/2))+(p*parseInt(vertShadeSpace)-vertShadeShift)));
                     }else{
-                      bigA = ((XlocationOnWall+(j+1)-(r.glzCoords[xCoord-1][0][0]+(wallDepVal/2))+(-p*parseInt(vertShadeSpace)-vertShadeShift)));
+                      bigA = ((XlocationOnWall+(j+1)-(r.glzCoords[n][0][0]+(wallDepVal/2))+(-p*parseInt(vertShadeSpace)-vertShadeShift)));
                     }
                     bigB = ((Math.sin(angleB*(3.1415926 / 180))*bigA)/(Math.sin(angleA*(3.1415926 / 180))));
                     bigBArray.push(bigB);
-                  }
-
-              }//console.log(bigBArray);
-              for (let q = 0; q < bigBArray.length; q++){
-                if (bigBArray[q] > parseInt(vertShadeDist) && bigBArray[q] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))){
-                  XYLouver1 = XYLouver1 + 1;
+                    newBigBArray.push(bigB);
+                  }superC.push(newBigBArray);
+              }//console.log(bigBArray.length);
+              superB.push(bigBArray);
+              superD.push(superC);
+              for (let q = 0; q < superC.length; q++){ // I think the problem exists here... need a second layer of for loop?
+                for (let g = 0; g < superC[0].length; g++){
+                  if (superC[q][g] > parseInt(vertShadeDist) && superC[q][g] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))){
+                    XYLouver1 = XYLouver1 + 1;
+                    filledListI[i][j][k][q][g] = 1;
+                }else{
+                  filledListI[i][j][k][q][g] = 0;
                 }
-              }ZAdd.push(bigB)
-
+                }
+              }//ZAdd.push(bigB)
               if (XYLouver1 > 0){
                 b1 = 1;
               }else{
                 b1 =  0;
               }XYLouverTest.push(b1);
             }
-
           }
-        }//console.log(XYLouverTest);
+        }
+        //console.log(filledListI);
+  // VERTICAL SHADES Z
+
+  let a1;
+  let Ztest1 = [];
+  let AHArray1 = [];
+  let newCounter = 0;
+  let emptyList = [];
+    for (let i = 0; i<gridX; i++) {
+    let distanceFromWall = (i+1)/4;
+    a1 = 0;
+    for (let j = 0; j<gridY; j++){
+      a1 = 0;
+      for (let k = 0; k<coordinates.length; k++){
+        let distanceBeyondWall = 0;
+        let anotherCounter = 0;
+        let angleHeight = Math.tan((coordinates[k][1])*(3.1415926 / 180))*distanceFromWall;
+
+        for (let n = 0; n<r.glzCoords.length; n++){
+
+          for (let ru = 0; ru < vertShadeNum; ru ++){
+            distanceBeyondWall = (superD[newCounter][n][ru]);
+
+            let angleHeight2 = Math.tan((coordinates[k][1])*(3.1415926 / 180))*distanceBeyondWall;
 
 
+            let myVar;
+              if (angleHeight + angleHeight2  > (r.glzCoords[0][0][2]-gridHt) - parseInt(vertShadeScale) + parseInt(vertShadeHeight) && angleHeight + angleHeight2  < (r.glzCoords[0][2][2]-gridHt)   + parseInt(vertShadeHeight)){
+                myVar = 0;
+                 //if this condintion, it hits the full size louver
+              }else{
+                myVar = 1;
+                anotherCounter = anotherCounter + 1
+              }
+              filledListZ[i][j][k][n][ru] = myVar;
+          }
+        }
+        if (anotherCounter > 0 + vertShadeNum){
+          XYLouverTest[newCounter-1] = 0;
+        }
+        newCounter = newCounter + 1;
 
+      }
+    }
+  }
 
-        let a1;
-        let Ztest1 = [];
-        let AHArray1 = [];
-        let angleHeightList = [];
-        let angleHeightList1 = [];
-        let count = 0;
-        for (let i = 0; i<gridX; i++) {
-          let distanceFromWall = (i+1)/4;
-          a1 = 0;
-          for (let j = 0; j<gridY; j++){
-            a1 = 0;
-            for (let k = 0; k<coordinates.length; k++){
-              let distanceFromWindow = abs(ZAdd[count]);
-              let angleHeight = Math.tan((coordinates[k][1])*(3.1415926 / 180))*(distanceFromWall+distanceFromWindow);
-              let angleHeight1 = Math.tan((coordinates[k][1])*(3.1415926 / 180))*(distanceFromWall);
-              angleHeightList.push(angleHeight);
-              angleHeightList1.push(angleHeight1);
-              //AHArray1.push(coordinates[k][1]);
-              count = count + 1;
+let LouverList1 = [];
+let decider = 0;
+  for (let i = 0; i<gridX; i++) {
+    for (let j = 0; j<gridY; j++){
+      for (let k = 0; k<coordinates.length; k++){
+        let nextLevel = 0;
+        for (let n = 0; n < r.glzCoords.length; n++){
+          for (let p = 0; p < parseInt(vertShadeNum); p++){
+            decider = 0;
+            if (filledListI[i][j][k][n][p] == 1){
+              decider = 1;
+              if (filledListZ[i][j][k][n][p] == 1){
+                decider = 2;
+              }
             }
-         }
-       }
-       //console.log(angleHeightList[20000]);
-       //console.log(angleHeightList1[20000]);
+            if (decider == 1){
+              nextLevel = nextLevel + 1;
+            }
+          }
+        }if (nextLevel > 0){
+          LouverList1.push(1);
+        }else{
+          LouverList1.push(0);
+        }
+      }
+    }
+  }
+console.log(LouverList1.length);
 
 
+//END OF VERTICAL SHADES
 
 
 
@@ -818,22 +918,18 @@ p.preload = function() {
       }
     }
   //END PYTHAGOREAM THEROM FOR Z
+  //console.log(singleAngleHeightList);
 
     //START XY and Z check
     let gridColor;
     let gridColorArray = []
     for (let i = 0; i < XYtest.length; i++){
       //let vertZTestItem = vertZTest[i];
-      let XYLouv = XYLouverTest[i];
+      //let XYLouv = XYLouverTest[i];
+      let XYLouv = LouverList1[i];
       let XYcolor = XYtest[i];
       let Zcolor = Ztest[i];
-      if (XYLouv == 1){
-        if (angleHeightList[i] > r.glzCoords[0][0][2]-gridHt-vertShadeScale-(vertShadeHeight*-1) && angleHeightList[i] < (r.glzCoords[0][2][2] -gridHt-(vertShadeHeight*-1))){
-          XYLouv = 1;
-        }else{
-          XYLouv = 0;
-        }
-    }
+
       if (XYcolor == 1 && Zcolor == 1 && XYLouv == 0){
         gridColor = gridColor + 1;
       }else{
