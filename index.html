@@ -9,7 +9,12 @@
 	<title>Summertime Comfort Tool</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="static/css/styles.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css"/>
 
+	<!-- CDN Jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<!-- CDN Jquery UI -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
 	<script src="//d3js.org/d3.v3.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -17,7 +22,7 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
 		<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
   <script language="javascript" type="text/javascript" src="libraries/p5.svg.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
@@ -29,8 +34,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
+				<div class="serifText">
 				<p style="font-size:80%;">This tool shows the impact of shade form and glazing geomerty on indoor<br>
 				occupant discomfort from direct sun.</p>
+				</div>
 			 </div>
 	    <div class="col-lg-4">
 
@@ -97,7 +104,7 @@
 
 					 <div id="inputs">
 
- 					<fieldset class="inputgroup">
+ 					<!-- <fieldset class="inputgroup"> -->
 						<div>
 							<fieldset class="inputgroup">
 								<div id="caseWrapper">
@@ -113,6 +120,7 @@
 					<input type="button" name="CitySearch" id="CitySearch" value="Location Lookup" class="optionButton unselected">
 					<div style="clear:both;"></div>
 				</div><br>
+				</fieldset>
 							</div>
 
 
@@ -130,17 +138,25 @@
 
 
 
- 					</fieldset>
+
+					</div>
+					<div id="inputs">
 
  					<fieldset class="inputgroup">
+						<div>
+						<div id="caseWrapper">
  						<legend class="heading">Study Type</legend>
+					</div>
 
 						<div id="citySearch">
 							<input type="button" name="bHour" id="bHour" value="Single Hour" class="optionButton unselected">
 							<input type="button" name="bDay" id="bDay" value="Day" class="optionButton selected">
-							<input type="button" name="bAnnual" id="bAnnual" value="Annual" class="optionButton unselected"><br>
+							<input type="button" name="bAnnual" id="bAnnual" value="Annual" class="optionButton unselected">
 							<div style="clear:both;"></div>
 						</div>
+							</div>
+							</fieldset>
+
 
 						<label>Hour</label>
  						<input type="number" name="hour" id="hour" min="0" max="24" value="12" step="1">
@@ -160,7 +176,7 @@
 
 
 
- 					</fieldset>
+
 
  				</div>
 	        </div>
@@ -175,7 +191,7 @@
 							<div>
 								<fieldset class="inputgroup">
 									<div id="caseWrapper">
-										<legend class="heading first">Fa&ccedil;ade Geometry</legend>
+										<legend class="heading first">Room Geometry</legend>
 										<div  id="caseSelection">
 											<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
 											<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>Case 2</h2>
@@ -207,7 +223,12 @@
 
 									<label>Room Depth</label>
 									<input type="number" name="wallWidth" id="wallWidth" min="1" max="60"  value="30" step="1">
-									<input type="number" name="wallWidth1" id="wallWidth1" min="1" max="60"  value="30" step="1" disabled><br>
+									<input type="number" name="wallWidth1" id="wallWidth1" min="1" max="60"  value="30" step="1" disabled><br><br>
+
+								</fieldset>
+
+								<fieldset class="inputgroup">
+									<legend class="heading">Window Geometry</legend>
 
 									<label>Window Height from Sill</label>
 									<input type="number" name="windowHeight" id="windowHeight" min="0.0" max="12.0"  value="7.0" step="1.0">
@@ -219,14 +240,53 @@
 
 
 									<label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
+<!-- <form>
+									<label for="width" id="windowWidthLabel">
+										<div class="customCheckStyle">
+											<input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck">
+											<label for="windowWidthCheck" id="checkWindWidth"></label>
+										</div>Window Width (<span class="units IP">ft</span>)</label>
+										<div class="inputWrapperLeft">
+										<input type="number" name="windowWidth" id="windowWidth" min="0" value="4" step="0.5" class="case1">
+									</div><br>
+
+									<label for="glazing" id="glazingLabel">
+										<div class="customCheckStyle">
+											<input type="radio" name="glazingRadio" value="glazingRatioCheck" class="customCheck" id="glazingRatioCheck">
+											<label for="glazingRatioCheck" id="checkGlzRatio"></label>
+										</div>Window-to-Wall Ratio (%)</label>
+									<div class="inputWrapperLeft">
+										<input type="number" name="glazing" class="inactive case1" id="glazing" min="1" max="95" value="39" step="1" disabled>
+									</div><br>
+</form> -->
+
+											<label for="width" id="windowWidthLabel">
+											<div class="customCheckStyle">
+											<input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" checked>
+											<label for="windowWidthCheck" id="checkWindWidth"></label>
+											</div>Window Width (<span class="units IP">ft</span>)</label>
+											<div class="inputWrapperLeft">
+											<input type="number" name="windowWidth" id="windowWidth" min="0" value="4" step="0.5" class="case1">
+										</div><br>
+
+											<label for="glazing" id="glazingLabel">
+											<div class="customCheckStyle">
+											<input type="radio" name="glazingRadio" value="glazingRatioCheck" id="glazingRatioCheck">
+											<label for="glazingRatioCheck" id="checkGlzRatio"></label>
+										  </div>Window-to-Wall Ratio (%)</label>
+									  	<div class="inputWrapperLeft">
+											<input type="number" name="glazing"  id="glazing" min="1" max="95" value="39" step="1">
+											</div><br>
 
 
 
-									<label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (<span class="units IP">ft</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
-									<div class="inputWrapperLeft"><input type="number" name="windowWidth" id="windowWidth" min="0" max="24"  value="14" step="0.5"></div><br>
+
+
+									<!-- <label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (<span class="units IP">ft</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
+									<div class="inputWrapperLeft"><input type="number" name="windowWidth" id="windowWidth" min="0" max="24"  value="14" step="0.5" class="case1"></div><br>
 
 									<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
-									<div class="inputWrapperLeft"><input type="number" name="glazing" class="inactive case1" id="glazing" min="1" max="95" value="39" step="1" disabled></div><br>
+									<div class="inputWrapperLeft"><input type="number" name="glazing" class="inactive case1" id="glazing" min="1" max="95" value="39" step="1" disabled></div><br> -->
 
 									<label>Window Seperation</label>
 									<input type="number" name="distWindow" id="distWindow" min="0"  value="12" step="1">
@@ -254,7 +314,7 @@
 								</div>
 
 
-		 					<label>Horizontal Shade Depth</label>
+		 					<label><strong>Horizontal Shade Depth</strong></label>
 							<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4"  value="1" step="1">
 		 					<input type="number" name="hShadeDep1" id="hShadeDep1" min="0" max="4"  value="1" step="1" disabled><br>
 
@@ -278,7 +338,7 @@
 							<input type="number" name="hShadeAngle" id="hShadeAngle" min="0" max="90"  value="90" step="1">
 		 					<input type="number" name="hShadeAngle1" id="hShadeAngle1" min="0" max="90"  value="90" step="1" disabled><br><br>
 
-		 					<label>Vertical Shade Depth</label>
+		 					<label><strong>Vertical Shade Depth</strong></label>
 							<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4"  value="1" step="1">
 		 					<input type="number" name="vShadeDep1" id="vShadeDep1" min="0" max="4"  value="1" step="1" disabled><br>
 
@@ -320,7 +380,7 @@
 	  </div>
 	</div>
 
-
+		<script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script>
 		<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
 		<script type="text/javascript" charset="utf-8" src="static/js/p5renderCanvas2.js"></script>
 		<script type="text/javascript" charset="utf-8" src="static/js/solarCalculator.js"></script>
