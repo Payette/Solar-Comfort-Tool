@@ -141,6 +141,11 @@ p.preload = function() {
       //RELOAD THE PAGE ONLY WHEN VALUES ARE CHANGED
 
       //let Hour = 10.5;
+      let glzOrWidth = document.getElementById("glazingRatioCheck").checked;
+      //console.log(Radiox);
+      document.getElementsByName("glazingRadio")[0].addEventListener('input', p.reload);
+      document.getElementsByName("glazingRadio")[1].addEventListener('input', p.reload);
+
 
       let Lon = document.getElementById("long").value;
       document.getElementsByName("long")[0].addEventListener('input', p.reload);
@@ -274,7 +279,8 @@ p.preload = function() {
 
 
     //GEO Result - TAKES DATA FROM THE GEO.JS FILE
-    var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), parseFloat(wallDepVal), glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows));
+    //geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth, changedVar)
+    var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), parseFloat(wallDepVal), glzRatioValue/100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
     var r = {}
     r.wallCoords = geoResult.wallCoords;
     r.glzCoords = geoResult.glzCoords;
@@ -823,7 +829,6 @@ let decider = 0;
       }
     }
   }
-console.log(LouverList1.length);
 
 
 //END OF VERTICAL SHADES
