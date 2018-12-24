@@ -19,29 +19,6 @@
 	margin: 0 10px 0 0;
 }
 
-#graphViewToggle {
-	padding-top: 3px;
-	width: 90px;
-	display: block;
-	float: right;
-	margin-left: 15px;
-	padding-left: 15px;
-	border-left: solid;
-	border-width: thin;
-	border-color: grey;
-}
-
-/* The switch - the box around the slider */
-.switch {
- position: relative;
- display: inline-block;
- width: 20px;
- height: 35px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {display:none;}
-
 /* The slider */
 .slider {
  position: absolute;
@@ -50,7 +27,7 @@
  left: 0;
  right: 0;
  bottom: 0;
- background-color: #ccc;
+ background-color:  #4c4c4e;
  -webkit-transition: .4s;
  transition: .4s;
 }
@@ -61,16 +38,16 @@
  height: 16px;
  width: 16px;
  left: 2px;
- bottom: 15px;
+ bottom: 26px;
  background-color: white;
  -webkit-transition: .4s;
  transition: .4s;
 }
 
 input:checked + .slider:before {
- -webkit-transform: translateY(6px);
- -ms-transform: translateY(11px);
- transform: translateY(11px);
+ -webkit-transform: translateY(23px);
+ -ms-transform: translateY(23px);
+ transform: translateY(23px);
 }
 
 /* Rounded sliders */
@@ -82,260 +59,9 @@ input:checked + .slider:before {
  border-radius: 50%;
 }
 
-#graphViewToggle p {
-		font-family: "museo-sans", sans-serif;
-		font-weight: 700;
-		font-size: 12px;
-		padding: 4px 0 0px 26px;
-		margin: 0;
-		float: left;
-}
-
-#graphViewToggle .marked {
-		color: grey;
-}
-
-#graphViewToggle .unmarked {
-		color: #b9b9b9;
-}
-
-.hiddenGraph {
-	display: none;
-}
-
-#graphDisplay {
-	min-height: 350px;
-}
-
-#graphWrapper, #graphWrapper2, #graphWrapper3 {
-	height: auto;
-	position: relative;
-	background-color: rgb(230,230,230);
-	overflow: hidden;
-}
-
-#graphWrapper2 {
-	margin-top: 10px;
-}
-
-#graphWrapper3 {
-	padding-bottom: 10px;
-}
-
-#graphWrapper ul, #graphWrapper2 ul, #graphWrapper3 ul {
-	list-style: none;
-	float: right;
-	margin: 10px 35px 0px -40px;
-	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
-	font-weight: 700;
-}
-
-#graphWrapper ul li, #graphWrapper2 ul li, #graphWrapper3 ul li {
-	display: inline;
-	color: #777777;
-	margin: 0 0 0 15px;
-}
-
-#graphWrapper ul li img, #graphWrapper2 ul li img, #graphWrapper3 ul li img {
-	display: inline;
-	width: 9px;
-	height: 9px;
-	margin: 0 5px 0 0;
-
-}
-
-#key {
-	float: right;
-	background-color: rgb(230,230,230)
-}
-
-
-#graph .creditText {
-	font-family: "museo-sans", sans-serif;
-	font-size: 9px;
-	font-style: italic;
-	display: none;
-}
-
-
-
-#graph .axislabel, #graph .axis text {
-	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
-}
-
-#graph .axislabel {
-	font-weight: 300;
-}
-
-#graph .yaxislabel {
-	font-weight: 700;
-	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
-	fill: #777777;
-}
-
-#graph .axis path,
-#graph .axis line {
-    fill: none;
-}
-
-
-.occupantLine, .occupantLine2, .occupantLine3 {
-	stroke: #000;
-	stroke-width: 3;
-	stroke-linecap: round;
-	stroke-dasharray: 0 6;
-}
-
-#graph .grid line { /* horizontal reference lines */
-	stroke-width: 1;
-	stroke: #000;
-	stroke-linecap: round;
-	stroke-dasharray: 0 4;
-}
-
-#graph .grid path {
-	stroke-width: 0;
-}
-
-#graph #graphXAxis line {
-	stroke-width: .5;
-	stroke: rgb(90,90,90);
-}
-
-#graph #graphYAxis line {
-	stroke-width: 0;
-}
-
-
-#tooltip, #tooltip2, #tooltip3, #thresholdTooltip, #thresholdTooltip2, #thresholdTooltip3 {
-	position: absolute;
-	width: 280px;
-	/*padding: 5px;*/
-	pointer-events: none;
-	/*background-color: rgba(240,240,240,.9);
-	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);*/
-}
-
-
-
-#tooltip.hidden, #tooltip2.hidden, #tooltip3.hidden, #thresholdTooltip.hidden, #thresholdTooltip2.hidden, #thresholdTooltip3.hidden {
-	display: none;
-}
-
-#tooltip h1, #tooltip2 h1, #tooltip3 h1, #thresholdTooltip h1, #thresholdTooltip2 h1,  #thresholdTooltip3 h1 {
-	font-family: "museo-sans", sans-serif;
-	font-weight: 700;
-	font-size: 12px;
-	padding: 0 0 3px 0;
-	margin: 0;
-	float: left;
-}
-
-#thresholdTooltip img.icon, #tooltip img.icon, #tooltip2 img.icon, #thresholdTooltip2 img.icon, #tooltip3 img.icon, #thresholdTooltip3 img.icon {
-	display: block;
-	float: left;
-	width: 12px;
-	height: 12px;
-	margin: 0px 3px 0 0;
-	padding: 0;
-}
-
-
-#facadeWrapper {
-	width: 150%
-	overflow: auto;
-	margin-top: 5px;
-	margin-bottom: 10px;
-}
-
-#case1FacadeWrapper, #case2FacadeWrapper, #case3FacadeWrapper {
-	float: left;
-}
-
-
-.facadeHeading {
-	font-family: "museo-sans", sans-serif;
-	font-weight: 500;
-	font-size: 11px;
-	margin: 0;
-	display: inline-block;
-	float: left;
-}
-
-#graphViewToggle .heading {
-	font-family: "museo-sans", sans-serif;
-	font-weight: 700;
-	font-size: 12px;
-	text-transform: uppercase;
-	padding: 0 0 2px 0;
-	margin: 0;
-	width: 190px;
-	}
-
-.greyText {
-	color: #b9b9b9;
-}
-
-.case1Text {
-	color: rgb(0,160,221);
-}
-
-.case2Text {
-	color: rgb(248,151,29);
-}
-
-.case3Text {
-	color: rgb(108,28,131);
-}
-
-
-
-
-.facadelabel {
-	font-family: "museo-sans", sans-serif;
-	font-size: 12px;
-	font-weight: 300;
-	fill: #000;
-}
-
-
-.dimline {
-	stroke-width: 1px;
-	stroke: #777;
-	stroke-linecap: butt;
-	shape-rendering: crispEdges;
-}
-
-
-
-
-rect.filled {
-	fill: rgb(190,190,190);
-	stroke: rgb(190,190,190);
-	stroke-width: 1px;
-	stroke-dasharray: 0;
-}
-
-rect.outlined {
-	fill: #fff;
-	stroke: rgb(190,190,190);
-	stroke-width: 1px;
-	stroke-dasharray: 4, 3;
-}
-
-rect.white {
-	fill: #fff;
-}
-
-rect.blue {
-	fill: #E1F0FF;
-}
 
 #occupancyWrapper {
-	margin: 0 0 5px 0;
+	margin: 0 0 0px 0;
 }
 
 
@@ -480,7 +206,7 @@ input[type=range]#fal::-moz-range-progress, input[type=range]#mdst::-moz-range-p
 	overflow: hidden;
 	width: 100%;
 	display: inline-block;
-	height: 15px;
+	height: 26px;
 	padding-bottom: 0;
 
 }
@@ -516,6 +242,18 @@ input[type=range]#fal::-moz-range-progress, input[type=range]#mdst::-moz-range-p
 	margin: 0px 2px 0 0;
 	background-size: 11px 11px;
 }
+
+
+.facadeHeading {
+	font-family: "raleway", sans-serif;
+	font-weight: 500;
+	font-size: 11px;
+	margin: 0;
+	display: inline-block;
+	float: left;
+}
+
+
 
 span#case1Button {
 	background: url(../../static/images/expand-case1.png) 0 0 no-repeat;
@@ -584,9 +322,9 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 #inputs fieldset.inputgroup, #occupantSliders fieldset.inputgroup {
 	border: none;
-	padding: 0;
 	position: relative;
 	margin: 0 0 15px 0;
+	padding: 0;
 }
 
 
@@ -598,10 +336,10 @@ span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unsel
 
 #inputs legend, #occupantSliders legend, #referenceLinks legend {
 	font-weight: 700;
-	font-size: 12px;
+	font-size: 16px;
 	text-transform: uppercase;
-	padding: 0 0 5px 0;
-	margin: 0;
+	padding: 0 0 15px 0;
+	margin: 0 0 10px 0;
 	width: 190px;
 }
 
@@ -825,9 +563,9 @@ input[type=checkbox] {
 	visibility: hidden;
 }
 
-input[type=radio] {
+/* input[type=radio] {
 	visibility: hidden;
-}
+} */
 
 #inputs div.customCheckStyle {
 	width: 12px;
@@ -858,23 +596,23 @@ input[type=radio] {
 	padding: 1px;
 	top: 1px;
 	left: 0;
-	background: rgb(245, 245, 245);
+	/* background: rgb(245, 245, 245); */
 }
 
 
-#inputs div.customCheckStyle label.unselected, #inputs div.customCheckStyleCentered label.unselected {
+/* #inputs div.customCheckStyle label.unselected, #inputs div.customCheckStyleCentered label.unselected {
 	border: 1px solid rgb(235, 235, 235);
 	width: 10px;
 	height: 10px;
 	background: #fff;
-}
+} */
 
 
 
 
 
 /* tick for inside checkbox */
-#inputs div.customCheckStyle label:after, #inputs div.customCheckStyleCentered label:after {
+/* #inputs div.customCheckStyle label:after, #inputs div.customCheckStyleCentered label:after {
 	opacity: 1;
 	content: '';
 	position: absolute;
@@ -902,7 +640,7 @@ input[type=radio] {
 	opacity: 0.5;
 	top: 2px;
 	left: 2px;
-}
+} */
 
 
 
@@ -963,7 +701,7 @@ input[type=radio] {
 #options {
 	overflow: auto;
 	width: 100%;
-	padding: 15px 0px 20px 0px;
+	padding: 15px 0px 10px 0px;
 }
 
 div#units {
@@ -978,7 +716,7 @@ div#share {
 #options h2 {
 	color: #000;
 	font-weight: 700;
-	font-size: 12px;
+	font-size: 16px;
 	text-transform: uppercase;
 	padding: 0;
 	margin: 2px 5px 0 0;
@@ -1030,7 +768,7 @@ div#share {
 	width:110px;
 }
 
-#inputs input[type=button].optionButton#bHour{ 
+#inputs input[type=button].optionButton#bHour{
 	width:60px;
 }
 
@@ -1284,7 +1022,11 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
 	display: none;
 }
 
-
+.serifText {
+	font-size: 20px;
+  line-height: 1.33333;
+	font-family: "Freight Text Pro", "Freight Text", "freight-text-pro", serif;
+}
 
 
 
