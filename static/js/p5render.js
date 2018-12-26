@@ -26,7 +26,7 @@ $("#fal").on("input", function(event) {
       }
     });
 
-$("#mdst").on("input", function(event) {
+$("#mdst").on("change", function(event) {
       if ($(this).val() == 1) {
         ppdValue1 = 1;
         $("#mdst").val(1);
@@ -221,7 +221,8 @@ p.preload = function() {
       let horzShadeAngle = document.getElementById("hShadeAngle").value;
       document.getElementsByName("hShadeAngle")[0].addEventListener('input', p.reload);
 
-
+      let vertShadeOn = document.getElementById("vShadeOn").value;
+      document.getElementsByName("vShadeOn")[0].addEventListener('input', p.reload);
 
       let vertShadeDep = document.getElementById("vShadeDep").value;
       document.getElementsByName("vShadeDep")[0].addEventListener('input', p.reload);
@@ -291,7 +292,7 @@ p.preload = function() {
     r.centLineDist = geoResult.centLineDist;
 
 
-  
+
 
     // MAKE SUN PATH CORNER GRAPHIC
 
@@ -583,6 +584,10 @@ p.preload = function() {
   }
 
 
+let LouverList1 = [];
+let XYLouverTest = [];
+
+if (parseInt(vertShadeOn) == 1){
 
   // VERTICAL SHADES XY
   let XYLouverTest = [];
@@ -745,7 +750,7 @@ p.preload = function() {
     }
   }
 
-let LouverList1 = [];
+
 let decider = 0;
   for (let i = 0; i<gridX; i++) {
     for (let j = 0; j<gridY; j++){
@@ -772,7 +777,81 @@ let decider = 0;
       }
     }
   }
+}else{
+  // VERTICAL SHADES XY
 
+        let b1;
+        let Xloc1 = [];
+        let XYtest1 = [];
+        let AWArray1 = [];
+        let ZAdd = [];
+        let bigB = 0;
+        let superB = [];
+        let superD = [];
+        let filledList = [];
+        for (let i = 0; i<gridX; i++) {
+          let YdistanceFromWall = (i+1); // grid distance from window wall in Y direction
+          b1 = 0;
+          filledList.push(0);
+          for (let j = 0; j<gridY; j++){
+            b1 = 0;
+            for (let k = 0; k<coordinates.length; k++){
+              let XYLouver1 = 0;
+              let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
+              if (newCoordinateArray[k]<88.0 && newCoordinateArray[k]> -88.0){
+                  XlocationOnWall = Math.tan(newCoordinateArray[k]*(3.1415926 / 180))*YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+              }
+              AWArray1.push(XlocationOnWall);
+              let xCoord = 0;
+              let bigBArray = [];
+              let superC = [];
+
+              for (let n = 0; n<r.glzCoords.length; n++){ //cycle through each window
+                // if (XlocationOnWall+(j+1) > r.glzCoords[n][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[n][1][0]+(wallDepVal/2)){ //cycle through all the windows, check if the wall position exists within the bounds of the window
+                //   xCoord = n+1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
+                // }
+                // xCoord = 1;
+              //}if(xCoord > 0){ //if this specific gridpoint and sun angle goes through a window...
+              let newBigBArray = [];
+                  for (let p = 0; p<parseInt(vertShadeNum); p++){ //for each shade in this window...
+
+                    let angleA = abs(newCoordinateArray[k]);
+                    let angleB = 90.0-abs(newCoordinateArray[k]);
+                    if (newCoordinateArray[k] > 0){
+                      angleB = angleB * -1;
+                    }
+                    let bigA;
+                    if(vertShadeStart == "L"){
+                      bigA = ((XlocationOnWall+(j+1)+(r.glzCoords[n][0][0]-(wallDepVal/2))+(p*parseInt(vertShadeSpace)-vertShadeShift)));
+                    }else{
+                      bigA = ((XlocationOnWall+(j+1)-(r.glzCoords[n][0][0]+(wallDepVal/2))+(-p*parseInt(vertShadeSpace)-vertShadeShift)));
+                    }
+                    bigB = ((Math.sin(angleB*(3.1415926 / 180))*bigA)/(Math.sin(angleA*(3.1415926 / 180))));
+                    bigBArray.push(bigB);
+                    newBigBArray.push(bigB);
+                  }superC.push(newBigBArray);
+              }//console.log(bigBArray.length);
+              superB.push(bigBArray);
+              superD.push(superC);
+              for (let q = 0; q < superC.length; q++){ // I think the problem exists here... need a second layer of for loop?
+                for (let g = 0; g < superC[0].length; g++){
+                  if (superC[q][g] > parseInt(vertShadeDist) && superC[q][g] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))){
+                    XYLouver1 = XYLouver1 + 1;
+                }else{
+                  }
+                }
+              }//ZAdd.push(bigB)
+              if (XYLouver1 > 0){
+                b1 = 1;
+              }else{
+                b1 =  0;
+              }LouverList1.push(b1);
+            }
+          }
+        }
+        //console.log(filledListI);
+
+}
 
 //END OF VERTICAL SHADES
 
