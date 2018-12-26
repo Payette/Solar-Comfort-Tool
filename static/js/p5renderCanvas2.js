@@ -58,8 +58,8 @@ p.setup = function() {
     let Month = document.getElementById("mon1").value;
     document.getElementsByName("mon1")[0].addEventListener('input', p.reload);
 
-    let timestep = document.getElementById("timeStep1").value;
-    document.getElementsByName("timeStep1")[0].addEventListener('input', p.reload);
+    let timestep = document.getElementById("timeStep").value;
+    document.getElementsByName("timeStep")[0].addEventListener('input', p.reload);
 
 
     let roomOrientationValue = document.getElementById("north1").value;
