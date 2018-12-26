@@ -111,7 +111,7 @@
 									<legend class="heading first">CLIMATE</legend>
 									<div  id="caseSelection">
 										<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
-										<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>Case 2</h2>
+										<h2 id="case2Label"><span id="case2Button"></span>Case 2</h2>
 										<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
 
 									</div>
@@ -171,8 +171,8 @@
  						<input type="number" name="mon1" id="mon1" min="1" max="12"  value="9" step="1"><br>
 
  						<label>Timestep per Hour</label>
- 						<input type="number" name="timeStep" id="timeStep" min="1" max="8"  value="4" step="0.5">
- 						<input type="number" name="timeStep1" id="timeStep1" min="2" max="4"  value="2" step="0.5"><br>
+ 						<input type="number" name="timeStep" id="timeStep" min="1" max="8"  value="4" step="1">
+ 						<input type="number" name="timeStep1" id="timeStep1" min="1" max="8"  value="2" step="1"><br>
 
 
 
@@ -194,7 +194,7 @@
 										<legend class="heading first">Room Geometry</legend>
 										<div  id="caseSelection">
 											<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
-											<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>Case 2</h2>
+											<h2 id="case2Label"><span id="case2Button"></span>Case 2</h2>
 											<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
 
 										</div>
@@ -211,19 +211,19 @@
 
 									<label>Ceiling Height</label>
 									<input type="number" name="ceiling" id="ceiling" min="1" max="100"  value="12" step="1">
-									<input type="number" name="ceiling1" id="ceiling1" min="1" max="100"  value="12" step="1" disabled><br>
+									<input type="number" name="ceiling1" id="ceiling1" min="1" max="100"  value="12" step="1"><br>
 
 									<label>Grid Height</label>
 									<input type="number" name="gridHt" id="gridHt" min="0" max="10"  value="3" step="1">
-									<input type="number" name="gridHt1" id="gridHt1" min="0" max="10"  value="3" step="1" disabled><br>
+									<input type="number" name="gridHt1" id="gridHt1" min="0" max="10"  value="3" step="1"><br>
 
 									<label>Room Length</label>
 									<input type="number" name="wallDep" id="wallDep" min="1" max="60"  value="40" step="1">
-									<input type="number" name="wallDep1" id="wallDep1" min="1" max="60"  value="40" step="1" disabled><br>
+									<input type="number" name="wallDep1" id="wallDep1" min="1" max="60"  value="40" step="1"><br>
 
 									<label>Room Depth</label>
 									<input type="number" name="wallWidth" id="wallWidth" min="1" max="60"  value="30" step="1">
-									<input type="number" name="wallWidth1" id="wallWidth1" min="1" max="60"  value="30" step="1" disabled><br><br>
+									<input type="number" name="wallWidth1" id="wallWidth1" min="1" max="60"  value="30" step="1"><br><br>
 
 								</fieldset>
 
@@ -232,65 +232,38 @@
 
 									<label>Window Height from Sill</label>
 									<input type="number" name="windowHeight" id="windowHeight" min="0.0" max="12.0"  value="7.0" step="1.0">
-									<input type="number" name="windowHeight1" id="windowHeight1" min="0.0" max="12.0"  value="7.0" step="1.0" disabled><br>
+									<input type="number" name="windowHeight1" id="windowHeight1" min="0.0" max="12.0"  value="7.0" step="1.0"><br>
 
 									<label>Sill Height</label>
 									<input type="number" name="sill" id="sill" min="0" max="5"  value="2.0" step="1">
-									<input type="number" name="sill1" id="sill1" min="0" max="5"  value="2.0" step="1" disabled><br>
+									<input type="number" name="sill1" id="sill1" min="0" max="5"  value="2.0" step="1"><br>
 
 
 									<label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
-<!-- <form>
+
+
 									<label for="width" id="windowWidthLabel">
-										<div class="customCheckStyle">
-											<input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck">
-											<label for="windowWidthCheck" id="checkWindWidth"></label>
-										</div>Window Width (<span class="units IP">ft</span>)</label>
-										<div class="inputWrapperLeft">
-										<input type="number" name="windowWidth" id="windowWidth" min="0" value="4" step="0.5" class="case1">
+									<div class="customCheckStyle">
+									<input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" checked>
+									<label for="windowWidthCheck" id="checkWindWidth"></label>
+									</div>Window Width (<span class="units IP">ft</span>)</label>
+									<div class="inputWrapperLeft">
+									<input type="number" name="windowWidth" id="windowWidth" min="0" value="4" step="0.5" class="case1">
 									</div><br>
 
 									<label for="glazing" id="glazingLabel">
-										<div class="customCheckStyle">
-											<input type="radio" name="glazingRadio" value="glazingRatioCheck" class="customCheck" id="glazingRatioCheck">
-											<label for="glazingRatioCheck" id="checkGlzRatio"></label>
-										</div>Window-to-Wall Ratio (%)</label>
-									<div class="inputWrapperLeft">
-										<input type="number" name="glazing" class="inactive case1" id="glazing" min="1" max="95" value="39" step="1" disabled>
+									<div class="customCheckStyle">
+									<input type="radio" name="glazingRadio" value="glazingRatioCheck" id="glazingRatioCheck">
+									<label for="glazingRatioCheck" id="checkGlzRatio"></label>
+								  </div>Window-to-Wall Ratio (%)</label>
+							  	<div class="inputWrapperLeft">
+									<input type="number" name="glazing"  id="glazing" min="1" max="95" value="39" step="1">
 									</div><br>
-</form> -->
 
-											<label for="width" id="windowWidthLabel">
-											<div class="customCheckStyle">
-											<input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" checked>
-											<label for="windowWidthCheck" id="checkWindWidth"></label>
-											</div>Window Width (<span class="units IP">ft</span>)</label>
-											<div class="inputWrapperLeft">
-											<input type="number" name="windowWidth" id="windowWidth" min="0" value="4" step="0.5" class="case1">
-										</div><br>
-
-											<label for="glazing" id="glazingLabel">
-											<div class="customCheckStyle">
-											<input type="radio" name="glazingRadio" value="glazingRatioCheck" id="glazingRatioCheck">
-											<label for="glazingRatioCheck" id="checkGlzRatio"></label>
-										  </div>Window-to-Wall Ratio (%)</label>
-									  	<div class="inputWrapperLeft">
-											<input type="number" name="glazing"  id="glazing" min="1" max="95" value="39" step="1">
-											</div><br>
-
-
-
-
-
-									<!-- <label for="width" id="windowWidthLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" class="customCheck" checked><label for="windowWidthCheck" id="checkWindWidth"></label></div>Window Width (<span class="units IP">ft</span>)<sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
-									<div class="inputWrapperLeft"><input type="number" name="windowWidth" id="windowWidth" min="0" max="24"  value="14" step="0.5" class="case1"></div><br>
-
-									<label for="glazing" class="inactive" id="glazingLabel"><div class="customCheckStyle"><input type="radio" name="glazingRadio" value="glazingRatioCheck" class="customCheck" id="glazingRatioCheck"><label for="glazingRatioCheck" id="checkGlzRatio" class="unselected"></label></div>Window-to-Wall Ratio (%)<sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
-									<div class="inputWrapperLeft"><input type="number" name="glazing" class="inactive case1" id="glazing" min="1" max="95" value="39" step="1" disabled></div><br> -->
 
 									<label>Window Seperation</label>
 									<input type="number" name="distWindow" id="distWindow" min="0"  value="12" step="1">
-									<input type="number" name="distWindow1" id="distWindow1" min="0"  value="12" step="1" disabled><br><br>
+									<input type="number" name="distWindow1" id="distWindow1" min="0"  value="12" step="1"><br><br>
 
 
 								</fieldset>
@@ -306,7 +279,7 @@
 										<legend class="heading first">Shade Geometry</legend>
 										<div  id="caseSelection">
 											<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
-											<h2 id="case2Label" class="unselected"><span id="case2Button" class="unselected"></span>Case 2</h2>
+											<h2 id="case2Label" ><span id="case2Button"></span>Case 2</h2>
 											<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
 
 										</div>
@@ -316,59 +289,59 @@
 
 		 					<label><strong>Horizontal Shade Depth</strong></label>
 							<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4"  value="1" step="1">
-		 					<input type="number" name="hShadeDep1" id="hShadeDep1" min="0" max="4"  value="1" step="1" disabled><br>
+		 					<input type="number" name="hShadeDep1" id="hShadeDep1" min="0" max="4"  value="1" step="1"><br>
 
 		 					<label>&emsp;Number of Shades</label>
 							<input type="number" name="hShadeNum" id="hShadeNum" min="0" max="10"  value="0" step="1">
-		 					<input type="number" name="hShadeNum1" id="hShadeNum1" min="0" max="10"  value="0" step="1" disabled><br>
+		 					<input type="number" name="hShadeNum1" id="hShadeNum1" min="0" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;Spacing</label>
 							<input type="number" name="hShadeSpace" id="hShadeSpace" min="1" max="10"  value="3" step="1">
-		 					<input type="number" name="hShadeSpace1" id="hShadeSpace1" min="1" max="10"  value="3" step="1" disabled><br>
+		 					<input type="number" name="hShadeSpace1" id="hShadeSpace1" min="1" max="10"  value="3" step="1"><br>
 
 		 					<label>&emsp;Distance from Facade</label>
 							<input type="number" name="hShadeDist" id="hShadeDist" min="0" max="10"  value="0" step="1">
-		 					<input type="number" name="hShadeDist1" id="hShadeDist1" min="0" max="10"  value="0" step="1" disabled><br>
+		 					<input type="number" name="hShadeDist1" id="hShadeDist1" min="0" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;Height Above Window</label>
 							<input type="number" name="hShadeHeight" id="hShadeHeight" min="-10" max="10"  value="0" step="1">
-		 					<input type="number" name="hShadeHeight1" id="hShadeHeight1" min="-10" max="10"  value="0" step="1" disabled><br>
+		 					<input type="number" name="hShadeHeight1" id="hShadeHeight1" min="-10" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;Angle</label>
 							<input type="number" name="hShadeAngle" id="hShadeAngle" min="0" max="90"  value="90" step="1">
-		 					<input type="number" name="hShadeAngle1" id="hShadeAngle1" min="0" max="90"  value="90" step="1" disabled><br><br>
+		 					<input type="number" name="hShadeAngle1" id="hShadeAngle1" min="0" max="90"  value="90" step="1"><br><br>
 
 		 					<label><strong>Vertical Shade Depth</strong></label>
 							<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4"  value="1" step="1">
-		 					<input type="number" name="vShadeDep1" id="vShadeDep1" min="0" max="4"  value="1" step="1" disabled><br>
+		 					<input type="number" name="vShadeDep1" id="vShadeDep1" min="0" max="4"  value="1" step="1"><br>
 
 		 					<label>&emsp;Number of Shades</label>
 							<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100"  value="0" step="1">
-		 					<input type="number" name="vShadeNum1" id="vShadeNum1" min="0" max="100"  value="0" step="1" disabled><br>
+		 					<input type="number" name="vShadeNum1" id="vShadeNum1" min="0" max="100"  value="0" step="1"><br>
 
 		 					<label>&emsp;Spacing</label>
 							<input type="number" name="vShadeSpace" id="vShadeSpace" min="1" max="10"  value="1" step="1">
-		 					<input type="number" name="vShadeSpace1" id="vShadeSpace1" min="1" max="10"  value="1" step="1" disabled><br>
+		 					<input type="number" name="vShadeSpace1" id="vShadeSpace1" min="1" max="10"  value="1" step="1"><br>
 
 		 					<label>&emsp;Left/Right</label>
 							<input type="text" name="vShadeStart" id="vShadeStart" value="L">
-		 					<input type="text" name="vShadeStart1" id="vShadeStart1" value="L" disabled><br>
+		 					<input type="text" name="vShadeStart1" id="vShadeStart1" value="L"><br>
 
 							<label>&emsp;Left/Right Shift</label>
 							<input type="number" name="vShadeShift" id="vShadeShift" min="-10" max="10"  value="0" step="1">
-		 					<input type="number" name="vShadeShift1" id="vShadeShift1" min="-10" max="10"  value="0" step="1" disabled><br>
+		 					<input type="number" name="vShadeShift1" id="vShadeShift1" min="-10" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;Distance from Facade</label>
 							<input type="number" name="vShadeDist" id="vShadeDist" min="0" max="10"  value="0" step="1">
-		 					<input type="number" name="vShadeDist1" id="vShadeDist1" min="0" max="10"  value="0" step="1" disabled><br>
+		 					<input type="number" name="vShadeDist1" id="vShadeDist1" min="0" max="10"  value="0" step="1"><br>
 
 							<label>&emsp;Height Above Window</label>
 							<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10"  value="0" step="1">
-		 					<input type="number" name="vShadeHeight1" id="vShadeHeight1" min="0" max="10"  value="0" step="1" disabled><br>
+		 					<input type="number" name="vShadeHeight1" id="vShadeHeight1" min="0" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;Height Relative to Window</label>
 							<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10"  value="0" step="1">
-		 					<input type="number" name="vShadeScale1" id="vShadeScale1" min="0" max="10"  value="0" step="1" disabled><br>
+		 					<input type="number" name="vShadeScale1" id="vShadeScale1" min="0" max="10"  value="0" step="1"><br>
 
 
 
