@@ -81,11 +81,11 @@ p.setup = function() {
     document.getElementsByName("windowHeight1")[0].addEventListener('input', p.reload);
     windowHeightValue = windowHeightValue/10;
 
-    let windowWidthValue = document.getElementById("windowWidth").value;
-    document.getElementsByName("windowWidth")[0].addEventListener('input', p.reload);
+    let windowWidthValue = document.getElementById("windowWidth1").value;
+    document.getElementsByName("windowWidth1")[0].addEventListener('input', p.reload);
 
-    let glzRatioValue = document.getElementById("glazing").value;
-    document.getElementsByName("glazing")[0].addEventListener('input', p.reload);
+    let glzRatioValue = document.getElementById("glazing1").value;
+    document.getElementsByName("glazing1")[0].addEventListener('input', p.reload);
 
     let sillHeightValue = document.getElementById("sill1").value;
     document.getElementsByName("sill1")[0].addEventListener('input', p.reload);
