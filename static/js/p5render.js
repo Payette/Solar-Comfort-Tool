@@ -291,96 +291,39 @@ p.preload = function() {
     r.centLineDist = geoResult.centLineDist;
 
 
+  
 
     // MAKE SUN PATH CORNER GRAPHIC
-    let IsoROV = 0;
+
     roomOrientationValue = roomOrientationValue*-1
-    if (roomOrientationValue > -1 && roomOrientationValue < 90){
-    	IsoROV = roomOrientationValue/90*62.5;
-    }else if (roomOrientationValue > 89 && roomOrientationValue < 180){
-    	IsoROV = ((roomOrientationValue - 90)/90*117.5)+62.5;
-    }else if (roomOrientationValue > 179 && roomOrientationValue < 270){
-    	IsoROV = ((roomOrientationValue - 180)/90*62.5) + 180;
-    }else if (roomOrientationValue > 269){
-    	IsoROV = ((roomOrientationValue - 270)/90*117.5) + 242.5;
-    }else if (roomOrientationValue > -90 && roomOrientationValue <0){
-      IsoROV = roomOrientationValue/90*117.5;
-    }else if (roomOrientationValue > -180 && roomOrientationValue <-89){
-      IsoROV = ((roomOrientationValue + 90)/90*62.5)-117.5;
-    }else if (roomOrientationValue > -270 && roomOrientationValue < -179){
-    IsoROV = ((roomOrientationValue + 180)/90*117.5)-180;
-  }else{
-    IsoROV = ((roomOrientationValue + 270)/90*62.5) - 297.5;
-  }
-
-    let IsoROV2 = 0;
-    if (roomOrientationValue > -1 && roomOrientationValue < 90){
-    	IsoROV2 = roomOrientationValue/90*117.5;
-    }else if (roomOrientationValue > 89 && roomOrientationValue < 180){
-    	IsoROV2 = ((roomOrientationValue - 90)/90*62.5)+117.5;
-    }else if (roomOrientationValue > 179 && roomOrientationValue < 270){
-    	IsoROV2 = ((roomOrientationValue - 180)/90*117.5) + 180;
-    }else if (roomOrientationValue > 269){
-    	IsoROV2 = ((roomOrientationValue - 270)/90*62.5) + 297.5;
-    }else if (roomOrientationValue > -90 && roomOrientationValue < 0){
-      IsoROV2 = roomOrientationValue/90*62.5;
-    }else if (roomOrientationValue > -180 && roomOrientationValue < -89){
-    	IsoROV2 = ((roomOrientationValue + 90)/90*117.5)-62.5;
-    }else if (roomOrientationValue > -270 && roomOrientationValue < -179){
-    	IsoROV2 = ((roomOrientationValue + 180)/90*62.5)-180;
-    }else{
-      IsoROV2 = ((roomOrientationValue + 270)/90*117.5) - 242.5;
-    }
-
-  p.fill(255, 150);
-  p.push();
-    p.translate(380,280);
     p.push();
-      p.rotate(IsoROV*(3.1415926/180));
-      p.push();
-        p.rotate(IsoROV*(-3.1415926/180));
-        p.rotate(IsoROV2*(3.1415926/180));
-        p.translate(47,27);
-
-        p.rotate(IsoROV2*(-3.1415926/180));
-        p.fill(light_black);
-        p.text("N", -5,5);
-      p.pop();
-      p.rotate(45);
-        p.push();
-        p.strokeWeight(1);
-        p.stroke(light_black+50);
-        p.rotate(-45);
-        p.push();
-          p.rotate(IsoROV*(-3.1415926/180));
-          p.ellipse(0,0,75,45); //main circle
-        p.pop();
-        p.push();
-          p.rotate(IsoROV*(-3.1415926/180));
-          p.push();
-          p.rotate(IsoROV2*(3.1415926/180));
-          p.line(-38,-22,38,22);
-          p.strokeWeight(3);
-          p.line(38,22,0,0);
-          p.pop();
-        p.pop();
-        p.rotate(90);
-        p.line(-38,-22,38,22);
-
-      p.pop();
+    p.translate(380,280);
+    p.stroke(100);
+    p.strokeWeight(1);
+    p.noFill();
+    p.ellipse(0,0,75,45); //main circle
+    p.fill(light_black);
+    p.line(0,0,41*p.sin((roomOrientationValue+45)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue+45)*(-3.1415926 / 180)));
+    p.line(0,0,41*p.sin((roomOrientationValue+135)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue+135)*(-3.1415926 / 180)));
+    p.line(0,0,41*p.sin((roomOrientationValue+225)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue+225)*(-3.1415926 / 180)));
+    p.textAlign(p.CENTER, p.CENTER);
+    p.text("N", 56*p.sin((roomOrientationValue-45)*(-3.1415926 / 180)), 34*p.cos((roomOrientationValue-45)*(-3.1415926 / 180)));
+    p.strokeWeight(4);
+    p.line(0,0,41*p.sin((roomOrientationValue-45)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue-45)*(-3.1415926 / 180)));
+    //p.translate(36*p.sin((roomOrientationValue+45)*(-3.1415926 / 180)), 22*p.cos((roomOrientationValue+45)*(-3.1415926 / 180)));
+    //p.point(0,0);
+    p.stroke(10);
+    p.strokeWeight(3);
+    for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
+      if (coordinates[i][1]>0){
+        p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.25));
+        }
+    }
     p.pop();
 
-    for (let i = 0; i < coordinates.length; i++){
-      if (coordinates[i][1]>0){
-        p.push();
-        p.strokeWeight(2);
-        p.stroke(light_black);
-        p.rotate(((coordinates[i][0])-p.float(roomOrientationValue))*(3.1415926 / 180));
-        //p.point(50,0);
-        p.pop();
-      }
-    }
-  p.pop();
+
+
+
   roomOrientationValue = roomOrientationValue*-1
 
   //DETERMINE HOW LARGE THE ISOMETRIC GRAPHIC WILL BE.
