@@ -69,10 +69,10 @@
 								<!-- <legend>Occupancy Thresholds</legend>
 								<hr> -->
 								<label for="fal"> Floor Area Loss</label>
-								<div class="occSlider"><input type="range" name="fal" id="fal" value="20" min="1" max="99"><p id="ppdOutput">20%</p></div>
+								<div class="occSlider"><input type="range" name="fal" id="fal" value="40" min="1" max="99"><p id="ppdOutput">40%</p></div>
 
 			          <label for="mdst">Max Direct Sun Time</label>
-								<div class="occSlider"><input type="range" name="mdst" id="mdst" value="4" min="1" max="12"><p id="ppdOutput2"> 1.00 Hr</p></div>
+								<div class="occSlider"><input type="range" name="mdst" id="mdst" value="3" min="1" max="12"><p id="ppdOutput2"> 0.75 Hr</p></div>
 
 							</fieldset>
 
@@ -163,8 +163,8 @@
  						<input type="number" name="hour1" id="hour1" min="0" max="24" value="12" step="1"><br>
 
  						<label>Day</label>
- 						<input type="number" name="day" id="day" min="1" max="31" value="13" step="1">
- 						<input type="number" name="day1" id="day1" min="1" max="31" value="13" step="1"><br>
+ 						<input type="number" name="day" id="day" min="1" max="31" value="21" step="1">
+ 						<input type="number" name="day1" id="day1" min="1" max="31" value="21" step="1"><br>
 
  						<label>Month</label>
  						<input type="number" name="mon" id="mon" min="1" max="12"  value="9" step="1">
@@ -248,8 +248,8 @@
 									<label for="windowWidthCheck" id="checkWindWidth"></label>
 									</div>Window Width (<span class="units IP">ft</span>)</label>
 									<!-- <div class="inputWrapperLeft"> -->
-									<input type="number" name="windowWidth" id="windowWidth" min="0" value="4" step="0.5" class="case1">
-									<input type="number" name="windowWidth1" id="windowWidth1" min="0" value="4" step="0.5" class="case1"><br>
+									<input type="number" name="windowWidth" id="windowWidth" min="0" value="14" step="0.5" class="case1">
+									<input type="number" name="windowWidth1" id="windowWidth1" min="0" value="3" step="0.5" class="case1"><br>
 									<!-- </div><br> -->
 
 									<label for="glazing" id="glazingLabel">
@@ -291,11 +291,11 @@
 
 		 					<label><strong>Horizontal Shade Depth</strong></label>
 							<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4"  value="1" step="1">
-		 					<input type="number" name="hShadeDep1" id="hShadeDep1" min="0" max="4"  value="1" step="1"><br>
+		 					<input type="number" name="hShadeDep1" id="hShadeDep1" min="0" max="4"  value="2" step="1"><br>
 
 		 					<label>&emsp;Number of Shades</label>
 							<input type="number" name="hShadeNum" id="hShadeNum" min="0" max="10"  value="0" step="1">
-		 					<input type="number" name="hShadeNum1" id="hShadeNum1" min="0" max="10"  value="0" step="1"><br>
+		 					<input type="number" name="hShadeNum1" id="hShadeNum1" min="0" max="10"  value="1" step="1"><br>
 
 		 					<label>&emsp;Spacing</label>
 							<input type="number" name="hShadeSpace" id="hShadeSpace" min="1" max="10"  value="3" step="1">
@@ -311,26 +311,26 @@
 
 		 					<label>&emsp;Angle</label>
 							<input type="number" name="hShadeAngle" id="hShadeAngle" min="0" max="90"  value="90" step="1">
-		 					<input type="number" name="hShadeAngle1" id="hShadeAngle1" min="0" max="90"  value="90" step="1"><br><br>
+		 					<input type="number" name="hShadeAngle1" id="hShadeAngle1" min="0" max="90"  value="60" step="1"><br><br>
 
 		 					<label><strong>Vertical Shade Depth</strong></label>
-							<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4"  value="1" step="1">
+							<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4"  value="3" step="1">
 		 					<input type="number" name="vShadeDep1" id="vShadeDep1" min="0" max="4"  value="1" step="1"><br>
 
 		 					<label>&emsp;Number of Shades</label>
-							<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100"  value="0" step="1">
+							<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100"  value="5" step="1">
 		 					<input type="number" name="vShadeNum1" id="vShadeNum1" min="0" max="100"  value="0" step="1"><br>
 
 		 					<label>&emsp;Spacing</label>
-							<input type="number" name="vShadeSpace" id="vShadeSpace" min="1" max="10"  value="1" step="1">
-		 					<input type="number" name="vShadeSpace1" id="vShadeSpace1" min="1" max="10"  value="1" step="1"><br>
+							<input type="number" name="vShadeSpace" id="vShadeSpace" min="1" max="10"  value="3" step="1">
+		 					<input type="number" name="vShadeSpace1" id="vShadeSpace1" min="1" max="10"  value="2" step="1"><br>
 
 		 					<label>&emsp;Left/Right</label>
 							<input type="text" name="vShadeStart" id="vShadeStart" value="L">
 		 					<input type="text" name="vShadeStart1" id="vShadeStart1" value="L"><br>
 
 							<label>&emsp;Left/Right Shift</label>
-							<input type="number" name="vShadeShift" id="vShadeShift" min="-10" max="10"  value="0" step="1">
+							<input type="number" name="vShadeShift" id="vShadeShift" min="-10" max="10"  value="-1" step="1">
 		 					<input type="number" name="vShadeShift1" id="vShadeShift1" min="-10" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;Distance from Facade</label>
@@ -338,11 +338,11 @@
 		 					<input type="number" name="vShadeDist1" id="vShadeDist1" min="0" max="10"  value="0" step="1"><br>
 
 							<label>&emsp;Height Above Window</label>
-							<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10"  value="0" step="1">
+							<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10"  value="1" step="1">
 		 					<input type="number" name="vShadeHeight1" id="vShadeHeight1" min="0" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;Height Relative to Window</label>
-							<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10"  value="0" step="1">
+							<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10"  value="4" step="1">
 		 					<input type="number" name="vShadeScale1" id="vShadeScale1" min="0" max="10"  value="0" step="1"><br>
 
 
