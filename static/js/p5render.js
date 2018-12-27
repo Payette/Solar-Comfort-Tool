@@ -222,7 +222,17 @@ p.preload = function() {
       document.getElementsByName("hShadeAngle")[0].addEventListener('input', p.reload);
 
       let vertShadeOn = document.getElementById("vShadeOn").value;
-      document.getElementsByName("vShadeOn")[0].addEventListener('input', p.reload);
+      document.getElementsByName("vShadeOn")[0].addEventListener('click', p.reload);
+
+      let checkbox = document.querySelector("input[name=vShadeOn]");
+
+
+      if(checkbox.checked) {
+          vertShadeOn = 0;
+      } else {
+          vertShadeOn = 1;
+      }
+
 
       let vertShadeDep = document.getElementById("vShadeDep").value;
       document.getElementsByName("vShadeDep")[0].addEventListener('input', p.reload);
@@ -574,7 +584,7 @@ p.preload = function() {
   let newCoordinateArray = [];
   for (let k = 0; k<coordinates.length; k++){
     //console.log(coordinates[k][0]+float(roomOrientationValue-180))
-    if (coordinates[k][0]+p.float(roomOrientationValue-180)<-180){
+    if (coordinates[k][0]+p.float(roomOrientationValue-180) < -180){
       newCoordinateArray.push(coordinates[k][0]+p.float(roomOrientationValue-180)+360);
     }else if (coordinates[k][0]+p.float(roomOrientationValue-180)>180){
       newCoordinateArray.push(coordinates[k][0]+p.float(roomOrientationValue-180)-360);
@@ -587,7 +597,7 @@ p.preload = function() {
 let LouverList1 = [];
 let XYLouverTest = [];
 
-if (parseInt(vertShadeOn) == 1){
+if (vertShadeOn == 1){
 
   // VERTICAL SHADES XY
   let XYLouverTest = [];
