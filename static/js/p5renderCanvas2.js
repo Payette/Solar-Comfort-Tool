@@ -114,7 +114,16 @@ p.setup = function() {
     document.getElementsByName("hShadeAngle1")[0].addEventListener('input', p.reload);
 
     let vertShadeOn = document.getElementById("vShadeOn1").value;
-    document.getElementsByName("vShadeOn1")[0].addEventListener('input', p.reload);
+    document.getElementsByName("vShadeOn1")[0].addEventListener('click', p.reload);
+
+    let checkbox = document.querySelector("input[name=vShadeOn1]");
+
+
+    if(checkbox.checked) {
+        vertShadeOn = 0;
+    } else {
+        vertShadeOn = 1;
+    }
 
     let vertShadeDep = document.getElementById("vShadeDep1").value;
     document.getElementsByName("vShadeDep1")[0].addEventListener('input', p.reload);
