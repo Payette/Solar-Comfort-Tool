@@ -559,9 +559,9 @@ br.glzBR {
 	width: 15px;
 }
 
-input[type=checkbox] {
+/* input[type=checkbox] {
 	visibility: hidden;
-}
+} */
 
 /* input[type=radio] {
 	visibility: hidden;
