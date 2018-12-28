@@ -11,6 +11,7 @@
 	width: 100%;
 }
 
+
 .left {
 	position: relative;
 	float: left;
@@ -737,6 +738,7 @@ div#share {
 	float: left;
 }
 
+
 #Outdoorpop input[type=button] {
 	font-family: "museo-sans", sans-serif;
 	font-size: 12px;
@@ -1053,4 +1055,44 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
 	font-family: "museo-sans";
 	font-weight: 900;
 	src: url('../fonts/MuseoSans_1.ttf');
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+	height: 18px;
+	width: 50px;
+  color: white;
+  /* padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 10px;
+	cursor:pointer;
+}
+.button1 {
+  background-color: #000; /* Green */
+  border: none;
+	height: 18px;
+	width: 50px;
+  color: white;
+  /* padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 10px;
+	cursor:pointer;
+}
+.button2 {
+  background-color: #FFF;
+  border: none;
+	height: 18px;
+	width: 60px;
+  color: white;
+  /* padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 10px;
+
 }
