@@ -94,6 +94,22 @@ vis.selectAll('rect').data(arr).enter()
 var sketch1 = function(p) {
   let GridHtSlider, SunRotationSlider;
   let light_black = 100;
+
+
+  let Lon;
+  let Lat;
+  let TimeZone;
+  let Hour;
+  let Day;
+  let Month;
+  let coordinates = [];
+  let solar;
+  let xPointLoc = [];
+  let yPointLoc = [];
+  let roomOrientationValue;
+  let myButton = 0;
+
+
   //let cnv;
 
   var imgCheck;
@@ -117,66 +133,53 @@ p.preload = function() {
       p.clear();
       p.background(255);
 
-      //console.log(timeStepValue);
 
-      /*
-
-      p.push();
-
-      for (let i = 0; i < ColorScaleArray.length; i++){
-        p.fill(ColorScaleArray[i].r,ColorScaleArray[i].g,ColorScaleArray[i].b);
-        p.strokeWeight(1);
-        p.stroke(0);
-        p.rect(275+(i*10),10,10,6);
-      }
-      p.textSize(8);
-      p.text("Hours of the Day in Direct Sun",275,8);
-      for (let i = 0; i < ColorScaleArray.length; i=i+2){
-        p.textSize(6);
-        p.text(i,277+(i*10), 24);
-      }
-      p.pop();
-      */
-
-      //RELOAD THE PAGE ONLY WHEN VALUES ARE CHANGED
-
-      //let Hour = 10.5;
       let glzOrWidth = document.getElementById("glazingRatioCheck").checked;
       //console.log(Radiox);
       document.getElementsByName("glazingRadio")[0].addEventListener('input', p.reload);
       document.getElementsByName("glazingRadio")[1].addEventListener('input', p.reload);
 
 
-      let Lon = document.getElementById("long").value;
+      document.getElementsByName("button1")[0].addEventListener('click', p.checkButton);
+      //console.log(myButton);
+
+
+
+
+      let Lon1 = document.getElementById("long").value;
       document.getElementsByName("long")[0].addEventListener('input', p.reload);
 
-      let Lat = document.getElementById("lat").value;
+      let Lat1 = document.getElementById("lat").value;
       document.getElementsByName("lat")[0].addEventListener('input', p.reload);
 
-      let TimeZone = document.getElementById("timeZone").value;
+
+
+      let TimeZone1 = document.getElementById("timeZone").value;
       document.getElementsByName("timeZone")[0].addEventListener('input', p.reload);
 
 
-      let Hour = document.getElementById("hour").value;
+      let Hour1 = document.getElementById("hour").value;
       document.getElementsByName("hour")[0].addEventListener('input', p.reload);
 
-      let Day = document.getElementById("day").value;
+      let Day1 = document.getElementById("day").value;
       document.getElementsByName("day")[0].addEventListener('input', p.reload);
 
-      let Month = document.getElementById("mon").value;
+      let Month1 = document.getElementById("mon").value;
       document.getElementsByName("mon")[0].addEventListener('input', p.reload);
 
       let timestep = document.getElementById("timeStep").value;
       document.getElementsByName("timeStep")[0].addEventListener('input', p.reload);
 
 
-      let roomOrientationValue = document.getElementById("north").value;
+      let roomOrientationValue1 = document.getElementById("north").value;
       document.getElementsByName("north")[0].addEventListener('input', p.reload);
 
       let gridHeightValue = document.getElementById("gridHt").value;
       document.getElementsByName("gridHt")[0].addEventListener('input', p.reload);
 
       let ceilingHeightValue = document.getElementById("ceiling").value;
+      document.getElementsByName("ceiling")[0].addEventListener('input', p.reload);
+      let ceilingHeightValue1 = document.getElementById("ceiling").value;
       document.getElementsByName("ceiling")[0].addEventListener('input', p.reload);
 
       let wallLen = document.getElementById("wallWidth").value;
@@ -267,26 +270,57 @@ p.preload = function() {
 
 
 
+      if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1){
+        //console.log(1);
+
+      }else{
+        //console.log(0);
+        Lon = Lon1;
+        Lat = Lat1;
+        Hour = Hour1;
+        Day = Day1;
+        Month = Month1;
+        TimeZone = TimeZone1;
+        roomOrientationValue = roomOrientationValue1;
+
+        //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
+        solar = solarCalculator([Lon, Lat]);
+
+    	offset = (new Date().getTimezoneOffset())/60
+    	var dates = []
+    	for (i = 1; i <= 24*timestep; i++) {
+    			hour = i/timestep
+    			dates.push(new Date(2000, Month-1, Day, hour - TimeZone - offset, (hour%parseInt(hour))*60))
+    		}//console.log(dates);
+
+    	now = new Date(2000, Month-1, Day, Hour - TimeZone - offset, (Hour%parseInt(Hour))*60)
+    	start = d3.time.day.floor(now)
+    	end = d3.time.day.offset(start, 1)
+      xPointLoc = [];
+      yPointLoc = [];
+      //roomOrientationValue = roomOrientationValue*-1
+
+      coordinates = [];
+    	 for (i = 1; i <= (24*timestep)-1; i++) {
+    	coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
+    }
+
+    for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
+      if (coordinates[i][1]>0){
+        xPointLoc.push((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
+        yPointLoc.push(((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+        //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+        }
+    }
+    //roomOrientationValue = roomOrientationValue*-1
 
 
-      //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
-      var solar = solarCalculator([Lon, Lat]);
-
-  	offset = (new Date().getTimezoneOffset())/60
-  	var dates = []
-  	for (i = 1; i <= 24*timestep; i++) {
-  			hour = i/timestep
-  			dates.push(new Date(2000, Month-1, Day, hour - TimeZone - offset, (hour%parseInt(hour))*60))
-  		}//console.log(dates);
-
-  	now = new Date(2000, Month-1, Day, Hour - TimeZone - offset, (Hour%parseInt(Hour))*60)
-  	start = d3.time.day.floor(now)
-  	end = d3.time.day.offset(start, 1)
-
-  	var coordinates = [];
-  	 for (i = 1; i <= (24*timestep)-1; i++) {
-  	coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
   }
+      //console.log(coordinates.length);
+
+
+
+
 
 
     //GEO Result - TAKES DATA FROM THE GEO.JS FILE
@@ -309,31 +343,42 @@ p.preload = function() {
     roomOrientationValue = roomOrientationValue*-1
     p.push();
     p.translate(380,280);
-    p.stroke(100);
+    p.strokeCap(p.SQUARE);
+    p.stroke(light_black+100);
     p.strokeWeight(1);
     p.noFill();
     p.ellipse(0,0,75,45); //main circle
-    p.fill(light_black);
-    p.line(0,0,41*p.sin((roomOrientationValue+45)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue+45)*(-3.1415926 / 180)));
-    p.line(0,0,41*p.sin((roomOrientationValue+135)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue+135)*(-3.1415926 / 180)));
-    p.line(0,0,41*p.sin((roomOrientationValue+225)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue+225)*(-3.1415926 / 180)));
+    p.fill(light_black+100);
+    p.line(0,0,45*p.sin((roomOrientationValue+45)*(-3.1415926 / 180)), 27*p.cos((roomOrientationValue+45)*(-3.1415926 / 180)));
+    p.line(0,0,45*p.sin((roomOrientationValue+135)*(-3.1415926 / 180)), 27*p.cos((roomOrientationValue+135)*(-3.1415926 / 180)));
+    p.line(0,0,45*p.sin((roomOrientationValue+225)*(-3.1415926 / 180)), 27*p.cos((roomOrientationValue+225)*(-3.1415926 / 180)));
     p.textAlign(p.CENTER, p.CENTER);
+    p.textSize(10);
     p.text("N", 56*p.sin((roomOrientationValue-45)*(-3.1415926 / 180)), 34*p.cos((roomOrientationValue-45)*(-3.1415926 / 180)));
     p.strokeWeight(4);
-    p.line(0,0,41*p.sin((roomOrientationValue-45)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue-45)*(-3.1415926 / 180)));
+    p.line(0,0,45*p.sin((roomOrientationValue-45)*(-3.1415926 / 180)), 27*p.cos((roomOrientationValue-45)*(-3.1415926 / 180)));
     //p.translate(36*p.sin((roomOrientationValue+45)*(-3.1415926 / 180)), 22*p.cos((roomOrientationValue+45)*(-3.1415926 / 180)));
     //p.point(0,0);
     p.stroke(10);
     p.strokeWeight(3);
-    for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
-      if (coordinates[i][1]>0){
-        p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.25));
-        }
+
+    p.strokeWeight(4);
+    p.stroke(light_black);
+    p.point(xPointLoc[0], yPointLoc[0]);
+    for (let i = 0; i < xPointLoc.length-1; i++){
+      p.strokeWeight(1);
+      //p.stroke(light_black);
+      p.line(xPointLoc[i], yPointLoc[i],xPointLoc[i+1], yPointLoc[i+1]);
+      p.strokeWeight(4);
+      //p.stroke(100);
+      p.point(xPointLoc[i+1], yPointLoc[i+1]);
     }
+    p.strokeWeight(3);
+    p.stroke(100);
+    // for (let i = 0; i < xPointLoc.length; i++){
+    //   p.point(xPointLoc[i], yPointLoc[i]);
+    // }
     p.pop();
-
-
-
 
   roomOrientationValue = roomOrientationValue*-1
 
@@ -524,6 +569,11 @@ p.preload = function() {
     p.strokeWeight(1);
     p.stroke(light_black);
     p.fill(50,50);
+
+    if (vertShadeOn == 0){
+      vertShadeHeight = ceilingHeightValue1 - (r.glzCoords[0][2][2]);
+      vertShadeScale = ceilingHeightValue1 - (r.glzCoords[0][2][2]) +  r.glzCoords[0][0][2];
+    }
 
     //VERTICAL SHADE LOUVERS
     for (let i = 0; i < r.glzCoords.length; i++){
@@ -1126,11 +1176,14 @@ let decider = 0;
     p.line(((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-Ceil, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY))));
     p.line(x, (y*(gridY+2)), x, (y*(gridY+2)+Ceil));
     p.pop();
-    p.noLoop();
+    //console.log(1);
+    //p.noLoop();
 
     //CHECK IF MEETS CONDITION TEXT
 
     let MDTPercentage = p.int((p.float(MDT)/(wallLen * wallDepVal))*100);
+
+    //console.log(p.frameCount);
 
 
     p.push();
@@ -1148,13 +1201,30 @@ let decider = 0;
     p.text(MDTPercentage +"%", 340,38);
     p.textSize(10);
     p.text("> max direct sun time", 340,50);
-    p.pop();
+    // p.pop();
+    // 
+    // //console.log(p.frameCount);
+    // p.fill(50);
+    // p.textSize(7);
+    // p.text(p.frameCount,420,320);
   }
 
 
+
+
   p.reload = function(){
-    p.loop();
+    //p.loop();
     //noLoop();
+    //console.log("hi");
+  }
+  p.checkButton = function(){
+    //p.loop();
+    //noLoop();
+    if (myButton == 1){
+      myButton = 0;
+    }else{
+      myButton = 1;
+    }
   }
 }
 
