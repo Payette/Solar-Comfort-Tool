@@ -110,9 +110,14 @@
 								<div id="caseWrapper">
 									<legend class="heading first">CLIMATE</legend>
 									<div  id="caseSelection">
-										<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
-										<h2 id="case2Label"><span id="case2Button"></span>Case 2</h2>
-										<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+										<!-- <label>Case1</label> -->
+										<button type="button" class="button" name="button" id="button">Case 1</button>
+										<button type="button" class="button" name="button1" id="button1">Case 2</button>
+										<button type="button" class="button2">Click Me!</button>
+					 					<!-- <h2 id="case1Label"><span id="case1Button"></span>Case 1</h2> -->
+										<!-- <input type="checkbox"> -->
+										<!-- <h2 id="case2Label"><span id="case2Button"></span>Case 2</h2>
+										<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2> -->
 
 									</div>
 								</div>
@@ -318,9 +323,9 @@
 							<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4"  value="3" step="1">
 		 					<input type="number" name="vShadeDep1" id="vShadeDep1" min="0" max="4"  value="1" step="1"><br>
 
-							<label>&emsp;Extend Louvers</label>
+							<!-- <label>&emsp;Extend Louvers</label>
 							<input type="checkbox" name="vShadeOn" id="vShadeOn" checked>
-		 					<input type="checkbox" name="vShadeOn1" id="vShadeOn1" checked><br>
+		 					<input type="checkbox" name="vShadeOn1" id="vShadeOn1" checked><br> -->
 
 		 					<label>&emsp;Number of Shades</label>
 							<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100"  value="5" step="1">
@@ -342,13 +347,23 @@
 							<input type="number" name="vShadeDist" id="vShadeDist" min="0" max="10"  value="0" step="1">
 		 					<input type="number" name="vShadeDist1" id="vShadeDist1" min="0" max="10"  value="0" step="1"><br>
 
-							<label>&emsp;Height Above Window</label>
+							<label>&emsp;Full Height Louvers?</label>
+							<input type="checkbox" name="vShadeOn" id="vShadeOn" checked>
+		 					<input type="checkbox" name="vShadeOn1" id="vShadeOn1" checked><br>
+
+							<label>&emsp;&emsp;&emsp;&emsp;Height Above Window</label>
 							<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10"  value="1" step="1">
 		 					<input type="number" name="vShadeHeight1" id="vShadeHeight1" min="0" max="10"  value="0" step="1"><br>
 
-		 					<label>&emsp;Height Relative to Window</label>
+		 					<label>&emsp;&emsp;&emsp;&emsp;Height Relative to Window</label>
 							<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10"  value="4" step="1">
 		 					<input type="number" name="vShadeScale1" id="vShadeScale1" min="0" max="10"  value="0" step="1"><br>
+
+
+
+
+
+
 
 
 
@@ -360,7 +375,7 @@
 	  </div>
 	</div>
 
-		<script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script>
+		<!-- <script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script> -->
 		<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
 		<script type="text/javascript" charset="utf-8" src="static/js/p5renderCanvas2.js"></script>
 		<script type="text/javascript" charset="utf-8" src="static/js/solarCalculator.js"></script>
