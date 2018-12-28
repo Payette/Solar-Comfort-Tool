@@ -2,6 +2,18 @@ var sketch2 = function(p) {
 let GridHtSlider, SunRotationSlider;
 
 let light_black = 100;
+
+let Lon;
+let Lat;
+let TimeZone;
+let Hour;
+let Day;
+let Month;
+let coordinates = [];
+let solar;
+let xPointLoc = [];
+let yPointLoc = [];
+let myButton = 0;
 //let cnv;
 
 var imgCheck;
@@ -34,28 +46,31 @@ p.setup = function() {
     document.getElementsByName("glazingRadio")[0].addEventListener('input', p.reload);
     document.getElementsByName("glazingRadio")[1].addEventListener('input', p.reload);
 
+    document.getElementsByName("button1")[0].addEventListener('click', p.checkButton);
+    console.log(myButton);
+
 
 
 
     //let Hour = 10.5;
 
-    let Lon = document.getElementById("long1").value;
+    let Lon1 = document.getElementById("long1").value;
     document.getElementsByName("long1")[0].addEventListener('input', p.reload);
 
-    let Lat = document.getElementById("lat1").value;
+    let Lat1 = document.getElementById("lat1").value;
     document.getElementsByName("lat1")[0].addEventListener('input', p.reload);
 
-    let TimeZone = document.getElementById("timeZone1").value;
+    let TimeZone1 = document.getElementById("timeZone1").value;
     document.getElementsByName("timeZone1")[0].addEventListener('input', p.reload);
 
-    let Hour = document.getElementById("hour1").value;
+    let Hour1 = document.getElementById("hour1").value;
     document.getElementsByName("hour1")[0].addEventListener('input', p.reload);
 
 
-    let Day = document.getElementById("day1").value;
+    let Day1 = document.getElementById("day1").value;
     document.getElementsByName("day1")[0].addEventListener('input', p.reload);
 
-    let Month = document.getElementById("mon1").value;
+    let Month1 = document.getElementById("mon1").value;
     document.getElementsByName("mon1")[0].addEventListener('input', p.reload);
 
     let timestep = document.getElementById("timeStep").value;
@@ -113,8 +128,15 @@ p.setup = function() {
     let horzShadeAngle = document.getElementById("hShadeAngle1").value;
     document.getElementsByName("hShadeAngle1")[0].addEventListener('input', p.reload);
 
-    let vertShadeOn = document.getElementById("vShadeOn1").value;
+    let ShadeOn = document.getElementById("vShadeOn1").value;
     document.getElementsByName("vShadeOn1")[0].addEventListener('click', p.reload);
+
+    let checkbox1 = document.querySelector("input[name=vShadeOn1]");
+
+
+
+    let vertShadeOn = document.getElementById("vShadeOn").value;
+    document.getElementsByName("vShadeOn")[0].addEventListener('click', p.reload);
 
     let checkbox = document.querySelector("input[name=vShadeOn1]");
 
@@ -159,24 +181,159 @@ p.setup = function() {
 
 
 
-    //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
-    var solar = solarCalculator([Lon, Lat]);
 
-  offset = (new Date().getTimezoneOffset())/60
-  var dates = []
-  for (i = 1; i <= 24*timestep; i++) {
-      hour = i/timestep
-      dates.push(new Date(2000, Month-1, Day, hour - TimeZone - offset, (hour%parseInt(hour))*60))
-    }//console.log(dates);
 
-  now = new Date(2000, Month-1, Day, Hour - TimeZone - offset, (Hour%parseInt(Hour))*60)
-  start = d3.time.day.floor(now)
-  end = d3.time.day.offset(start, 1)
 
-  var coordinates = [];
-   for (i = 1; i <= (24*timestep)-1; i++) {
-  coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
-}
+
+
+    if(myButton == 0){
+      document.getElementsByName("button1")[0].className = "button";
+      // document.getElementById("button1").className = "button1";
+      //let vertShadeStart = document.getElementById("vShadeStart1").value;
+      document.getElementById("vShadeStart1").value = document.getElementById("vShadeStart").value;
+      document.getElementById("vShadeStart1").disabled = true;
+
+      //DETERMINE HOW LARGE THE ISOMETRIC GRAPHIC WILL BE.
+      //FIRST MAKE IT, THEN RE-DO IT USING A MULTIPLIER TO INCREASE OR DECREASE THE SCALE SO IT STAYS WITHIN THE BOUNDS OF THE CANVAS
+
+        //let CeilHt = CeilingSlider.value();//Ceiling Height (ft) - this moves the whole grid down.
+        let gridX = wallLen; // number of y grids - should be fixed size normally at 60
+        let gridY = wallDepVal-1; // number of x grids - should be fixed size normally at 30
+        let gridHt = gridHeightValue;
+        //let sunRotation = SunRotationSlider.value() * (3.1415926/180);
+
+
+        //ISOMETRIC BASED ON SQUARE OF 200px x 120px - the x and y numbers below change if not square grid
+        let x = 100;
+        let y = 60;
+        let xNext = 200-x;
+        let yNext = 120-y;
+        let Ceil = ceilingHeightValue * 120;
+        let yShift = 0; //x * gridY
+
+        //SINGLE GRID BLOCK - NOT VISIBLE
+        //CLOCKWISE STARTING @ TOP LEFT
+        let x1 = x+yShift;
+        let y1 = 0+Ceil;
+        let x2 = (200)+yShift;
+        let y2 = y+Ceil;
+        let x3 = ((200)-x)+yShift;
+        let y3 = (120)+Ceil;
+        let x4 = 0+yShift;
+        let y4 = ((120)-y)+Ceil;
+
+        //RE-DO THE MULTIPLIER TO FILL THE CANVAS
+        let newMult = 0;
+        let newYMult = 300/((y3+(y*(gridX)))+(yNext*(gridY)));
+        let newXMult = 340/(x2+(xNext*(gridX)));
+        if (newXMult>newYMult) {
+          newMult = newYMult;
+        } else {
+          newMult = newXMult;
+        }
+        let m = newMult;
+
+        //ISOMETRIC BASED ON SQUARE OF 200px x 120px - the x and y numbers below change if not square grid
+        x = 100*m;
+        y = 60*m;
+        xNext = (200*m)-x;
+        yNext = (120*m)-y;
+        Ceil = (ceilingHeightValue*m) * 120;
+        yShift = x * (gridY);
+        let GridHt = (gridHt*m) * 120;
+
+        //SINGLE GRID BLOCK - NOT VISIBLE
+        //CLOCKWISE STARTING @ TOP LEFT
+        x1 = x+yShift;
+        y1 = 0+Ceil;
+        x2 = (200*m)+yShift;
+        y2 = y+Ceil;
+        x3 = ((200*m)-x)+yShift;
+        y3 = (120*m)+Ceil;
+        x4 = 0+yShift;
+        y4 = ((120*m)-y)+Ceil;
+
+        //ITEMS THAT EXIST BEHIND THE GRID PLANE
+        //FAR WALL LINE
+        //p.push();
+        p.noFill();
+        p.stroke(light_black+100);
+        p.strokeWeight(1);
+        p.line(x2, y2, x2, y2-Ceil);
+
+        //FLOOR PLANE
+        p.quad(x2, y2, (x2+(xNext*(gridX))), (y2+(y*(gridX))), ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY))), x, (y*(gridY+2))+Ceil);
+      //  p.push();
+        p.stroke(light_black+100);
+
+      //  p.push();
+        p.noFill();
+        p.stroke(light_black+100);
+        p.strokeWeight(1);
+      //  p.quad(x2, y2-GridHt, (x2+(xNext*(gridX))), (y2+(y*(gridX)))-GridHt, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-GridHt, x, (y*(gridY+2))+Ceil-GridHt);
+        p.stroke(light_black+100);
+
+        //CEILING PLANE
+        p.quad(x2, y2-Ceil, (x2+(xNext*(gridX))), (y2+(y*(gridX)))-Ceil, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-Ceil, x, (y*(gridY+2)));
+
+        //WALL LINES
+        //line(x2, y2, x2, y2-Ceil); This one exists behind the grid
+        p.line((x2+(xNext*(gridX))), (y2+(y*(gridX))), (x2+(xNext*(gridX))), (y2+(y*(gridX)))-Ceil);
+        p.line(((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-Ceil, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY))));
+        p.line(x, (y*(gridY+2)), x, (y*(gridY+2)+Ceil));
+      //  p.pop();
+
+    }else{
+      document.getElementsByName("button1")[0].className = "button1";
+
+
+
+
+    if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1){
+      //console.log(1);
+
+    }else{
+      //console.log(0);
+      Lon = Lon1;
+      Lat = Lat1;
+      Hour = Hour1;
+      Day = Day1;
+      Month = Month1;
+      TimeZone = TimeZone1;
+
+      //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
+      solar = solarCalculator([Lon, Lat]);
+
+    offset = (new Date().getTimezoneOffset())/60
+    var dates = []
+    for (i = 1; i <= 24*timestep; i++) {
+        hour = i/timestep
+        dates.push(new Date(2000, Month-1, Day, hour - TimeZone - offset, (hour%parseInt(hour))*60))
+      }//console.log(dates);
+
+    now = new Date(2000, Month-1, Day, Hour - TimeZone - offset, (Hour%parseInt(Hour))*60)
+    start = d3.time.day.floor(now)
+    end = d3.time.day.offset(start, 1)
+
+    coordinates = [];
+     for (i = 1; i <= (24*timestep)-1; i++) {
+    coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
+  }
+
+  for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
+    if (coordinates[i][1]>0){
+      xPointLoc.push((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)));
+      yPointLoc.push(((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+      //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+      }
+  }
+
+
+    }
+
+
+
+
 
 
   //GEO Result - TAKES DATA FROM THE GEO.JS FILE
@@ -199,27 +356,41 @@ p.setup = function() {
   roomOrientationValue = roomOrientationValue*-1
   p.push();
   p.translate(380,280);
-  p.stroke(100);
+  p.strokeCap(p.SQUARE);
+  p.stroke(light_black+100);
   p.strokeWeight(1);
   p.noFill();
   p.ellipse(0,0,75,45); //main circle
-  p.fill(light_black);
-  p.line(0,0,41*p.sin((roomOrientationValue+45)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue+45)*(-3.1415926 / 180)));
-  p.line(0,0,41*p.sin((roomOrientationValue+135)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue+135)*(-3.1415926 / 180)));
-  p.line(0,0,41*p.sin((roomOrientationValue+225)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue+225)*(-3.1415926 / 180)));
+  p.fill(light_black+100);
+  p.line(0,0,45*p.sin((roomOrientationValue+45)*(-3.1415926 / 180)), 27*p.cos((roomOrientationValue+45)*(-3.1415926 / 180)));
+  p.line(0,0,45*p.sin((roomOrientationValue+135)*(-3.1415926 / 180)), 27*p.cos((roomOrientationValue+135)*(-3.1415926 / 180)));
+  p.line(0,0,45*p.sin((roomOrientationValue+225)*(-3.1415926 / 180)), 27*p.cos((roomOrientationValue+225)*(-3.1415926 / 180)));
   p.textAlign(p.CENTER, p.CENTER);
+  p.textSize(10);
   p.text("N", 56*p.sin((roomOrientationValue-45)*(-3.1415926 / 180)), 34*p.cos((roomOrientationValue-45)*(-3.1415926 / 180)));
   p.strokeWeight(4);
-  p.line(0,0,41*p.sin((roomOrientationValue-45)*(-3.1415926 / 180)), 25*p.cos((roomOrientationValue-45)*(-3.1415926 / 180)));
+  p.line(0,0,45*p.sin((roomOrientationValue-45)*(-3.1415926 / 180)), 27*p.cos((roomOrientationValue-45)*(-3.1415926 / 180)));
   //p.translate(36*p.sin((roomOrientationValue+45)*(-3.1415926 / 180)), 22*p.cos((roomOrientationValue+45)*(-3.1415926 / 180)));
   //p.point(0,0);
   p.stroke(10);
   p.strokeWeight(3);
-  for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
-    if (coordinates[i][1]>0){
-      p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.25));
-      }
+
+  p.strokeWeight(4);
+  p.stroke(light_black);
+  p.point(xPointLoc[0], yPointLoc[0]);
+  for (let i = 0; i < xPointLoc.length-1; i++){
+    p.strokeWeight(1);
+    //p.stroke(light_black);
+    p.line(xPointLoc[i], yPointLoc[i],xPointLoc[i+1], yPointLoc[i+1]);
+    p.strokeWeight(4);
+    //p.stroke(100);
+    p.point(xPointLoc[i+1], yPointLoc[i+1]);
   }
+  p.strokeWeight(3);
+  p.stroke(100);
+  // for (let i = 0; i < xPointLoc.length; i++){
+  //   p.point(xPointLoc[i], yPointLoc[i]);
+  // }
   p.pop();
 
 
@@ -1018,7 +1189,7 @@ for (let i = 0; i < gridColorArray; i++){
   p.line(((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY)))-Ceil, ((x3+(xNext*(gridX)))-(x*(gridY))), ((y3+(y*(gridX)))+(yNext*(gridY))));
   p.line(x, (y*(gridY+2)), x, (y*(gridY+2)+Ceil));
   p.pop();
-  p.noLoop();
+  //p.noLoop();
 
   //CHECK IF MEETS CONDITION TEXT
 
@@ -1041,12 +1212,29 @@ for (let i = 0; i < gridColorArray; i++){
   p.textSize(10);
   p.text("> max direct sun time", 340,50);
   p.pop();
+
+  // p.push();
+  //
+  // p.fill(50);
+  // p.textSize(7);
+  // p.text(p.frameCount,420,320);
+  // p.pop();
+}
 }
 
 
 p.reload = function(){
-  p.loop();
+  //p.loop();
   //noLoop();
+}
+p.checkButton = function(){
+  //p.loop();
+  //noLoop();
+  if (myButton == 1){
+    myButton = 0;
+  }else{
+    myButton = 1;
+  }
 }
 }
 var iso2 = new p5(sketch2);
