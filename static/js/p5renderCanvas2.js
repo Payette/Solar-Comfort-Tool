@@ -47,6 +47,8 @@ p.setup = function() {
     document.getElementsByName("glazingRadio")[1].addEventListener('input', p.reload);
 
     document.getElementsByName("button1")[0].addEventListener('click', p.checkButton);
+    document.getElementsByName("button1")[1].addEventListener('click', p.checkButton);
+    document.getElementsByName("button1")[2].addEventListener('click', p.checkButton);
     //console.log(Case2Button);
 
 
@@ -183,6 +185,8 @@ p.setup = function() {
 
     if(Case2Button == 0){
       document.getElementsByName("button1")[0].className = "button1OFF";
+      document.getElementsByName("button1")[1].className = "button1OFF";
+      document.getElementsByName("button1")[2].className = "button1OFF";
       // document.getElementById("button1").className = "button1";
       //let vertShadeStart = document.getElementById("vShadeStart1").value;
 
@@ -349,6 +353,8 @@ p.setup = function() {
 // CHECK IF THE CASE2BUTTON IS CLICKED
     }else{
       document.getElementsByName("button1")[0].className = "button1ON";
+      document.getElementsByName("button1")[1].className = "button1ON";
+      document.getElementsByName("button1")[2].className = "button1ON";
 
       document.getElementById("long1").disabled = false;
       document.getElementById("lat1").disabled = false;
