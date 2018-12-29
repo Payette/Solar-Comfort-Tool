@@ -112,12 +112,8 @@
 									<div  id="caseSelection">
 										<!-- <label>Case1</label> -->
 										<button type="button" class="button" name="button" id="button">Case 1</button>
-										<button type="button" class="button" name="button1" id="button1">Case 2</button>
-										<button type="button" class="button2">Click Me!</button>
-					 					<!-- <h2 id="case1Label"><span id="case1Button"></span>Case 1</h2> -->
-										<!-- <input type="checkbox"> -->
-										<!-- <h2 id="case2Label"><span id="case2Button"></span>Case 2</h2>
-										<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2> -->
+										<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
+										<button type="button" class="button2"></button>
 
 									</div>
 								</div>
@@ -176,7 +172,7 @@
  						<input type="number" name="mon1" id="mon1" min="1" max="12"  value="9" step="1"><br>
 
  						<label>Timestep per Hour</label>
- 						<input type="number" name="timeStep" id="timeStep" min="1" max="8"  value="4" step="1" disabled>
+ 						<input type="number" name="timeStep" id="timeStep" min="1" max="8"  value="4" step="1" disabled><br><br>
  						<!-- <input type="number" name="timeStep1" id="timeStep1" min="1" max="8"  value="2" step="1"><br> -->
 
 
@@ -198,9 +194,10 @@
 									<div id="caseWrapper">
 										<legend class="heading first">Room Geometry</legend>
 										<div  id="caseSelection">
-											<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
-											<h2 id="case2Label"><span id="case2Button"></span>Case 2</h2>
-											<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+											<!-- <label>Case1</label> -->
+											<button type="button" class="button" name="button" id="button">Case 1</button>
+											<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
+											<button type="button" class="button2"></button>
 
 										</div>
 									</div>
@@ -254,7 +251,7 @@
 									</div>Window Width (<span class="units IP">ft</span>)</label>
 									<!-- <div class="inputWrapperLeft"> -->
 									<input type="number" name="windowWidth" id="windowWidth" min="0" value="14" step="0.5" class="case1">
-									<input type="number" name="windowWidth1" id="windowWidth1" min="0" value="3" step="0.5" class="case1"><br>
+									<input type="number" name="windowWidth1" id="windowWidth1" min="0" value="14" step="0.5" class="case1"><br>
 									<!-- </div><br> -->
 
 									<label for="glazing" id="glazingLabel">
@@ -285,9 +282,10 @@
 									<div id="caseWrapper">
 										<legend class="heading first">Shade Geometry</legend>
 										<div  id="caseSelection">
-											<h2 id="case1Label"><span id="case1Button"></span>Case 1</h2>
-											<h2 id="case2Label" ><span id="case2Button"></span>Case 2</h2>
-											<h2 id="case3Label" class="unselected"><span id="dead" class="unselected"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+											<!-- <label>Case1</label> -->
+											<button type="button" class="button" name="button" id="button">Case 1</button>
+											<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
+											<button type="button" class="button2"></button>
 
 										</div>
 									</div>
@@ -296,11 +294,11 @@
 
 		 					<label><strong>Horizontal Shade Depth</strong></label>
 							<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4"  value="1" step="1">
-		 					<input type="number" name="hShadeDep1" id="hShadeDep1" min="0" max="4"  value="2" step="1"><br>
+		 					<input type="number" name="hShadeDep1" id="hShadeDep1" min="0" max="4"  value="1" step="1"><br>
 
 		 					<label>&emsp;Number of Shades</label>
 							<input type="number" name="hShadeNum" id="hShadeNum" min="0" max="10"  value="0" step="1">
-		 					<input type="number" name="hShadeNum1" id="hShadeNum1" min="0" max="10"  value="1" step="1"><br>
+		 					<input type="number" name="hShadeNum1" id="hShadeNum1" min="0" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;Spacing</label>
 							<input type="number" name="hShadeSpace" id="hShadeSpace" min="1" max="10"  value="3" step="1">
@@ -316,31 +314,31 @@
 
 		 					<label>&emsp;Angle</label>
 							<input type="number" name="hShadeAngle" id="hShadeAngle" min="0" max="90"  value="90" step="1">
-		 					<input type="number" name="hShadeAngle1" id="hShadeAngle1" min="0" max="90"  value="60" step="1"><br><br>
+		 					<input type="number" name="hShadeAngle1" id="hShadeAngle1" min="0" max="90"  value="90" step="1"><br><br>
 
 		 					<label><strong>Vertical Shade Depth</strong></label>
 
 							<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4"  value="3" step="1">
-		 					<input type="number" name="vShadeDep1" id="vShadeDep1" min="0" max="4"  value="1" step="1"><br>
+		 					<input type="number" name="vShadeDep1" id="vShadeDep1" min="0" max="4"  value="3" step="1"><br>
 
 							<!-- <label>&emsp;Extend Louvers</label>
 							<input type="checkbox" name="vShadeOn" id="vShadeOn" checked>
 		 					<input type="checkbox" name="vShadeOn1" id="vShadeOn1" checked><br> -->
 
 		 					<label>&emsp;Number of Shades</label>
-							<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100"  value="5" step="1">
+							<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100"  value="0" step="1">
 		 					<input type="number" name="vShadeNum1" id="vShadeNum1" min="0" max="100"  value="0" step="1"><br>
 
 		 					<label>&emsp;Spacing</label>
 							<input type="number" name="vShadeSpace" id="vShadeSpace" min="1" max="10"  value="3" step="1">
-		 					<input type="number" name="vShadeSpace1" id="vShadeSpace1" min="1" max="10"  value="2" step="1"><br>
+		 					<input type="number" name="vShadeSpace1" id="vShadeSpace1" min="1" max="10"  value="3" step="1"><br>
 
 		 					<label>&emsp;Left/Right</label>
 							<input type="text" name="vShadeStart" id="vShadeStart" value="L">
 		 					<input type="text" name="vShadeStart1" id="vShadeStart1" value="L"><br>
 
 							<label>&emsp;Left/Right Shift</label>
-							<input type="number" name="vShadeShift" id="vShadeShift" min="-10" max="10"  value="-1" step="1">
+							<input type="number" name="vShadeShift" id="vShadeShift" min="-10" max="10"  value="0" step="1">
 		 					<input type="number" name="vShadeShift1" id="vShadeShift1" min="-10" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;Distance from Facade</label>
@@ -352,11 +350,11 @@
 		 					<input type="checkbox" name="vShadeOn1" id="vShadeOn1" checked><br>
 
 							<label>&emsp;&emsp;&emsp;&emsp;Height Above Window</label>
-							<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10"  value="1" step="1">
+							<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10"  value="0" step="1">
 		 					<input type="number" name="vShadeHeight1" id="vShadeHeight1" min="0" max="10"  value="0" step="1"><br>
 
 		 					<label>&emsp;&emsp;&emsp;&emsp;Height Relative to Window</label>
-							<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10"  value="4" step="1">
+							<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10"  value="0" step="1">
 		 					<input type="number" name="vShadeScale1" id="vShadeScale1" min="0" max="10"  value="0" step="1"><br>
 
 
