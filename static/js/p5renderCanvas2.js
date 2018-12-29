@@ -13,7 +13,7 @@ let coordinates = [];
 let solar;
 let xPointLoc = [];
 let yPointLoc = [];
-let myButton = 0;
+let Case2Button = 0;
 //let cnv;
 
 var imgCheck;
@@ -47,7 +47,7 @@ p.setup = function() {
     document.getElementsByName("glazingRadio")[1].addEventListener('input', p.reload);
 
     document.getElementsByName("button1")[0].addEventListener('click', p.checkButton);
-    console.log(myButton);
+    //console.log(Case2Button);
 
 
 
@@ -128,15 +128,10 @@ p.setup = function() {
     let horzShadeAngle = document.getElementById("hShadeAngle1").value;
     document.getElementsByName("hShadeAngle1")[0].addEventListener('input', p.reload);
 
-    let ShadeOn = document.getElementById("vShadeOn1").value;
+
+
+    let vertShadeOn = document.getElementById("vShadeOn1").value;
     document.getElementsByName("vShadeOn1")[0].addEventListener('click', p.reload);
-
-    let checkbox1 = document.querySelector("input[name=vShadeOn1]");
-
-
-
-    let vertShadeOn = document.getElementById("vShadeOn").value;
-    document.getElementsByName("vShadeOn")[0].addEventListener('click', p.reload);
 
     let checkbox = document.querySelector("input[name=vShadeOn1]");
 
@@ -184,14 +179,79 @@ p.setup = function() {
 
 
 
+// CHECK IF THE CASE2BUTTON IS CLICKED
 
-
-    if(myButton == 0){
-      document.getElementsByName("button1")[0].className = "button";
+    if(Case2Button == 0){
+      document.getElementsByName("button1")[0].className = "button1OFF";
       // document.getElementById("button1").className = "button1";
       //let vertShadeStart = document.getElementById("vShadeStart1").value;
+
+      document.getElementById("long1").value = document.getElementById("long").value;
+      document.getElementById("lat1").value = document.getElementById("lat").value;
+      document.getElementById("timeZone1").value = document.getElementById("timeZone").value;
+      document.getElementById("hour1").value = document.getElementById("hour").value;
+      document.getElementById("day1").value = document.getElementById("day").value;
+      document.getElementById("mon1").value = document.getElementById("mon").value;
+      document.getElementById("north1").value = document.getElementById("north").value;
+      document.getElementById("gridHt1").value = document.getElementById("gridHt").value;
+      document.getElementById("ceiling1").value = document.getElementById("ceiling").value;
+      document.getElementById("wallWidth1").value = document.getElementById("wallWidth").value;
+      document.getElementById("wallDep1").value = document.getElementById("wallDep").value;
+      document.getElementById("windowHeight1").value = document.getElementById("windowHeight").value;
+      document.getElementById("windowWidth1").value = document.getElementById("windowWidth").value;
+      document.getElementById("glazing1").value = document.getElementById("glazing").value;
+      document.getElementById("sill1").value = document.getElementById("sill").value;
+      document.getElementById("distWindow1").value = document.getElementById("distWindow").value;
+      document.getElementById("hShadeDep1").value = document.getElementById("hShadeDep").value;
+      document.getElementById("hShadeNum1").value = document.getElementById("hShadeNum").value;
+      document.getElementById("hShadeSpace1").value = document.getElementById("hShadeSpace").value;
+      document.getElementById("hShadeDist1").value = document.getElementById("hShadeDist").value;
+      document.getElementById("hShadeHeight1").value = document.getElementById("hShadeHeight").value;
+      document.getElementById("hShadeAngle1").value = document.getElementById("hShadeAngle").value;
+      document.getElementById("vShadeOn1").value = document.getElementById("vShadeOn").value;
+      document.getElementById("vShadeDep1").value = document.getElementById("vShadeDep").value;
+      document.getElementById("vShadeNum1").value = document.getElementById("vShadeNum").value;
+      document.getElementById("vShadeSpace1").value = document.getElementById("vShadeSpace").value;
+      document.getElementById("vShadeShift1").value = document.getElementById("vShadeShift").value;
+      document.getElementById("vShadeDist1").value = document.getElementById("vShadeDist").value;
+      document.getElementById("vShadeHeight1").value = document.getElementById("vShadeHeight").value;
+      document.getElementById("vShadeScale1").value = document.getElementById("vShadeScale").value;
       document.getElementById("vShadeStart1").value = document.getElementById("vShadeStart").value;
+
+      document.getElementById("long1").disabled = true;
+      document.getElementById("lat1").disabled = true;
+      document.getElementById("timeZone1").disabled = true;
+      document.getElementById("hour1").disabled = true;
+      document.getElementById("day1").disabled = true;
+      document.getElementById("mon1").disabled = true;
+      document.getElementById("north1").disabled = true;
+      document.getElementById("gridHt1").disabled = true;
+      document.getElementById("ceiling1").disabled = true;
+      document.getElementById("wallWidth1").disabled = true;
+      document.getElementById("wallDep1").disabled = true;
+      document.getElementById("windowHeight1").disabled = true;
+      document.getElementById("windowWidth1").disabled = true;
+      document.getElementById("glazing1").disabled = true;
+      document.getElementById("sill1").disabled = true;
+      document.getElementById("distWindow1").disabled = true;
+      document.getElementById("hShadeDep1").disabled = true;
+      document.getElementById("hShadeNum1").disabled = true;
+      document.getElementById("hShadeSpace1").disabled = true;
+      document.getElementById("hShadeDist1").disabled = true;
+      document.getElementById("hShadeHeight1").disabled = true;
+      document.getElementById("hShadeAngle1").disabled = true;
+      document.getElementById("vShadeOn1").disabled = true;
+      document.getElementById("vShadeDep1").disabled = true;
+      document.getElementById("vShadeNum1").disabled = true;
+      document.getElementById("vShadeSpace1").disabled = true;
+      document.getElementById("vShadeShift1").disabled = true;
+      document.getElementById("vShadeDist1").disabled = true;
+      document.getElementById("vShadeHeight1").disabled = true;
+      document.getElementById("vShadeScale1").disabled = true;
       document.getElementById("vShadeStart1").disabled = true;
+
+
+
 
       //DETERMINE HOW LARGE THE ISOMETRIC GRAPHIC WILL BE.
       //FIRST MAKE IT, THEN RE-DO IT USING A MULTIPLIER TO INCREASE OR DECREASE THE SCALE SO IT STAYS WITHIN THE BOUNDS OF THE CANVAS
@@ -283,10 +343,44 @@ p.setup = function() {
         p.line(x, (y*(gridY+2)), x, (y*(gridY+2)+Ceil));
       //  p.pop();
 
+
+
+
+// CHECK IF THE CASE2BUTTON IS CLICKED
     }else{
-      document.getElementsByName("button1")[0].className = "button1";
+      document.getElementsByName("button1")[0].className = "button1ON";
 
-
+      document.getElementById("long1").disabled = false;
+      document.getElementById("lat1").disabled = false;
+      document.getElementById("timeZone1").disabled = false;
+      document.getElementById("hour1").disabled = false;
+      document.getElementById("day1").disabled = false;
+      document.getElementById("mon1").disabled = false;
+      document.getElementById("north1").disabled = false;
+      document.getElementById("gridHt1").disabled = false;
+      document.getElementById("ceiling1").disabled = false;
+      document.getElementById("wallWidth1").disabled = false;
+      document.getElementById("wallDep1").disabled = false;
+      document.getElementById("windowHeight1").disabled = false;
+      document.getElementById("windowWidth1").disabled = false;
+      document.getElementById("glazing1").disabled = false;
+      document.getElementById("sill1").disabled = false;
+      document.getElementById("distWindow1").disabled = false;
+      document.getElementById("hShadeDep1").disabled = false;
+      document.getElementById("hShadeNum1").disabled = false;
+      document.getElementById("hShadeSpace1").disabled = false;
+      document.getElementById("hShadeDist1").disabled = false;
+      document.getElementById("hShadeHeight1").disabled = false;
+      document.getElementById("hShadeAngle1").disabled = false;
+      document.getElementById("vShadeOn1").disabled = false;
+      document.getElementById("vShadeDep1").disabled = false;
+      document.getElementById("vShadeNum1").disabled = false;
+      document.getElementById("vShadeSpace1").disabled = false;
+      document.getElementById("vShadeShift1").disabled = false;
+      document.getElementById("vShadeDist1").disabled = false;
+      document.getElementById("vShadeHeight1").disabled = false;
+      document.getElementById("vShadeScale1").disabled = false;
+      document.getElementById("vShadeStart1").disabled = false;
 
 
     if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1){
@@ -1230,10 +1324,10 @@ p.reload = function(){
 p.checkButton = function(){
   //p.loop();
   //noLoop();
-  if (myButton == 1){
-    myButton = 0;
+  if (Case2Button == 1){
+    Case2Button = 0;
   }else{
-    myButton = 1;
+    Case2Button = 1;
   }
 }
 }
