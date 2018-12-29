@@ -1058,7 +1058,7 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
 }
 
 .button {
-  background-color: #4CAF50; /* Green */
+  background-color: #04a0dc; /* Blue */
   border: none;
 	height: 18px;
 	width: 50px;
@@ -1070,8 +1070,21 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
   font-size: 10px;
 	cursor:pointer;
 }
-.button1 {
-  background-color: #000; /* Green */
+.button1OFF {
+  background-color: #e5e5e5; /* Grey */
+  border: none;
+	height: 18px;
+	width: 50px;
+  color: white;
+  /* padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 10px;
+	cursor:pointer;
+}
+.button1ON {
+  background-color: #ff9e1e; /* Orange */
   border: none;
 	height: 18px;
 	width: 50px;
@@ -1084,7 +1097,7 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
 	cursor:pointer;
 }
 .button2 {
-  background-color: #FFF;
+  background-color: #FFF; /* this is the hidden white button */
   border: none;
 	height: 18px;
 	width: 60px;
