@@ -414,13 +414,13 @@ p.setup = function() {
       for (i = 1; i <= 24*timestep; i++) {
         hour = i/timestep
         if ( i == ((parseInt(24-Hour))*timestep)){
-          date = new Date(2000, Month-1, Day, hour, (hour%parseInt(hour))*60);
+          date = new Date(2000, Month-1, Day, hour - offset - TimeZone, (hour%parseInt(hour))*60);
           //console.log((hour%parseInt(hour))*60 + " " + Hour);
           let mytime = 24 - hour;
-          date2 = new Date(2000, Month-1, Day, Hour, 0);
+          date2 = new Date(2000, Month-1, Day, Hour - offset - TimeZone, 0);
         }
-        dates.push(new Date(2000, Month-1, Day, hour - offset, (hour%parseInt(hour))*60));
-      }
+  			dates.push(new Date(2000, Month-1, Day, hour - offset - TimeZone, (hour%parseInt(hour))*60));
+  		}
       //console.log(dates);
       //console.log(date);
 
