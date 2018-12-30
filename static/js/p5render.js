@@ -1,6 +1,19 @@
 //THIS UPDATES THE FLOOR AREA LOSS, MAX DIRECT SUNTIME AND TIMESTEP PER HOUR VALUES
 //IT ALSO REMEMBERS THEM SO THEY CAN BE USED IN THE D3 COLOR CHART BEFORE THE DRAW LOOP
 
+let singleHour = 0;
+let fullDay = 1;
+
+function msg(){
+    singleHour = 1;
+    fullDay = 0;
+}
+
+function msg2(){
+    singleHour = 0;
+    fullDay = 1;
+}
+
 let timeStepValue = 4;
 let ppdValue1 = 4;
 $("#timeStep").on("input", function(event) {
@@ -108,6 +121,7 @@ var sketch1 = function(p) {
   let yPointLoc = [];
   let roomOrientationValue;
   let myButton = 0;
+  let currentStudy = 0;
 
 
   //let cnv;
@@ -142,6 +156,17 @@ p.preload = function() {
 
       document.getElementsByName("button1")[0].addEventListener('click', p.checkButton);
       //console.log(myButton);
+
+
+      if (singleHour == 1){
+        document.getElementById("bHour").className="optionButton selected";
+        document.getElementById("bDay").className="optionButton unselected";
+      }else{
+        document.getElementById("bHour").className="optionButton unselected";
+        document.getElementById("bDay").className="optionButton selected";
+      }
+
+
 
 
 
@@ -270,7 +295,7 @@ p.preload = function() {
 
 
 
-      if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1){
+      if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1 && currentStudy == singleHour){
         //console.log(1);
 
       }else{
@@ -282,27 +307,36 @@ p.preload = function() {
         Month = Month1;
         TimeZone = TimeZone1;
         roomOrientationValue = roomOrientationValue1;
+        currentStudy = singleHour;
 
         //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
         solar = solarCalculator([Lon, Lat]);
 
-    	offset = (new Date().getTimezoneOffset())/60
+    	offset = (new Date().getTimezoneOffset())/60;
     	var dates = []
+      var date;
+      var date2;
     	for (i = 1; i <= 24*timestep; i++) {
-    			hour = i/timestep
-    			dates.push(new Date(2000, Month-1, Day, hour - TimeZone - offset, (hour%parseInt(hour))*60))
-    		}//console.log(dates);
+        hour = i/timestep
+        if ( i == ((parseInt(24-Hour))*timestep)){
+          date = new Date(2000, Month-1, Day, hour, (hour%parseInt(hour))*60);
+          //console.log((hour%parseInt(hour))*60 + " " + Hour);
+          let mytime = 24 - hour;
+          date2 = new Date(2000, Month-1, Day, Hour, 0);
+        }
+  			dates.push(new Date(2000, Month-1, Day, hour - offset, (hour%parseInt(hour))*60));
+  		}
+      //console.log(dates);
+      //console.log(date);
 
-    	now = new Date(2000, Month-1, Day, Hour - TimeZone - offset, (Hour%parseInt(Hour))*60)
-    	start = d3.time.day.floor(now)
-    	end = d3.time.day.offset(start, 1)
+
       xPointLoc = [];
       yPointLoc = [];
-      //roomOrientationValue = roomOrientationValue*-1
 
       coordinates = [];
     	 for (i = 1; i <= (24*timestep)-1; i++) {
     	coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
+
     }
 
     for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
@@ -312,11 +346,30 @@ p.preload = function() {
         //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
         }
     }
-    //roomOrientationValue = roomOrientationValue*-1
+
+    if (singleHour == 1){
+      coordinates = [];
+      let coordinates2 = [];
+      for (i = 1; i <= 9; i++) {
+        coordinates.push(solarCalculator([Lon,Lat]).position(date));
+      }
+      for (i = 1; i <= 9; i++) {
+        coordinates2.push(solarCalculator([Lon,Lat]).position(date2));
+      }
+      xPointLoc = [];
+      yPointLoc = [];
+      for (let i = 0; i < coordinates2.length; i += parseInt(timestep)){
+        if (coordinates2[i][1]>0){
+          xPointLoc.push((36-(36*(coordinates2[i][1]/180)))*p.sin((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
+          yPointLoc.push(((22-(22*(coordinates2[i][1]/180)))*p.cos((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates2[i][1]*.3));
+          //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+        }
+      }
+    }
 
 
   }
-      //console.log(coordinates.length);
+
 
 
 
@@ -642,6 +695,7 @@ p.preload = function() {
       newCoordinateArray.push(coordinates[k][0]+p.float(roomOrientationValue-180));
     }
   }
+
 
 
 let LouverList1 = [];
@@ -1202,7 +1256,7 @@ let decider = 0;
     p.textSize(10);
     p.text("> max direct sun time", 340,50);
     // p.pop();
-    // 
+    //
     // //console.log(p.frameCount);
     // p.fill(50);
     // p.textSize(7);
