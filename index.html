@@ -12,25 +12,158 @@
 	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css"/>
 
 	<!-- CDN Jquery -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<!-- CDN Jquery UI -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- CDN Jquery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
 	<script src="//d3js.org/d3.v3.min.js"></script>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
 		<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
   <script language="javascript" type="text/javascript" src="libraries/p5.svg.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+
+
+		<script type="text/javascript">
+				// Footnote Options
+
+				// Increment Buttons
+
+				// URL Alert
+				$(function() {
+					$("#URLpop").dialog({
+						autoOpen: false,
+						draggable: false,
+						closeOnEscape: true,
+						buttons: [
+							{text: "Short URL",
+							click: function() {
+								var urlToShorten = $("#URLpop textarea").val();
+								shorten(urlToShorten, function(response) {
+									// replace long url with shortened url
+									$("#URLpop textarea").empty();
+									$("#URLpop textarea").append(response.data.url);
+									$("#URLpop textarea").select();
+						        });
+							}},
+							{text: "Standard URL",
+							click: function() {
+								var standardURL = createURL(false)
+									// replace long url with shortened url
+									$("#URLpop textarea").empty();
+									$("#URLpop textarea").append(standardURL);
+									$("#URLpop textarea").select();
+							}},
+							{text: "Full URL",
+							click: function() {
+								var fullURL = createURL(true)
+									// replace long url with shortened url
+									$("#URLpop textarea").empty();
+									$("#URLpop textarea").append(fullURL);
+									$("#URLpop textarea").select();
+							}},
+							{text: "Close",
+							click: function() {
+								$(this).dialog("close");
+							}},
+							],
+						modal: true,
+						width: 450,
+					});
+				});
+				// Select Outdoor Temperature Dialog
+				$(function() {
+					$("#Outdoorpop").dialog({
+						autoOpen: false,
+						draggable: false,
+						closeOnEscape: true,
+						buttons: [
+							{text: "Close",
+							click: function() {
+								$(this).dialog("close");
+							}},
+							],
+						modal: true,
+						width: 450,
+					});
+				});
+
+			</script>
 
 </head>
 
 
 <body>
+
+	<div id="URLpop">
+		<textarea>the link</textarea>
+	</div>
+
+	<div id="Outdoorpop">
+		<h1>Search for Location Data</h1>
+		<p>Location information provided by the<br>
+			<a href="http://www.ladybug.tools/epwmap/" target="_blank">US. Dept. of Energy EPW database</a>.</p>
+
+		<div class="dropdown">
+			<legend>Continent</legend>
+				<select id="continent">
+					<option>Select</option>
+					<option>Africa</option>
+					<option>Asia</option>
+					<option>Europe</option>
+					<option>North America</option>
+					<option>South America</option>
+					<option>South Pacific</option>
+				</select>
+			</div>
+
+			<div id="countryDiv" class="empty">
+			<legend>Country Code</legend>
+				<select id="country" disabled>
+					<option> </option>
+				</select>
+			</div>
+
+			<div id="stateDiv" class="empty">
+			<legend>State/Province</legend>
+				<select id="state" disabled>
+					<option> </option>
+				</select>
+			</div>
+
+			<div id="cityDiv" class="empty">
+			<legend>City</legend>
+				<select id="city" disabled>
+					<option> </option>
+				</select>
+			</div>
+
+		<div id="outTempDiv" class="temperatureEmpty">
+		<legend>Longitude </legend>
+		<textarea id="outTempTextArea" disabled>the link</textarea>
+		</div>
+
+		<div id="outTempDiv1" class="temperatureEmpty">
+		<legend>Latitude</legend>
+		<textarea id="outTempTextArea1" disabled>the link</textarea>
+		</div>
+
+		<div id="outTempDiv2" class="temperatureEmpty">
+		<legend>Timezone Offset</legend>
+		<textarea id="outTempTextArea2" disabled>the link</textarea>
+		</div>
+
+		<div id="applyTempDiv" class="desButton">
+		<input type="button" name="Apply" id="Apply" value="Enter Results" disabled>
+		</div>
+
+	</div>
+
 	<div class="container">
 		<div class="row">
 			<div class="col">
@@ -126,16 +259,16 @@
 
 
  						<label>Longitude</label>
- 						<input type="number" name="long" id="long" min="-180" max="180" value="-72" step="1">
- 						<input type="number" name="long1" id="long1" min="-180" max="180" value="-72" step="1"><br>
+ 						<input type="number" name="long" id="long" min="-180" max="180" value="-71" step="1">
+ 						<input type="number" name="long1" id="long1" min="-180" max="180" value="-71" step="1"><br>
 
  						<label>Latitude</label>
  						<input type="number" name="lat" id="lat" min="-180" max="180"  value="42" step="1">
  						<input type="number" name="lat1" id="lat1" min="-180" max="180"  value="42" step="1"><br>
 
  						<label>Timezone Offset</label>
- 						<input type="number" name="timeZone" id="timeZone" min="-12" max="12"  value="-4" step="1">
- 						<input type="number" name="timeZone1" id="timeZone1" min="-12" max="12"  value="-4" step="1"><br>
+ 						<input type="number" name="timeZone" id="timeZone" min="-12" max="12"  value="-5" step="1">
+ 						<input type="number" name="timeZone1" id="timeZone1" min="-12" max="12"  value="-5" step="1"><br>
 
 
 
@@ -374,6 +507,8 @@
 	</div>
 
 		<!-- <script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script> -->
+		<script type="text/javascript" src="static/js/locationData.js"></script>
+		<script type="text/javascript" src="static/js/render.js"></script>
 		<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
 		<script type="text/javascript" charset="utf-8" src="static/js/p5renderCanvas2.js"></script>
 		<script type="text/javascript" charset="utf-8" src="static/js/solarCalculator.js"></script>
