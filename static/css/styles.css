@@ -757,6 +757,11 @@ div#share {
 	background-color: #fff;
 }
 
+#options input[type=button].optionButton.ready, #citySearch input[type=button].optionButton.ready{
+	color: #fff;
+	background-color: #61bb4c;
+}
+
 #options input[type=button].optionButton.selected, #citySearch input[type=button].optionButton.selected {
 	color: #fff;
 	background-color: #777;
