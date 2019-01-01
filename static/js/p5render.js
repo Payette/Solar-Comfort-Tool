@@ -3,6 +3,11 @@
 
 let singleHour = 0;
 let fullDay = 1;
+let currentFrame = 0;
+let myCheck = 0;
+let dateCounter = 0;
+
+
 
 function msg(){
     singleHour = 1;
@@ -12,6 +17,17 @@ function msg(){
 function msg2(){
     singleHour = 0;
     fullDay = 1;
+}
+
+checkAnnual = function(){
+  currentFrame = 0;
+  singleHour = 2;
+  dateCounter = 0;
+  if (myCheck == 1){
+    myCheck = 0;
+  }else{
+    myCheck = 1;
+  }
 }
 
 let timeStepValue = 4;
@@ -116,12 +132,14 @@ var sketch1 = function(p) {
   let Day;
   let Month;
   let coordinates = [];
-  let solar;
+  // let solar;
   let xPointLoc = [];
   let yPointLoc = [];
   let roomOrientationValue;
   let myButton = 0;
   let currentStudy = 0;
+  let datesAnnual = [];
+  let annualCoordinates = [];
 
 
   //let cnv;
@@ -136,7 +154,7 @@ p.preload = function() {
   p.setup = function() {
     //createCanvas(800, 500, SVG);
     //createCanvas(800, 500);
-    p.cnv = p.createCanvas(440,350);
+    p.cnv = p.createCanvas(440,375);
      // Move the canvas so it’s inside the <div id="sketch-holder">.
     p.cnv.parent('sketch');
     p.noStroke();
@@ -146,6 +164,36 @@ p.preload = function() {
    p.draw = function() {
       p.clear();
       p.background(255);
+
+
+      if (myCheck == 1){
+
+        if(currentFrame < 420){
+          currentFrame +=1;
+        }
+        p.push()
+        p.noFill();
+        p.stroke(150);
+        p.strokeWeight(1);
+        p.rect(5,345,420,11);
+        p.strokeWeight(0);
+        if (currentFrame > 418){
+          p.fill('#61bb4c');
+          p.rect(5,345,420,11);
+          // p.fill(255);
+          // p.text("CLICK THE ANNUAL BUTTON AGAIN TO SEE THE RESULTS", 50, 355);
+
+        }else{
+          p.fill(150);
+          p.text("CALCULATING ANNUAL DAYLIGHTING FACTOR", 80, 355);
+          p.rect(5,345,currentFrame,11);
+        }
+        //p.fill(150);
+      //  p.textSize(8);
+
+
+        p.pop();
+      }
 
 
       let glzOrWidth = document.getElementById("glazingRatioCheck").checked;
@@ -164,6 +212,11 @@ p.preload = function() {
       }else{
         document.getElementById("bHour").className="optionButton unselected";
         document.getElementById("bDay").className="optionButton selected";
+      }
+      if(currentFrame > 418){
+        document.getElementById("bAnnual").className="optionButton ready";
+      }else{
+        document.getElementById("bAnnual").className="optionButton unselected";
       }
 
 
@@ -295,6 +348,30 @@ p.preload = function() {
 
 
 
+      if(myCheck == 1){
+        var dates1 = [];
+      	offset1 = (new Date().getTimezoneOffset())/60;
+        date1 = 0;
+        if (dateCounter < 365){
+          dateCounter += 1;
+          for (let i = 1; i < 24; i++) {
+            hour1 = i/timestep;
+      			date1 = (new Date(2000, 0, dateCounter, i - offset1 - TimeZone, (i%parseInt(i))*60));
+            dates1.push(date1);
+          }
+          for (let i = 1; i <23; i++) {
+        	   annualCoordinates.push(solarCalculator([Lon,Lat]).position(dates1[i]));
+          }
+        }
+      }else{
+        datesAnnual = [];
+        dateCounter = 0;
+        annualCoordinates = [];
+      }
+      //onsole.log(annualCoordinates);
+
+
+
       if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1 && currentStudy == singleHour){
         //console.log(1);
 
@@ -309,15 +386,19 @@ p.preload = function() {
         roomOrientationValue = roomOrientationValue1;
         currentStudy = singleHour;
 
+        dateCounter = 0;
+        annualCoordinates = [];
+        currentFrame = 0;
+
         //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
-        solar = solarCalculator([Lon, Lat]);
+      // solar = solarCalculator([Lon, Lat]);
 
     	offset = (new Date().getTimezoneOffset())/60;
     	var dates = []
       var date;
       var date2;
       for (i = 1; i <= 24*timestep; i++) {
-        hour = i/timestep
+        hour = i/timestep;
         if ( i == ((parseInt(24-Hour))*timestep)){
           date = new Date(2000, Month-1, Day, hour - offset - TimeZone, (hour%parseInt(hour))*60);
           //console.log((hour%parseInt(hour))*60 + " " + Hour);
@@ -334,41 +415,49 @@ p.preload = function() {
       yPointLoc = [];
 
       coordinates = [];
-    	 for (i = 1; i <= (24*timestep)-1; i++) {
-    	coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
-
-    }
-
-    for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
-      if (coordinates[i][1]>0){
-        xPointLoc.push((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
-        yPointLoc.push(((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
-        //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
-        }
-    }
-
-    if (singleHour == 1){
-      coordinates = [];
-      let coordinates2 = [];
-      for (i = 1; i <= 9; i++) {
-        coordinates.push(solarCalculator([Lon,Lat]).position(date));
+    	for (let i = 1; i <= (24*timestep)-1; i++) {
+    	   coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
       }
-      for (i = 1; i <= 9; i++) {
-        coordinates2.push(solarCalculator([Lon,Lat]).position(date2));
-      }
-      xPointLoc = [];
-      yPointLoc = [];
-      for (let i = 0; i < coordinates2.length; i += parseInt(timestep)){
-        if (coordinates2[i][1]>0){
-          xPointLoc.push((36-(36*(coordinates2[i][1]/180)))*p.sin((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
-          yPointLoc.push(((22-(22*(coordinates2[i][1]/180)))*p.cos((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates2[i][1]*.3));
+
+      for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
+        if (coordinates[i][1]>0){
+          xPointLoc.push((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
+          yPointLoc.push(((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
           //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+          }
+      }
+
+      if (singleHour == 1){
+        coordinates = [];
+        let coordinates2 = [];
+        for (let i = 1; i <= 9; i++) {
+          coordinates.push(solarCalculator([Lon,Lat]).position(date));
+        }
+        for (let i = 1; i <= 9; i++) {
+          coordinates2.push(solarCalculator([Lon,Lat]).position(date2));
+        }
+        xPointLoc = [];
+        yPointLoc = [];
+        for (let i = 0; i < coordinates2.length; i += parseInt(timestep)){
+          if (coordinates2[i][1]>0){
+            xPointLoc.push((36-(36*(coordinates2[i][1]/180)))*p.sin((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
+            yPointLoc.push(((22-(22*(coordinates2[i][1]/180)))*p.cos((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates2[i][1]*.3));
+            //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+          }
         }
       }
     }
 
 
-  }
+    if(myCheck == 1 && currentFrame > 418){
+      coordinates = annualCoordinates;
+      p.noLoop();
+    }
+    //console.log(coordinates);
+
+
+
+
 
 
 
@@ -1116,7 +1205,11 @@ let decider = 0;
         MDT = MDT + 1;
       }
 
+      if (myCheck == 1 && currentFrame > 418){
+        mySun = p.int(mySun/365);
+      }else{
       mySun = p.int(mySun/timestep);
+    }
 
 
         p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
@@ -1174,8 +1267,11 @@ let decider = 0;
            MDT = p.int(MDT) + 1;
         }
         //console.log(mySun);
+        if (myCheck == 1 && currentFrame > 418){
+          mySun = p.int(mySun/365);
+        }else{
         mySun = p.int(mySun/timestep);
-
+        }
 
           p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
 
@@ -1233,9 +1329,18 @@ let decider = 0;
     //console.log(1);
     //p.noLoop();
 
+    // if(currentFrame > 418){
+    //   p.noLoop;
+    // }
+
     //CHECK IF MEETS CONDITION TEXT
 
     let MDTPercentage = p.int((p.float(MDT)/(wallLen * wallDepVal))*100);
+    //console.log(MDT);
+    // if (myCheck == 1 && currentFrame > 418){
+    //   MDTPercentage = p.int((p.float(MDT)/(wallLen * wallDepVal))*100/1.5);
+    //   //console.log(MDT);
+    // }
 
     //console.log(p.frameCount);
 
@@ -1267,13 +1372,11 @@ let decider = 0;
 
 
   p.reload = function(){
+    currentFrame = 0;
     //p.loop();
-    //noLoop();
-    //console.log("hi");
   }
+
   p.checkButton = function(){
-    //p.loop();
-    //noLoop();
     if (myButton == 1){
       myButton = 0;
     }else{
