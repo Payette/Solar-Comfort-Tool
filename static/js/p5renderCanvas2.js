@@ -13,7 +13,7 @@ let coordinates = [];
 let solar;
 let xPointLoc = [];
 let yPointLoc = [];
-let Case2Button = 0;
+//let Case2Button = 0;
   let roomOrientationValue;
 //let cnv;
 
