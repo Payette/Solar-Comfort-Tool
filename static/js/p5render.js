@@ -4,9 +4,9 @@
 let singleHour = 0;
 let fullDay = 1;
 let currentFrame = 0;
-let myCheck = 0;
+let myCheck = 0; // Check If Annual Button is Pressed
 let dateCounter = 0;
-
+let Case2Button = 0;
 
 
 function msg(){
@@ -19,14 +19,77 @@ function msg2(){
     fullDay = 1;
 }
 
-checkAnnual = function(){
+checkAnnual = function(){ // Check If Annual Button is Pressed
   currentFrame = 0;
   singleHour = 2;
   dateCounter = 0;
   if (myCheck == 1){
     myCheck = 0;
+    document.getElementById("long").disabled = false;
+    document.getElementById("lat").disabled = false;
+    document.getElementById("timeZone").disabled = false;
+    document.getElementById("hour").disabled = false;
+    document.getElementById("day").disabled = false;
+    document.getElementById("mon").disabled = false;
+    document.getElementById("north").disabled = false;
+    document.getElementById("gridHt").disabled = false;
+    document.getElementById("ceiling").disabled = false;
+    document.getElementById("wallWidth").disabled = false;
+    document.getElementById("wallDep").disabled = false;
+    document.getElementById("windowHeight").disabled = false;
+    document.getElementById("windowWidth").disabled = false;
+    document.getElementById("glazing").disabled = false;
+    document.getElementById("sill").disabled = false;
+    document.getElementById("distWindow").disabled = false;
+    document.getElementById("hShadeDep").disabled = false;
+    document.getElementById("hShadeNum").disabled = false;
+    document.getElementById("hShadeSpace").disabled = false;
+    document.getElementById("hShadeDist").disabled = false;
+    document.getElementById("hShadeHeight").disabled = false;
+    document.getElementById("hShadeAngle").disabled = false;
+    document.getElementById("vShadeOn").disabled = false;
+    document.getElementById("vShadeDep").disabled = false;
+    document.getElementById("vShadeNum").disabled = false;
+    document.getElementById("vShadeSpace").disabled = false;
+    document.getElementById("vShadeShift").disabled = false;
+    document.getElementById("vShadeDist").disabled = false;
+    document.getElementById("vShadeHeight").disabled = false;
+    document.getElementById("vShadeScale").disabled = false;
+    document.getElementById("vShadeStart").disabled = false;
   }else{
     myCheck = 1;
+    Case2Button = 0;
+    document.getElementById("long").disabled = true;
+    document.getElementById("lat").disabled = true;
+    document.getElementById("timeZone").disabled = true;
+    document.getElementById("hour").disabled = true;
+    document.getElementById("day").disabled = true;
+    document.getElementById("mon").disabled = true;
+    document.getElementById("north").disabled = true;
+    document.getElementById("gridHt").disabled = true;
+    document.getElementById("ceiling").disabled = true;
+    document.getElementById("wallWidth").disabled = true;
+    document.getElementById("wallDep").disabled = true;
+    document.getElementById("windowHeight").disabled = true;
+    document.getElementById("windowWidth").disabled = true;
+    document.getElementById("glazing").disabled = true;
+    document.getElementById("sill").disabled = true;
+    document.getElementById("distWindow").disabled = true;
+    document.getElementById("hShadeDep").disabled = true;
+    document.getElementById("hShadeNum").disabled = true;
+    document.getElementById("hShadeSpace").disabled = true;
+    document.getElementById("hShadeDist").disabled = true;
+    document.getElementById("hShadeHeight").disabled = true;
+    document.getElementById("hShadeAngle").disabled = true;
+    document.getElementById("vShadeOn").disabled = true;
+    document.getElementById("vShadeDep").disabled = true;
+    document.getElementById("vShadeNum").disabled = true;
+    document.getElementById("vShadeSpace").disabled = true;
+    document.getElementById("vShadeShift").disabled = true;
+    document.getElementById("vShadeDist").disabled = true;
+    document.getElementById("vShadeHeight").disabled = true;
+    document.getElementById("vShadeScale").disabled = true;
+    document.getElementById("vShadeStart").disabled = true;
   }
 }
 
@@ -140,9 +203,8 @@ var sketch1 = function(p) {
   let currentStudy = 0;
   let datesAnnual = [];
   let annualCoordinates = [];
+  let bigArrayColor = [];
 
-
-  //let cnv;
 
   var imgCheck;
   var imgNope;
@@ -166,31 +228,28 @@ p.preload = function() {
       p.background(255);
 
 
-      if (myCheck == 1){
 
-        if(currentFrame < 420){
+      if (myCheck == 1){ // Check If Annual Button is Pressed
+
+        if(currentFrame < 367){
           currentFrame +=1;
         }
         p.push()
         p.noFill();
         p.stroke(150);
         p.strokeWeight(1);
-        p.rect(5,345,420,11);
+        p.rect(5,345,367,11);
         p.strokeWeight(0);
-        if (currentFrame > 418){
+        if (currentFrame > 365){
           p.fill('#61bb4c');
-          p.rect(5,345,420,11);
-          // p.fill(255);
-          // p.text("CLICK THE ANNUAL BUTTON AGAIN TO SEE THE RESULTS", 50, 355);
-
+          p.rect(5,345,367,11);
         }else{
           p.fill(150);
-          p.text("CALCULATING ANNUAL DAYLIGHTING FACTOR", 80, 355);
           p.rect(5,345,currentFrame,11);
-        }
-        //p.fill(150);
-      //  p.textSize(8);
+          p.fill(100);
+          p.text("CALCULATING ANNUAL DAYLIGHTING FACTOR", 55, 355);
 
+        }
 
         p.pop();
       }
@@ -213,7 +272,7 @@ p.preload = function() {
         document.getElementById("bHour").className="optionButton unselected";
         document.getElementById("bDay").className="optionButton selected";
       }
-      if(currentFrame > 418){
+      if(currentFrame > 365){
         document.getElementById("bAnnual").className="optionButton ready";
       }else{
         document.getElementById("bAnnual").className="optionButton unselected";
@@ -341,14 +400,16 @@ p.preload = function() {
 
 
       let valFal = document.getElementById("fal").value; //FLOOR AREA LOSS
-      document.getElementsByName("fal")[0].addEventListener('input', p.reload);
+      document.getElementsByName("fal")[0].addEventListener('input', p.reload1);
 
       let valMDST = document.getElementById("mdst").value; // MAX DIRECT SUN TIME
-      document.getElementsByName("mdst")[0].addEventListener('input', p.reload);
+      document.getElementsByName("mdst")[0].addEventListener('input', p.reload1);
 
 
 
-      if(myCheck == 1){
+
+
+      if(myCheck == 1){ // Check If Annual Button is Pressed
         var dates1 = [];
       	offset1 = (new Date().getTimezoneOffset())/60;
         date1 = 0;
@@ -359,24 +420,64 @@ p.preload = function() {
       			date1 = (new Date(2000, 0, dateCounter, i - offset1 - TimeZone, (i%parseInt(i))*60));
             dates1.push(date1);
           }
-          for (let i = 1; i <23; i++) {
-        	   annualCoordinates.push(solarCalculator([Lon,Lat]).position(dates1[i]));
+        }else{
+          dateCounter = 365;
+          for (let i = 1; i < 24; i++) {
+            hour1 = i/timestep;
+      			date1 = (new Date(2000, 0, dateCounter, i - offset1 - TimeZone, (i%parseInt(i))*60));
+            dates1.push(date1);
+          }
+        }
+
+
+        xPointLoc = [];
+        yPointLoc = [];
+
+        coordinates = [];
+      	for (let i = 1; i <23; i++) {
+      	   coordinates.push(solarCalculator([Lon,Lat]).position(dates1[i]));
+        }
+
+        for (let i = 0; i < coordinates.length; i ++){
+          if (coordinates[i][1]>0){
+            xPointLoc.push((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
+            yPointLoc.push(((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+            //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+            }
+        }
+
+        if (singleHour == 1){
+          coordinates = [];
+          let coordinates2 = [];
+          for (let i = 1; i <= 9; i++) {
+            coordinates.push(solarCalculator([Lon,Lat]).position(date));
+          }
+          for (let i = 1; i <= 9; i++) {
+            coordinates2.push(solarCalculator([Lon,Lat]).position(date2));
+          }
+          xPointLoc = [];
+          yPointLoc = [];
+          for (let i = 0; i < coordinates2.length; i ++){
+            if (coordinates2[i][1]>0){
+              xPointLoc.push((36-(36*(coordinates2[i][1]/180)))*p.sin((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
+              yPointLoc.push(((22-(22*(coordinates2[i][1]/180)))*p.cos((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates2[i][1]*.3));
+              //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+            }
           }
         }
       }else{
-        datesAnnual = [];
-        dateCounter = 0;
-        annualCoordinates = [];
-      }
-      //onsole.log(annualCoordinates);
+
+
+
+
+
+
 
 
 
       if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1 && currentStudy == singleHour){
-        //console.log(1);
 
       }else{
-        //console.log(0);
         Lon = Lon1;
         Lat = Lat1;
         Hour = Hour1;
@@ -391,7 +492,6 @@ p.preload = function() {
         currentFrame = 0;
 
         //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
-      // solar = solarCalculator([Lon, Lat]);
 
     	offset = (new Date().getTimezoneOffset())/60;
     	var dates = []
@@ -447,19 +547,7 @@ p.preload = function() {
         }
       }
     }
-
-
-    if(myCheck == 1 && currentFrame > 418){
-      coordinates = annualCoordinates;
-      p.noLoop();
-    }
-    //console.log(coordinates);
-
-
-
-
-
-
+  }
 
 
 
@@ -786,11 +874,223 @@ p.preload = function() {
   }
 
 
+  let LouverList1 = [];
+  let XYLouverTest = [];
 
-let LouverList1 = [];
-let XYLouverTest = [];
 
-if (vertShadeOn == 1){
+  let gridColorArray = [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+  if(myCheck == 1){
+    // VERTICAL SHADES XY
+
+          let b1;
+          let Xloc1 = [];
+          let XYtest1 = [];
+          let AWArray1 = [];
+          let ZAdd = [];
+          let bigB = 0;
+          let superB = [];
+          let superD = [];
+          let filledList = [];
+          for (let i = 0; i<gridX; i++) {
+            let YdistanceFromWall = (i+1); // grid distance from window wall in Y direction
+            b1 = 0;
+            filledList.push(0);
+            for (let j = 0; j<gridY; j++){
+              b1 = 0;
+              for (let k = 0; k<coordinates.length; k++){
+                let XYLouver1 = 0;
+                let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
+                if (newCoordinateArray[k]<88.0 && newCoordinateArray[k]> -88.0){
+                    XlocationOnWall = Math.tan(newCoordinateArray[k]*(3.1415926 / 180))*YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+                }
+                AWArray1.push(XlocationOnWall);
+                let xCoord = 0;
+                let bigBArray = [];
+                let superC = [];
+
+                for (let n = 0; n<r.glzCoords.length; n++){ //cycle through each window
+                  // if (XlocationOnWall+(j+1) > r.glzCoords[n][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[n][1][0]+(wallDepVal/2)){ //cycle through all the windows, check if the wall position exists within the bounds of the window
+                  //   xCoord = n+1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
+                  // }
+                  // xCoord = 1;
+                //}if(xCoord > 0){ //if this specific gridpoint and sun angle goes through a window...
+                let newBigBArray = [];
+                    for (let p = 0; p<parseInt(vertShadeNum); p++){ //for each shade in this window...
+
+                      let angleA = abs(newCoordinateArray[k]);
+                      let angleB = 90.0-abs(newCoordinateArray[k]);
+                      if (newCoordinateArray[k] > 0){
+                        angleB = angleB * -1;
+                      }
+                      let bigA;
+                      if(vertShadeStart == "L"){
+                        bigA = ((XlocationOnWall+(j+1)+(r.glzCoords[n][0][0]-(wallDepVal/2))+(p*parseInt(vertShadeSpace)-vertShadeShift)));
+                      }else{
+                        bigA = ((XlocationOnWall+(j+1)-(r.glzCoords[n][0][0]+(wallDepVal/2))+(-p*parseInt(vertShadeSpace)-vertShadeShift)));
+                      }
+                      bigB = ((Math.sin(angleB*(3.1415926 / 180))*bigA)/(Math.sin(angleA*(3.1415926 / 180))));
+                      bigBArray.push(bigB);
+                      newBigBArray.push(bigB);
+                    }superC.push(newBigBArray);
+                }//console.log(bigBArray.length);
+                superB.push(bigBArray);
+                superD.push(superC);
+                for (let q = 0; q < superC.length; q++){ // I think the problem exists here... need a second layer of for loop?
+                  for (let g = 0; g < superC[0].length; g++){
+                    if (superC[q][g] > parseInt(vertShadeDist) && superC[q][g] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))){
+                      XYLouver1 = XYLouver1 + 1;
+                  }else{
+                    }
+                  }
+                }//ZAdd.push(bigB)
+                if (XYLouver1 > 0){
+                  b1 = 1;
+                }else{
+                  b1 =  0;
+                }LouverList1.push(b1);
+              }
+            }
+          }
+          //console.log(filledListI);
+
+
+  //END OF VERTICAL SHADES
+
+
+
+
+      //START PYTHAGOREAM THEORM FOR XY
+      //ASSUME +Y IS DUE NORTH and is the wall opposite the windowwall is N (windowwall is S)
+
+      let b;
+      let Xloc = []
+      let XYtest = []
+      let AWArray = []
+      for (let i = 0; i<gridX; i++) {
+        let YdistanceFromWall = (i+1); // grid distance from window wall in Y direction
+        b = 0;
+        for (let j = 0; j<gridY; j++){
+          b = 0;
+          for (let k = 0; k<coordinates.length; k++){
+            let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
+            if (newCoordinateArray[k]<88.0 && newCoordinateArray[k]> -88.0){
+                XlocationOnWall = Math.tan(newCoordinateArray[k]*(3.1415926 / 180))*YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+                //console.log(XlocationOnWall);
+            }
+            AWArray.push(XlocationOnWall);
+            let xCoord = 0;
+            let vertLouverXdistance = [];
+            for (let m = 0; m<r.glzCoords.length; m++){
+
+              if (XlocationOnWall+(j+1) > r.glzCoords[m][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[m][1][0]+(wallDepVal/2)){ //cycle through all the windows, check if the wall position exists within the bounds of the window
+                xCoord = xCoord + 1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
+              }
+            }
+            if (xCoord > 0){
+              b = 1;
+            }else{
+              b =  0;
+            }XYtest.push(b);
+
+          }
+        }
+      }
+      //END PYTHAGOREM THEORM FOR XY
+
+
+      //START PYTHAGOREAM THEORM FOR Z
+
+      let a;
+      let Ztest = [];
+      let AHArray = [];
+      for (let i = 0; i<gridX; i++) {
+        let distanceFromWall = (i+1)/4;
+        a = 0;
+        for (let j = 0; j<gridY; j++){
+          a = 0;
+          for (let k = 0; k<coordinates.length; k++){
+            let angleHeight = Math.tan((coordinates[k][1])*(3.1415926 / 180))*distanceFromWall;
+            AHArray.push(coordinates[k][1]);
+            if (coordinates[k][1] < 0 ){
+              a = 0;
+            }else if (angleHeight > r.glzCoords[0][0][2]-gridHt && angleHeight < (r.glzCoords[0][2][2] -gridHt)){
+              let testArray1 = [1];
+              for (let n = 0; n < horzShadeNum; n++){
+                let sinLawDist = (horzShadeDist*(Math.sin(3.1415926-(((90)-coordinates[k][1])*(3.1415926 / 180))-(90*(3.1415926 / 180)))))/Math.sin(((90)-coordinates[k][1])*(3.1415926 / 180));
+                let sinLawAngle = (horzShadeDep*(Math.sin(3.1415926-(((90)-coordinates[k][1])*(3.1415926 / 180))-(horzShadeAngle*(3.1415926 / 180)))))/Math.sin(((90)-coordinates[k][1])*(3.1415926 / 180));
+
+                if (angleHeight < (r.glzCoords[0][2][2]-gridHt)-(horzShadeSpace*n)-(sinLawDist)+(p.float(horzShadeHeight)*.5) && angleHeight > ((r.glzCoords[0][2][2]-gridHt)-(horzShadeSpace*n)-(sinLawDist)-(sinLawAngle)+(p.float(horzShadeHeight)*.5))){
+                  testArray1.push(0);
+                }else{
+                  testArray1.push(1);
+                }
+              }
+              let SortedArray = testArray1.sort();
+              let SALength = testArray1.length;
+              let itemArray = SortedArray[0];
+              a = itemArray;
+
+              //console.log(SortedArray);
+            }else{
+              a = 0;
+            }Ztest.push(a);
+          }
+        }
+      }
+    //END PYTHAGOREAM THEROM FOR Z
+
+      //START XY and Z check
+      let gridColor;
+      //let gridColorArray = []
+      for (let i = 0; i < XYtest.length; i++){
+
+        let XYLouv = LouverList1[i];
+        let XYcolor = XYtest[i];
+        let Zcolor = Ztest[i];
+
+        if (XYcolor == 1 && Zcolor == 1 && XYLouv == 0){
+          gridColor = gridColor + 1;
+        }else{
+          gridColor = gridColor + 0;
+        }if (i % coordinates.length == (coordinates.length)-1){
+          gridColorArray.push(gridColor);
+          gridColor = 0;
+      }
+    }
+
+    if (dateCounter == 1){
+      for (let i = 0; i < gridColorArray.length; i++){
+        bigArrayColor.push(gridColor);
+      }
+    }else if (dateCounter < 365){
+      for (let i = 0; i < gridColorArray.length; i++){
+        bigArrayColor[i] += gridColorArray[i];
+    }
+  }
+
+}else{
+
+  bigArrayColor = [];
+
+
+
+
+
+
+if (vertShadeOn == 1){ // Variable height louvers
 
   // VERTICAL SHADES XY
   let XYLouverTest = [];
@@ -980,7 +1280,7 @@ let decider = 0;
       }
     }
   }
-}else{
+}else{ //baseline --- louvers extend to infinty
   // VERTICAL SHADES XY
 
         let b1;
@@ -1087,13 +1387,6 @@ let decider = 0;
             if (XlocationOnWall+(j+1) > r.glzCoords[m][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[m][1][0]+(wallDepVal/2)){ //cycle through all the windows, check if the wall position exists within the bounds of the window
               xCoord = xCoord + 1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
             }
-            // if(xCoord > 0){ //if this specific gridpoint and sun angle goes through this window...
-            //   if (vertShadeStart == "L" && vertShadeNum > 0){ //do this if the vert louvers start at the left and there is at least 1 vert louver
-            //     for (let r = 0; r<vertShadeNum; r++){ //for each shade in this window...
-            //       vertLouverXdistance.push((XlocationOnWall+(j+1)+);
-            //     }
-            //   }
-            // }
           }
           if (xCoord > 0){
             b = 1;
@@ -1103,12 +1396,11 @@ let decider = 0;
 
         }
       }
-    }//console.log(parseInt(vertShadeDist) + parseInt(vertShadeDep));
+    }
     //END PYTHAGOREM THEORM FOR XY
 
 
     //START PYTHAGOREAM THEORM FOR Z
-    //THIS IS WHERE YOU WILL NEED TO LOOK AT THE VERTICAL SHADES pt2
 
     let a;
     let Ztest = [];
@@ -1148,14 +1440,12 @@ let decider = 0;
       }
     }
   //END PYTHAGOREAM THEROM FOR Z
-  //console.log(singleAngleHeightList);
 
     //START XY and Z check
     let gridColor;
-    let gridColorArray = []
+    //let gridColorArray = []
     for (let i = 0; i < XYtest.length; i++){
-      //let vertZTestItem = vertZTest[i];
-      //let XYLouv = XYLouverTest[i];
+
       let XYLouv = LouverList1[i];
       let XYcolor = XYtest[i];
       let Zcolor = Ztest[i];
@@ -1170,11 +1460,19 @@ let decider = 0;
     }
   }
 
-  for (let i = 0; i < gridColorArray; i++){
-    if (gridColorArray[i] < valMDST && gridColorArray[i+1] > valMDST){
 
-    }
-  }
+}
+
+
+
+
+
+
+//console.log(gridColorArray.length);
+
+
+
+
 
   //END OF TRIG
 
@@ -1194,22 +1492,44 @@ let decider = 0;
       let X4 = (x3+(xNext*i));
       let Y4 = (y3+(y*i));
       let mySun = 0;
-      if(i == 0){
-        // mySun = (p.int(gridColorArray[1*gridY]/timestep));
-        mySun = gridColorArray[1*gridY];
+      if (myCheck == 1 && dateCounter > 364){
+        if(i == 0){
+          // mySun = (p.int(gridColorArray[1*gridY]/timestep));
+          mySun = (bigArrayColor[1*gridY]/365);
+        }else{
+          // mySun = (p.int(gridColorArray[i*gridY]/timestep));
+          mySun = (bigArrayColor[i*gridY]/365);
+        }
       }else{
-        // mySun = (p.int(gridColorArray[i*gridY]/timestep));
-        mySun = gridColorArray[i*gridY];
-      }
-      if(mySun > Percentage/timestep){
-        MDT = MDT + 1;
+        if(i == 0){
+          // mySun = (p.int(gridColorArray[1*gridY]/timestep));
+          mySun = gridColorArray[1*gridY];
+        }else{
+          // mySun = (p.int(gridColorArray[i*gridY]/timestep));
+          mySun = gridColorArray[i*gridY];
+        }
       }
 
-      if (myCheck == 1 && currentFrame > 418){
-        mySun = p.int(mySun/365);
+
+      if (myCheck == 1){
+        if(mySun > Percentage/timestep){
+          MDT = MDT + 1;
+        }
       }else{
+        if(mySun > Percentage/timestep){
+          MDT = MDT + 1;
+        }
       mySun = p.int(mySun/timestep);
     }
+    if (mySun == null){
+      mySun = 0;
+    }
+    //console.log(mySun);
+
+
+      mySun = parseInt(mySun);
+
+
 
 
         p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
@@ -1223,6 +1543,31 @@ let decider = 0;
         //   p.line(X3, Y3-GridHt, X4, Y4-GridHt);
         //   p.pop();
         // }
+
+        if (myCheck == 1){
+
+        if (gridColorArray[i*gridY]/.99 > valMDST && gridColorArray[(i*gridY)+1]/.99 < valMDST){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(X3, Y3-GridHt, X4, Y4-GridHt);
+          p.pop();
+        }
+        if (gridColorArray[(i*gridY)]/.99 < valMDST && gridColorArray[(i*gridY)+gridY]/.99 > valMDST){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(X2, Y2-GridHt, X3, Y3-GridHt);
+          p.pop();
+        }
+        if (gridColorArray[(i*gridY)]/.99> valMDST && gridColorArray[(i*gridY)+gridY]/.99 < valMDST){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(X2, Y2-GridHt, X3, Y3-GridHt);
+          p.pop();
+        }
+      }else{
 
         if (gridColorArray[i*gridY]/(timestep-.1) > valMDST/timestep && gridColorArray[(i*gridY)+1]/(timestep-.1) < valMDST/timestep){
           p.push();
@@ -1245,6 +1590,7 @@ let decider = 0;
           p.line(X2, Y2-GridHt, X3, Y3-GridHt);
           p.pop();
         }
+      }
 
       //GRID Y ROW
       for (let j = 0; j<gridY; j++) {
@@ -1256,6 +1602,15 @@ let decider = 0;
         let newY3 = (Y3+(yNext*(j+1)));
         let newX4 = (X4-(x*(j+1)));
         let newY4 = (Y4+(yNext*(j+1)));
+        if (myCheck == 1 && dateCounter > 364){
+          if(j == 0){
+            // mySun = (p.int(gridColorArray[1*gridY]/timestep));
+            mySun = (bigArrayColor[(i*gridY)+1]/365);
+          }else{
+            // mySun = (p.int(gridColorArray[i*gridY]/timestep));
+            mySun = (bigArrayColor[(i*gridY)+j]/365);
+          }
+        }else{
         if(j == 0){
           // mySun = (p.int(gridColorArray[(i*gridY)+1]/timestep));
           mySun = gridColorArray[(i*gridY)+1];
@@ -1263,19 +1618,88 @@ let decider = 0;
           // mySun = p.int(gridColorArray[(i*gridY)+j]/timestep);
           mySun = gridColorArray[(i*gridY)+j];
         }
-        if( mySun/timestep > Percentage/timestep){
-           MDT = p.int(MDT) + 1;
-        }
+      }
+
         //console.log(mySun);
-        if (myCheck == 1 && currentFrame > 418){
-          mySun = p.int(mySun/365);
+        if (myCheck == 1){
+          if( mySun > Percentage/timestep){
+             MDT = p.int(MDT) + 1;
+          }
         }else{
+          if( mySun/timestep > Percentage/timestep){
+             MDT = p.int(MDT) + 1;
+          }
         mySun = p.int(mySun/timestep);
-        }
+      }
+      if (mySun == null){
+        mySun = 0;
+      }
+
+      mySun = parseInt(mySun);
 
           p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
 
         p.quad(newX1, newY1-GridHt, newX2, newY2-GridHt, newX3, newY3-GridHt, newX4, newY4-GridHt);
+
+        if (myCheck == 1 && dateCounter > 364){
+        if (bigArrayColor[(i*gridY)+j]/.99 < valMDST/timestep*365 && bigArrayColor[(i*gridY)+j+1]/.99 > valMDST/timestep*365){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(newX3, newY3-GridHt, newX4, newY4-GridHt);
+          p.pop();
+        }
+        if (bigArrayColor[(i*gridY)+j]/.99 > valMDST/timestep*365 && bigArrayColor[(i*gridY)+j+1]/.99 < valMDST/timestep*365){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(newX3, newY3-GridHt, newX4, newY4-GridHt);
+          p.pop();
+        }
+        if (bigArrayColor[(i*gridY)+j]/.99 < valMDST/timestep*365 && bigArrayColor[(i*gridY)+j+gridY]/.99 > valMDST/timestep*365){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(newX2, newY2-GridHt, newX3, newY3-GridHt);
+          p.pop();
+        }
+        if (bigArrayColor[(i*gridY)+j]/.99 > valMDST/timestep*365 && bigArrayColor[(i*gridY)+j+gridY]/.99 < valMDST/timestep*365){
+          p.push();
+          p.strokeWeight(1);
+          p.stroke(0);
+          p.line(newX2, newY2-GridHt, newX3, newY3-GridHt);
+          p.pop();
+        }
+      }else if (myCheck == 1){
+      if (gridColorArray[(i*gridY)+j]/.99 < valMDST/timestep && gridColorArray[(i*gridY)+j+1]/.99 > valMDST/timestep){
+        p.push();
+        p.strokeWeight(1);
+        p.stroke(0);
+        p.line(newX3, newY3-GridHt, newX4, newY4-GridHt);
+        p.pop();
+      }
+      if (gridColorArray[(i*gridY)+j]/.99 > valMDST/timestep && gridColorArray[(i*gridY)+j+1]/.99 < valMDST/timestep){
+        p.push();
+        p.strokeWeight(1);
+        p.stroke(0);
+        p.line(newX3, newY3-GridHt, newX4, newY4-GridHt);
+        p.pop();
+      }
+      if (gridColorArray[(i*gridY)+j]/.99 < valMDST/timestep && gridColorArray[(i*gridY)+j+gridY]/.99 > valMDST/timestep){
+        p.push();
+        p.strokeWeight(1);
+        p.stroke(0);
+        p.line(newX2, newY2-GridHt, newX3, newY3-GridHt);
+        p.pop();
+      }
+      if (gridColorArray[(i*gridY)+j]/.99 > valMDST/timestep && gridColorArray[(i*gridY)+j+gridY]/.99 < valMDST/timestep){
+        p.push();
+        p.strokeWeight(1);
+        p.stroke(0);
+        p.line(newX2, newY2-GridHt, newX3, newY3-GridHt);
+        p.pop();
+      }
+    }else{
         if (gridColorArray[(i*gridY)+j]/(timestep-.1) < valMDST/timestep && gridColorArray[(i*gridY)+j+1]/(timestep-.1) > valMDST/timestep){
           p.push();
           p.strokeWeight(1);
@@ -1304,6 +1728,7 @@ let decider = 0;
           p.line(newX2, newY2-GridHt, newX3, newY3-GridHt);
           p.pop();
         }
+      }
       }
     }
 
@@ -1334,8 +1759,14 @@ let decider = 0;
     // }
 
     //CHECK IF MEETS CONDITION TEXT
+    let MDTPercentage = 0;
+    if (myCheck == 1){
+      MDTPercentage = p.int((p.float(MDT)/(wallLen * wallDepVal))*100);
+    }else{
+      MDTPercentage = p.int((p.float(MDT)/(wallLen * wallDepVal))*100);
+    }
 
-    let MDTPercentage = p.int((p.float(MDT)/(wallLen * wallDepVal))*100);
+
     //console.log(MDT);
     // if (myCheck == 1 && currentFrame > 418){
     //   MDTPercentage = p.int((p.float(MDT)/(wallLen * wallDepVal))*100/1.5);
@@ -1373,6 +1804,10 @@ let decider = 0;
 
   p.reload = function(){
     currentFrame = 0;
+    //p.loop();
+  }
+  p.reload1 = function(){
+
     //p.loop();
   }
 
