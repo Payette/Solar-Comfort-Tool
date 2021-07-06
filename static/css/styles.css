@@ -1,0 +1,1116 @@
+
+
+#wrapper {
+	width: 960px;
+	margin: 0 auto;
+	min-height: 1000px;
+}
+
+
+#header img {
+	width: 100%;
+}
+
+
+.left {
+	position: relative;
+	float: left;
+	width: 550px;
+	padding: 0;
+	margin: 0 10px 0 0;
+}
+
+/* The slider */
+.slider {
+ position: absolute;
+ cursor: pointer;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background-color:  #4c4c4e;
+ -webkit-transition: .4s;
+ transition: .4s;
+}
+
+.slider:before {
+ position: absolute;
+ content: "";
+ height: 16px;
+ width: 16px;
+ left: 2px;
+ bottom: 26px;
+ background-color: white;
+ -webkit-transition: .4s;
+ transition: .4s;
+}
+
+input:checked + .slider:before {
+ -webkit-transform: translateY(23px);
+ -ms-transform: translateY(23px);
+ transform: translateY(23px);
+}
+
+/* Rounded sliders */
+.slider.round {
+ border-radius: 20px;
+}
+
+.slider.round:before {
+ border-radius: 50%;
+}
+
+
+#occupancyWrapper {
+	margin: 0 0 0px 0;
+}
+
+
+#sliderWrapper, #sliderWrapper2, #sliderWrapper3 {
+	height: 15px;
+	float: left;
+	position: relative;
+	overflow: visible;
+}
+
+form#occupantSliders div.occSlider {
+	width: 203px;
+	height: 20px;
+	float: left;
+	padding: 0px;
+	display: inline-block;
+}
+
+#fal, #distFromFacade, #mdst {
+	display: inline-block;
+	float: left;
+	margin: 0;
+	padding-top: 0;
+}
+
+#fal p, #mdst p {
+	margin: 0;
+}
+
+.occSlider p {
+	float: right;
+	display: inline-block;
+	font-weight: 300;
+	font-size: 12px;
+	color: #777;
+	margin: 0;
+}
+
+output #occupantImage, output #occupantImage2, output #occupantImage3 {
+	position: relative;
+	width: 180px;
+  	height: 250px;
+  	display: inline-block;
+  	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
+	left: -15px; /* - imageWidth/2 */
+	opacity: .8;
+}
+
+
+input[type=range]#fal, input[type=range]#mdst, input[type=range]#distFromFacade {
+	-webkit-appearance: none;
+	-ms-appearance: none;
+	position: absolute;
+	width: 160px
+}
+
+input[type=range]#occupantDist, input[type=range]#occupantDist2, input[type=range]#occupantDist3 {
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-webkit-appearance: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	position: absolute;
+	width: 100%;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]#occupantDist::-ms-track, input[type=range]#occupantDist2::-ms-track, input[type=range]#occupantDist3::-ms-track, input[type=range]#fal::-ms-track, input[type=range]#mdst::-ms-track, input[type=range]#distFromFacade::-ms-track {
+	-ms-appearance: none;
+	height: 3px;
+	background-color: #d5d5d5;
+	margin-right: 0;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border:0;
+	color: transparent;
+	width: 150%;
+}
+
+input[type=range]#fal::-ms-fill-lower, input[type=range]#mdst::-ms-fill-lower {
+	background: #e4537f;
+}
+
+input[type=range]#distFromFacade::-ms-fill-lower, input[type=range]#occupantDist::-ms-fill-lower, input[type=range]#occupantDist2::-ms-fill-lower, input[type=range]#occupantDist3::-ms-fill-lower {
+	background: #d5d5d5;
+}
+
+#occupantDist::-moz-range-track, #occupantDist2::-moz-range-track, #occupantDist3::-moz-range-track, #fal::-moz-range-track, #mdst::-moz-range-track, #distFromFacade::-moz-range-track {
+	-moz-appearance: none;
+	height: 3px;
+	background-color: #939598;
+	margin-right: 3px;
+}
+
+input[type=range]#fal::-moz-range-progress, input[type=range]#mdst::-moz-range-progress{
+	background: #e4537f;
+}
+
+#occupantDist::-webkit-slider-runnable-track, #occupantDist2::-webkit-slider-runnable-track, #occupantDist3::-webkit-slider-runnable-track, #fal::-webkit-slider-runnable-track, #mdst::-webkit-slider-runnable-track, #distFromFacade::-webkit-slider-runnable-track {
+	-webkit-appearance: none;
+	height: 3px;
+	background-color: #d5d5d5;
+	margin-right: 3px;
+	margin-top: 7px;
+}
+
+#occupantDist::-ms-thumb, #occupantDist2::-ms-thumb, #occupantDist3::-ms-thumb, #fal::-ms-thumb, #mdst::-ms-thumb, #distFromFacade::-ms-thumb {
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
+}
+
+#occupantDist::-moz-range-thumb, #occupantDist2::-moz-range-thumb, #occupantDist3::-moz-range-thumb, #fal::-moz-range-thumb, #mdst::-moz-range-thumb, #distFromFacade::-moz-range-thumb {
+	-moz-appearance: none;
+    background-color: #FFF;
+    border: 3px solid rgb(150,150,150);
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
+}
+
+#occupantDist::-webkit-slider-thumb, #occupantDist2::-webkit-slider-thumb, #occupantDist3::-webkit-slider-thumb, #fal::-webkit-slider-thumb, #mdst::-webkit-slider-thumb, #distFromFacade::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	position: relative;
+  background-color: #FFF;
+	height: 11px;
+  width: 11px;
+  border: 3px solid rgb(150,150,150);
+  border-radius: 5px;
+	margin-top: -3px
+}
+
+
+
+#caseWrapper {
+	overflow: hidden;
+	width: 100%;
+	display: inline-block;
+	height: 26px;
+	padding-bottom: 0;
+
+}
+
+#caseSelection {
+	display: block;
+	float: right;
+	padding-bottom: 0px;
+}
+
+
+
+#caseSelection h2 {
+	display: inline-block;
+	text-align: left;
+	font-size: 10px;
+
+	padding: 0;
+	margin: 0 1px 0 8px;
+	vertical-align: top;
+
+	color: #000;
+
+	cursor: pointer;
+}
+
+
+#caseSelection h2 span {
+	display: block;
+	float: left;
+	width: 12px;
+	height: 12px;
+	margin: 0px 2px 0 0;
+	background-size: 11px 11px;
+}
+
+
+.facadeHeading {
+	font-family: "raleway", sans-serif;
+	font-weight: 500;
+	font-size: 11px;
+	margin: 0;
+	display: inline-block;
+	float: left;
+}
+
+
+
+span#case1Button {
+	background: url(../../static/images/expand-case1.png) 0 0 no-repeat;
+}
+
+span#case2Button {
+	background: url(../../static/images/expand-case2.png) 0 0 no-repeat;
+}
+
+span#case3Button {
+	background: url(../../static/images/expand-case3.png) 0 0 no-repeat;
+}
+
+
+
+#caseSelection h2.unselected, #caseSelection h3.unselected {
+	color: #b9b9b9;
+}
+
+
+span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unselected {
+	background: url(../../static/images/expand-unselected.png) 0 0 no-repeat;
+	background-size: 11px 11px;
+}
+
+
+
+#inputs, #referenceLinks {
+	float: left;
+	width: 390px;
+	font-family: "museo-sans", sans-serif;
+	position: relative;
+	z-index: 0;
+
+	/*line-height: 1em;*/
+}
+
+#inputs strong {
+	font-weight: 700;
+}
+
+#occupantSliders {
+	width: 450px;
+	font-family: "museo-sans", sans-serif;
+}
+
+
+#inputs h1, #occupantSliders h1 {
+	font-weight: 700px;
+	font-size: 23px;
+	line-height: 23px;
+	margin: 0;
+	padding-bottom: 5px;
+}
+
+#inputs p, #occupantSliders p, #referenceLinks p {
+	font-size: 12px;
+	line-height: 1.4em;
+	font-weight: 100;
+}
+
+#inputs p.subtext {
+	color: #777;
+}
+
+
+#inputs fieldset.inputgroup, #occupantSliders fieldset.inputgroup {
+	border: none;
+	position: relative;
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+
+
+#inputs #legend, #occupantSliders #legend {
+	border: none;
+	padding: 0 0 10px 0;
+	margin-bottom: 20px;
+}
+
+#inputs legend, #occupantSliders legend, #referenceLinks legend {
+	font-weight: 700;
+	font-size: 16px;
+	text-transform: uppercase;
+	padding: 0 0 15px 0;
+	margin: 0 0 10px 0;
+	width: 190px;
+}
+
+#inputs legend.first {
+	float: left;
+}
+
+#inputs ul, #referenceLinks ul, #referenceLinks a {
+	font-family: "museo-sans", sans-serif;
+	color: #b9b9b9;
+	font-weight: 300;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#referenceLinks li {
+	padding: 0 0 5px 0;
+}
+
+#inputs a {
+	color: grey;
+}
+
+#referenceLinks a:hover, #inputs a:hover {
+	color: #808080
+}
+
+#inputs hr, #occupantSliders hr {
+	padding: 0;
+	margin: 0 0 5px 0;
+	background: #000;
+	border: none;
+	color: #000;
+	height: 1px;
+	width: 100%;
+}
+
+
+#inputs div.inputWrapperLeft {
+	width: 55px;
+	height: 16px;
+	padding: 2px 0px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div.inputWrapperLeft span {
+	float:left;
+}
+
+#inputs div.inputWrapperCenter {
+	width: 41px;
+	height: 16px;
+	padding: 2px 0px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+div.inputWrapperCenter span {
+	float:left;
+}
+
+#inputs div.inputWrapperRight {
+	width: 56px;
+	height: 16px;
+	padding: 2px 0px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+div.inputWrapperRight span {
+	float: right;
+}
+
+
+#inputs div.inputWrapperCenter hr, #inputs div.inputWrapperRight hr {
+	width: 20px;
+	margin: 7px auto;
+	height: 1px;
+	background-color: #b9b9b9;
+}
+
+#inputs div.inputWrapperRight hr {
+	margin: 7px 0 7px 25px;
+}
+
+
+
+
+#inputs input {
+	padding: 2px 3px 1px 1px;
+	margin: 0px 12px 0px 0px;
+	display: inline-block;
+	float: left;
+	width: 4em;
+	height: 13px;
+
+	background-color: rgb(245, 245, 245);
+
+	border: none;
+
+	font-family: "museo-sans", sans-serif;
+	font-weight: 300;
+	font-size: 10px;
+	text-align: left;
+	color: black;
+}
+
+#inputs input.inactive {
+	border-color: rgb(235, 235, 235);
+	border-style: solid;
+	border-width: 1px;
+	cursor: default;
+	background-color: #fff;
+	padding: 1px 2px 0px 0px;
+}
+
+
+
+#inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
+	padding: 0px 11px 0px 2px;
+	font-style: normal;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: none;
+	color: #ADADAD;
+}
+
+#inputs input#calcuvalue3, #inputs input.inactive#condRisk3 {
+	margin: 0 0 0 16px;
+}
+
+#inputs input.inactive#calcuvalue.alert, #inputs input.inactive#calcuvalue2.alert, #inputs input.inactive#calcuvalue3.alert, #inputs input.inactive#condRisk1.alert, #inputs input.inactive#condRisk2.alert, #inputs input.inactive#condRisk3.alert {
+	color: #f72734;
+}
+
+
+
+
+
+br.glzBR {
+	clear: both;
+}
+
+#citySearch {
+	float: left;
+	width: 165px;
+}
+
+
+#inputs #designConditWrapper label {
+	width: 160px;
+}
+
+
+#inputs label, #occupantSliders label {
+	margin: 0;
+	padding: 2px 3px 2px 0;
+	float: left;
+	clear: left;
+	text-align: left;
+	display: block;
+
+
+	font-weight: 300;
+	font-size: 12px;
+	height: 16px;
+}
+
+#inputs label {
+	color: #777;
+	width: 226px;
+}
+
+#inputs label.grey {
+	color: #ADADAD;
+}
+
+
+#inputs label.indent {
+	padding-left: 48px;
+	width: 164px;
+}
+
+
+#inputs label.inactive {
+	color: #ADADAD;
+	font-style: italic;
+	font-weight: 300;
+}
+
+
+
+
+#occupantSliders label {
+	color: #000;
+	width: 125px;
+}
+
+#occupantSliders label p {
+	font-size: 12px;
+	color: #777;
+	font-weight: 100;
+	margin: 3px 0 0 0;
+}
+
+
+
+
+/* custom checkbox styling */
+#inputs label input.customCheck {
+	width: 15px;
+}
+
+/* input[type=checkbox] {
+	visibility: hidden;
+} */
+
+/* input[type=radio] {
+	visibility: hidden;
+} */
+
+#inputs div.customCheckStyle {
+	width: 12px;
+	margin: 0px 5px 0px 20px;
+	position: relative;
+	padding: 0;
+}
+
+#inputs div.customCheckStyleCentered {
+	width: 12px;
+	margin: 0;
+	position: relative;
+	padding: 0;
+}
+
+#inputs div.customCheckStyleCentered.case3{
+	margin-left: 15px;
+}
+
+
+
+/* box for the checkbox */
+#inputs div.customCheckStyle label, #inputs div.customCheckStyleCentered label {
+	cursor: pointer;
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	padding: 1px;
+	top: 1px;
+	left: 0;
+	/* background: rgb(245, 245, 245); */
+}
+
+
+/* #inputs div.customCheckStyle label.unselected, #inputs div.customCheckStyleCentered label.unselected {
+	border: 1px solid rgb(235, 235, 235);
+	width: 10px;
+	height: 10px;
+	background: #fff;
+} */
+
+
+
+
+
+/* tick for inside checkbox */
+/* #inputs div.customCheckStyle label:after, #inputs div.customCheckStyleCentered label:after {
+	opacity: 1;
+	content: '';
+	position: absolute;
+	width: 6px;
+	height: 4px;
+	background: transparent;
+	top: 3px;
+	left: 3px;
+	border: 2px solid #777;
+	border-top: none;
+	border-right: none;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+#inputs div.customCheckStyle label.unselected:after, #inputs div.customCheckStyleCentered label.unselected:after {
+	opacity: 0;
+}
+
+#inputs div.customCheckStyle label.unselected:hover::after, #inputs div.customCheckStyleCentered label.unselected:hover::after {
+	opacity: 0.5;
+	top: 2px;
+	left: 2px;
+} */
+
+
+
+#inputs div#condensation {
+	width: 142px;
+	bottom: 40px;
+	left: 218px;
+}
+
+#inputs div#uvaluePop {
+	width: 142px;
+	bottom: 53px;
+	left: 218px;
+	z-index: 1000;
+}
+
+
+
+#inputs div.alert img.close {
+	position: absolute;
+	right: -7px;
+	top: -7px;
+	width: 20px;
+	height: 20px;
+}
+
+
+#inputs div.alert {
+	position: absolute;
+
+	background-color: #fff;
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	padding: 10px;
+	border-radius: 10px;
+	border: 2px solid #f72734;
+
+	display: none;
+}
+
+ #inputs div.alert p {
+	color: #f72734;
+	margin: 0;
+}
+
+
+
+#inputs div#URLpop a:visited, #inputs div#URLpop a:hover, #inputs div#URLpop a:active {
+	color: #777;
+}
+
+#sliderWrapper2, #sliderWrapper3, #occupantImage2, #occupantImage3 {
+	display: none;
+}
+
+
+
+
+#options {
+	overflow: auto;
+	width: 100%;
+	padding: 15px 0px 10px 0px;
+}
+
+div#units {
+	margin-right: 20px;
+	float: left;
+}
+
+div#share {
+
+}
+
+#options h2 {
+	color: #000;
+	font-weight: 700;
+	font-size: 16px;
+	text-transform: uppercase;
+	padding: 0;
+	margin: 2px 5px 0 0;
+	display: inline-block;
+	float: left;
+}
+
+
+#options input[type=button].optionButton, #citySearch input[type=button].optionButton {
+	padding: 1px 2px;
+	height: 20px;
+	margin: 0 3px;
+	border-radius: 0px;
+	border: 1px solid #777;
+	cursor: pointer;
+	text-align: center;
+	display: inline-block;
+	float: left;
+}
+
+
+#Outdoorpop input[type=button] {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	padding: 1px 2px;
+	height: 22px;
+	width:125px;
+	margin: 0 3px;
+	border-radius: 0px;
+	border: 1px solid #777;
+	cursor: pointer;
+	text-align: center;
+}
+
+#options input[type=button].optionButton.unselected, #citySearch input[type=button].optionButton.unselected{
+	color: #777;
+	background-color: #fff;
+}
+
+#options input[type=button].optionButton.ready, #citySearch input[type=button].optionButton.ready{
+	color: #fff;
+	background-color: #61bb4c;
+}
+
+#options input[type=button].optionButton.selected, #citySearch input[type=button].optionButton.selected {
+	color: #fff;
+	background-color: #777;
+}
+
+#options input[type=button].optionButton#PDF, #inputs input[type=button].optionButton#URL,  #inputs input[type=button].optionButton#CSV{
+	width: 60px;
+}
+
+#inputs input[type=button].optionButton#CitySearch{
+	width:110px;
+}
+
+#inputs input[type=button].optionButton#bHour{
+	width:60px;
+}
+
+#options input[type=button].optionButton:hover, #citySearch input[type=button].optionButton:hover, #Outdoorpop input[type=button].activeButton:hover{
+	color: #fff;
+	background-color: #777;
+}
+
+
+.expandOptions {
+	margin: 0;
+}
+
+span.expand {
+	padding: 0;
+	display: block;
+	float: left;
+	height: 12px;
+	width: 12px;
+	margin: 2px 5px 0px 0px;
+	background-image: url(../../static/images/expand-small.png);
+	overflow: hidden;
+	position: relative;
+	top: -2px;
+}
+
+.hideContent, .explanContent, .refcontent {
+	display: none;
+}
+
+
+div#Outdoorpop textarea {
+	font-family: "museo-sans", sans-serif;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 100;
+	color: #000;
+	width: 100px;
+	height: 20px;
+	resize: none;
+}
+
+div#Outdoorpop .temperature{
+	width:100px;
+	left:152px;
+	position: relative;
+	padding-top: 25px;
+	padding-bottom: 5px;
+}
+
+div#Outdoorpop .temperatureEmpty{
+	width:100px;
+	left:152px;
+	position: relative;
+	padding-top: 25px;
+	padding-bottom: 5px;
+}
+
+div#Outdoorpop .temperatureEmpty legend{
+	color: grey;
+}
+
+div#Outdoorpop .temperatureEmpty textarea{
+	color: grey;
+}
+
+
+div#Outdoorpop .dropdown{
+	width:200px;
+  left: 105px;
+  position: relative;
+	padding-top: 5px;
+	padding-bottom: 15px;
+}
+
+div#Outdoorpop .dropdown legend, div#Outdoorpop .empty legend, div#Outdoorpop .temperatureEmpty legend, div#Outdoorpop .temperature legend{
+	padding-bottom: 3px;
+}
+
+
+div#Outdoorpop .desButton{
+	width:200px;
+  left: 105px;
+  position: relative;
+	padding-top: 5px;
+	padding-bottom: 15px;
+	text-align: center;
+}
+
+div#Outdoorpop .empty {
+	width:200px;
+  left: 105px;
+  position: relative;
+	padding-top: 5px;
+	padding-bottom: 15px;
+}
+
+div#Outdoorpop .empty legend{
+	color: grey;
+}
+
+div#Outdoorpop select{
+	width:200px;
+}
+
+div#URLpop textarea {
+	font-family: "museo-sans", sans-serif;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 100;
+	color: #000;
+	width: 410px;
+	height: 150px;
+}
+
+div#disclaimer {
+	padding: 10px;
+	background-color: #ffffff;
+}
+
+div#disclaimer p,  div#disclaimer h1, div#Outdoorpop p, div#Outdoorpop h1, div#Outdoorpop legend{
+	font-family: "museo-sans", sans-serif;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 300;
+}
+
+div#disclaimer p, div#Outdoorpop p{
+	font-size: 12px;
+	font-weight: 300;
+}
+
+div#disclaimer a {
+	color: grey;
+	border: none;
+}
+
+div#disclaimer h1, div#Outdoorpop h1{
+	font-size: 16px;
+	font-weight: 700;
+}
+
+
+
+#referenceLinks h1 {
+	margin: 0;
+	padding-bottom: 5px;
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+
+	font-family: "museo-sans", sans-serif;
+}
+
+#explanation {
+	padding: 0;
+	margin: 30px 0 0 0;
+}
+
+.keepTogether {
+	margin: 0 0 30px 0;
+}
+
+#explanation hr {
+	padding: 0;
+	margin: 0 0 15px 0;
+	background: #000;
+	border: none;
+	color: #000;
+	height: 1px;
+	width: 100%;
+}
+
+#explanation h1 {
+	margin: 0;
+	padding-bottom: 5px;
+	font-weight: 700;
+	font-size: 12px;
+	text-transform: uppercase;
+
+	font-family: "museo-sans", sans-serif;
+}
+
+#explanation h2 {
+	margin: 0 0 5px 0;
+	font-weight: 700;
+	font-size: 12px;
+
+	font-family: "museo-sans", sans-serif;
+}
+
+#explanation h3 {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	font-weight: 300;
+	line-height: 1.5;
+	margin: 20px 0 0 0;
+}
+
+#explanation p {
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	margin: 0;
+ 	padding: 0;
+}
+
+
+#explanation img.diagram {
+	float: left;
+	width: 140px;
+	margin: 0 20px 0 0;
+}
+
+#explanation img.discomfortIcon {
+	float: left;
+	width: 9px;
+	height: 9px;
+	margin: 0px 5px 0 0;
+	padding: 2px 0;
+}
+
+#explanation div.descripText {
+	float: left;
+	width: 390px;
+}
+
+
+#explanation ul {
+	margin: 0;
+	padding: 0 0 0 10px;
+	font-family: "museo-sans", sans-serif;
+	font-size: 12px;
+}
+
+.refLine.draggable, .refLine2.draggable {
+	cursor: ns-resize;
+}
+
+.occupantLine.draggable, .occupantLine2.draggable, .occupantLine3.draggable {
+	cursor: ew-resize;
+}
+
+#description p {
+	margin-top: 5px;
+	margin-bottom: 8px;
+}
+
+/* -- show cases only when selected -- */
+div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.case3 {
+	display: none;
+}
+
+.serifText {
+	font-size: 20px;
+  line-height: 1.33333;
+	font-family: "Freight Text Pro", "Freight Text", "freight-text-pro", serif;
+}
+
+
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 100;
+	src: url('../fonts/MuseoSans-300.ttf');
+}
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 300;
+	src: url('../fonts/MuseoSans-300.ttf');
+}
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 700;
+	src: url('../fonts/MuseoSans_0.ttf');
+
+}
+
+@font-face {
+	font-family: "museo-sans";
+	font-weight: 900;
+	src: url('../fonts/MuseoSans_1.ttf');
+}
+
+.button {
+  background-color: #04a0dc; /* Blue */
+  border: none;
+	height: 18px;
+	width: 50px;
+  color: white;
+  /* padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 10px;
+	cursor:pointer;
+}
+.button1OFF {
+  background-color: #e5e5e5; /* Grey */
+  border: none;
+	height: 18px;
+	width: 50px;
+  color: white;
+  /* padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 10px;
+	cursor:pointer;
+}
+.button1ON {
+  background-color: #ff9e1e; /* Orange */
+  border: none;
+	height: 18px;
+	width: 50px;
+  color: white;
+  /* padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 10px;
+	cursor:pointer;
+}
+.button2 {
+  background-color: #FFF; /* this is the hidden white button */
+  border: none;
+	height: 18px;
+	width: 60px;
+  color: white;
+  /* padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 10px;
+
+}

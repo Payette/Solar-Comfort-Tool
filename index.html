@@ -1,0 +1,508 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset = "UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Summertime Comfort Tool</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="static/css/styles.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css"/>
+
+	<!-- CDN Jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- CDN Jquery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+	<script src="//d3js.org/d3.v3.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
+		<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="libraries/p5.svg.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+
+		<script type="text/javascript">
+				// Footnote Options
+
+				// Increment Buttons
+
+				// URL Alert
+				$(function() {
+					$("#URLpop").dialog({
+						autoOpen: false,
+						draggable: false,
+						closeOnEscape: true,
+						buttons: [
+							{text: "Short URL",
+							click: function() {
+								var urlToShorten = $("#URLpop textarea").val();
+								shorten(urlToShorten, function(response) {
+									// replace long url with shortened url
+									$("#URLpop textarea").empty();
+									$("#URLpop textarea").append(response.data.url);
+									$("#URLpop textarea").select();
+						        });
+							}},
+							{text: "Standard URL",
+							click: function() {
+								var standardURL = createURL(false)
+									// replace long url with shortened url
+									$("#URLpop textarea").empty();
+									$("#URLpop textarea").append(standardURL);
+									$("#URLpop textarea").select();
+							}},
+							{text: "Full URL",
+							click: function() {
+								var fullURL = createURL(true)
+									// replace long url with shortened url
+									$("#URLpop textarea").empty();
+									$("#URLpop textarea").append(fullURL);
+									$("#URLpop textarea").select();
+							}},
+							{text: "Close",
+							click: function() {
+								$(this).dialog("close");
+							}},
+							],
+						modal: true,
+						width: 450,
+					});
+				});
+				// Select Outdoor Temperature Dialog
+				$(function() {
+					$("#Outdoorpop").dialog({
+						autoOpen: false,
+						draggable: false,
+						closeOnEscape: true,
+						buttons: [
+							{text: "Close",
+							click: function() {
+								$(this).dialog("close");
+							}},
+							],
+						modal: true,
+						width: 450,
+					});
+				});
+
+			</script>
+
+</head>
+
+
+<body>
+
+	<div id="URLpop">
+		<textarea>the link</textarea>
+	</div>
+
+	<div id="Outdoorpop">
+		<h1>Search for Location Data</h1>
+		<p>Location information provided by the<br>
+			<a href="http://www.ladybug.tools/epwmap/" target="_blank">US. Dept. of Energy EPW database</a>.</p>
+
+		<div class="dropdown">
+			<legend>Continent</legend>
+				<select id="continent">
+					<option>Select</option>
+					<option>Africa</option>
+					<option>Asia</option>
+					<option>Europe</option>
+					<option>North America</option>
+					<option>South America</option>
+					<option>South Pacific</option>
+				</select>
+			</div>
+
+			<div id="countryDiv" class="empty">
+			<legend>Country Code</legend>
+				<select id="country" disabled>
+					<option> </option>
+				</select>
+			</div>
+
+			<div id="stateDiv" class="empty">
+			<legend>State/Province</legend>
+				<select id="state" disabled>
+					<option> </option>
+				</select>
+			</div>
+
+			<div id="cityDiv" class="empty">
+			<legend>City</legend>
+				<select id="city" disabled>
+					<option> </option>
+				</select>
+			</div>
+
+		<div id="outTempDiv" class="temperatureEmpty">
+		<legend>Longitude </legend>
+		<textarea id="outTempTextArea" disabled>the link</textarea>
+		</div>
+
+		<div id="outTempDiv1" class="temperatureEmpty">
+		<legend>Latitude</legend>
+		<textarea id="outTempTextArea1" disabled>the link</textarea>
+		</div>
+
+		<div id="outTempDiv2" class="temperatureEmpty">
+		<legend>Timezone Offset</legend>
+		<textarea id="outTempTextArea2" disabled>the link</textarea>
+		</div>
+
+		<div id="applyTempDiv" class="desButton">
+		<input type="button" name="Apply" id="Apply" value="Enter Results" disabled>
+		</div>
+
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="serifText">
+				<p style="font-size:80%;">This tool shows the impact of shade and glazing geometry on indoor<br>
+				occupant discomfort from direct sun.</p>
+				</div>
+			 </div>
+	    <div class="col-lg-4">
+
+				<div id="visualization"></div>
+			 </div>
+	    </div>
+	  <div class="row">
+	    <div class="col-lg-8 col-xl-12 col-sm-12">
+	      <div class="row">
+	        <div class="col-lg-12 col-xl-6 col-sm-12">
+						<div id="sketch">
+						 <!-- The canvas goes here! -->
+					 </div>
+	        </div>
+	        <div class="col-lg-12 col-xl-6 col-sm-12">
+						<div id="sketch1">
+					 	<!-- The canvas goes here! -->
+					 </div>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="col-lg-4 col-xl-12 col-sm-12">
+	      <div class="row">
+	       <div class="col-lg-12 col-xl-4 col-sm-12">
+
+					 <div id="occupancyWrapper">
+						<form id="occupantSliders" autocomplete="off">
+							<fieldset class="inputgroup">
+								<!-- <legend>Occupancy Thresholds</legend>
+								<hr> -->
+								<label for="fal"> Floor Area Loss</label>
+								<div class="occSlider"><input type="range" name="fal" id="fal" value="40" min="1" max="99"><p id="ppdOutput">40%</p></div>
+
+			          <label for="mdst">Max Direct Sun Time</label>
+								<div class="occSlider"><input type="range" name="mdst" id="mdst" value="3" min="1" max="12"><p id="ppdOutput2"> 0.75 Hr</p></div>
+
+							</fieldset>
+
+						</form>
+					</div>
+
+					<!-- <div id="inputs">
+
+		<div id="options">
+			<div id="units">
+				<h2>Units</h2><br>
+				<input type="button" name="IP" id="IP" value="IP" class="optionButton selected">
+				<input type="button" name="SI" id="SI" value="SI" class="optionButton unselected">
+				<div style="clear:both;"></div>
+			</div>
+			<div id="share">
+				<h2>Share</h2><br>
+				<input type="button" name="PDF" id="PDF" value="Save PDF" class="optionButton unselected">
+				<input type="button" name="CSV" id="CSV" value="Save CSV" class="optionButton unselected">
+				<input type="button" name="URL" id="URL" value="Copy URL" class="optionButton unselected">
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+
+	</div> -->
+
+
+
+
+					 <div id="inputs">
+
+ 					<!-- <fieldset class="inputgroup"> -->
+						<div>
+							<fieldset class="inputgroup">
+								<div id="caseWrapper">
+									<legend class="heading first">CLIMATE</legend>
+									<div  id="caseSelection">
+										<!-- <label>Case1</label> -->
+										<button type="button" class="button" name="button" id="button">Case 1</button>
+										<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
+										<button type="button" class="button2"></button>
+
+									</div>
+								</div>
+								<div id="citySearch">
+					<input type="button" name="CitySearch" id="CitySearch" value="Location Lookup" class="optionButton unselected">
+					<div style="clear:both;"></div>
+				</div><br>
+				</fieldset>
+							</div>
+
+
+ 						<label>Longitude</label>
+ 						<input type="number" name="long" id="long" min="-180" max="180" value="-71" step="1">
+ 						<input type="number" name="long1" id="long1" min="-180" max="180" value="-71" step="1"><br>
+
+ 						<label>Latitude</label>
+ 						<input type="number" name="lat" id="lat" min="-180" max="180"  value="42" step="1">
+ 						<input type="number" name="lat1" id="lat1" min="-180" max="180"  value="42" step="1"><br>
+
+ 						<label>Time Zone Offset</label>
+ 						<input type="number" name="timeZone" id="timeZone" min="-12" max="12"  value="-5" step="1">
+ 						<input type="number" name="timeZone1" id="timeZone1" min="-12" max="12"  value="-5" step="1"><br><br>
+
+
+
+
+					</div>
+					<div id="inputs">
+
+ 					<fieldset class="inputgroup">
+						<div>
+						<div id="caseWrapper">
+ 						<legend class="heading">Study Type</legend>
+					</div>
+
+						<div id="citySearch">
+							<input type="button" name="bHour" id="bHour" value="Single Hour" class="optionButton unselected" onclick="msg()">
+							<input type="button" name="bDay" id="bDay" value="Day" class="optionButton selected" onclick="msg2()">
+							<input type="button" name="bAnnual" id="bAnnual" value="Annual" class="optionButton unselected" onclick="checkAnnual()">
+							<div style="clear:both;"></div>
+						</div>
+							</div>
+							</fieldset>
+
+
+						<label>Hour</label>
+ 						<input type="number" name="hour" id="hour" min="0" max="24" value="12" step="1">
+ 						<input type="number" name="hour1" id="hour1" min="0" max="24" value="12" step="1"><br>
+
+ 						<label>Day</label>
+ 						<input type="number" name="day" id="day" min="1" max="31" value="21" step="1">
+ 						<input type="number" name="day1" id="day1" min="1" max="31" value="21" step="1"><br>
+
+ 						<label>Month</label>
+ 						<input type="number" name="mon" id="mon" min="1" max="12"  value="9" step="1">
+ 						<input type="number" name="mon1" id="mon1" min="1" max="12"  value="9" step="1"><br>
+
+ 						<label>Time Step per Hour</label>
+ 						<input type="number" name="timeStep" id="timeStep" min="1" max="8"  value="4" step="1" disabled><br><br>
+ 						<!-- <input type="number" name="timeStep1" id="timeStep1" min="1" max="8"  value="2" step="1"><br> -->
+
+
+
+
+
+ 				</div>
+	        </div>
+	        <div class="col-lg-12 col-xl-4 col-sm-12">
+
+
+
+
+
+						<div id="inputs">
+
+							<div>
+								<fieldset class="inputgroup">
+									<div id="caseWrapper">
+										<legend class="heading first">Room Geometry</legend>
+										<div  id="caseSelection">
+											<!-- <label>Case1</label> -->
+											<button type="button" class="button" name="button" id="button">Case 1</button>
+											<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
+											<button type="button" class="button2"></button>
+
+										</div>
+									</div>
+								</div>
+
+
+
+
+
+									<label>Room Orientation</label>
+									<input type="number" name="north" id="north" min="-360" max="360"  value="0" step="1">
+									<input type="number" name="north1" id="north1" min="-360" max="360"  value="0" step="1"><br><br>
+
+									<label>Ceiling Height</label>
+									<input type="number" name="ceiling" id="ceiling" min="1" max="100"  value="12" step="1">
+									<input type="number" name="ceiling1" id="ceiling1" min="1" max="100"  value="12" step="1"><br>
+
+									<label>Grid Height</label>
+									<input type="number" name="gridHt" id="gridHt" min="0" max="10"  value="3" step="1">
+									<input type="number" name="gridHt1" id="gridHt1" min="0" max="10"  value="3" step="1"><br>
+
+									<label>Room Length</label>
+									<input type="number" name="wallDep" id="wallDep" min="1" max="60"  value="40" step="1">
+									<input type="number" name="wallDep1" id="wallDep1" min="1" max="60"  value="40" step="1"><br>
+
+									<label>Room Depth</label>
+									<input type="number" name="wallWidth" id="wallWidth" min="1" max="60"  value="30" step="1">
+									<input type="number" name="wallWidth1" id="wallWidth1" min="1" max="60"  value="30" step="1"><br><br>
+
+								</fieldset>
+
+								<fieldset class="inputgroup">
+									<legend class="heading">Window Geometry</legend>
+
+									<label>Window Height from Sill</label>
+									<input type="number" name="windowHeight" id="windowHeight" min="0.0" max="12.0"  value="7.0" step="1.0">
+									<input type="number" name="windowHeight1" id="windowHeight1" min="0.0" max="12.0"  value="7.0" step="1.0"><br>
+
+									<label>Sill Height</label>
+									<input type="number" name="sill" id="sill" min="0" max="5"  value="2.0" step="1">
+									<input type="number" name="sill1" id="sill1" min="0" max="5"  value="2.0" step="1"><br>
+
+
+									<label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
+
+
+									<label for="width" id="windowWidthLabel">
+									<div class="customCheckStyle">
+									<input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" checked>
+									<label for="windowWidthCheck" id="checkWindWidth"></label>
+									</div>Window Width</label>
+									<!-- <div class="inputWrapperLeft"> -->
+									<input type="number" name="windowWidth" id="windowWidth" min="0" value="14" step="0.5" class="case1">
+									<input type="number" name="windowWidth1" id="windowWidth1" min="0" value="14" step="0.5" class="case1"><br>
+									<!-- </div><br> -->
+
+									<label for="glazing" id="glazingLabel">
+									<div class="customCheckStyle">
+									<input type="radio" name="glazingRadio" value="glazingRatioCheck" id="glazingRatioCheck">
+									<label for="glazingRatioCheck" id="checkGlzRatio"></label>
+								  </div>Window-to-Wall Ratio (%)</label>
+							  	<!-- <div class="inputWrapperLeft"> -->
+									<input type="number" name="glazing"  id="glazing" min="1" max="95" value="39" step="1">
+									<input type="number" name="glazing1"  id="glazing1" min="1" max="95" value="39" step="1"><br>
+									<!-- </div><br> -->
+
+
+									<label>Window Seperation</label>
+									<input type="number" name="distWindow" id="distWindow" min="0"  value="12" step="1">
+									<input type="number" name="distWindow1" id="distWindow1" min="0"  value="12" step="1"><br><br>
+
+
+								</fieldset>
+							</div>
+	        </div>
+	        <div class="col-lg-12 col-xl-4 col-sm-12">
+						<div id="inputs">
+
+		 				<fieldset class="inputgroup">
+							<div>
+								<fieldset class="inputgroup">
+									<div id="caseWrapper">
+										<legend class="heading first">Shade Geometry</legend>
+										<div  id="caseSelection">
+											<!-- <label>Case1</label> -->
+											<button type="button" class="button" name="button" id="button">Case 1</button>
+											<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
+											<button type="button" class="button2"></button>
+
+										</div>
+									</div>
+								</div>
+
+
+		 					<label><strong>Horizontal Shade Depth</strong></label>
+							<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4"  value="1" step="1">
+		 					<input type="number" name="hShadeDep1" id="hShadeDep1" min="0" max="4"  value="1" step="1"><br>
+
+		 					<label>&emsp;Number of Shades</label>
+							<input type="number" name="hShadeNum" id="hShadeNum" min="0" max="10"  value="0" step="1">
+		 					<input type="number" name="hShadeNum1" id="hShadeNum1" min="0" max="10"  value="0" step="1"><br>
+
+		 					<label>&emsp;Spacing</label>
+							<input type="number" name="hShadeSpace" id="hShadeSpace" min="1" max="10"  value="3" step="1">
+		 					<input type="number" name="hShadeSpace1" id="hShadeSpace1" min="1" max="10"  value="3" step="1"><br>
+
+		 					<label>&emsp;Distance from Facade</label>
+							<input type="number" name="hShadeDist" id="hShadeDist" min="0" max="10"  value="0" step="1">
+		 					<input type="number" name="hShadeDist1" id="hShadeDist1" min="0" max="10"  value="0" step="1"><br>
+
+		 					<label>&emsp;Height Above Window</label>
+							<input type="number" name="hShadeHeight" id="hShadeHeight" min="-10" max="10"  value="0" step="1">
+		 					<input type="number" name="hShadeHeight1" id="hShadeHeight1" min="-10" max="10"  value="0" step="1"><br>
+
+		 					<label>&emsp;Angle</label>
+							<input type="number" name="hShadeAngle" id="hShadeAngle" min="0" max="90"  value="90" step="1">
+		 					<input type="number" name="hShadeAngle1" id="hShadeAngle1" min="0" max="90"  value="90" step="1"><br>
+
+		 					<label><strong>Vertical Shade Depth</strong></label>
+
+							<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4"  value="3" step="1">
+		 					<input type="number" name="vShadeDep1" id="vShadeDep1" min="0" max="4"  value="3" step="1"><br>
+
+
+		 					<label>&emsp;Number of Shades</label>
+							<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100"  value="0" step="1">
+		 					<input type="number" name="vShadeNum1" id="vShadeNum1" min="0" max="100"  value="0" step="1"><br>
+
+		 					<label>&emsp;Spacing</label>
+							<input type="number" name="vShadeSpace" id="vShadeSpace" min="1" max="10"  value="3" step="1">
+		 					<input type="number" name="vShadeSpace1" id="vShadeSpace1" min="1" max="10"  value="3" step="1"><br>
+
+		 					<label>&emsp;Left/Right</label>
+							<input type="text" name="vShadeStart" id="vShadeStart" value="L">
+		 					<input type="text" name="vShadeStart1" id="vShadeStart1" value="L"><br>
+
+							<label>&emsp;Left/Right Shift</label>
+							<input type="number" name="vShadeShift" id="vShadeShift" min="-10" max="10"  value="0" step="1">
+		 					<input type="number" name="vShadeShift1" id="vShadeShift1" min="-10" max="10"  value="0" step="1"><br>
+
+		 					<label>&emsp;Distance from Facade</label>
+							<input type="number" name="vShadeDist" id="vShadeDist" min="0" max="10"  value="0" step="1">
+		 					<input type="number" name="vShadeDist1" id="vShadeDist1" min="0" max="10"  value="0" step="1"><br>
+
+							<label>&emsp;Full Height Louvers?</label>
+							<input type="checkbox" name="vShadeOn" id="vShadeOn" checked>
+		 					<input type="checkbox" name="vShadeOn1" id="vShadeOn1" checked><br>
+
+							<label>&emsp;&emsp;&emsp;&emsp;Height Above Window</label>
+							<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10"  value="0" step="1">
+		 					<input type="number" name="vShadeHeight1" id="vShadeHeight1" min="0" max="10"  value="0" step="1"><br>
+
+		 					<label>&emsp;&emsp;&emsp;&emsp;Height Relative to Window</label>
+							<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10"  value="0" step="1">
+		 					<input type="number" name="vShadeScale1" id="vShadeScale1" min="0" max="10"  value="0" step="1"><br>
+
+		 				</fieldset>
+		 				</div>
+	       </div>
+	     </div>
+	    </div>
+	  </div>
+	</div>
+
+		<!-- <script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script> -->
+		<script type="text/javascript" src="static/js/locationData.js"></script>
+		<script type="text/javascript" src="static/js/render.js"></script>
+		<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
+		<script type="text/javascript" charset="utf-8" src="static/js/p5renderCanvas2.js"></script>
+		<script type="text/javascript" charset="utf-8" src="static/js/solarCalculator.js"></script>
+
+
+</body>
+
+</html>
