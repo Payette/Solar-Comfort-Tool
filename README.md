@@ -1,1 +1,1 @@
-# SummertimeComfortTool
+# Solar Comfort Tool
