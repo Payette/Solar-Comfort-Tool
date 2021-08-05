@@ -464,22 +464,22 @@ var sketch2 = function(p) {
         document.getElementById("vShadeStart1").disabled = false;
 
 
-        if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1 && currentStudy == singleHour){
-          //console.log(1);
+        // if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1 && currentStudy == singleHour){
+        //   console.log(1);
 
-        }else{
-          //console.log(0);
-          Lon = Lon1;
-          Lat = Lat1;
-          Hour = Hour1;
-          Day = Day1;
-          Month = Month1;
-          TimeZone = TimeZone1;
-          roomOrientationValue = roomOrientationValue1;
-          currentStudy = singleHour;
+        // }else{
+          // console.log(0);
+        Lon = Lon1;
+        Lat = Lat1;
+        Hour = Hour1;
+        Day = Day1;
+        Month = Month1;
+        TimeZone = TimeZone1;
+        roomOrientationValue = roomOrientationValue1;
+        currentStudy = singleHour;
 
-          //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
-          solar = solarCalculator([Lon, Lat]);
+        //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
+        solar = solarCalculator([Lon, Lat]);
 
         offset = (new Date().getTimezoneOffset())/60;
         var dates = []
@@ -537,7 +537,7 @@ var sketch2 = function(p) {
       }
 
 
-    }
+    
 
 
 

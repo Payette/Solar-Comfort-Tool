@@ -504,18 +504,6 @@ p.preload = function() {
           }
         }
       }else{
-
-
-
-
-
-
-
-
-
-      if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1 && currentStudy == singleHour){
-
-      }else{
         Lon = Lon1;
         Lat = Lat1;
         Hour = Hour1;
@@ -531,61 +519,61 @@ p.preload = function() {
 
         //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
 
-    	offset = (new Date().getTimezoneOffset())/60;
-    	var dates = []
-      var date;
-      var date2;
-      for (i = 1; i <= 24*timestep; i++) {
-        hour = i/timestep;
-        if ( i == ((parseInt(24-Hour))*timestep)){
-          date = new Date(2000, Month-1, Day, hour - offset - TimeZone, (hour%parseInt(hour))*60);
-          //console.log((hour%parseInt(hour))*60 + " " + Hour);
-          let mytime = 24 - hour;
-          date2 = new Date(2000, Month-1, Day, Hour - offset - TimeZone, 0);
-        }
-  			dates.push(new Date(2000, Month-1, Day, hour - offset - TimeZone, (hour%parseInt(hour))*60));
-  	  }
-      //console.log(dates);
-      //console.log(date);
-
-
-      xPointLoc = [];
-      yPointLoc = [];
-
-      coordinates = [];
-    	for (let i = 1; i <= (24*timestep)-1; i++) {
-    	   coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
-      }
-
-      for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
-        if (coordinates[i][1]>0){
-          xPointLoc.push((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
-          yPointLoc.push(((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
-          //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+        offset = (new Date().getTimezoneOffset())/60;
+        var dates = []
+        var date;
+        var date2;
+        for (i = 1; i <= 24*timestep; i++) {
+          hour = i/timestep;
+          if ( i == ((parseInt(24-Hour))*timestep)){
+            date = new Date(2000, Month-1, Day, hour - offset - TimeZone, (hour%parseInt(hour))*60);
+            //console.log((hour%parseInt(hour))*60 + " " + Hour);
+            let mytime = 24 - hour;
+            date2 = new Date(2000, Month-1, Day, Hour - offset - TimeZone, 0);
           }
-      }
+          dates.push(new Date(2000, Month-1, Day, hour - offset - TimeZone, (hour%parseInt(hour))*60));
+        }
+        //console.log(dates);
+        //console.log(date);
 
-      if (singleHour == 1){
-        coordinates = [];
-        let coordinates2 = [];
-        for (let i = 1; i <= 9; i++) {
-          coordinates.push(solarCalculator([Lon,Lat]).position(date));
-        }
-        for (let i = 1; i <= 9; i++) {
-          coordinates2.push(solarCalculator([Lon,Lat]).position(date2));
-        }
+
         xPointLoc = [];
         yPointLoc = [];
-        for (let i = 0; i < coordinates2.length; i += parseInt(timestep)){
-          if (coordinates2[i][1]>0){
-            xPointLoc.push((36-(36*(coordinates2[i][1]/180)))*p.sin((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
-            yPointLoc.push(((22-(22*(coordinates2[i][1]/180)))*p.cos((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates2[i][1]*.3));
+
+        coordinates = [];
+        for (let i = 1; i <= (24*timestep)-1; i++) {
+          coordinates.push(solarCalculator([Lon,Lat]).position(dates[i]));
+        }
+
+        for (let i = 0; i < coordinates.length; i += parseInt(timestep)){
+          if (coordinates[i][1]>0){
+            xPointLoc.push((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
+            yPointLoc.push(((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
             //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+            }
+        }
+
+        if (singleHour == 1){
+          coordinates = [];
+          let coordinates2 = [];
+          for (let i = 1; i <= 9; i++) {
+            coordinates.push(solarCalculator([Lon,Lat]).position(date));
+          }
+          for (let i = 1; i <= 9; i++) {
+            coordinates2.push(solarCalculator([Lon,Lat]).position(date2));
+          }
+          xPointLoc = [];
+          yPointLoc = [];
+          for (let i = 0; i < coordinates2.length; i += parseInt(timestep)){
+            if (coordinates2[i][1]>0){
+              xPointLoc.push((36-(36*(coordinates2[i][1]/180)))*p.sin((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)));
+              yPointLoc.push(((22-(22*(coordinates2[i][1]/180)))*p.cos((coordinates2[i][0]-45-roomOrientationValue)*(-3.1415926 / 180)))-(coordinates2[i][1]*.3));
+              //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+            }
           }
         }
+    
       }
-    }
-  }
 
 
 
@@ -1548,12 +1536,12 @@ let decider = 0;
         if(mySun > Percentage/timestep){
           MDT = MDT + 1;
         }
-      mySun = p.int(mySun/timestep);
-    }
-    if (mySun == null){
-      mySun = 0;
-    }
-    //console.log(mySun);
+        mySun = p.int(mySun/timestep);
+      }
+      if (mySun == null){
+        mySun = 0;
+      }
+      //console.log(mySun);
 
 
       mySun = parseInt(mySun);
