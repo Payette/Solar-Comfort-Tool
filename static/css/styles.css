@@ -1,4 +1,10 @@
+.container {
+	max-width: 70%;
+}
 
+.col-xl-3 {
+	min-width: 360px;
+}
 
 #wrapper {
 	width: 960px;
@@ -264,18 +270,12 @@ span#case2Button {
 	background: url(../../static/images/expand-case2.png) 0 0 no-repeat;
 }
 
-span#case3Button {
-	background: url(../../static/images/expand-case3.png) 0 0 no-repeat;
-}
-
-
-
 #caseSelection h2.unselected, #caseSelection h3.unselected {
 	color: #b9b9b9;
 }
 
 
-span#case1Button.unselected, span#case2Button.unselected, span#case3Button.unselected {
+span#case1Button.unselected, span#case2Button.unselected {
 	background: url(../../static/images/expand-unselected.png) 0 0 no-repeat;
 	background-size: 11px 11px;
 }
@@ -431,12 +431,8 @@ div.inputWrapperRight span {
 	margin: 7px 0 7px 25px;
 }
 
-
-
-
 #inputs input {
 	padding: 2px 3px 1px 1px;
-	margin: 0px 12px 0px 0px;
 	display: inline-block;
 	float: left;
 	width: 4em;
@@ -451,6 +447,10 @@ div.inputWrapperRight span {
 	font-size: 10px;
 	text-align: left;
 	color: black;
+}
+
+#inputs input:not([type="radio"]), #inputs input:not([type="checkbox"]) {
+	margin: 0px 12px 0px 0px;
 }
 
 #inputs input.inactive {
@@ -482,8 +482,7 @@ div.inputWrapperRight span {
 	color: #f72734;
 }
 
-
-
+/* Toggle Switch */
 
 
 br.glzBR {
@@ -1113,4 +1112,8 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
   /* display: inline-block; */
   font-size: 10px;
 
+}
+
+#sketch, #sketch1 {
+	margin: 0 50px;
 }

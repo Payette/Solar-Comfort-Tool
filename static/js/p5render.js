@@ -25,22 +25,35 @@ checkAnnual = function(){ // Check If Annual Button is Pressed
   dateCounter = 0;
   if (myCheck == 1){
     myCheck = 0;
+    document.getElementById("annualWarning").innerHTML = '';
     document.getElementById("long").disabled = false;
     document.getElementById("lat").disabled = false;
     document.getElementById("timeZone").disabled = false;
+    document.getElementById("outdoorTemp").disabled = false;
     document.getElementById("hour").disabled = false;
     document.getElementById("day").disabled = false;
     document.getElementById("mon").disabled = false;
+    document.getElementById("airTemp").disabled = false;
+    document.getElementById("humidity").disabled = false;
+    document.getElementById("airSpeed").disabled = false;
+    document.getElementById("clothing").disabled = false;
+    document.getElementById("metabolic").disabled = false;
+    document.getElementById("fbes").disabled = false;
     document.getElementById("north").disabled = false;
     document.getElementById("gridHt").disabled = false;
     document.getElementById("ceiling").disabled = false;
     document.getElementById("wallWidth").disabled = false;
     document.getElementById("wallDep").disabled = false;
+    document.getElementById("wallR").disabled = false;
     document.getElementById("windowHeight").disabled = false;
     document.getElementById("windowWidth").disabled = false;
     document.getElementById("glazing").disabled = false;
     document.getElementById("sill").disabled = false;
     document.getElementById("distWindow").disabled = false;
+    document.getElementById("windowU").disabled = false;
+    document.getElementById("asa").disabled = false;
+    document.getElementById("lowE").disabled = false;
+    document.getElementById("emissivity").disabled = false;
     document.getElementById("hShadeDep").disabled = false;
     document.getElementById("hShadeNum").disabled = false;
     document.getElementById("hShadeSpace").disabled = false;
@@ -58,23 +71,36 @@ checkAnnual = function(){ // Check If Annual Button is Pressed
     document.getElementById("vShadeStart").disabled = false;
   }else{
     myCheck = 1;
-    Case2Button = 0;
+    // Case2Button = 0;
+    document.getElementById("annualWarning").innerHTML = '<label style="font-size: 9px; color: orange;">Chages to inputs are disabled. To enable changes turn off Annual.</label><br>';
     document.getElementById("long").disabled = true;
     document.getElementById("lat").disabled = true;
     document.getElementById("timeZone").disabled = true;
+    document.getElementById("outdoorTemp").disabled = true;
     document.getElementById("hour").disabled = true;
     document.getElementById("day").disabled = true;
     document.getElementById("mon").disabled = true;
+    document.getElementById("airTemp").disabled = true;
+    document.getElementById("humidity").disabled = true;
+    document.getElementById("airSpeed").disabled = true;
+    document.getElementById("clothing").disabled = true;
+    document.getElementById("metabolic").disabled = true;
+    document.getElementById("fbes").disabled = true;
     document.getElementById("north").disabled = true;
     document.getElementById("gridHt").disabled = true;
     document.getElementById("ceiling").disabled = true;
     document.getElementById("wallWidth").disabled = true;
     document.getElementById("wallDep").disabled = true;
+    document.getElementById("wallR").disabled = true;
     document.getElementById("windowHeight").disabled = true;
     document.getElementById("windowWidth").disabled = true;
     document.getElementById("glazing").disabled = true;
     document.getElementById("sill").disabled = true;
     document.getElementById("distWindow").disabled = true;
+    document.getElementById("windowU").disabled = true;
+    document.getElementById("asa").disabled = true;
+    document.getElementById("lowE").disabled = true;
+    document.getElementById("emissivity").disabled = true;
     document.getElementById("hShadeDep").disabled = true;
     document.getElementById("hShadeNum").disabled = true;
     document.getElementById("hShadeSpace").disabled = true;
@@ -264,24 +290,7 @@ p.preload = function() {
       document.getElementsByName("button1")[0].addEventListener('click', p.checkButton);
       //console.log(myButton);
 
-
-      if (singleHour == 1){
-        document.getElementById("bHour").className="optionButton selected";
-        document.getElementById("bDay").className="optionButton unselected";
-      }else{
-        document.getElementById("bHour").className="optionButton unselected";
-        document.getElementById("bDay").className="optionButton selected";
-      }
-      if(currentFrame > 365){
-        document.getElementById("bAnnual").className="optionButton ready";
-      }else{
-        document.getElementById("bAnnual").className="optionButton unselected";
-      }
-
-
-
-
-
+      // CLIMATE
 
       let Lon1 = document.getElementById("long").value;
       document.getElementsByName("long")[0].addEventListener('input', p.reload);
@@ -289,11 +298,12 @@ p.preload = function() {
       let Lat1 = document.getElementById("lat").value;
       document.getElementsByName("lat")[0].addEventListener('input', p.reload);
 
-
-
       let TimeZone1 = document.getElementById("timeZone").value;
       document.getElementsByName("timeZone")[0].addEventListener('input', p.reload);
 
+      let outdoorTemp = document.getElementById("outdoorTemp").value;
+
+      // TIME CONFIG
 
       let Hour1 = document.getElementById("hour").value;
       document.getElementsByName("hour")[0].addEventListener('input', p.reload);
@@ -308,6 +318,20 @@ p.preload = function() {
       document.getElementsByName("timeStep")[0].addEventListener('input', p.reload);
 
 
+      // INDOOR CONDITIONS
+      let airTemp = document.getElementById("airTemp").value;
+
+      let humidity = document.getElementById("humidity").value;
+
+      let airSpeed = document.getElementById("airSpeed").value;
+
+      let clothing = document.getElementById("clothing").value;
+
+      let metabolic = document.getElementById("metabolic").value;
+
+      let fractionBody = document.getElementById("fbes").value;
+
+      // ROOM GEOMETRY
       let roomOrientationValue1 = document.getElementById("north").value;
       document.getElementsByName("north")[0].addEventListener('input', p.reload);
 
@@ -325,6 +349,10 @@ p.preload = function() {
       let wallDepVal = document.getElementById("wallDep").value;
       document.getElementsByName("wallDep")[0].addEventListener('input', p.reload);
 
+      let wallR = document.getElementById("wallR").value;
+
+      // WINDOW GEOMETRY
+
       let windowHeightValue = document.getElementById("windowHeight").value*10;
       document.getElementsByName("windowHeight")[0].addEventListener('input', p.reload);
       windowHeightValue = windowHeightValue/10;
@@ -341,7 +369,23 @@ p.preload = function() {
       let distanceWindows = document.getElementById("distWindow").value;
       document.getElementsByName("distWindow")[0].addEventListener('input', p.reload);
 
+      let windowU = document.getElementById("windowU").value;
 
+      let aveShortwave = document.getElementById("asa").value;
+
+      let lowEOn = document.getElementById("lowE").value;
+
+      let lowECheckbox = document.querySelector("input[name=lowE]");
+
+      if(lowECheckbox.checked) {
+          lowEOn = 0;
+      } else {
+          lowEOn = 1;
+      }
+
+      let emissivity = document.getElementById("emissivity").value;
+
+      // SHADE GEOMETRY
 
       let horzShadeDep = document.getElementById("hShadeDep").value;
       document.getElementsByName("hShadeDep")[0].addEventListener('input', p.reload);
@@ -361,19 +405,6 @@ p.preload = function() {
       let horzShadeAngle = document.getElementById("hShadeAngle").value;
       document.getElementsByName("hShadeAngle")[0].addEventListener('input', p.reload);
 
-      let vertShadeOn = document.getElementById("vShadeOn").value;
-      document.getElementsByName("vShadeOn")[0].addEventListener('click', p.reload);
-
-      let checkbox = document.querySelector("input[name=vShadeOn]");
-
-
-      if(checkbox.checked) {
-          vertShadeOn = 0;
-      } else {
-          vertShadeOn = 1;
-      }
-
-
       let vertShadeDep = document.getElementById("vShadeDep").value;
       document.getElementsByName("vShadeDep")[0].addEventListener('input', p.reload);
 
@@ -383,11 +414,25 @@ p.preload = function() {
       let vertShadeSpace = document.getElementById("vShadeSpace").value;
       document.getElementsByName("vShadeSpace")[0].addEventListener('input', p.reload);
 
+      let vertShadeStart = document.getElementById("vShadeStart").value;
+      document.getElementsByName("vShadeStart")[0].addEventListener('input', p.reload);
+
       let vertShadeShift = document.getElementById("vShadeShift").value;
       document.getElementsByName("vShadeShift")[0].addEventListener('input', p.reload);
 
       let vertShadeDist = document.getElementById("vShadeDist").value;
       document.getElementsByName("vShadeDist")[0].addEventListener('input', p.reload);
+
+      let vertShadeOn = document.getElementById("vShadeOn").value;
+      document.getElementsByName("vShadeOn")[0].addEventListener('click', p.reload);
+
+      let vShadeCheckbox = document.querySelector("input[name=vShadeOn]");
+
+      if(vShadeCheckbox.checked) {
+          vertShadeOn = 0;
+      } else {
+          vertShadeOn = 1;
+      }
 
       let vertShadeHeight = document.getElementById("vShadeHeight").value;
       document.getElementsByName("vShadeHeight")[0].addEventListener('input', p.reload);
@@ -395,18 +440,11 @@ p.preload = function() {
       let vertShadeScale = document.getElementById("vShadeScale").value;
       document.getElementsByName("vShadeScale")[0].addEventListener('input', p.reload);
 
-      let vertShadeStart = document.getElementById("vShadeStart").value;
-      document.getElementsByName("vShadeStart")[0].addEventListener('input', p.reload);
-
-
       let valFal = document.getElementById("fal").value; //FLOOR AREA LOSS
       document.getElementsByName("fal")[0].addEventListener('input', p.reload1);
 
       let valMDST = document.getElementById("mdst").value; // MAX DIRECT SUN TIME
       document.getElementsByName("mdst")[0].addEventListener('input', p.reload1);
-
-
-
 
 
       if(myCheck == 1){ // Check If Annual Button is Pressed
@@ -879,15 +917,6 @@ p.preload = function() {
 
 
   let gridColorArray = [];
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1529,22 +1558,19 @@ let decider = 0;
 
       mySun = parseInt(mySun);
 
+      p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
 
+      p.quad(X1, Y1-GridHt, X2, Y2-GridHt, X3, Y3-GridHt, X4, Y4-GridHt);
 
+      // if (gridColorArray[i*gridY]/(timestep-.1) < valMDST && gridColorArray[(i*gridY)-1]/(timestep-.1) > valMDST){
+      //   p.push();
+      //   p.strokeWeight(1);
+      //   p.stroke(50);
+      //   p.line(X3, Y3-GridHt, X4, Y4-GridHt);
+      //   p.pop();
+      // }
 
-        p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
-
-        p.quad(X1, Y1-GridHt, X2, Y2-GridHt, X3, Y3-GridHt, X4, Y4-GridHt);
-
-        // if (gridColorArray[i*gridY]/(timestep-.1) < valMDST && gridColorArray[(i*gridY)-1]/(timestep-.1) > valMDST){
-        //   p.push();
-        //   p.strokeWeight(1);
-        //   p.stroke(50);
-        //   p.line(X3, Y3-GridHt, X4, Y4-GridHt);
-        //   p.pop();
-        // }
-
-        if (myCheck == 1){
+      if (myCheck == 1){
 
         if (gridColorArray[i*gridY]/.99 > valMDST && gridColorArray[(i*gridY)+1]/.99 < valMDST){
           p.push();
