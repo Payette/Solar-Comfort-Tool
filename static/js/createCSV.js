@@ -110,6 +110,9 @@ function createCSV() {
         csvContent += obj.label + ',' + obj.value + '\n';
     });
 
+    csvContent += "\nCase 1 Result, \n";
+    csvContent += MDTResult;
+
     csvContent += "\nCase 1 Inputs, \n";
     Object.values(gatherCase1Inputs()).forEach(function(obj) {
         if (obj.label == "Emissivity" && !$("input#lowE").is(":checked")) {

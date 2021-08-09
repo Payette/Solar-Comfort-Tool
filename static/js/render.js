@@ -262,16 +262,16 @@ $("#Apply").click(function(event) {
 })
 
 if ($("#dsDay").is(":checked")) {
-  $("label[for=hour], input#hour, input#hour1, label[for=timeStep], input#timeStep").hide();
+  $("label[for=hour], input#hour, input#hour1, label[for=timeStep], input#timeStep").css("visibility", "hidden");
 }
 
 // Show/hide Hour, Time Step inputs when a study type is selected
 $("#dsDay").on("change", function() {
-  $("label[for=hour], input#hour, input#hour1, label[for=timeStep], input#timeStep").hide();
+  $("label[for=hour], input#hour, input#hour1, label[for=timeStep], input#timeStep").css("visibility", "hidden");
 })
 
 $("#ppdRadio, #dsHour").on("change", function() {
-  $("label[for=hour], input#hour, input#hour1, label[for=timeStep], input#timeStep").show();
+  $("label[for=hour], input#hour, input#hour1, label[for=timeStep], input#timeStep").css("visibility", "visible");
 });
 
 // Change Emissivity input label style when Low-E is checked
