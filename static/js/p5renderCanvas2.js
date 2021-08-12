@@ -94,7 +94,17 @@ var sketch2 = function(p) {
 
     let metabolic = document.getElementById("metabolic1").value;
 
-    let fractionBodyExposed = document.getElementById("fbes1").value;
+    let posture = document.getElementById("posture1").value;
+
+    let fractionBodyExposed;
+
+    if (posture == "seated") {
+      fractionBodyExposed = 0.696;
+    } else {
+      fractionBodyExposed = 0.725;
+    }
+
+    let aveShortwaveAbsorptivity = document.getElementById("asa1").value;
 
     // ROOM GEOMETRY
 
@@ -135,17 +145,7 @@ var sketch2 = function(p) {
 
     let windowU = document.getElementById("windowU1").value;
 
-    let aveShortwaveAbsorptivity = document.getElementById("asa1").value;
-
-    let lowEOn = document.getElementById("lowE1").value;
-
-    let lowECheckbox = document.querySelector("input[name=lowE1]");
-
-    if(lowECheckbox.checked) {
-        lowEOn = 0;
-    } else {
-        lowEOn = 1;
-    }
+    let shgc = document.getElementById("shgc1").value;
 
     // SHADE GEOMETRY
 
@@ -220,54 +220,8 @@ var sketch2 = function(p) {
       document.getElementsByName("button1")[1].className = "button1OFF";
       document.getElementsByName("button1")[2].className = "button1OFF";
       document.getElementsByName("button1")[3].className = "button1OFF";
-      // document.getElementById("button1").className = "button1";
-      //let vertShadeStart = document.getElementById("vShadeStart1").value;
 
-      $("input.case2").css("display", "none");
-
-      document.getElementById("long1").value = document.getElementById("long").value;
-      document.getElementById("lat1").value = document.getElementById("lat").value;
-      document.getElementById("timeZone1").value = document.getElementById("timeZone").value;
-      document.getElementById("outdoorTemp1").value = document.getElementById("outdoorTemp").value;
-      document.getElementById("hour1").value = document.getElementById("hour").value;
-      document.getElementById("day1").value = document.getElementById("day").value;
-      document.getElementById("mon1").value = document.getElementById("mon").value;
-      document.getElementById("airTemp1").value = document.getElementById("airTemp").value;
-      document.getElementById("humidity1").value = document.getElementById("humidity").value;
-      document.getElementById("airSpeed1").value = document.getElementById("airSpeed").value;
-      document.getElementById("clothing1").value = document.getElementById("clothing").value;
-      document.getElementById("metabolic1").value = document.getElementById("metabolic").value;
-      document.getElementById("fbes1").value = document.getElementById("fbes").value;
-      document.getElementById("north1").value = document.getElementById("north").value;
-      document.getElementById("gridHt1").value = document.getElementById("gridHt").value;
-      document.getElementById("ceiling1").value = document.getElementById("ceiling").value;
-      document.getElementById("wallWidth1").value = document.getElementById("wallWidth").value;
-      document.getElementById("wallDep1").value = document.getElementById("wallDep").value;
-      document.getElementById("wallR1").value = document.getElementById("wallR").value;
-      document.getElementById("windowHeight1").value = document.getElementById("windowHeight").value;
-      document.getElementById("windowWidth1").value = document.getElementById("windowWidth").value;
-      document.getElementById("glazing1").value = document.getElementById("glazing").value;
-      document.getElementById("sill1").value = document.getElementById("sill").value;
-      document.getElementById("distWindow1").value = document.getElementById("distWindow").value;
-      document.getElementById("windowU1").value = document.getElementById("windowU").value;
-      document.getElementById("asa1").value = document.getElementById("asa").value;
-      // document.getElementById("lowE1").value = document.getElementById("lowE").value;
-      // document.getElementById("emissivity1").value = document.getElementById("emissivity").value;
-      document.getElementById("hShadeDep1").value = document.getElementById("hShadeDep").value;
-      document.getElementById("hShadeNum1").value = document.getElementById("hShadeNum").value;
-      document.getElementById("hShadeSpace1").value = document.getElementById("hShadeSpace").value;
-      document.getElementById("hShadeDist1").value = document.getElementById("hShadeDist").value;
-      document.getElementById("hShadeHeight1").value = document.getElementById("hShadeHeight").value;
-      document.getElementById("hShadeAngle1").value = document.getElementById("hShadeAngle").value;
-      document.getElementById("vShadeOn1").value = document.getElementById("vShadeOn").value;
-      document.getElementById("vShadeDep1").value = document.getElementById("vShadeDep").value;
-      document.getElementById("vShadeNum1").value = document.getElementById("vShadeNum").value;
-      document.getElementById("vShadeSpace1").value = document.getElementById("vShadeSpace").value;
-      document.getElementById("vShadeShift1").value = document.getElementById("vShadeShift").value;
-      document.getElementById("vShadeDist1").value = document.getElementById("vShadeDist").value;
-      document.getElementById("vShadeHeight1").value = document.getElementById("vShadeHeight").value;
-      document.getElementById("vShadeScale1").value = document.getElementById("vShadeScale").value;
-      document.getElementById("vShadeStart1").value = document.getElementById("vShadeStart").value;
+      $("input.case2, select.case2").css("visibility", "hidden");
 
       document.getElementById("long1").disabled = true;
       document.getElementById("lat1").disabled = true;
@@ -281,7 +235,8 @@ var sketch2 = function(p) {
       document.getElementById("airSpeed1").disabled = true;
       document.getElementById("clothing1").disabled = true;
       document.getElementById("metabolic1").disabled = true;
-      document.getElementById("fbes1").disabled = true;
+      document.getElementById("posture1").disabled = true;
+      document.getElementById("asa1").disabled = true;
       document.getElementById("north1").disabled = true;
       document.getElementById("gridHt1").disabled = true;
       document.getElementById("ceiling1").disabled = true;
@@ -294,9 +249,7 @@ var sketch2 = function(p) {
       document.getElementById("sill1").disabled = true;
       document.getElementById("distWindow1").disabled = true;
       document.getElementById("windowU1").disabled = true;
-      document.getElementById("asa1").disabled = true;
-      document.getElementById("lowE1").disabled = true;
-      document.getElementById("emissivity1").disabled = true;
+      document.getElementById("shgc1").disabled = true;
       document.getElementById("hShadeDep1").disabled = true;
       document.getElementById("hShadeNum1").disabled = true;
       document.getElementById("hShadeSpace1").disabled = true;
@@ -416,7 +369,7 @@ var sketch2 = function(p) {
       document.getElementsByName("button1")[2].className = "button1ON";
       document.getElementsByName("button1")[3].className = "button1ON";
 
-      $("input.case2").css("display", "inline-block");
+      $("input.case2, select.case2").css("visibility", "visible");
 
       document.getElementById("long1").disabled = false;
       document.getElementById("lat1").disabled = false;
@@ -430,7 +383,8 @@ var sketch2 = function(p) {
       document.getElementById("airSpeed1").disabled = false;
       document.getElementById("clothing1").disabled = false;
       document.getElementById("metabolic1").disabled = false;
-      document.getElementById("fbes1").disabled = false;
+      document.getElementById("posture1").disabled = false;
+      document.getElementById("asa1").disabled = false;
       document.getElementById("north1").disabled = false;
       document.getElementById("gridHt1").disabled = false;
       document.getElementById("ceiling1").disabled = false;
@@ -443,9 +397,7 @@ var sketch2 = function(p) {
       document.getElementById("sill1").disabled = false;
       document.getElementById("distWindow1").disabled = false;
       document.getElementById("windowU1").disabled = false;
-      document.getElementById("asa1").disabled = false;
-      document.getElementById("lowE1").disabled = false;
-      document.getElementById("emissivity1").disabled = false;
+      document.getElementById("shgc1").disabled = false;
       document.getElementById("hShadeDep1").disabled = false;
       document.getElementById("hShadeNum1").disabled = false;
       document.getElementById("hShadeSpace1").disabled = false;
@@ -534,14 +486,6 @@ var sketch2 = function(p) {
         }
       }
     }
-
-
-    
-
-
-
-
-
 
     //GEO Result - TAKES DATA FROM THE GEO.JS FILE
     //geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth, changedVar)

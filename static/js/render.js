@@ -262,44 +262,18 @@ $("#Apply").click(function(event) {
 })
 
 if ($("#dsDay").is(":checked")) {
-  $("label[for=hour], input#hour, input#hour1, label[for=timeStep], input#timeStep").css("visibility", "hidden");
+  $("#hideTime").hide();
 }
 
 // Show/hide Hour, Time Step inputs when a study type is selected
 $("#dsDay").on("change", function() {
-  $("label[for=hour], input#hour, input#hour1, label[for=timeStep], input#timeStep").css("visibility", "hidden");
+  $("#hideTime").hide()
 })
 
 $("#ppdRadio, #dsHour").on("change", function() {
-  $("label[for=hour], input#hour, input#hour1, label[for=timeStep], input#timeStep").css("visibility", "visible");
+  $("#hideTime").show()
 });
 
-// Change Emissivity input label style when Low-E is checked
-$("input#lowE, input#lowE1").on("change", function() {
-  if ($("input#lowE").is(":checked") || $("input#lowE1").is(":checked")) {
-    $("label[for=emissivity]").css({"font-style": "normal"});
-    $("label[for=emissivity]").removeClass("grey");
-  } else {
-    $("label[for=emissivity]").css({"font-style": "italic"});
-    $("label[for=emissivity]").addClass("grey");
-  }
-})
-
-$("input#lowE").on("change", function() {
-  if ($("input#lowE").is(":checked")) {
-    $("input#emissivity").val(0.2);
-  } else {
-    $("input#emissivity").val('');
-  }
-})
-
-$("input#lowE1").on("change", function() {
-  if ($("input#lowE1").is(":checked")) {
-    $("input#emissivity1").val($("input#emissivity").val() == '' ? 0.2 : $("input#emissivity").val());
-  } else {
-    $("input#emissivity1").val('');
-  }
-})
 
 // Change Louvers Height inputs label style
 if ($("input#vShadeOn").is(":checked")) {

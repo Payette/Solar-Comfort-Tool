@@ -1,15 +1,15 @@
 <!DOCTYPE HTML>
-<html lang = "en">
+<html lang="en">
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta charset = "UTF-8" />
+	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<title>Summertime Comfort Tool</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="static/css/styles.css"/>
-	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/styles.css" />
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css" />
 
 	<!-- CDN Jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -19,81 +19,89 @@
 	<script src="//d3js.org/d3.v3.min.js"></script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
-		<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
-  <script language="javascript" type="text/javascript" src="libraries/p5.svg.js"></script>
+	<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+	<script language="javascript" type="text/javascript" src="libraries/p5.svg.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 
+	<script type="text/javascript">
+		// Footnote Options
 
+		// Increment Buttons
 
-		<script type="text/javascript">
-				// Footnote Options
+		// URL Alert
+		$(function () {
+			$("#URLpop").dialog({
+				autoOpen: false,
+				draggable: false,
+				closeOnEscape: true,
+				buttons: [
+					{
+						text: "Short URL",
+						click: function () {
+							var urlToShorten = $("#URLpop textarea").val();
+							shorten(urlToShorten, function (response) {
+								// replace long url with shortened url
+								$("#URLpop textarea").empty();
+								$("#URLpop textarea").append(response.data.url);
+								$("#URLpop textarea").select();
+							});
+						}
+					},
+					{
+						text: "Standard URL",
+						click: function () {
+							var standardURL = createURL(false)
+							// replace long url with shortened url
+							$("#URLpop textarea").empty();
+							$("#URLpop textarea").append(standardURL);
+							$("#URLpop textarea").select();
+						}
+					},
+					{
+						text: "Full URL",
+						click: function () {
+							var fullURL = createURL(true)
+							// replace long url with shortened url
+							$("#URLpop textarea").empty();
+							$("#URLpop textarea").append(fullURL);
+							$("#URLpop textarea").select();
+						}
+					},
+					{
+						text: "Close",
+						click: function () {
+							$(this).dialog("close");
+						}
+					},
+				],
+				modal: true,
+				width: 450,
+			});
+		});
+		// Select Outdoor Temperature Dialog
+		$(function () {
+			$("#Outdoorpop").dialog({
+				autoOpen: false,
+				draggable: false,
+				closeOnEscape: true,
+				buttons: [
+					{
+						text: "Close",
+						click: function () {
+							$(this).dialog("close");
+						}
+					},
+				],
+				modal: true,
+				width: 450,
+			});
+		});
 
-				// Increment Buttons
-
-				// URL Alert
-				$(function() {
-					$("#URLpop").dialog({
-						autoOpen: false,
-						draggable: false,
-						closeOnEscape: true,
-						buttons: [
-							{text: "Short URL",
-							click: function() {
-								var urlToShorten = $("#URLpop textarea").val();
-								shorten(urlToShorten, function(response) {
-									// replace long url with shortened url
-									$("#URLpop textarea").empty();
-									$("#URLpop textarea").append(response.data.url);
-									$("#URLpop textarea").select();
-						        });
-							}},
-							{text: "Standard URL",
-							click: function() {
-								var standardURL = createURL(false)
-									// replace long url with shortened url
-									$("#URLpop textarea").empty();
-									$("#URLpop textarea").append(standardURL);
-									$("#URLpop textarea").select();
-							}},
-							{text: "Full URL",
-							click: function() {
-								var fullURL = createURL(true)
-									// replace long url with shortened url
-									$("#URLpop textarea").empty();
-									$("#URLpop textarea").append(fullURL);
-									$("#URLpop textarea").select();
-							}},
-							{text: "Close",
-							click: function() {
-								$(this).dialog("close");
-							}},
-							],
-						modal: true,
-						width: 450,
-					});
-				});
-				// Select Outdoor Temperature Dialog
-				$(function() {
-					$("#Outdoorpop").dialog({
-						autoOpen: false,
-						draggable: false,
-						closeOnEscape: true,
-						buttons: [
-							{text: "Close",
-							click: function() {
-								$(this).dialog("close");
-							}},
-							],
-						modal: true,
-						width: 450,
-					});
-				});
-
-			</script>
+	</script>
 
 </head>
 
@@ -107,59 +115,60 @@
 	<div id="Outdoorpop">
 		<h1>Search for Location Data</h1>
 		<p>Location information provided by the<br>
-			<a href="http://www.ladybug.tools/epwmap/" target="_blank">US. Dept. of Energy EPW database</a>.</p>
+			<a href="http://www.ladybug.tools/epwmap/" target="_blank">US. Dept. of Energy EPW database</a>.
+		</p>
 
 		<div class="dropdown">
 			<legend>Continent</legend>
-				<select id="continent">
-					<option>Select</option>
-					<option>Africa</option>
-					<option>Asia</option>
-					<option>Europe</option>
-					<option>North America</option>
-					<option>South America</option>
-					<option>South Pacific</option>
-				</select>
-			</div>
+			<select id="continent">
+				<option>Select</option>
+				<option>Africa</option>
+				<option>Asia</option>
+				<option>Europe</option>
+				<option>North America</option>
+				<option>South America</option>
+				<option>South Pacific</option>
+			</select>
+		</div>
 
-			<div id="countryDiv" class="empty">
+		<div id="countryDiv" class="empty">
 			<legend>Country Code</legend>
-				<select id="country" disabled>
-					<option> </option>
-				</select>
-			</div>
+			<select id="country" disabled>
+				<option> </option>
+			</select>
+		</div>
 
-			<div id="stateDiv" class="empty">
+		<div id="stateDiv" class="empty">
 			<legend>State/Province</legend>
-				<select id="state" disabled>
-					<option> </option>
-				</select>
-			</div>
+			<select id="state" disabled>
+				<option> </option>
+			</select>
+		</div>
 
-			<div id="cityDiv" class="empty">
+		<div id="cityDiv" class="empty">
 			<legend>City</legend>
-				<select id="city" disabled>
-					<option> </option>
-				</select>
-			</div>
+			<select id="city" disabled>
+				<option> </option>
+			</select>
+		</div>
 
 		<div id="outTempDiv" class="temperatureEmpty">
-		<legend>Longitude </legend>
-		<textarea id="outTempTextArea" disabled>the link</textarea>
+			<legend>Longitude </legend>
+			<textarea id="outTempTextArea" disabled>the link</textarea>
 		</div>
 
 		<div id="outTempDiv1" class="temperatureEmpty">
-		<legend>Latitude</legend>
-		<textarea id="outTempTextArea1" disabled>the link</textarea>
+			<legend>Latitude</legend>
+			<textarea id="outTempTextArea1" disabled>the link</textarea>
 		</div>
 
 		<div id="outTempDiv2" class="temperatureEmpty">
-		<legend>Timezone Offset</legend>
-		<textarea id="outTempTextArea2" disabled>the link</textarea>
+			<legend>Timezone Offset</legend>
+			<textarea id="outTempTextArea2" disabled>the link</textarea>
 		</div>
 
 		<div id="applyTempDiv" class="desButton">
-		<input type="button" name="Apply" id="Apply" value="Enter Results" disabled>
+			<input type="button" name="Apply" id="Apply" value="Enter Results" disabled>
 		</div>
 
 	</div>
@@ -168,28 +177,45 @@
 		<div class="row justify-content-center">
 			<div class="col-8">
 				<div class="serifText">
-				<p style="font-size:80%;">This tool shows the impact of shade and glazing geometry on indoor<br>
-				occupant discomfort from direct sun.</p>
+					<p style="font-size:80%;">This tool shows the impact of shade and glazing geometry on indoor<br>
+						occupant discomfort from direct sun.</p>
 				</div>
 			</div>
-	    		<div class="col-4">
+			<div class="col-4">
 				<div id="visualization"></div>
 			</div>
-	    </div>
-	  	<div class="row justify-content-center">
-			<div class="col-lg-8 col-xl-12 col-sm-12">
-				<div class="row justify-content-center">
-					<div id="sketch">
-					<!-- The canvas goes here! -->
-					</div>
-					<div id="sketch1">
-					<!-- The canvas goes here! -->
-					</div>
-				</div>
-				</div>
 		</div>
-	    <div class="row justify-content-center">
-			<div class="col-xl-3 col-lg-6 col-sm-8">
+		<div class="row justify-content-center">
+			<div id="sketch">
+				<!-- The canvas goes here! -->
+			</div>
+			<div id="sketch1">
+				<!-- The canvas goes here! -->
+			</div>
+		</div>
+		<div class="row justify-content-center">			
+			<div class="col-auto">
+				<div id="occupancyWrapper">
+					<form id="occupantSliders" autocomplete="off">
+						<fieldset class="inputgroup">
+							<!-- <legend>Occupancy Thresholds</legend>
+							<hr> -->
+							<label for="fal"> Floor Area Loss</label>
+							<div class="occSlider"><input type="range" name="fal" id="fal" value="40" min="1" max="99">
+								<p id="ppdOutput">40%</p>
+							</div>
+
+							<label for="mdst">Max Direct Sun Time</label>
+							<div class="occSlider"><input type="range" name="mdst" id="mdst" value="3" min="1" max="12">
+								<p id="ppdOutput2"> 0.75 Hr</p>
+							</div>
+
+						</fieldset>
+
+					</form>
+				</div>
+			</div>
+			<div class="col-auto">
 				<div id="inputs">
 					<fieldset class="inputgroup">
 						<div id="caseWrapper">
@@ -200,338 +226,359 @@
 							<div style="clear:both;"></div>
 						</div>
 					</fieldset>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-4">
+				<div id="inputs">
+					<div class="row">		
+						<div class="col-12">
+							<fieldset class="inputgroup">
+								<div id="caseWrapper">
+									<legend class="heading">Study Type</legend>
+								</div>
+							</fieldset>
+						</div>
+						<div class="col-6">
+							<label><strong>Thermal Comfort</strong></label><br>
+							<label for="ppdRadio"><input type="radio" id="ppdRadio" name="studyType"
+									value="Thermal Comfort - Single Hour">Single Hour</label><br>
+						</div>
+						<div class="col-6">
+							<label><strong>Direct Sun</strong></label><br>
+							<label for="dsHour"><input type="radio" id="dsHour" name="studyType"
+									value="Direct Sun - Single Hour" onclick="msg()">Single Hour</label><br>
+		
+							<label for="dsDay"><input type="radio" id="dsDay" name="studyType" value="Direct Sun - Day"
+									onclick="msg2()" checked>Day</label><br>
+		
+							<label for="dsAnnual"><input type="checkbox" id="dsAnnual" name="studyType"
+									value="Direct Sun - Annual" onclick="checkAnnual()">Annual</label><br>
+							<span id="annualWarning" style="font-size: 9px; color: orange; display: inline-block; padding-left: 14px;"></span>
+						</div>
+						<div class="col-12">
+							<div id="caseWrapper">
+								<label id="timeConfigLabel" style="width: 220px !important;"><strong>Time
+										Configuration</strong></label>
+								<div id="caseSelection">
+									<!-- <label>Case1</label> -->
+									<button type="button" class="button" name="button" id="button">Case 1</button>
+									<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
+								</div>
+							</div><br>
+		
+							<label for="mon">Month</label>
+							<input type="number" name="mon" id="mon" min="1" max="12" value="9" step="1">
+							<input type="number" name="mon1" id="mon1" class="case2" min="1" max="12" value="9" step="1"><br>
+		
+							<label for="day">Day</label>
+							<input type="number" name="day" id="day" min="1" max="31" value="21" step="1">
+							<input type="number" name="day1" id="day1" class="case2" min="1" max="31" value="21" step="1"><br>
+		
+							<span id="hideTime">
+							<label for="hour">Hour</label>
+							<input type="number" name="hour" id="hour" min="0" max="24" value="12" step="1">
+							<input type="number" name="hour1" id="hour1" class="case2" min="0" max="24" value="12" step="1"><br>
+		
+							<label for="timeStep">Time Step per Hour</label>
+							<input type="number" name="timeStep" id="timeStep" min="1" max="8" value="4" step="1"
+								disabled><br>
+							<!-- <input type="number" name="timeStep1" id="timeStep1" min="1" max="8"  value="2" step="1"><br> -->
+							</span><br>	
+						</div>					
+						<div class="col-12">
+						<fieldset class="inputgroup">
+							<div id="caseWrapper">
+								<legend class="heading">CLIMATE</legend>							
+							</div>
+							<div id="citySearch">
+								<input type="button" name="CitySearch" id="CitySearch" value="Location Lookup"
+									class="optionButton unselected">
+								<div style="clear:both;"></div>
+							</div><br>
+						</fieldset>
+						<label>Longitude</label>
+						<input type="number" name="long" id="long" min="-180" max="180" value="-71" step="1">
+						<input type="number" name="long1" id="long1" class="case2" min="-180" max="180" value="-71"
+							step="1"><br>
+
+						<label>Latitude</label>
+						<input type="number" name="lat" id="lat" min="-180" max="180" value="42" step="1">
+						<input type="number" name="lat1" id="lat1" class="case2" min="-180" max="180" value="42"
+							step="1"><br>
+
+						<label>Time Zone Offset</label>
+						<input type="number" name="timeZone" id="timeZone" min="-12" max="12" value="-5" step="1">
+						<input type="number" name="timeZone1" id="timeZone1" class="case2" min="-12" max="12" value="-5"
+							step="1"><br>
+
+						<!-- Required for PPD -->
+						<label>Outdoor Temperature (°F)</label>
+						<input type="number" name="outdoorTemp" id="outdoorTemp" min="-200" max="200" value="10" step="1">
+						<input type="number" name="outdoorTemp1" id="outdoorTemp1" class="case2" min="-200" max="200"
+							value="10" step="1"><br><br>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div id="inputs">
 					<fieldset class="inputgroup">
 						<div id="caseWrapper">
-							<legend class="heading first">Study Type</legend>
+							<legend class="heading first">Indoor Conditions</legend>
 							<div id="caseSelection">
 								<!-- <label>Case1</label> -->
 								<button type="button" class="button" name="button" id="button">Case 1</button>
 								<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
-								<button type="button" class="button2"></button>
 							</div>
-						</div>
-					</fieldset>
-					<label><strong>Thermal Comfort</strong></label><br>
-					<label for="ppdRadio"><input type="radio" id="ppdRadio" name="studyType" value="Thermal Comfort - Single Hour">Single Hour</label><br>				
-
-					<label><strong>Direct Sun</strong></label><br>
-					<label for="dsHour"><input type="radio" id="dsHour" name="studyType" value="Direct Sun - Single Hour" onclick="msg()">Single Hour</label><br>
-
-					<label for="dsDay"><input type="radio" id="dsDay" name="studyType" value="Direct Sun - Day" onclick="msg2()" checked>Day</label><br>
-
-					<label for="dsAnnual"><input type="checkbox" id="dsAnnual" name="studyType" value="Direct Sun - Annual" onclick="checkAnnual()">Annual</label><br>
-
-					<span id="annualWarning"></span>
-
-					<label id="timeConfigLabel"><strong>Time Configuration</strong></label><br>
-
-					<label for="mon">Month</label>
-					<input type="number" name="mon" id="mon" min="1" max="12" value="9" step="1">
-					<input type="number" name="mon1" id="mon1" class="case2" min="1" max="12" value="9" step="1"><br>
-
-					<label for="day">Day</label>
-					<input type="number" name="day" id="day" min="1" max="31" value="21" step="1">
-					<input type="number" name="day1" id="day1" class="case2" min="1" max="31" value="21" step="1"><br>
-					
-					<label for="hour">Hour</label>
-					<input type="number" name="hour" id="hour" min="0" max="24" value="12" step="1">
-					<input type="number" name="hour1" id="hour1" class="case2" min="0" max="24" value="12" step="1"><br>							
-
-					<label for="timeStep">Time Step per Hour</label>
-					<input type="number" name="timeStep" id="timeStep" min="1" max="8"  value="4" step="1" disabled><br><br>
-					<!-- <input type="number" name="timeStep1" id="timeStep1" min="1" max="8"  value="2" step="1"><br> -->
-
-				</div>
-			</div>
-	    	<div class="col-xl-3 col-lg-6 col-sm-8">
-				<div id="occupancyWrapper">
-					<form id="occupantSliders" autocomplete="off">
-						<fieldset class="inputgroup">
-							<!-- <legend>Occupancy Thresholds</legend>
-							<hr> -->
-							<label for="fal"> Floor Area Loss</label>
-							<div class="occSlider"><input type="range" name="fal" id="fal" value="40" min="1" max="99"><p id="ppdOutput">40%</p></div>
-
-							<label for="mdst">Max Direct Sun Time</label>
-							<div class="occSlider"><input type="range" name="mdst" id="mdst" value="3" min="1" max="12"><p id="ppdOutput2"> 0.75 Hr</p></div>
-
-						</fieldset>
-
-					</form>
-				</div>
-
-					<!-- <div id="inputs">
-
-		<div id="options">
-			<div id="units">
-				<h2>Units</h2><br>
-				<input type="button" name="IP" id="IP" value="IP" class="optionButton selected">
-				<input type="button" name="SI" id="SI" value="SI" class="optionButton unselected">
-				<div style="clear:both;"></div>
-			</div>
-			<div id="share">
-				<h2>Share</h2><br>
-				<input type="button" name="PDF" id="PDF" value="Save PDF" class="optionButton unselected">
-				<input type="button" name="CSV" id="CSV" value="Save CSV" class="optionButton unselected">
-				<input type="button" name="URL" id="URL" value="Copy URL" class="optionButton unselected">
-				<div style="clear:both;"></div>
-			</div>
-		</div>
-
-	</div> -->
-
-				<div id="inputs">
-
-				<!-- <fieldset class="inputgroup"> -->
-					<fieldset class="inputgroup">
-						<div id="caseWrapper">
-							<legend class="heading first">CLIMATE</legend>
-							<div  id="caseSelection">
-								<!-- <label>Case1</label> -->
-								<button type="button" class="button" name="button" id="button">Case 1</button>
-								<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
-								<button type="button" class="button2"></button>
-							</div>
-						</div>
-						<div id="citySearch">
-						<input type="button" name="CitySearch" id="CitySearch" value="Location Lookup" class="optionButton unselected">
-						<div style="clear:both;"></div>
-						</div><br>
-					</fieldset>				
-					<label>Longitude</label>
-					<input type="number" name="long" id="long" min="-180" max="180" value="-71" step="1">
-					<input type="number" name="long1" id="long1" class="case2" min="-180" max="180" value="-71" step="1"><br>
-
-					<label>Latitude</label>
-					<input type="number" name="lat" id="lat" min="-180" max="180"  value="42" step="1">
-					<input type="number" name="lat1" id="lat1" class="case2" min="-180" max="180"  value="42" step="1"><br>
-
-					<label>Time Zone Offset</label>
-					<input type="number" name="timeZone" id="timeZone" min="-12" max="12"  value="-5" step="1">
-					<input type="number" name="timeZone1" id="timeZone1" class="case2" min="-12" max="12"  value="-5" step="1"><br>
-					
-					<!-- Required for PPD -->
-					<label>Outdoor Temperature (°F)</label>
-					<input type="number" name="outdoorTemp" id="outdoorTemp" min="-200" max="200"  value="10" step="1">
-					<input type="number" name="outdoorTemp1" id="outdoorTemp1" class="case2" min="-200" max="200"  value="10" step="1"><br><br>
-
-					<fieldset class="inputgroup">
-						<div id="caseWrapper">
-							<legend class="heading first">Indoor Conditions</legend>
 						</div>
 					</fieldset>
 					<label>Indoor Temperature (°F)</label>
-					<input type="number" name="airTemp" id="airTemp" min="-300" max="300"  value="72" step="1">
-					<input type="number" name="airTemp1" id="airTemp1" class="case2" min="-300" max="300"  value="72" step="1"><br>
+					<input type="number" name="airTemp" id="airTemp" min="-300" max="300" value="72" step="1">
+					<input type="number" name="airTemp1" id="airTemp1" class="case2" min="-300" max="300" value="72"
+						step="1"><br>
 
 					<label>Relative Humidity (%)</label>
-					<input type="number" name="humidity" id="humidity" min="0" max="100"  value="20" step="1">
-					<input type="number" name="humidity1" id="humidity1" class="case2" min="0" max="100"  value="20" step="1"><br>
+					<input type="number" name="humidity" id="humidity" min="0" max="100" value="20" step="1">
+					<input type="number" name="humidity1" id="humidity1" class="case2" min="0" max="100" value="20"
+						step="1"><br>
 
 					<label>Air Speed (fpm)</label>
 					<input type="number" name="airSpeed" id="airSpeed" min="0" value="10" step="0.1">
-					<input type="number" name="airSpeed1" id="airSpeed1" class="case2" min="0" value="10" step="0.1"><br>
+					<input type="number" name="airSpeed1" id="airSpeed1" class="case2" min="0" value="10"
+						step="0.1"><br>
 
 					<label>Clothing Level (clo)</label>
 					<input type="number" name="clothing" id="clothing" min="0" value="0.85" step="0.05">
-					<input type="number" name="clothing1" id="clothing1" class="case2" min="0" value="0.85" step="0.05"><br>
+					<input type="number" name="clothing1" id="clothing1" class="case2" min="0" value="0.85"
+						step="0.05"><br>
 
 					<label>Metabolic Rate (met)</label>
 					<input type="number" name="metabolic" id="metabolic" min="0" value="1.2" step="0.05">
-					<input type="number" name="metabolic1" id="metabolic1" class="case2" min="0" value="1.2" step="0.05"><br>
-					
-					<label>Fraction of Body Exposed to Sun</label>
-					<input type="number" name="fbes" id="fbes" min="0" max="1"  value="0.5" step="0.01">
-					<input type="number" name="fbes1" id="fbes1" class="case2" min="0" max="1"  value="0.5" step="0.01"><br><br>
-					<!-- End PPD -->					
+					<input type="number" name="metabolic1" id="metabolic1" class="case2" min="0" value="1.2"
+						step="0.05"><br>
 
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-6 col-sm-8">
-				<div id="inputs">
+					<label>Occupant Posture</label>
+					<select name="posture" id="posture">
+						<option value="seated">Seated</option>
+						<option value="standing">Standing</option>
+					</select>
+					
+					<select name="posture1" id="posture1" class="case2" style="appearance: none;">
+						<option value="seated">Seated</option>
+						<option value="standing">Standing</option>
+					</select><br>
+
+					<label>Average Shortwave Absorptivity</label>
+					<input type="number" name="asa" id="asa" min="0" max="1" value="0.67" step="0.01">
+					<input type="number" name="asa1" id="asa1" class="case2" min="0" max="1" value="0.67"
+						step="0.01"><br><br>
+					<!-- End PPD -->
+
 					<fieldset class="inputgroup">
 						<div id="caseWrapper">
-							<legend class="heading first">Room Geometry</legend>
-							<div  id="caseSelection">
-								<!-- <label>Case1</label> -->
-								<button type="button" class="button" name="button" id="button">Case 1</button>
-								<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
-								<button type="button" class="button2"></button>
-							</div>
+							<legend class="heading">Room Geometry</legend>							
 						</div>
-					</fieldset>						
+					</fieldset>
 					<label>Room Orientation</label>
-					<input type="number" name="north" id="north" min="-360" max="360"  value="0" step="1">
-					<input type="number" name="north1" id="north1" class="case2" min="-360" max="360"  value="0" step="1"><br>
+					<input type="number" name="north" id="north" min="-360" max="360" value="0" step="1">
+					<input type="number" name="north1" id="north1" class="case2" min="-360" max="360" value="0"
+						step="1"><br>
 
 					<label>Ceiling Height (ft)</label>
-					<input type="number" name="ceiling" id="ceiling" min="1" max="100"  value="12" step="1">
-					<input type="number" name="ceiling1" id="ceiling1" class="case2" min="1" max="100"  value="12" step="1"><br>
+					<input type="number" name="ceiling" id="ceiling" min="1" max="100" value="12" step="1">
+					<input type="number" name="ceiling1" id="ceiling1" class="case2" min="1" max="100" value="12"
+						step="1"><br>
 
 					<label>Grid Height (ft)</label>
-					<input type="number" name="gridHt" id="gridHt" min="0" max="10"  value="3" step="1">
-					<input type="number" name="gridHt1" id="gridHt1" class="case2" min="0" max="10"  value="3" step="1"><br>
+					<input type="number" name="gridHt" id="gridHt" min="0" max="10" value="3" step="1">
+					<input type="number" name="gridHt1" id="gridHt1" class="case2" min="0" max="10" value="3"
+						step="1"><br>
 
 					<label>Room Length (ft)</label>
-					<input type="number" name="wallDep" id="wallDep" min="1" max="60"  value="40" step="1">
-					<input type="number" name="wallDep1" id="wallDep1" class="case2" min="1" max="60"  value="40" step="1"><br>
+					<input type="number" name="wallDep" id="wallDep" min="1" max="60" value="40" step="1">
+					<input type="number" name="wallDep1" id="wallDep1" class="case2" min="1" max="60" value="40"
+						step="1"><br>
 
 					<label>Room Depth (ft)</label>
-					<input type="number" name="wallWidth" id="wallWidth" min="1" max="60"  value="30" step="1">
-					<input type="number" name="wallWidth1" id="wallWidth1" class="case2" min="1" max="60"  value="30" step="1"><br>
-					
+					<input type="number" name="wallWidth" id="wallWidth" min="1" max="60" value="30" step="1">
+					<input type="number" name="wallWidth1" id="wallWidth1" class="case2" min="1" max="60" value="30"
+						step="1"><br>
+
 					<!-- Required for PPD -->
 					<label>Wall R-Value (ft²hr°F/Btu)</label>
 					<input type="number" name="wallR" id="wallR" min="0" value="15" step="1">
 					<input type="number" name="wallR1" id="wallR1" class="case2" min="0" value="15" step="1"><br><br>
-					<!-- End PPD -->							
+					<!-- End PPD -->
 
+
+				</div>
+			</div>
+			<div class="col-4">
+				<div id="inputs">					
 					<fieldset class="inputgroup">
 						<div id="caseWrapper">
-							<legend class="heading">Window Geometry</legend>
+							<legend class="heading first">Window Geometry</legend>
+							<div id="caseSelection">
+								<!-- <label>Case1</label> -->
+								<button type="button" class="button" name="button" id="button">Case 1</button>
+								<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
+							</div>
 						</div>
 					</fieldset>
 					<label>Window Height from Sill (ft)</label>
-					<input type="number" name="windowHeight" id="windowHeight" min="0.0" max="12.0"  value="7.0" step="0.5">
-					<input type="number" name="windowHeight1" id="windowHeight1" class="case2" min="0.0" max="12.0"  value="7.0" step="0.5"><br>
+					<input type="number" name="windowHeight" id="windowHeight" min="0.0" max="12.0" value="7.0"
+						step="0.5">
+					<input type="number" name="windowHeight1" id="windowHeight1" class="case2" min="0.0" max="12.0"
+						value="7.0" step="0.5"><br>
 
 					<label>Sill Height (ft)</label>
-					<input type="number" name="sill" id="sill" min="0" max="5"  value="2.0" step="0.5">
-					<input type="number" name="sill1" id="sill1" class="case2" min="0" max="5"  value="2.0" step="0.5"><br>
+					<input type="number" name="sill" id="sill" min="0" max="5" value="2.0" step="0.5">
+					<input type="number" name="sill1" id="sill1" class="case2" min="0" max="5" value="2.0"
+						step="0.5"><br>
 
 					<label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
 
 					<label for="width" id="windowWidthLabel">
-					<div class="customCheckStyle">
-					<input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck" checked>
-					<label for="windowWidthCheck" id="checkWindWidth"></label>
-					</div>Window Width (ft)</label>
+						<div class="customCheckStyle">
+							<input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck"
+								checked>
+							<label for="windowWidthCheck" id="checkWindWidth"></label>
+						</div>Window Width (ft)
+					</label>
 					<!-- <div class="inputWrapperLeft"> -->
-					<input type="number" name="windowWidth" id="windowWidth" min="0" value="14" step="0.5" class="case1">
-					<input type="number" name="windowWidth1" id="windowWidth1" class="case2" min="0" value="14" step="0.5" class="case1"><br>
+					<input type="number" name="windowWidth" id="windowWidth" min="0" value="14" step="0.5"
+						class="case1">
+					<input type="number" name="windowWidth1" id="windowWidth1" class="case2" min="0" value="14"
+						step="0.5" class="case1"><br>
 					<!-- </div><br> -->
 
 					<label for="glazing" id="glazingLabel">
-					<div class="customCheckStyle">
-					<input type="radio" name="glazingRadio" value="glazingRatioCheck" id="glazingRatioCheck">
-					<label for="glazingRatioCheck" id="checkGlzRatio"></label>
-					</div>Window-to-Wall Ratio (%)</label>
-				<!-- <div class="inputWrapperLeft"> -->
-					<input type="number" name="glazing"  id="glazing" min="1" max="95" value="39" step="1">
-					<input type="number" name="glazing1"  id="glazing1" class="case2" min="1" max="95" value="39" step="1"><br>
+						<div class="customCheckStyle">
+							<input type="radio" name="glazingRadio" value="glazingRatioCheck" id="glazingRatioCheck">
+							<label for="glazingRatioCheck" id="checkGlzRatio"></label>
+						</div>Window-to-Wall Ratio (%)
+					</label>
+					<!-- <div class="inputWrapperLeft"> -->
+					<input type="number" name="glazing" id="glazing" min="1" max="95" value="39" step="1">
+					<input type="number" name="glazing1" id="glazing1" class="case2" min="1" max="95" value="39"
+						step="1"><br>
 					<!-- </div><br> -->
 					<label>Window Seperation (ft)</label>
-					<input type="number" name="distWindow" id="distWindow" min="0"  value="12" step="1">
-					<input type="number" name="distWindow1" id="distWindow1" class="case2" min="0"  value="12" step="1"><br>
-					
+					<input type="number" name="distWindow" id="distWindow" min="0" value="12" step="1">
+					<input type="number" name="distWindow1" id="distWindow1" class="case2" min="0" value="12"
+						step="1"><br>
+
 					<!-- Required for PPD -->
 					<label>Window U-Value (Btu/ft²hr°F)</label>
-					<input type="number" name="windowU" id="windowU" min="0"  value="0.35" step="0.01">
-					<input type="number" name="windowU1" id="windowU1" class="case2" min="0"  value="0.35" step="0.01"><br>
+					<input type="number" name="windowU" id="windowU" min="0" value="0.35" step="0.01">
+					<input type="number" name="windowU1" id="windowU1" class="case2" min="0" value="0.35"
+						step="0.01"><br>
+						
+					<label>Solar Heat Gain Coefficient</label>
+					<input type="number" name="shgc" id="shgc" min="0" value="0.35" step="0.01">
+					<input type="number" name="shgc1" id="shgc1" class="case2" min="0" value="0.35"
+						step="0.01"><br><br>
+					<!-- End PPD -->
 
-					<label>Average Shortwave Absorptivity</label>
-					<input type="number" name="asa" id="asa" min="0" max="1" value="0.70" step="0.01">
-					<input type="number" name="asa1" id="asa1" class="case2" min="0" max="1" value="0.70" step="0.01"><br>
-					
-					<label>Room-side Low-E Coating</label>
-					<input type="checkbox" name="lowE" id="lowE">
-					<input type="checkbox" name="lowE1" id="lowE1" class="case2"><br>
-					
-					<label for="emissivity" class="grey" style="font-style: italic">&emsp;&emsp;&emsp;Emissivity</label>
-					<input type="number" name="emissivity" id="emissivity" min="0" max="1" step="0.1">
-					<input type="number" name="emissivity1" id="emissivity1" class="case2" min="0" max="1" step="0.1"><br><br>
-					<!-- End PPD -->							
-				</div>
-			</div>
-	        <div class="col-xl-3 col-lg-6 col-sm-8">
-				<div id="inputs">
 					<fieldset class="inputgroup">
 						<div id="caseWrapper">
 							<legend class="heading first">Shade Geometry</legend>
-							<div  id="caseSelection">
+							<div id="caseSelection">
 								<!-- <label>Case1</label> -->
 								<button type="button" class="button" name="button" id="button">Case 1</button>
 								<button type="button" class="button1OFF" name="button1" id="button1">Case 2</button>
-								<button type="button" class="button2"></button>
-
 							</div>
 						</div>
 					</fieldset>
 					<label><strong>Horizontal Shade Depth (ft)</strong></label>
-					<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4"  value="1" step="1">
-					<input type="number" name="hShadeDep1" id="hShadeDep1" class="case2" min="0" max="4"  value="1" step="1"><br>
+					<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4" value="1" step="1">
+					<input type="number" name="hShadeDep1" id="hShadeDep1" class="case2" min="0" max="4" value="1"
+						step="1"><br>
 
 					<label>&emsp;Number of Shades</label>
-					<input type="number" name="hShadeNum" id="hShadeNum" min="0" max="10"  value="0" step="1">
-					<input type="number" name="hShadeNum1" id="hShadeNum1" class="case2" min="0" max="10"  value="0" step="1"><br>
+					<input type="number" name="hShadeNum" id="hShadeNum" min="0" max="10" value="0" step="1">
+					<input type="number" name="hShadeNum1" id="hShadeNum1" class="case2" min="0" max="10" value="0"
+						step="1"><br>
 
 					<label>&emsp;Spacing (ft)</label>
-					<input type="number" name="hShadeSpace" id="hShadeSpace" min="1" max="10"  value="3" step="1">
-					<input type="number" name="hShadeSpace1" id="hShadeSpace1" class="case2" min="1" max="10"  value="3" step="1"><br>
+					<input type="number" name="hShadeSpace" id="hShadeSpace" min="1" max="10" value="3" step="1">
+					<input type="number" name="hShadeSpace1" id="hShadeSpace1" class="case2" min="1" max="10" value="3"
+						step="1"><br>
 
 					<label>&emsp;Distance from Facade (ft)</label>
-					<input type="number" name="hShadeDist" id="hShadeDist" min="0" max="10"  value="0" step="1">
-					<input type="number" name="hShadeDist1" id="hShadeDist1" class="case2" min="0" max="10"  value="0" step="1"><br>
+					<input type="number" name="hShadeDist" id="hShadeDist" min="0" max="10" value="0" step="1">
+					<input type="number" name="hShadeDist1" id="hShadeDist1" class="case2" min="0" max="10" value="0"
+						step="1"><br>
 
 					<label>&emsp;Height Above Window (ft)</label>
-					<input type="number" name="hShadeHeight" id="hShadeHeight" min="-10" max="10"  value="0" step="1">
-					<input type="number" name="hShadeHeight1" id="hShadeHeight1" class="case2" min="-10" max="10"  value="0" step="1"><br>
+					<input type="number" name="hShadeHeight" id="hShadeHeight" min="-10" max="10" value="0" step="1">
+					<input type="number" name="hShadeHeight1" id="hShadeHeight1" class="case2" min="-10" max="10"
+						value="0" step="1"><br>
 
 					<label>&emsp;Angle</label>
-					<input type="number" name="hShadeAngle" id="hShadeAngle" min="0" max="90"  value="90" step="1">
-					<input type="number" name="hShadeAngle1" id="hShadeAngle1" class="case2" min="0" max="90"  value="90" step="1"><br>
+					<input type="number" name="hShadeAngle" id="hShadeAngle" min="0" max="90" value="90" step="1">
+					<input type="number" name="hShadeAngle1" id="hShadeAngle1" class="case2" min="0" max="90" value="90"
+						step="1"><br>
 
 					<label><strong>Vertical Shade Depth (ft)</strong></label>
 
-					<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4"  value="3" step="1">
-					<input type="number" name="vShadeDep1" id="vShadeDep1" class="case2" min="0" max="4"  value="3" step="1"><br>
+					<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4" value="3" step="1">
+					<input type="number" name="vShadeDep1" id="vShadeDep1" class="case2" min="0" max="4" value="3"
+						step="1"><br>
 
 
 					<label>&emsp;Number of Shades</label>
-					<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100"  value="0" step="1">
-					<input type="number" name="vShadeNum1" id="vShadeNum1" class="case2" min="0" max="100"  value="0" step="1"><br>
+					<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100" value="0" step="1">
+					<input type="number" name="vShadeNum1" id="vShadeNum1" class="case2" min="0" max="100" value="0"
+						step="1"><br>
 
 					<label>&emsp;Spacing (ft)</label>
-					<input type="number" name="vShadeSpace" id="vShadeSpace" min="1" max="10"  value="3" step="1">
-					<input type="number" name="vShadeSpace1" id="vShadeSpace1" class="case2" min="1" max="10"  value="3" step="1"><br>
+					<input type="number" name="vShadeSpace" id="vShadeSpace" min="1" max="10" value="3" step="1">
+					<input type="number" name="vShadeSpace1" id="vShadeSpace1" class="case2" min="1" max="10" value="3"
+						step="1"><br>
 
 					<label>&emsp;Left/Right</label>
 					<input type="text" name="vShadeStart" id="vShadeStart" value="L">
 					<input type="text" name="vShadeStart1" id="vShadeStart1" class="case2" value="L"><br>
 
 					<label>&emsp;Left/Right Shift</label>
-					<input type="number" name="vShadeShift" id="vShadeShift" min="-10" max="10"  value="0" step="1">
-					<input type="number" name="vShadeShift1" id="vShadeShift1" class="case2" min="-10" max="10"  value="0" step="1"><br>
+					<input type="number" name="vShadeShift" id="vShadeShift" min="-10" max="10" value="0" step="1">
+					<input type="number" name="vShadeShift1" id="vShadeShift1" class="case2" min="-10" max="10"
+						value="0" step="1"><br>
 
 					<label>&emsp;Distance from Facade (ft)</label>
-					<input type="number" name="vShadeDist" id="vShadeDist" min="0" max="10"  value="0" step="1">
-					<input type="number" name="vShadeDist1" id="vShadeDist1" class="case2" min="0" max="10"  value="0" step="1"><br>
+					<input type="number" name="vShadeDist" id="vShadeDist" min="0" max="10" value="0" step="1">
+					<input type="number" name="vShadeDist1" id="vShadeDist1" class="case2" min="0" max="10" value="0"
+						step="1"><br>
 
 					<label>&emsp;Full Height Louvers</label>
 					<input type="checkbox" name="vShadeOn" id="vShadeOn" checked>
 					<input type="checkbox" name="vShadeOn1" id="vShadeOn1" class="case2" checked><br>
 
 					<label for="vShadeHeight">&emsp;&emsp;&emsp;&emsp;Height Above Window (ft)</label>
-					<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10"  value="0" step="1">
-					<input type="number" name="vShadeHeight1" id="vShadeHeight1" class="case2" min="0" max="10"  value="0" step="1"><br>
+					<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10" value="0" step="1">
+					<input type="number" name="vShadeHeight1" id="vShadeHeight1" class="case2" min="0" max="10"
+						value="0" step="1"><br>
 
 					<label for="vShadeScale">&emsp;&emsp;&emsp;&emsp;Height Relative to Window (ft)</label>
-					<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10"  value="0" step="1">
-					<input type="number" name="vShadeScale1" id="vShadeScale1" class="case2" min="0" max="10"  value="0" step="1"><br><br>
-				
+					<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10" value="0" step="1">
+					<input type="number" name="vShadeScale1" id="vShadeScale1" class="case2" min="0" max="10" value="0"
+						step="1"><br><br>
 				</div>
-	    	</div>
+			</div>
 		</div>
-	  </div>
+	</div>
 	</div>
 
-		<!-- <script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script> -->
-		<script type="text/javascript" src="static/js/locationData.js"></script>
-		<script type="text/javascript" src="static/js/render.js"></script>
-		<script type="text/javascript" src="static/js/createCSV.js"></script>
-		<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
-		<script type="text/javascript" charset="utf-8" src="static/js/p5renderCanvas2.js"></script>
-		<script type="text/javascript" charset="utf-8" src="static/js/solarCalculator.js"></script>
+	<!-- <script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script> -->
+	<script type="text/javascript" src="static/js/locationData.js"></script>
+	<script type="text/javascript" src="static/js/render.js"></script>
+	<script type="text/javascript" src="static/js/createCSV.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/p5renderCanvas2.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/solarCalculator.js"></script>
 
 
 </body>

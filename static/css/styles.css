@@ -1,9 +1,5 @@
-.container {
-	max-width: 70%;
-}
-
-.col-xl-3 {
-	min-width: 360px;
+.col-4 {
+	min-width: 350px;
 }
 
 #wrapper {
@@ -105,16 +101,6 @@ form#occupantSliders div.occSlider {
 	font-size: 12px;
 	color: #777;
 	margin: 0;
-}
-
-output #occupantImage, output #occupantImage2, output #occupantImage3 {
-	position: relative;
-	width: 180px;
-  	height: 250px;
-  	display: inline-block;
-  	bottom: 500px; /* imageHeight + facMargin.bottom*2*/
-	left: -15px; /* - imageWidth/2 */
-	opacity: .8;
 }
 
 
@@ -220,7 +206,6 @@ input[type=range]#fal::-moz-range-progress, input[type=range]#mdst::-moz-range-p
 
 #caseSelection {
 	display: block;
-	float: right;
 	padding-bottom: 0px;
 }
 
@@ -284,7 +269,7 @@ span#case1Button.unselected, span#case2Button.unselected {
 
 #inputs, #referenceLinks {
 	float: left;
-	width: 390px;
+	width: inherit;
 	font-family: "museo-sans", sans-serif;
 	position: relative;
 	z-index: 0;
@@ -346,6 +331,7 @@ span#case1Button.unselected, span#case2Button.unselected {
 
 #inputs legend.first {
 	float: left;
+	width: 220px;
 }
 
 #inputs ul, #referenceLinks ul, #referenceLinks a {
@@ -449,11 +435,11 @@ div.inputWrapperRight span {
 	color: black;
 }
 
-#inputs input:not([type="radio"]), #inputs input:not([type="checkbox"]) {
+#inputs input[type="number"], #inputs input[type="text"], #inputs select {
 	margin: 0px 12px 0px 0px;
 }
 
-#inputs input.inactive {
+#inputs input.inactive, #inputs select.inactive {
 	border-color: rgb(235, 235, 235);
 	border-style: solid;
 	border-width: 1px;
@@ -461,8 +447,6 @@ div.inputWrapperRight span {
 	background-color: #fff;
 	padding: 1px 2px 0px 0px;
 }
-
-
 
 #inputs input.inactive#calcuvalue, #inputs input.inactive#calcuvalue2, #inputs input.inactive#calcuvalue3, #inputs input.inactive#condRisk1, #inputs input.inactive#condRisk2, #inputs input.inactive#condRisk3 {
 	padding: 0px 11px 0px 2px;
@@ -581,10 +565,6 @@ br.glzBR {
 	padding: 0;
 }
 
-#inputs div.customCheckStyleCentered.case3{
-	margin-left: 15px;
-}
-
 
 
 /* box for the checkbox */
@@ -642,7 +622,29 @@ br.glzBR {
 	left: 2px;
 } */
 
+/* custom dropdown styling */
+#inputs select {
+	display: inline-block;
+	float: left;
+	width: 4em;
+	height: 13px;
 
+	background-color: rgb(245, 245, 245);
+
+	border: none;
+
+	font-family: "museo-sans", sans-serif;
+	font-weight: 300;
+	font-size: 10px;
+	text-align: left;
+	color: black;
+
+	appearance: none;
+}
+
+#inputs select:hover {
+	cursor: pointer;
+}
 
 #inputs div#condensation {
 	width: 142px;
@@ -1024,8 +1026,8 @@ div#disclaimer h1, div#Outdoorpop h1{
 }
 
 /* -- show cases only when selected -- */
-div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.case3 {
-	display: none;
+div.case2, #inputs input.case2, #inputs select.case2, hr.case2 {
+	visibility: hidden;
 }
 
 .serifText {
@@ -1099,19 +1101,6 @@ div.case2, div.case3, #inputs input.case2, #inputs input.case3, hr.case2, hr.cas
   /* display: inline-block; */
   font-size: 10px;
 	cursor:pointer;
-}
-.button2 {
-  background-color: #FFF; /* this is the hidden white button */
-  border: none;
-	height: 18px;
-	width: 60px;
-  color: white;
-  /* padding: 15px 32px; */
-  text-align: center;
-  text-decoration: none;
-  /* display: inline-block; */
-  font-size: 10px;
-
 }
 
 #sketch, #sketch1 {
