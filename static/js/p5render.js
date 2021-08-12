@@ -1638,8 +1638,8 @@ var sketch1 = function(p) {
 
       mySun = parseInt(mySun);
 
-          p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
-
+        // draw colored grid square on floor representing % of time in direct sun
+        p.fill(ColorScaleArray[mySun].r,ColorScaleArray[mySun].g,ColorScaleArray[mySun].b,200);
         p.quad(newX1, newY1-GridHt, newX2, newY2-GridHt, newX3, newY3-GridHt, newX4, newY4-GridHt);
 
         if (myCheck == 1 && dateCounter > 364){
