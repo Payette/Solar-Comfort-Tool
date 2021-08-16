@@ -8,7 +8,7 @@ let myCheck = 0; // Check If Annual Button is Pressed
 let dateCounter = 0;
 let Case2Button = 0;
 let MDTResult = 0;
-
+let globalGridColor = undefined;
 
 function msg(){
     singleHour = 1;
@@ -18,6 +18,28 @@ function msg(){
 function msg2(){
     singleHour = 0;
     fullDay = 1;
+}
+
+twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numSteps) => {
+  let gridColorArray2D = [];
+  let gridColorArray2DX  = 0;
+  let gridColorArray2DY  = 0;
+
+  for(let i=0; i<oneDimensionalArray.length; i++) {
+    if(gridColorArray2DX === 0) {
+      gridColorArray2D[gridColorArray2DY] = []; 
+    }
+
+    gridColorArray2D[gridColorArray2DY][gridY - gridColorArray2DX - 1] = oneDimensionalArray[i] / numSteps;
+
+    gridColorArray2DX++;
+    if(gridColorArray2DX === gridY) {
+      gridColorArray2DX = 0;
+      gridColorArray2DY++;
+    }
+  }
+
+  return gridColorArray2D
 }
 
 checkAnnual = function(){ // Check If Annual Button is Pressed
@@ -1074,7 +1096,7 @@ var sketch1 = function(p) {
       //END PYTHAGOREAM THEROM FOR Z
 
       //START XY and Z check
-      let gridColor;
+      let gridColor = 0;
       //let gridColorArray = []
       for (let i = 0; i < XYtest.length; i++){
 
@@ -1091,6 +1113,10 @@ var sketch1 = function(p) {
           gridColor = 0;
       }
     }
+
+    // Annual
+    globalGridColor = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal-1, 1);
+
 
       if (dateCounter == 1){
         for (let i = 0; i < gridColorArray.length; i++){
@@ -1456,7 +1482,7 @@ var sketch1 = function(p) {
       //END PYTHAGOREAM THEROM FOR Z
 
       //START XY and Z check
-      let gridColor;
+      let gridColor = 0;
       //let gridColorArray = []
       for (let i = 0; i < XYtest.length; i++){
 
@@ -1474,9 +1500,11 @@ var sketch1 = function(p) {
           gridColor = 0;
         }
       }
-    }
 
-    //console.log(gridColorArray.length);
+      // Hour or Day
+      let stepDelta = singleHour == 1 ? 9 : 4;
+      globalGridColor = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal-1, stepDelta);
+    }
 
     //END OF TRIG
 

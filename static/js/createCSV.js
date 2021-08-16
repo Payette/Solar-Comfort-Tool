@@ -113,6 +113,23 @@ function createCSV() {
     csvContent += "\nCase 1 Result, \n";
     csvContent += MDTResult;
 
+    if(globalGridColor && globalGridColor.length > 0) {
+        csvContent += "\nCase 1 Grid Color (length x depth), \n";
+
+        // header
+        let length = globalGridColor[0].length;
+        csvContent += "depth, ";
+        let lengthValues = [];
+        for(let i=length; i>=1; i--) {
+            lengthValues.push(i);
+        }
+        csvContent += lengthValues.join(",") + "\n";
+
+        for(let i=0; i<globalGridColor.length; i++) {
+            csvContent += (i+1) + "," + globalGridColor[i].join(',') + "\n";
+        }
+    }
+
     csvContent += "\nCase 1 Inputs, \n";
     Object.values(gatherCase1Inputs()).forEach(function(obj) {
         if (obj.label == "Emissivity" && !$("input#lowE").is(":checked")) {
