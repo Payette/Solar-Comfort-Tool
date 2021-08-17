@@ -23,7 +23,6 @@ function gatherCase1Inputs() {
         airSpeed: {label: "Air Speed (fpm)", value: $("input#airSpeed").val()},
         cloting: {label: "Clothing Level (clo)", value: $("input#clothing").val()},
         metabolic: {label: "Metabolic Rate (met)", value: $("input#metabolic").val()},
-        fractionBody: {label: "Fraction of Body Exposed to Sun", value: $("input#fbes").val()},
         roomOrientation: {label: "Room Orientation", value: $("input#north").val()},
         ceiling: {label: "Ceiling Height (ft)", value: $("input#ceiling").val()},
         gridHeight: {label: "Grid Height (ft)", value: $("input#gridHt").val()},
@@ -37,7 +36,6 @@ function gatherCase1Inputs() {
         distanceWindows: {label: "Window Seperation (ft)", value: $("input#distWindow").val()},
         windowU: {label: "Window U-Value (Btu/ft²hr°F)", value: $("input#windowU").val()},
         aveShortwave: {label: "Average Shortwave Absorptivity", value: $("input#asa").val()},
-        emissivity: {label: "Emissivity", value: $("input#emissivity").val()},
         horzShadeDep: {label: "Horizontal Shade Depth (ft)", value: $("input#hShadeDep").val()},
         horzShadeNum: {label: "Number of Shades (Horizontal)", value: $("input#hShadeNum").val()},
         horzShadeSpace: {label: "Spacing (Horizontal) (ft)", value: $("input#hShadeSpace").val()},
@@ -71,7 +69,6 @@ function gatherCase2Inputs() {
         airSpeed: {label: "Air Speed (fpm)", value: $("input#airSpeed1").val()},
         cloting: {label: "Clothing Level (clo)", value: $("input#clothing1").val()},
         metabolic: {label: "Metabolic Rate (met)", value: $("input#metabolic1").val()},
-        fractionBody: {label: "Fraction of Body Exposed to Sun", value: $("input#fbes1").val()},
         roomOrientation: {label: "Room Orientation", value: $("input#north1").val()},
         ceiling: {label: "Ceiling Height (ft)", value: $("input#ceiling1").val()},
         gridHeight: {label: "Grid Height (ft)", value: $("input#gridHt1").val()},
@@ -85,7 +82,6 @@ function gatherCase2Inputs() {
         distanceWindows: {label: "Window Seperation (ft)", value: $("input#distWindow1").val()},
         windowU: {label: "Window U-Value (Btu/ft²hr°F)", value: $("input#windowU1").val()},
         aveShortwave: {label: "Average Shortwave Absorptivity", value: $("input#asa1").val()},
-        emissivity: {label: "Emissivity", value: $("input#emissivity1").val()},
         horzShadeDep: {label: "Horizontal Shade Depth (ft)", value: $("input#hShadeDep1").val()},
         horzShadeNum: {label: "Number of Shades (Horizontal)", value: $("input#hShadeNum1").val()},
         horzShadeSpace: {label: "Spacing (Horizontal) (ft)", value: $("input#hShadeSpace1").val()},
@@ -139,11 +135,7 @@ function createCSV() {
 
     csvContent += "\nCase 1 Inputs, \n";
     Object.values(gatherCase1Inputs()).forEach(function(obj) {
-        if (obj.label == "Emissivity" && !$("input#lowE").is(":checked")) {
-            csvContent += obj.label + ',' + '0.9' + '\n';
-        } else {
-            csvContent += obj.label + ',' + obj.value + '\n';
-        }
+        csvContent += obj.label + ',' + obj.value + '\n';
     });
 
     csvContent += "\nCase 2 Inputs, \n";
@@ -154,21 +146,16 @@ function createCSV() {
         });
     } else {
         Object.values(gatherCase2Inputs()).forEach(function(obj) {
-            if (obj.label == "Emissivity" && !$("input#lowE1").is(":checked")) {
-                csvContent += obj.label + ',' + '0.9' + '\n';
-            } else {
-                csvContent += obj.label + ',' + obj.value + '\n';
-            }
+            csvContent += obj.label + ',' + obj.value + '\n';
         });
     }
 
-    // TODO add case 2 result
-    // csvContent += "\nCase 2 Result, \n";
-    // csvContent += MDTResult2;
+    csvContent += "\nCase 2 Result, \n";
+    csvContent += MDTResult1;
 
     csvContent += "\nCase 2 Hours of Sun Floor Grid (length x depth), \n";
-    if(globalGridColor2 && globalGridColor2.length > 0) {
-        csvContent += hoursOfSunFloorGridToCSV(globalGridColor2);
+    if(globalGridColor1 && globalGridColor1.length > 0) {
+        csvContent += hoursOfSunFloorGridToCSV(globalGridColor1);
     }
 
     return csvContent;

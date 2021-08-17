@@ -1193,7 +1193,7 @@ var sketch2 = function(p) {
 
     // Hour or Day
     let stepDelta = singleHour == 1 ? 9 : 4;
-    globalGridColor2 = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal-1, stepDelta);
+    globalGridColor1 = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal-1, stepDelta);
 
 
   for (let i = 0; i < gridColorArray; i++){
@@ -1351,14 +1351,17 @@ var sketch2 = function(p) {
 
     let MDTPercentage = p.int((p.float(MDT)/(wallLen * wallDepVal))*100);
 
+    MDTResult1 = MDTPercentage +"% > max direct sun time";
 
     p.push();
     if(MDTPercentage < valFal){
       p.fill(0,255,0);
       p.image(imgCheck,310,2,30,30);
+      MDTResult1 += ", Pass\n";
     }    else{
       p.fill(255,0,0);
       p.image(imgNope,310,2,30,30);
+      MDTResult1 += ", Fail\n";
     }
 
     p.fill(0);

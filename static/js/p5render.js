@@ -8,8 +8,9 @@ let myCheck = 0; // Check If Annual Button is Pressed
 let dateCounter = 0;
 let Case2Button = 0;
 let MDTResult = 0;
+let MDTResult1 = 0;
 let globalGridColor = undefined;
-let globalGridColor2 = undefined;
+let globalGridColor1 = undefined;
 
 function msg(){
     singleHour = 1;
