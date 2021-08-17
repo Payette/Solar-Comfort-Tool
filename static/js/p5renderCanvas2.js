@@ -1172,7 +1172,7 @@ var sketch2 = function(p) {
   //console.log(singleAngleHeightList);
 
     //START XY and Z check
-    let gridColor;
+    let gridColor = 0;
     let gridColorArray = []
     for (let i = 0; i < XYtest.length; i++){
       //let vertZTestItem = vertZTest[i];
@@ -1190,6 +1190,11 @@ var sketch2 = function(p) {
         gridColor = 0;
     }
   }
+
+    // Hour or Day
+    let stepDelta = singleHour == 1 ? 9 : 4;
+    globalGridColor2 = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal-1, stepDelta);
+
 
   for (let i = 0; i < gridColorArray; i++){
     if (gridColorArray[i] < valMDST && gridColorArray[i+1] > valMDST){

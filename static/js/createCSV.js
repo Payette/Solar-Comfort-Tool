@@ -103,6 +103,25 @@ function gatherCase2Inputs() {
     }
 }
 
+function hoursOfSunFloorGridToCSV(globalGridColor) {
+    let str = "";
+
+    // header
+    let length = globalGridColor[0].length;
+    str += "depth, ";
+    let lengthValues = [];
+    for(let i=length; i>=1; i--) {
+        lengthValues.push(i);
+    }
+    str += lengthValues.join(",") + "\n";
+
+    for(let i=0; i<globalGridColor.length; i++) {
+        str += (i+1) + "," + globalGridColor[i].join(',') + "\n";
+    }
+
+    return str;
+}
+
 // CREATE CSV CONTENT
 function createCSV() {
     var csvContent = "Global Inputs, \n";
@@ -113,21 +132,9 @@ function createCSV() {
     csvContent += "\nCase 1 Result, \n";
     csvContent += MDTResult;
 
+    csvContent += "\nCase 1 Hours of Sun Floor Grid (length x depth), \n";
     if(globalGridColor && globalGridColor.length > 0) {
-        csvContent += "\nCase 1 Grid Color (length x depth), \n";
-
-        // header
-        let length = globalGridColor[0].length;
-        csvContent += "depth, ";
-        let lengthValues = [];
-        for(let i=length; i>=1; i--) {
-            lengthValues.push(i);
-        }
-        csvContent += lengthValues.join(",") + "\n";
-
-        for(let i=0; i<globalGridColor.length; i++) {
-            csvContent += (i+1) + "," + globalGridColor[i].join(',') + "\n";
-        }
+        csvContent += hoursOfSunFloorGridToCSV(globalGridColor);
     }
 
     csvContent += "\nCase 1 Inputs, \n";
@@ -154,5 +161,15 @@ function createCSV() {
             }
         });
     }
+
+    // TODO add case 2 result
+    // csvContent += "\nCase 2 Result, \n";
+    // csvContent += MDTResult2;
+
+    csvContent += "\nCase 2 Hours of Sun Floor Grid (length x depth), \n";
+    if(globalGridColor2 && globalGridColor2.length > 0) {
+        csvContent += hoursOfSunFloorGridToCSV(globalGridColor2);
+    }
+
     return csvContent;
 }
