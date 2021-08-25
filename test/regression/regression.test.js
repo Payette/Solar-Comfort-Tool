@@ -17,7 +17,7 @@ describe('Regression', () => {
 
           if(newCsvContents !== goldContents) {
             // TODO print git diff, or something...
-            fail();
+            expect(true).toBe(false);
           } else {
             console.log('files match, regression passed.')
             expect(true).toBe(true);
