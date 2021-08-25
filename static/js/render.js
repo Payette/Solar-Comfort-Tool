@@ -4,6 +4,10 @@ var designTemp;
 var designTemp1;
 var designTemp2;
 
+var urlParams = new URLSearchParams(window.location.search);
+let debug = urlParams.get('debug');
+debug && console.log('debug: ', true);
+
 // show Outdoor Temprature in modal alert
     $(".optionButton#CitySearch").click(function(event) {
     var searchedTemperature = $("#outdoortemp").val();
@@ -311,3 +315,16 @@ $(".optionButton#csv").click(function(event) {
   downloadLink.click();
   document.body.removeChild(downloadLink);
 });
+
+if(debug) {
+  // wait for everything to load
+  // then display some debug information
+  setTimeout(() => {
+    var csvContent = createCSV();
+
+    let csvDiv=document.createElement('pre');
+    csvDiv.setAttribute('id', 'debugcsv')
+    csvDiv.textContent=csvContent;
+    document.body.appendChild(csvDiv);
+  }, 500);
+}

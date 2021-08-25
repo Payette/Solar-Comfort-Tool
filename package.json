@@ -1,0 +1,43 @@
+{
+  "name": "solar-comfort-tool",
+  "version": "1.0.0",
+  "description": "A web tool for assessing the impact of facade choices on occupant comfort in sunny conditions. <https://payette.github.io/Solar-Comfort-Tool/>",
+  "main": "devserver.js",
+  "scripts": {
+    "start": "node devserver.js",
+    "test-regression": "jest --runInBand test/regression/regression",
+    "regenerate-gold": "jest --runInBand test/regression/regenerategold"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Payette/Solar-Comfort-Tool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Payette/Solar-Comfort-Tool/issues"
+  },
+  "homepage": "https://github.com/Payette/Solar-Comfort-Tool#readme",
+  "dependencies": {
+    "expect-puppeteer": "^5.0.4",
+    "jest": "^27.0.6",
+    "jest-puppeteer": "^5.0.4",
+    "node-static": "^0.7.11",
+    "puppeteer": "^9.1.1"
+  },
+  "jest": {
+    "projects": [
+      {
+        "displayName": "regression",
+        "testMatch": [
+          "**/test/regression/**/*test.[jt]s?(x)"
+        ],
+        "preset": "jest-puppeteer",
+        "moduleDirectories": [
+          "node_modules",
+          "<rootDir>/node_modules"
+        ]
+      }
+    ]
+  }
+}
