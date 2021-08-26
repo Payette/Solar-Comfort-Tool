@@ -1,28 +1,22 @@
 require('expect-puppeteer');
-const { promises: {readFile} } = require("fs");
+const { testCompareRegression, regressionTests } = require("./util");
+
+async function runAndVerifyAgainstGold(fileName, inputs) {
+  await page.goto('http://localhost:3000/?debug=true');
+
+  inputs.forEach(input => {
+    page.type(input.id, input.value + '');
+  })
+
+  const csvEl = await page.waitForSelector("#debugcsv");
+  let newCsvContents = await page.evaluate(el => el.textContent, csvEl)
+  return testCompareRegression(fileName, newCsvContents);
+}
 
 describe('Regression', () => {
-    it('passes regression defaults', async () => {
-        jest.setTimeout(5000);
-        await page.goto('http://localhost:3000/?debug=true');
-
-        const csvEl = await page.waitForSelector("#debugcsv");
-        let newCsvContents = await page.evaluate(el => el.textContent, csvEl)
-      
-        return readFile('regression-gold/defaults.csv')
-        .then(fileBuffer => {
-          const goldContents = fileBuffer.toString();
-
-          if(newCsvContents !== goldContents) {
-            // TODO print git diff, or something...
-            expect(true).toBe(false);
-          } else {
-            console.log('files match, regression passed.')
-            expect(true).toBe(true);
-          }
-        }).catch(error => {
-          console.error(error.message);
-          fail();
-        });
-      })
+  regressionTests.forEach(regression => {
+    it('passes regression ' + regression.name, async () => {
+      return runAndVerifyAgainstGold(`regression-gold/${regression.name}.csv`, regression.inputs);
+    })  
+  })
 });
