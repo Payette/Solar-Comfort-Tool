@@ -2,11 +2,9 @@ require('expect-puppeteer');
 const { promises: {readFile} } = require("fs");
 
 describe('Regression', () => {
-    it('passes regression', async () => {
+    it('passes regression defaults', async () => {
         jest.setTimeout(5000);
-        console.log('visiting website...');
         await page.goto('http://localhost:3000/?debug=true');
-        console.log('visited website');
 
         const csvEl = await page.waitForSelector("#debugcsv");
         let newCsvContents = await page.evaluate(el => el.textContent, csvEl)
