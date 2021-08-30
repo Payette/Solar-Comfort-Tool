@@ -1,12 +1,13 @@
 require('expect-puppeteer');
-const { testCompareRegression, regressionTests } = require("./util");
+const { testCompareRegression, regressionTests, updateInput } = require("./util");
 
 async function runAndVerifyAgainstGold(fileName, inputs) {
+  jest.setTimeout(5000);
   await page.goto('http://localhost:3000/?debug=true');
 
-  inputs.forEach(input => {
-    page.type(input.id, input.value + '');
-  })
+  for(let i=0; i<inputs.length; i++) {
+    updateInput(page, inputs[i]);
+  }
 
   const csvEl = await page.waitForSelector("#debugcsv");
   let newCsvContents = await page.evaluate(el => el.textContent, csvEl)
