@@ -326,5 +326,5 @@ if(debug) {
     csvDiv.setAttribute('id', 'debugcsv')
     csvDiv.textContent=csvContent;
     document.body.appendChild(csvDiv);
-  }, 1500);
+  }, 250);
 }
