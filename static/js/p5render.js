@@ -1784,17 +1784,17 @@ var sketch1 = function(p) {
 
     //console.log(p.frameCount);
 
-    MDTResult = MDTPercentage +"% > max direct sun time";
+    MDTResult = "% > max direct sun time, " + MDTPercentage + "%, ";
 
     p.push();
     if(MDTPercentage < valFal){
       p.fill(0,255,0);
       p.image(imgCheck,310,2,30,30);
-      MDTResult += ", Pass\n";
-    }    else{
+      MDTResult += "Pass\n";
+    }else{
       p.fill(255,0,0);
       p.image(imgNope,310,2,30,30);
-      MDTResult += ", Fail\n";
+      MDTResult += "Fail\n";
     }
 
     p.fill(0);
