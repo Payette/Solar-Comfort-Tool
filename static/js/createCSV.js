@@ -2,8 +2,8 @@
 function gatherGlobalInputs() {
     return {
         studyType: {label: "Study Type", value: $("input[name=studyType]:checked").val()},
-        valFal: {label: "Floor Area Loss", value: $("input#fal").val()},
-        valMDST: {label: "Max Direct Sun Time", value: $("input#mdst").val()}
+        valFal: {label: "Floor Area Loss", value: $("input#fal").val() + "%"},
+        valMDST: {label: "Max Direct Sun Time", value: $("input#mdst").val() + " hr"}
     }
 }
 
@@ -23,6 +23,8 @@ function gatherCase1Inputs() {
         airSpeed: {label: "Air Speed (fpm)", value: $("input#airSpeed").val()},
         cloting: {label: "Clothing Level (clo)", value: $("input#clothing").val()},
         metabolic: {label: "Metabolic Rate (met)", value: $("input#metabolic").val()},
+        posture: {label: "Occupant Posture", value: $("select#posture").val()},
+        aveShortwave: {label: "Average Shortwave Absorptivity", value: $("input#asa").val()},
         roomOrientation: {label: "Room Orientation", value: $("input#north").val()},
         ceiling: {label: "Ceiling Height (ft)", value: $("input#ceiling").val()},
         gridHeight: {label: "Grid Height (ft)", value: $("input#gridHt").val()},
@@ -35,7 +37,7 @@ function gatherCase1Inputs() {
         glzRatio: {label: "Window-to-Wall Ratio (%)", value: $("input#glazing").val()},
         distanceWindows: {label: "Window Seperation (ft)", value: $("input#distWindow").val()},
         windowU: {label: "Window U-Value (Btu/ft²hr°F)", value: $("input#windowU").val()},
-        aveShortwave: {label: "Average Shortwave Absorptivity", value: $("input#asa").val()},
+        solarHeatGainCo: {label: "Solar Heat Gain Coefficient (shgc)", value: $("input#shgc").val()},
         horzShadeDep: {label: "Horizontal Shade Depth (ft)", value: $("input#hShadeDep").val()},
         horzShadeNum: {label: "Number of Shades (Horizontal)", value: $("input#hShadeNum").val()},
         horzShadeSpace: {label: "Spacing (Horizontal) (ft)", value: $("input#hShadeSpace").val()},
@@ -69,6 +71,8 @@ function gatherCase2Inputs() {
         airSpeed: {label: "Air Speed (fpm)", value: $("input#airSpeed1").val()},
         cloting: {label: "Clothing Level (clo)", value: $("input#clothing1").val()},
         metabolic: {label: "Metabolic Rate (met)", value: $("input#metabolic1").val()},
+        posture: {label: "Occupant Posture", value: $("select#posture1").val()},
+        aveShortwave: {label: "Average Shortwave Absorptivity", value: $("input#asa1").val()},
         roomOrientation: {label: "Room Orientation", value: $("input#north1").val()},
         ceiling: {label: "Ceiling Height (ft)", value: $("input#ceiling1").val()},
         gridHeight: {label: "Grid Height (ft)", value: $("input#gridHt1").val()},
@@ -81,7 +85,7 @@ function gatherCase2Inputs() {
         glzRatio: {label: "Window-to-Wall Ratio (%)", value: $("input#glazing1").val()},
         distanceWindows: {label: "Window Seperation (ft)", value: $("input#distWindow1").val()},
         windowU: {label: "Window U-Value (Btu/ft²hr°F)", value: $("input#windowU1").val()},
-        aveShortwave: {label: "Average Shortwave Absorptivity", value: $("input#asa1").val()},
+        solarHeatGainCo: {label: "Solar Heat Gain Coefficient (shgc)", value: $("input#shgc1").val()},
         horzShadeDep: {label: "Horizontal Shade Depth (ft)", value: $("input#hShadeDep1").val()},
         horzShadeNum: {label: "Number of Shades (Horizontal)", value: $("input#hShadeNum1").val()},
         horzShadeSpace: {label: "Spacing (Horizontal) (ft)", value: $("input#hShadeSpace1").val()},
