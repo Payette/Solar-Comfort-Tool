@@ -2,6 +2,12 @@ const { promises: { readFile } } = require("fs");
 require('colors');
 const Diff = require('diff');
 
+function delay(time) {
+    return new Promise(function(resolve) { 
+        setTimeout(resolve, time)
+    });
+ }
+
 exports.testCompareRegression = (goldFile, newContents) => {
     return readFile(goldFile)
         .then(fileBuffer => {
@@ -31,9 +37,19 @@ exports.testCompareRegression = (goldFile, newContents) => {
 exports.updateInput = async (page, input) => {
     await page.evaluate(input => {
       let el = document.getElementById(input.id);
-      el.value = input.value + '';
-      el.blur();
+      if(input.value) {
+          el.value = input.value + '';
+          el.blur();
+      } else {
+          if(input.event === "click") {
+              el.click();
+          }
+      }
     }, input);
+
+    if(input.event === "click") {
+        await delay(500);
+    }
   }
 
 exports.regressionTests = [
@@ -52,6 +68,54 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 10 },
             { id: "day", value: 15 }
+        ]
+    },
+    {
+        name: "june-7",
+        inputs: [
+            { id: "mon", value: 6 },
+            { id: "day", value: 7 }
+        ]
+    },
+    {
+        name: "march-22",
+        inputs: [
+            { id: "mon", value: 3 },
+            { id: "day", value: 22 }
+        ]
+    },
+    {
+        name: "2pm",
+        inputs: [
+            { id: "dsHour", event: "click" },
+            { id: "hour", value: 14 }
+        ]
+    },
+    {
+        name: "may-4-9am",
+        inputs: [
+            { id: "dsHour", event: "click" },
+            { id: "mon", value: 5 },
+            { id: "day", value: 4 },
+            { id: "hour", value: 9 }
+        ]
+    },
+    {
+        name: "august-18-3pm",
+        inputs: [
+            { id: "dsHour", event: "click" },
+            { id: "mon", value: 8 },
+            { id: "day", value: 18 },
+            { id: "hour", value: 15 }
+        ]
+    },
+    {
+        name: "december-30-1pm",
+        inputs: [
+            { id: "dsHour", event: "click" },
+            { id: "mon", value: 12 },
+            { id: "day", value: 30 },
+            { id: "hour", value: 13 }
         ]
     }
 ]
