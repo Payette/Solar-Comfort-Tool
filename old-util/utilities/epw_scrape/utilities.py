@@ -8,6 +8,7 @@ from pyppeteer import launch
 #                'south_america_wmo_region_3', 'north_and_central_america_wmo_region_4',
 #                'southwest_pacific_wmo_region_5', 'europe_wmo_region_6')
 
+# TODO still need to download and parse these regions
 __regions__ = ('north_and_central_america_wmo_region_4',
                'southwest_pacific_wmo_region_5', 'europe_wmo_region_6')
 
