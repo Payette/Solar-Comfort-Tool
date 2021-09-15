@@ -6,7 +6,7 @@ function delay(time) {
     return new Promise(function(resolve) { 
         setTimeout(resolve, time)
     });
- }
+}
 
 exports.testCompareRegression = (goldFile, newContents) => {
     return readFile(goldFile)
@@ -34,6 +34,12 @@ exports.testCompareRegression = (goldFile, newContents) => {
         });
 }
 
+exports.case2On = async (page) => {
+    const case2btn = await page.$x("//button[@name='button1']");
+    case2btn[0].click();
+    await delay(3000);
+}
+
 exports.updateInput = async (page, input) => {
     await page.evaluate(input => {
       let el = document.getElementById(input.id);
@@ -41,81 +47,224 @@ exports.updateInput = async (page, input) => {
           el.value = input.value + '';
           el.blur();
       } else {
-          if(input.event === "click") {
+          if(input.command === "click") {
               el.click();
           }
       }
     }, input);
 
-    if(input.event === "click") {
-        await delay(500);
+    if(input.command === "click") {
+        await delay(3000);
     }
   }
 
 exports.regressionTests = [
+    // Default regression test
     {
         name: "defaults",
         inputs: []
     },
+    // Time regression tests - Month, Day, Hour
     {
-        name: "january",
+        name: "month",
         inputs: [
-            { id: "mon", value: 1 }
+            { id: "mon", value: 1 },
+            { id: "mon1", value: 2 }
         ]
     },
     {
-        name: "october-15",
+        name: "day",
         inputs: [
             { id: "mon", value: 10 },
-            { id: "day", value: 15 }
+            { id: "day", value: 15 },
+            { id: "mon1", value: 9 },
+            { id: "day1", value: 10 }
         ]
     },
     {
-        name: "june-7",
+        name: "day1",
         inputs: [
             { id: "mon", value: 6 },
-            { id: "day", value: 7 }
+            { id: "day", value: 7 },
+            { id: "mon1", value: 7 },
+            { id: "day1", value: 8 },
         ]
     },
     {
-        name: "march-22",
+        name: "day2",
         inputs: [
             { id: "mon", value: 3 },
-            { id: "day", value: 22 }
+            { id: "day", value: 22 },
+            { id: "mon1", value: 4 },
+            { id: "day1", value: 14 },
         ]
     },
     {
-        name: "2pm",
+        name: "hour",
         inputs: [
-            { id: "dsHour", event: "click" },
-            { id: "hour", value: 14 }
+            { id: "dsHour", command: "click" },
+            { id: "hour", value: 14 },
+            { id: "hour1", value: 16 }
         ]
     },
     {
-        name: "may-4-9am",
+        name: "month-day-hour",
         inputs: [
-            { id: "dsHour", event: "click" },
+            { id: "dsHour", command: "click" },
             { id: "mon", value: 5 },
             { id: "day", value: 4 },
-            { id: "hour", value: 9 }
+            { id: "hour", value: 9 },
+            { id: "mon1", value: 3 },
+            { id: "day1", value: 11 },
+            { id: "hour1", value: 11 }
         ]
     },
     {
-        name: "august-18-3pm",
+        name: "month-day-hour1",
         inputs: [
-            { id: "dsHour", event: "click" },
+            { id: "dsHour", command: "click" },
             { id: "mon", value: 8 },
             { id: "day", value: 18 },
-            { id: "hour", value: 15 }
+            { id: "hour", value: 15 },
+            { id: "mon1", value: 8 },
+            { id: "day1", value: 26 },
+            { id: "hour1", value: 14 }
         ]
     },
     {
-        name: "december-30-1pm",
+        name: "month-day-hour2",
         inputs: [
-            { id: "dsHour", event: "click" },
+            { id: "dsHour", command: "click" },
             { id: "mon", value: 12 },
             { id: "day", value: 30 },
-            { id: "hour", value: 13 }
+            { id: "hour", value: 13 },
+            { id: "mon1", value: 11 },
+            { id: "day1", value: 17 },
+            { id: "hour1", value: 12 }
         ]
-    }
+    },
+    // Climate regression tests - Latitude
+    {
+        name: "climate",
+        inputs: [
+            { id: "lat", value: 10 },
+            { id: "lat1", value: 50 }
+        ]
+    },
+    {
+        name: "climate1",
+        inputs: [
+            { id: "lat", value: 2 },
+            { id: "lat1", value: 60 }
+        ]
+    },
+    // Room Geometry regression tests - Room Orientation, Length, Depth
+    {
+        name: "room-geometry",
+        inputs: [
+            { id: "north", value: 45 },
+            { id: "north1", value: -90 },
+            { id: "wallDep", value: 20 },
+            { id: "wallDep1", value: 60 },
+            { id: "wallWidth", value: 20 },
+            { id: "wallWidth1", value: 60 }
+        ]
+    },
+    {
+        name: "room-geometry1",
+        inputs: [
+            { id: "north", value: 60 },
+            { id: "north1", value: -60 },
+            { id: "wallDep", value: 34 },
+            { id: "wallDep1", value: 59 },
+            { id: "wallWidth", value: 34 },
+            { id: "wallWidth1", value: 59 }
+        ]
+    },
+    // Window Geometry regression tests - Window Height from Sill, Sill Height, Window Width, Window-to-Wall Ratio
+    {
+        name: "window-geometry",
+        inputs: [
+            { id: "windowHeight", value: 9.5 },
+            { id: "windowHeight1", value: 5 },
+            { id: "sill", value: 4 },
+            { id: "sill1", value: 0 },
+            { id: "windowWidth", value: 30 },
+            { id: "windowWidth1", value: 8 },
+            { id: "glazingRatioCheck", command: "click" },
+            { id: "glazing", value: 55 },
+            { id: "glazing1", value: 20 }
+        ]
+    },
+    // Shade Geometry regression tests - all inputs
+    // horizontal shades
+    {
+        name: "horizontal-shades",
+        inputs: [
+            { id: "hShadeNum", value: 3 },
+            { id: "hShadeNum1", value: 2 },
+            { id: "hShadeDep", value: 2 },
+            { id: "hShadeDep1", value: 3 },
+            { id: "hShadeSpace", value: 2 },
+            { id: "hShadeSpace1", value: 4 },
+            { id: "hShadeDist", value: 1 },
+            { id: "hShadeDist1", value: 2 },
+            { id: "hShadeHeight", value: -4 },
+            { id: "hShadeHeight1", value: 2 },
+            { id: "hShadeAngle", value: 110 },
+            { id: "hShadeAngle1", value: 75 },
+        ]
+    },
+    // vertical shades
+    {
+        name: "vertical-shades",
+        inputs: [
+            { id: "vShadeNum", value: 3 },
+            { id: "vShadeNum1", value: 4 },
+            { id: "vShadeDep", value: 1 },
+            { id: "vShadeDep1", value: 2 },
+            { id: "vShadeSpace", value: 7 },
+            { id: "vShadeSpace1", value: 4 },
+            { id: "vShadeStart1", value: 'R' },
+            { id: "vShadeShift", value: 1 },
+            { id: "vShadeShift1", value: -1 },
+            { id: "vShadeDist", value: 1 },
+            { id: "vShadeDist1", value: 2 },
+            { id: "vShadeOn1", command: "click" },
+            { id: "vShadeHeight1", value: 2 },
+            { id: "vShadeScale1", value: 2 },
+        ]
+    },
+    // horizontal + vertical shades
+    {
+        name: "horizontal-vertical-shades",
+        inputs: [
+            { id: "hShadeNum", value: 2 },
+            { id: "hShadeNum1", value: 4 },
+            { id: "hShadeDep", value: 2 },
+            { id: "hShadeSpace", value: 4 },
+            { id: "hShadeSpace1", value: 2 },
+            { id: "hShadeDist", value: 1 },
+            { id: "hShadeDist1", value: 2 },
+            { id: "hShadeHeight", value: -1 },
+            { id: "hShadeHeight1", value: 1 },
+            { id: "hShadeAngle", value: 120 },
+            { id: "hShadeAngle1", value: 60 },
+            { id: "vShadeNum", value: 2 },
+            { id: "vShadeNum1", value: 4 },
+            { id: "vShadeDep", value: 4 },
+            { id: "vShadeDep1", value: 2 },
+            { id: "vShadeSpace", value: 7 },
+            { id: "vShadeSpace1", value: 4 },
+            { id: "vShadeStart1", value: 'R' },
+            { id: "vShadeShift", value: 1 },
+            { id: "vShadeShift1", value: -1 },
+            { id: "vShadeDist", value: 1 },
+            { id: "vShadeDist1", value: 2 },
+            { id: "vShadeOn1", command: "click" },
+            { id: "vShadeHeight1", value: 2 },
+            { id: "vShadeScale1", value: 2 },
+
+        ]
+    },
 ]

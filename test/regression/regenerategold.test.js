@@ -1,11 +1,12 @@
 require('expect-puppeteer');
 const { promises: { writeFile } } = require("fs");
-const { regressionTests, updateInput } = require("./util");
+const { regressionTests, updateInput, case2On } = require("./util");
 
+jest.setTimeout(30000);
 async function generateGold(fileName, inputs) {
-  jest.setTimeout(5000);
   await page.goto('http://localhost:3000/?debug=true');
-
+  case2On(page);
+  
   for(let i=0; i<inputs.length; i++) {
     updateInput(page, inputs[i]);
   }
