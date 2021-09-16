@@ -1,9 +1,10 @@
 require('expect-puppeteer');
-const { testCompareRegression, regressionTests, updateInput, case2On } = require("./util");
+const { testCompareRegression, regressionTests, updateInput, case2On, delay } = require("./util");
 
 jest.setTimeout(60000);
 async function runAndVerifyAgainstGold(fileName, inputs) {
   await page.goto('http://localhost:3000/?debug=true');
+  await delay(1000)
   case2On(page);
 
   for(let i=0; i<inputs.length; i++) {

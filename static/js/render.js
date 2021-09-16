@@ -322,7 +322,7 @@ if(debug) {
   var timeout = 0;
   setTimeout(() => {
     if($("#dsAnnual").is(":checked")) {
-      timeout = 40000;
+      timeout = 45000;
     }
     setTimeout(() => {
       var csvContent = createCSV();

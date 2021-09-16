@@ -7,6 +7,7 @@ function delay(time) {
         setTimeout(resolve, time)
     });
 }
+exports.delay = delay;
 
 exports.testCompareRegression = (goldFile, newContents) => {
     return readFile(goldFile)
@@ -53,11 +54,11 @@ exports.updateInput = async (page, input) => {
       }
     }, input);
 
-    // if(input.id === "dsAnnual") {
-    //     await delay(30000);
-    // }
-    if(input.command === "click") {
-        await delay(3000);
+    if(input.id === "dsAnnual") {
+        await delay(45000);
+    }
+    else if(input.command === "click") {
+        await delay(500);
     }
   }
 
@@ -144,22 +145,6 @@ exports.regressionTests = [
             { id: "mon1", value: 11 },
             { id: "day1", value: 17 },
             { id: "hour1", value: 12 }
-        ]
-    },
-    // Annual Mode regression test
-    {
-        name: "annual",
-        inputs: [
-            { id: "mon", value: 10 },
-            { id: "day", value: 24 },
-            { id: "lat", value: 39 },
-            { id: "north", value: 72 },
-            { id: "wallDep", value: 38 },
-            { id: "windowHeight", value: 8 },
-            { id: "windowWidth", value: 17.5 },
-            { id: "hShadeNum", value: 2 },
-            { id: "hShadeAngle", value: 81 },
-            { id: "dsAnnual", command: "click" },
         ]
     },
     // Climate regression tests - Latitude
@@ -286,4 +271,26 @@ exports.regressionTests = [
 
         ]
     },
+    // Annual Mode regression test - defaults and various inputs
+    {
+        name: "annual-defaults",
+        inputs: [
+            { id: "dsAnnual", command: "click" }
+        ]
+    },
+    {
+        name: "annual",
+        inputs: [
+            { id: "mon", value: 10 },
+            { id: "day", value: 24 },
+            { id: "lat", value: 39 },
+            { id: "north", value: 72 },
+            { id: "wallDep", value: 38 },
+            { id: "windowHeight", value: 8 },
+            { id: "windowWidth", value: 17.5 },
+            { id: "hShadeNum", value: 2 },
+            { id: "hShadeAngle", value: 81 },
+            { id: "dsAnnual", command: "click" },
+        ]
+    }
 ]
