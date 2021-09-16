@@ -1,7 +1,13 @@
 // GATHER GLOBAL INPUTS
 function gatherGlobalInputs() {
+    var selectedStudyType;
+    if($('#dsAnnual').is(':checked')) {
+        selectedStudyType = $('#dsAnnual');
+    } else {
+        selectedStudyType = $("input[name=studyType]:checked")
+    }
     return {
-        studyType: {label: "Study Type", value: $("input[name=studyType]:checked").val()},
+        studyType: {label: "Study Type", value: selectedStudyType.val()},
         valFal: {label: "Floor Area Loss", value: $("input#fal").val() + "%"},
         valMDST: {label: "Max Direct Sun Time", value: $("input#mdst").val() + " hr"}
     }

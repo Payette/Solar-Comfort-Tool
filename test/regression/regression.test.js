@@ -1,7 +1,7 @@
 require('expect-puppeteer');
 const { testCompareRegression, regressionTests, updateInput, case2On } = require("./util");
 
-jest.setTimeout(30000);
+jest.setTimeout(60000);
 async function runAndVerifyAgainstGold(fileName, inputs) {
   await page.goto('http://localhost:3000/?debug=true');
   case2On(page);
@@ -10,7 +10,7 @@ async function runAndVerifyAgainstGold(fileName, inputs) {
     updateInput(page, inputs[i]);
   }
 
-  const csvEl = await page.waitForSelector("#debugcsv");
+  const csvEl = await page.waitForSelector("#debugcsv", { timeout: 60000 });
   let newCsvContents = await page.evaluate(el => el.textContent, csvEl)
   return testCompareRegression(fileName, newCsvContents);
 }

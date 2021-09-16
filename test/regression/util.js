@@ -53,6 +53,9 @@ exports.updateInput = async (page, input) => {
       }
     }, input);
 
+    // if(input.id === "dsAnnual") {
+    //     await delay(30000);
+    // }
     if(input.command === "click") {
         await delay(3000);
     }
@@ -143,6 +146,22 @@ exports.regressionTests = [
             { id: "hour1", value: 12 }
         ]
     },
+    // Annual Mode regression test
+    {
+        name: "annual",
+        inputs: [
+            { id: "mon", value: 10 },
+            { id: "day", value: 24 },
+            { id: "lat", value: 39 },
+            { id: "north", value: 72 },
+            { id: "wallDep", value: 38 },
+            { id: "windowHeight", value: 8 },
+            { id: "windowWidth", value: 17.5 },
+            { id: "hShadeNum", value: 2 },
+            { id: "hShadeAngle", value: 81 },
+            { id: "dsAnnual", command: "click" },
+        ]
+    },
     // Climate regression tests - Latitude
     {
         name: "climate",
@@ -211,7 +230,7 @@ exports.regressionTests = [
             { id: "hShadeDist1", value: 2 },
             { id: "hShadeHeight", value: -4 },
             { id: "hShadeHeight1", value: 2 },
-            { id: "hShadeAngle", value: 110 },
+            { id: "hShadeAngle", value: 45 },
             { id: "hShadeAngle1", value: 75 },
         ]
     },
@@ -248,7 +267,7 @@ exports.regressionTests = [
             { id: "hShadeDist1", value: 2 },
             { id: "hShadeHeight", value: -1 },
             { id: "hShadeHeight1", value: 1 },
-            { id: "hShadeAngle", value: 120 },
+            { id: "hShadeAngle", value: 75 },
             { id: "hShadeAngle1", value: 60 },
             { id: "vShadeNum", value: 2 },
             { id: "vShadeNum1", value: 4 },

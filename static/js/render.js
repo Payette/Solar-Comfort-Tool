@@ -301,7 +301,7 @@ $("input#vShadeOn, input#vShadeOn1").on("change", function() {
 })
 
 // EXPORT  INPUT DATA TO CSV FILE //
-$(".optionButton#csv").click(function(event) {
+$(".optionButton#csv").click(function() {
   var csvContent = createCSV();
   var encodedUri = encodeURI(csvContent);
   var fileName = "SolarComfortInputs";
@@ -319,12 +319,18 @@ $(".optionButton#csv").click(function(event) {
 if(debug) {
   // wait for everything to load
   // then display some debug information
+  var timeout = 0;
   setTimeout(() => {
-    var csvContent = createCSV();
-
-    let csvDiv=document.createElement('pre');
-    csvDiv.setAttribute('id', 'debugcsv')
-    csvDiv.textContent=csvContent;
-    document.body.appendChild(csvDiv);
+    if($("#dsAnnual").is(":checked")) {
+      timeout = 40000;
+    }
+    setTimeout(() => {
+      var csvContent = createCSV();
+  
+      let csvDiv=document.createElement('pre');
+      csvDiv.setAttribute('id', 'debugcsv')
+      csvDiv.textContent=csvContent;
+      document.body.appendChild(csvDiv);
+    }, timeout)
   }, 5000);
 }
