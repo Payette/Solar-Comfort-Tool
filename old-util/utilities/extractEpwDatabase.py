@@ -1,7 +1,7 @@
 import os
 import zipfile
 
-"""Extract the ewp database into its component text files.
+"""Extract the epw database into its component text files.
 
 Args:
     A directory that contains the compressed epw database in a folder called "compressed."
@@ -36,4 +36,4 @@ for folder in os.listdir(compressDir):
         theZipFile = totalDir + compFile
         destination = totalDestinationDir + compFile.split(".zip")[0]
         unzip(theZipFile, destination)
-        print "Extracted to " + destination
+        print("Extracted to " + destination)
