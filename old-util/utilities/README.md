@@ -1,15 +1,30 @@
 # EPW Scraping
-These scripts scrape EPW web filese for Summer Cooling Setpoints
+These scripts scrape EPW web files for Summer Cooling Setpoints. You should only need to re-run these scripts
+if you want to pull updated Summer Cooling Setpoints from EPW data.
 
 ## Running
 
     cd old-util/utilities
     source env/bin/activate
 
-Every few few years you'll probably need to re-run collect_weather_files_links
-and download_weather_files_links
+1) Every few years you'll probably need to re-run collect_weather_files_links
+and download_weather_files_links in case energyplus has changed the links
 
+    in utilities.py uncomment the main code at the bottom that calls collect_weather_files_links
+    and then run:
+
+    cd epw_scrape
     xvfb-run python3 utilities.py
+
+2) If the links work (just try a few links in your web browser from the CSV file)
+then no need to do step 1) above, just download the files. Make sure
+the code at the bottom of utilities.py that calls download_weather_files_links
+is uncommented, and the code that calls collect_weather_files_links is commented,
+then run:
+
+    cd epw_scrape
+    xvfb-run python3 utilities.py
+
 
 ## New Developer Setup (1 time)
 On Linux Ubuntu or inside Windows Subsystem for Linux (Ubuntu)

@@ -39,7 +39,7 @@ async def parse_url(url, t=0.2):
         # let SPA app run, and download resulting DOM
         browser = await launch()
         page = await browser.newPage()
-        await page.goto(url)
+        await page.goto(url, { "timeout": 10000, "waitUntil": "networkidle0" } )
         theDom = await page.content()
         await browser.close()
 
