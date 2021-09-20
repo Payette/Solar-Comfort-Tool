@@ -4,14 +4,9 @@ import time
 import asyncio
 from pyppeteer import launch
 
-# __regions__ = ('africa_wmo_region_1', 'asia_wmo_region_2',
-#                'south_america_wmo_region_3', 'north_and_central_america_wmo_region_4',
-#                'southwest_pacific_wmo_region_5', 'europe_wmo_region_6')
-
-# TODO still need to download and parse these regions
-__regions__ = ('north_and_central_america_wmo_region_4',
+__regions__ = ('africa_wmo_region_1', 'asia_wmo_region_2',
+               'south_america_wmo_region_3', 'north_and_central_america_wmo_region_4',
                'southwest_pacific_wmo_region_5', 'europe_wmo_region_6')
-
 
 __hdr__ = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
