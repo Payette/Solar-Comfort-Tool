@@ -13,7 +13,7 @@ and download_weather_files_links in case energyplus has changed the links
     in utilities.py uncomment the main code at the bottom that calls collect_weather_files_links
     and then run:
 
-    cd epw_scrape
+    cd old-util/utilities/epw_scrape
     xvfb-run python3 utilities.py
 
 2) If the links work (just try a few links in your web browser from the CSV file)
@@ -22,8 +22,10 @@ the code at the bottom of utilities.py that calls download_weather_files_links
 is uncommented, and the code that calls collect_weather_files_links is commented,
 then run:
 
-    cd epw_scrape
-    xvfb-run python3 utilities.py
+    cd old-util/utilities/epw_scrape
+    python3 utilities.py
+
+
 
 
 ## New Developer Setup (1 time)
