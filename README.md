@@ -1,6 +1,7 @@
 # Solar Comfort Tool
 A web tool for assessing the impact of facade choices on occupant comfort in sunny conditions. <https://payette.github.io/Solar-Comfort-Tool/>
 
+![Solar Comfort Tool Tests](https://github.com/Payette/Solar-Comfort-Tool/actions/workflows/regression.test.yml/badge.svg)
 
 # New Developer Setup
 Use Node 16, and install node dependencies:

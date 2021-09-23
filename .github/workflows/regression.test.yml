@@ -1,4 +1,4 @@
-name: Regression Test CI
+name: Solar Comfort Tool Tests
 
 on:
   push:
