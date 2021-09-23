@@ -12,15 +12,15 @@ Returns:
     A json file name with latitude, longitude, and time zone.
 """
 
-directory  = "d:\ladybug\\epwDatabase\\"
+directory  = "/home/aringler/code/Solar-Comfort-Tool/old-util/utilities/epw_scrape/"
 locationFileName = "location.json"
 writeAsOneLine = False
 
 # create hte directories
-extractDir = directory + "extracted\\"
-locationjson = directory + "refined\\" + locationFileName
+extractDir = directory + "extracted/"
+locationjson = directory + "refined/" + locationFileName
 
-if not os.path.isdir(directory + "refined\\"):
+if not os.path.isdir(directory + "refined/"):
     os.mkdir(directory + "refined")
 
 # Set a character for line breaks if needed.
@@ -113,9 +113,9 @@ for folder in os.listdir(extractDir):
                 fd.write("," + linB + tab + tab + tab + tab + city + ": " + str(locDictionary))
                 cityList.append(city)
 
-            print nation + " " + province + " " + city + " - " + str(locDictionary)
+            print(nation + " " + province + " " + city + " - " + str(locDictionary))
         except Exception, e:
-            print e
+            print(e)
 
     fd.write(tab + tab + tab + "}" + linB)
     fd.write(tab + tab + "}" + linB)
