@@ -2,17 +2,22 @@ require('expect-puppeteer');
 const { promises: { writeFile } } = require("fs");
 const { regressionTests, updateInput, case2On, delay } = require("./util");
 
-jest.setTimeout(60000);
+jest.setTimeout(500000);
 async function generateGold(fileName, inputs) {
-  await page.goto('http://localhost:3000/?debug=true');
-  await delay(1000);
+  page.on('console', (msg) => console.log(msg.text()));
+
+  await page.goto('http://localhost:3000/?debug=true', {
+    waitUntil: 'load',
+  });
+  await delay(3000)
   case2On(page);
 
   for(let i=0; i<inputs.length; i++) {
     updateInput(page, inputs[i]);
   }
 
-  const csvEl = await page.waitForSelector("#debugcsv", { timeout: 60000 });
+  const csvEl = await page.waitForSelector("#debugcsv", { timeout: 450000 });
+  await delay(2000)
   let csvContents = await page.evaluate(el => el.textContent, csvEl)
 
   return writeFile(fileName, csvContents, {});

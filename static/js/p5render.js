@@ -5,6 +5,7 @@ let singleHour = 0;
 let fullDay = 1;
 let currentFrame = 0;
 let annualOn = false; // Check If Annual Button is Pressed
+let annualSimulationDone = false; // for regression test timing
 let dateCounter = 0;
 let Case2Button = 0;
 let MDTResult = 0;
@@ -1815,10 +1816,12 @@ var sketch1 = function (p) {
     // p.fill(50);
     // p.textSize(7);
     // p.text(p.frameCount,420,320);
+  
+    // An annual simulation has completed
+    if(dateCounter === 360 && annualOn) {
+      annualSimulationDone = true;
+    }
   }
-
-
-
 
   p.reload = function () {
     currentFrame = 0;
