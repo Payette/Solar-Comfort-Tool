@@ -341,5 +341,5 @@ if(debug) {
     } else {
       showCSVOnPage();
     }
-  }, 10000);
+  }, 20000);
 }

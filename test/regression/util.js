@@ -17,14 +17,25 @@ exports.testCompareRegression = (goldFile, newContents, testName) => {
         if (newContents !== goldContents) {
             console.error(`'${testName}' failed, diff vs gold file:`);
             const diff = Diff.diffChars(goldContents, newContents);
+            let numberOfDifferences = 0;
             diff.forEach((part) => {
                 // green for additions, red for deletions
                 // grey for common parts
                 const color = part.added ? 'green' : part.removed ? 'red' : 'grey';
+                if(part.added || part.removed) {
+                    numberOfDifferences++;
+                }
                 process.stderr.write(part.value[color]);
             });
-
-            expect(true).toBe(false);
+            if(numberOfDifferences > 0) {
+                console.error('csv differs from gold, csv from test run: ');
+                console.error(newContents);
+                expect(true).toBe(false);
+            } else {
+                // strict equals differed, but our DIFF ignoring certain whitespace
+                // said we are fine, so we'll call this good :)
+                expect(true).toBe(true);
+            }
         } else {
             expect(true).toBe(true);
         }
@@ -57,7 +68,7 @@ exports.updateInput = async (page, input) => {
         await delay(1500);
     }
     else if(input.command === "click") {
-        await delay(2000);
+        await delay(3000);
     }
 }
 
@@ -291,5 +302,5 @@ exports.regressionTests = [
             { id: "hShadeAngle", value: 81 },
             { id: "dsAnnual", command: "click" },
         ]
-    }
+    }    
 ]
