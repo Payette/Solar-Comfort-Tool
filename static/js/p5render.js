@@ -1818,7 +1818,7 @@ var sketch1 = function (p) {
     // p.text(p.frameCount,420,320);
   
     // An annual simulation has completed
-    if(dateCounter === 360 && annualOn) {
+    if(dateCounter === 365 && annualOn) {
       annualSimulationDone = true;
     }
   }
