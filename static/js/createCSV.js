@@ -136,9 +136,10 @@ function createCSV() {
     });
 
     csvContent += "\nCase 1 Result, \n";
-    csvContent += MDTResult;
+    csvContent += window.SOLAR_COMFORT.MDTResult;
 
     csvContent += "\nCase 1 Hours of Sun Floor Grid (length x depth), \n";
+    let globalGridColor = window.SOLAR_COMFORT.globalGridColor;
     if(globalGridColor && globalGridColor.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColor);
     }
@@ -161,9 +162,10 @@ function createCSV() {
     }
 
     csvContent += "\nCase 2 Result, \n";
-    csvContent += MDTResult1;
+    csvContent += window.SOLAR_COMFORT.MDTResult1;
 
     csvContent += "\nCase 2 Hours of Sun Floor Grid (length x depth), \n";
+    let globalGridColor1 = window.SOLAR_COMFORT.globalGridColor1;
     if(globalGridColor1 && globalGridColor1.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColor1);
     }

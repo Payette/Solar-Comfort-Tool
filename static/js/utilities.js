@@ -1,3 +1,5 @@
+window.SOLAR_COMFORT = {};
+
 twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numSteps) => {
     let gridColorArray2D = [];
     let gridColorArray2DX  = 0;
