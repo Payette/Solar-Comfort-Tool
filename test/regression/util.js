@@ -63,6 +63,7 @@ exports.updateInput = async (page, input) => {
             }
         }
     }, input);
+    await delay(250);
 
     if(input.id === "dsAnnual") {
         await delay(1500);
