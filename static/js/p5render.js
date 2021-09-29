@@ -6,8 +6,10 @@ let fullDay = 1;
 let currentFrame = 0;
 let annualOn = false; // Check If Annual Button is Pressed
 let annualSimulationDone = false; // for regression test timing
-let dateCounter = 0;
 let Case2Button = 0;
+
+window.SOLAR_COMFORT.dateCounter = 0;
+window.SOLAR_COMFORT.dateCounter1 = 0;
 
 window.SOLAR_COMFORT.MDTResult = 0;
 window.SOLAR_COMFORT.MDTResult1 = 0;
@@ -32,12 +34,11 @@ checkAnnual = function (target) { // Check If Annual Button is Pressed
   annualOn = target.checked;
   currentFrame = 0;
   singleHour = 2;
-  dateCounter = 0;
+  window.SOLAR_COMFORT.dateCounter = 0;
+  window.SOLAR_COMFORT.dateCounter1 = 0;
 
   for (let i = 0; i <= 1; i++) {
     let c = i === 0 ? '' : '1';
-
-    console.log(c);
 
     if (!annualOn) {
       document.getElementById(`annualWarning`).innerHTML = '';
@@ -268,7 +269,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       //createCanvas(800, 500);
       p.cnv = p.createCanvas(440, 375);
       // Move the canvas so it’s inside the <div id="sketch-holder">.
-      p.cnv.parent('sketch');
+      p.cnv.parent(`sketch${c}`);
       p.noStroke();
 
       if (caseNumber === 2) {
@@ -592,18 +593,19 @@ renderGraphicsAndRunSimulation = caseNumber => {
         var dates1 = [];
         offset1 = (new Date().getTimezoneOffset()) / 60;
         date1 = 0;
-        if (dateCounter < 365) {
-          dateCounter += 1;
+
+        if (window.SOLAR_COMFORT[`dateCounter${c}`] < 365) {
+          window.SOLAR_COMFORT[`dateCounter${c}`] += 1;
           for (let i = 1; i < 24; i++) {
             hour1 = i / timestep;
-            date1 = (new Date(2000, 0, dateCounter, i - offset1 - TimeZone, (i % parseInt(i)) * 60));
+            date1 = (new Date(2000, 0, window.SOLAR_COMFORT[`dateCounter${c}`], i - offset1 - TimeZone, (i % parseInt(i)) * 60));
             dates1.push(date1);
           }
         } else {
-          dateCounter = 365;
+          window.SOLAR_COMFORT[`dateCounter${c}`] = 365;
           for (let i = 1; i < 24; i++) {
             hour1 = i / timestep;
-            date1 = (new Date(2000, 0, dateCounter, i - offset1 - TimeZone, (i % parseInt(i)) * 60));
+            date1 = (new Date(2000, 0, window.SOLAR_COMFORT[`dateCounter${c}`], i - offset1 - TimeZone, (i % parseInt(i)) * 60));
             dates1.push(date1);
           }
         }
@@ -658,7 +660,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
           roomOrientationValue = roomOrientationValue1;
           currentStudy = singleHour;
 
-          dateCounter = 0;
+          window.SOLAR_COMFORT[`dateCounter${c}`] = 0;
           annualCoordinates = [];
           currentFrame = 0;
 
@@ -1228,11 +1230,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // Annual
         window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal - 1, 1);
 
-        if (dateCounter == 1) {
+        if (window.SOLAR_COMFORT[`dateCounter${c}`] == 1) {
           for (let i = 0; i < gridColorArray.length; i++) {
             bigArrayColor.push(gridColor);
           }
-        } else if (dateCounter < 365) {
+        } else if (window.SOLAR_COMFORT[`dateCounter${c}`] < 365) {
           for (let i = 0; i < gridColorArray.length; i++) {
             bigArrayColor[i] += gridColorArray[i];
           }
@@ -1634,7 +1636,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let X4 = (x3 + (xNext * i));
         let Y4 = (y3 + (y * i));
         let mySun = 0;
-        if (annualOn && dateCounter > 364) {
+        if (annualOn && window.SOLAR_COMFORT[`dateCounter${c}`] > 364) {
           if (i == 0) {
             // mySun = (p.int(gridColorArray[1*gridY]/timestep));
             mySun = (bigArrayColor[1 * gridY] / 365);
@@ -1741,7 +1743,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
           let newY3 = (Y3 + (yNext * (j + 1)));
           let newX4 = (X4 - (x * (j + 1)));
           let newY4 = (Y4 + (yNext * (j + 1)));
-          if (annualOn && dateCounter > 364) {
+          if (annualOn && window.SOLAR_COMFORT[`dateCounter${c}`] > 364) {
             if (j == 0) {
               // mySun = (p.int(gridColorArray[1*gridY]/timestep));
               mySun = (bigArrayColor[(i * gridY) + 1] / 365);
@@ -1780,7 +1782,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
           p.fill(ColorScaleArray[mySun].r, ColorScaleArray[mySun].g, ColorScaleArray[mySun].b, 200);
           p.quad(newX1, newY1 - GridHt, newX2, newY2 - GridHt, newX3, newY3 - GridHt, newX4, newY4 - GridHt);
 
-          if (annualOn && dateCounter > 364) {
+          if (annualOn && window.SOLAR_COMFORT[`dateCounter${c}`] > 364) {
             if (bigArrayColor[(i * gridY) + j] / .99 < valMDST / timestep * 365 && bigArrayColor[(i * gridY) + j + 1] / .99 > valMDST / timestep * 365) {
               p.push();
               p.strokeWeight(1);
@@ -1941,7 +1943,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       // p.text(p.frameCount,420,320);
 
       // An annual simulation has completed
-      if (dateCounter === 365 && annualOn) {
+      if (window.SOLAR_COMFORT[`dateCounter${c}`] === 365 && annualOn) {
         annualSimulationDone = true;
       }
     }
