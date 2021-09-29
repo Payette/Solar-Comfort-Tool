@@ -5,12 +5,17 @@ let singleHour = 0;
 let fullDay = 1;
 let currentFrame = 0;
 let annualOn = false; // Check If Annual Button is Pressed
+let annualSimulationDone = false; // for regression test timing
 let dateCounter = 0;
 let Case2Button = 0;
 let MDTResult = 0;
 let MDTResult1 = 0;
 let globalGridColor = undefined;
 let globalGridColor1 = undefined;
+
+let Month_Debug_Case2 = undefined;
+let Day_Debug_Case2 = undefined;
+let Hour_Debug_Case2 = undefined;
 
 function msg() {
   singleHour = 1;
@@ -1825,10 +1830,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
     // p.fill(50);
     // p.textSize(7);
     // p.text(p.frameCount,420,320);
+  
+    // An annual simulation has completed
+    if(dateCounter === 365 && annualOn) {
+      annualSimulationDone = true;
+    }
   }
-
-
-
 
   p.reload = function () {
     currentFrame = 0;

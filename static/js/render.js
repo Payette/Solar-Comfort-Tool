@@ -6,7 +6,6 @@ var designTemp2;
 
 var urlParams = new URLSearchParams(window.location.search);
 let debug = urlParams.get('debug');
-debug && console.log('debug: ', true);
 
 // show Outdoor Temprature in modal alert
     $(".optionButton#CitySearch").click(function(event) {
@@ -316,21 +315,33 @@ $(".optionButton#csv").click(function() {
   document.body.removeChild(downloadLink);
 });
 
+function showCSVOnPage() {
+  console.log(JSON.stringify({ Month_Debug_Case2, Day_Debug_Case2, Hour_Debug_Case2 }));
+
+  var csvContent = createCSV();
+  
+  let csvDiv=document.createElement('pre');
+  csvDiv.setAttribute('id', 'debugcsv')
+  csvDiv.textContent=csvContent;
+  document.body.appendChild(csvDiv);
+}
+
 if(debug) {
   // wait for everything to load
-  // then display some debug information
-  var timeout = 0;
+  // wait for our tests to finish updating the UI inputes
+  // then grab our CSV exports and display on the page
   setTimeout(() => {
     if($("#dsAnnual").is(":checked")) {
-      timeout = 45000;
+      // wait until annual simulation has completed
+      // then wait a tad more, and grab our CSV export
+      var annualDoneCheck = setInterval(function() {
+        if (annualSimulationDone) {
+          setTimeout(showCSVOnPage, 500);
+          clearInterval(annualDoneCheck);
+        }
+     }, 5000);
+    } else {
+      showCSVOnPage();
     }
-    setTimeout(() => {
-      var csvContent = createCSV();
-  
-      let csvDiv=document.createElement('pre');
-      csvDiv.setAttribute('id', 'debugcsv')
-      csvDiv.textContent=csvContent;
-      document.body.appendChild(csvDiv);
-    }, timeout)
-  }, 5000);
+  }, 20000);
 }

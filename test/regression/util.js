@@ -9,30 +9,40 @@ function delay(time) {
 }
 exports.delay = delay;
 
-exports.testCompareRegression = (goldFile, newContents) => {
+exports.testCompareRegression = (goldFile, newContents, testName) => {
     return readFile(goldFile)
-        .then(fileBuffer => {
-            const goldContents = fileBuffer.toString();
+    .then(fileBuffer => {
+        const goldContents = fileBuffer.toString();
 
-            if (newContents !== goldContents) {
-                const diff = Diff.diffChars(newContents, goldContents);
-                diff.forEach((part) => {
-                    // green for additions, red for deletions
-                    // grey for common parts
-                    const color = part.added ? 'green' : part.removed ? 'red' : 'grey';
-                    process.stderr.write(part.value[color]);
-                });
-                console.log();
-
+        if (newContents !== goldContents) {
+            console.error(`'${testName}' failed, diff vs gold file:`);
+            const diff = Diff.diffChars(goldContents, newContents);
+            let numberOfDifferences = 0;
+            diff.forEach((part) => {
+                // green for additions, red for deletions
+                // grey for common parts
+                const color = part.added ? 'green' : part.removed ? 'red' : 'grey';
+                if(part.added || part.removed) {
+                    numberOfDifferences++;
+                }
+                process.stderr.write(part.value[color]);
+            });
+            if(numberOfDifferences > 0) {
+                console.error('csv differs from gold, csv from test run: ');
+                console.error(newContents);
                 expect(true).toBe(false);
             } else {
-                console.log('files match, regression passed.')
+                // strict equals differed, but our DIFF ignoring certain whitespace
+                // said we are fine, so we'll call this good :)
                 expect(true).toBe(true);
             }
-        }).catch(error => {
-            console.error(error.message);
-            expect(true).toBe(false);
-        });
+        } else {
+            expect(true).toBe(true);
+        }
+    }).catch(error => {
+        console.error(error.message);
+        expect(true).toBe(false);
+    });
 }
 
 exports.case2On = async (page) => {
@@ -43,24 +53,25 @@ exports.case2On = async (page) => {
 
 exports.updateInput = async (page, input) => {
     await page.evaluate(input => {
-      let el = document.getElementById(input.id);
-      if(input.value) {
-          el.value = input.value + '';
-          el.blur();
-      } else {
-          if(input.command === "click") {
-              el.click();
-          }
-      }
+        let el = document.getElementById(input.id);
+        if(input.value) {
+            el.value = input.value + '';
+            el.blur();
+        } else {
+            if(input.command === "click") {
+                el.click();
+            }
+        }
     }, input);
+    await delay(250);
 
     if(input.id === "dsAnnual") {
-        await delay(45000);
+        await delay(1500);
     }
     else if(input.command === "click") {
-        await delay(500);
+        await delay(3000);
     }
-  }
+}
 
 exports.regressionTests = [
     // Default regression test
@@ -292,5 +303,5 @@ exports.regressionTests = [
             { id: "hShadeAngle", value: 81 },
             { id: "dsAnnual", command: "click" },
         ]
-    }
+    }    
 ]
