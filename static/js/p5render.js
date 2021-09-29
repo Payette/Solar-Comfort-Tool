@@ -13,6 +13,10 @@ let MDTResult1 = 0;
 let globalGridColor = undefined;
 let globalGridColor1 = undefined;
 
+let Month_Debug_Case2 = undefined;
+let Day_Debug_Case2 = undefined;
+let Hour_Debug_Case2 = undefined;
+
 function msg() {
   singleHour = 1;
   fullDay = 0;

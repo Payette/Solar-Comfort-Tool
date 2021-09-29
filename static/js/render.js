@@ -316,6 +316,8 @@ $(".optionButton#csv").click(function() {
 });
 
 function showCSVOnPage() {
+  console.log(JSON.stringify({ Month_Debug_Case2, Day_Debug_Case2, Hour_Debug_Case2 }));
+
   var csvContent = createCSV();
   
   let csvDiv=document.createElement('pre');

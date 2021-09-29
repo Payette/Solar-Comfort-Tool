@@ -424,6 +424,11 @@ var sketch2 = function(p) {
         Hour = Hour1;
         Day = Day1;
         Month = Month1;
+
+        Month_Debug_Case2 = Month;
+        Day_Debug_Case2 = Day;
+        Hour_Debug_Case2 = Hour;
+
         TimeZone = TimeZone1;
         roomOrientationValue = roomOrientationValue1;
         currentStudy = singleHour;
