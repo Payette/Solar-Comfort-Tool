@@ -244,8 +244,8 @@ renderGraphicsAndRunSimulation = caseNumber => {
     let TimeZone;
     let Hour;
     let Day;
-    let Month;
-    let coordinates = [];
+    let Month;            
+    let coordinates = []; // [ azimuth in degress, elevation in degress ]
     // let solar;
     let xPointLoc = [];
     let yPointLoc = [];
@@ -614,6 +614,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         xPointLoc = [];
         yPointLoc = [];
 
+        // [ azimuth in degress, elevation in degress ]
         coordinates = [];
         for (let i = 1; i < 23; i++) {
           coordinates.push(solarCalculator([Lon, Lat]).position(dates1[i]));

@@ -39,6 +39,7 @@
       }
 
       // Note: if zenith > 108°, it’s dark.
+      // returns: [ azimuth in degress, elevation in degress ]
       return [azimuth * degrees, 90 - zenith * degrees];
     }
 
