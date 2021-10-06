@@ -130,6 +130,8 @@ function hoursOfSunFloorGridToCSV(globalGridColor) {
 
 // CREATE CSV CONTENT
 function createCSV() {
+    console.log(window.SOLAR_COMFORT[`deltaMRTGrid`]);
+
     var csvContent = "Global Inputs, \n";
     Object.values(gatherGlobalInputs()).forEach(function(obj) {
         csvContent += obj.label + ',' + obj.value + '\n';

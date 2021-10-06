@@ -1,7 +1,7 @@
 window.SOLAR_COMFORT = {};
 
-window.SOLAR_COMFORT.BODY_POSITION_SIT = 'sit';
-window.SOLAR_COMFORT.BODY_POSITION_STAND = 'stand';
+window.SOLAR_COMFORT.BODY_POSITION_SIT = 'seated';
+window.SOLAR_COMFORT.BODY_POSITION_STAND = 'standing';
 
 twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numSteps) => {
     let gridColorArray2D = [];

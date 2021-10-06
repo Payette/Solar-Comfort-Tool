@@ -34,8 +34,9 @@ let Idir_lookup_table = {
     80: 920,
     90: 925
 }
+// TODO interpolate these values
 window.SOLAR_COMFORT.Idir_f = (solarAltitude) => {
-    let solarAltitude_lookup = int(Math.round(solarAltitude / 10.0) * 10);
+    let solarAltitude_lookup = parseInt(Math.round(solarAltitude / 10.0) * 10);
     solarAltitude_lookup = solarAltitude_lookup === 0 ? 5 : solarAltitude_lookup;
     let Idir = Idir_lookup_table[solarAltitude_lookup];
     if(typeof Idir === 'undefined') {
@@ -61,15 +62,37 @@ window.SOLAR_COMFORT.fsvv_f = (h, w, d) => {
     (90 * 180);
 }
 
-window.SOLAR_COMFORT.calculateDeltaMRT = (position_body, h, w, d, beta, solar_azimuth, body_azimuth, SHGC, alpha_sw) => {
+window.SOLAR_COMFORT.calculateDeltaMRT = (position_body, h, w, d, beta, solar_azimuth, SHGC, alpha_sw) => {
     let feff = position_body === window.SOLAR_COMFORT.BODY_POSITION_SIT ? feff_seated : feff_standing;
     let fsvv = window.SOLAR_COMFORT.fsvv_f(h, w, d);
     let Idir = window.SOLAR_COMFORT.Idir_f(beta);
-    let fp = window.SOLAR_COMFORT.projected_area_factor(solar_azimuth, beta, position_body, body_azimuth);
-    let ERF_solar = ERF_solar_f(feff, fsvv, Idir, beta, fp, SHGC, alpha_sw);
+    if(typeof Idir === 'undefined') {
+        return undefined;
+    }
+
+    let fp = window.SOLAR_COMFORT.projected_area_factor(solar_azimuth, beta, position_body);
+    let ERF_solar = window.SOLAR_COMFORT.ERF_solar_f(feff, fsvv, Idir, beta, fp, SHGC, alpha_sw);
     let delta_MRT = window.SOLAR_COMFORT.delta_MRT_f(ERF_solar, feff);
 
-    console.log(`delta MRT: ${delta_MRT}, ERF_solar: ${ERF_solar}, fp: ${fp}, Idir: ${Idir}, fsvv: ${fsvv}, feff: ${feff}, position_body: ${position_body}, h: ${h}, w: ${w}, d: ${d}, beta: ${beta}, solar_azimuth: ${solar_azimuth}, body_azimuth: ${body_azimuth}, SHGC: ${SHGC}, alpha_sw: ${alpha_sw}`);
+    //console.log(`delta MRT: ${delta_MRT}, ERF_solar: ${ERF_solar}, fp: ${fp}, Idir: ${Idir}, fsvv: ${fsvv}, feff: ${feff}, position_body: ${position_body}, h: ${h}, w: ${w}, d: ${d}, beta: ${beta}, solar_azimuth: ${solar_azimuth}, SHGC: ${SHGC}, alpha_sw: ${alpha_sw}`);
 
     return delta_MRT;
+}
+
+window.SOLAR_COMFORT.calculateDeltaMRT_for_Grid = (room_depth, room_width, position_body, h, w, beta, solar_azimuth, SHGC, alpha_sw) => {
+    let delta_mrt_grid = [];
+    for(let i=0; i<room_depth; i++) {
+        delta_mrt_grid[i] = [];
+        for(let j=0; j<room_width; j++) {
+            let d = i + 1;
+            if(isNaN(beta) || beta < 0 || isNaN(solar_azimuth)) {
+                // solar elevation is negative when the sun has dropped below the horizon hence it is night-time
+                delta_mrt_grid[i][j] = 0;
+            } else {
+                let deltaMRT = window.SOLAR_COMFORT.calculateDeltaMRT(position_body, h, w, d, beta, solar_azimuth, SHGC, alpha_sw);
+                delta_mrt_grid[i][j] = deltaMRT;    
+            }
+        }
+    }
+    return delta_mrt_grid;
 }

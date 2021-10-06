@@ -34,10 +34,9 @@
 // else:
 //     ProjAreaFac = lb_comfortModels.splineStand(azFinal, 90-altFinal)
 
-window.SOLAR_COMFORT.projected_area_factor = (solarAz, altitude, bodyPosition, body_azimuth) => {
-    // TODO add back in body direction
-    let azimuthForLookupTable = solarAz < 180 ? solarAz : (360 - solarAz);
-    let altitudeForLookupTable = altitude > 90 ? altitude - 90 : altitude;
+window.SOLAR_COMFORT.projected_area_factor = (solarAz, altitude, bodyPosition) => {
+    let azimuthForLookupTable = parseInt(solarAz < 180 ? solarAz : (360 - solarAz));
+    let altitudeForLookupTable = parseInt(altitude > 90 ? altitude - 90 : altitude);
     let projectedAreaFactorLookup = undefined;
 
     if(azimuthForLookupTable >=0 && azimuthForLookupTable < 180 && altitudeForLookupTable >=0 && altitudeForLookupTable < 90) {
@@ -49,10 +48,8 @@ window.SOLAR_COMFORT.projected_area_factor = (solarAz, altitude, bodyPosition, b
     } else {
         console.error('invalid solarAz, altitude', solarAz, altitude, bodyPosition, azimuthForLookupTable, altitudeForLookupTable);
     }
-    //DEBUG
-    console.log('projected area factor: ' + projectedAreaFactorLookup);
 
-    return projected_area_factor;
+    return projectedAreaFactorLookup;
 }
 
 /*

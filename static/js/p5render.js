@@ -8,6 +8,8 @@ let annualOn = false; // Check If Annual Button is Pressed
 let annualSimulationDone = false; // for regression test timing
 let Case2Button = 0;
 
+let HOUR_TIME_STEPS = 9;
+
 window.SOLAR_COMFORT.dateCounter = 0;
 window.SOLAR_COMFORT.dateCounter1 = 0;
 
@@ -470,15 +472,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       let posture = document.getElementById(`posture${c}`).value;
       document.getElementsByName("posture")[0].addEventListener('select', p.reload);
 
-      let fractionBodyExposed;
-
-      if (posture == "seated") {
-        fractionBodyExposed = 0.696;
-      } else {
-        fractionBodyExposed = 0.725;
-      }
-
-      let aveShortwave = document.getElementById(`asa${c}`).value;
+      let asa = document.getElementById(`asa${c}`).value;
       document.getElementsByName("asa")[0].addEventListener('input', p.reload);
 
       // ROOM GEOMETRY
@@ -614,7 +608,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         xPointLoc = [];
         yPointLoc = [];
 
-        // [ azimuth in degress, elevation in degress ]
+        // [ azimuth in degress, elevation in degrees ]
         coordinates = [];
         for (let i = 1; i < 23; i++) {
           coordinates.push(solarCalculator([Lon, Lat]).position(dates1[i]));
@@ -631,10 +625,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
         if (singleHour == 1) {
           coordinates = [];
           let coordinates2 = [];
-          for (let i = 1; i <= 9; i++) {
+          for (let i = 1; i <= HOUR_TIME_STEPS; i++) {
             coordinates.push(solarCalculator([Lon, Lat]).position(date));
           }
-          for (let i = 1; i <= 9; i++) {
+          for (let i = 1; i <= HOUR_TIME_STEPS; i++) {
             coordinates2.push(solarCalculator([Lon, Lat]).position(date2));
           }
           xPointLoc = [];
@@ -704,14 +698,15 @@ renderGraphicsAndRunSimulation = caseNumber => {
           if (singleHour == 1) {
             coordinates = [];
             let coordinates2 = [];
-            for (let i = 1; i <= 9; i++) {
+            for (let i = 1; i <= HOUR_TIME_STEPS; i++) {
               coordinates.push(solarCalculator([Lon, Lat]).position(date));
             }
-            for (let i = 1; i <= 9; i++) {
+            for (let i = 1; i <= HOUR_TIME_STEPS; i++) {
               coordinates2.push(solarCalculator([Lon, Lat]).position(date2));
             }
             xPointLoc = [];
             yPointLoc = [];
+            // TODO for Hourly simulation why are we grabbing coordinates[0] coordinates[4] and coordinates[8]
             for (let i = 0; i < coordinates2.length; i += parseInt(timestep)) {
               if (coordinates2[i][1] > 0) {
                 xPointLoc.push((36 - (36 * (coordinates2[i][1] / 180))) * p.sin((coordinates2[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
@@ -1617,6 +1612,28 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // Hour or Day
         let stepDelta = singleHour == 1 ? 9 : 4;
         window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal - 1, stepDelta);
+
+        let deltaMRT_grid_for_each_coordinate = [];
+        for(let i=0; i<coordinates.length; i++) {
+          let coordinate = coordinates[i];
+
+          /* coordinates = [ azimuth in degress, elevation in degrees (aka altitude) ] */
+          let elevation = coordinate[1];
+          let azimuth = coordinate[0];
+
+          let deltaMRT_grid = window.SOLAR_COMFORT.calculateDeltaMRT_for_Grid(
+            wallLen,    /* wallLen is room depth!! perpindicular to windows */
+            wallDepVal, /* wallDepVal is room width!! parallel to windows */
+            posture, sillHeightValue, windowWidthValue,
+            elevation,
+            azimuth,
+            shgc,
+            asa
+          );
+          deltaMRT_grid_for_each_coordinate.push(deltaMRT_grid);          
+        }
+        window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = deltaMRT_grid_for_each_coordinate;
+
       }
 
       //END OF TRIG
@@ -1946,6 +1963,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
       // An annual simulation has completed
       if (window.SOLAR_COMFORT[`dateCounter${c}`] === 365 && annualOn) {
         annualSimulationDone = true;
+      }
+    
+      if(p.frameCount === 60*1 && caseNumber === 1) {
+        console.log(coordinates.map(c => c[1]));
       }
     }
 
