@@ -1,6 +1,8 @@
 //THIS UPDATES THE FLOOR AREA LOSS, MAX DIRECT SUNTIME AND TIMESTEP PER HOUR VALUES
 //IT ALSO REMEMBERS THEM SO THEY CAN BE USED IN THE D3 COLOR CHART BEFORE THE DRAW LOOP
 
+let debug2 = true;
+
 let singleHour = 0;
 let fullDay = 1;
 let currentFrame = 0;
@@ -8,7 +10,9 @@ let annualOn = false; // Check If Annual Button is Pressed
 let annualSimulationDone = false; // for regression test timing
 let Case2Button = 0;
 
-let HOUR_TIME_STEPS = 9;
+let TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION = 9;
+let TIME_STEPS_PER_HOUR_DAY_SIMULATION = 4;
+let TIME_STEPS_PER_HOUR_ANNUAL_SIMULATION = 1;
 
 window.SOLAR_COMFORT.dateCounter = 0;
 window.SOLAR_COMFORT.dateCounter1 = 0;
@@ -585,32 +589,26 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       if (annualOn) { // Check If Annual Button is Pressed
         var dates1 = [];
-        offset1 = (new Date().getTimezoneOffset()) / 60;
-        date1 = 0;
 
         if (window.SOLAR_COMFORT[`dateCounter${c}`] < 365) {
-          window.SOLAR_COMFORT[`dateCounter${c}`] += 1;
-          for (let i = 1; i < 24; i++) {
-            hour1 = i / timestep;
-            date1 = (new Date(2000, 0, window.SOLAR_COMFORT[`dateCounter${c}`], i - offset1 - TimeZone, (i % parseInt(i)) * 60));
-            dates1.push(date1);
-          }
-        } else {
-          window.SOLAR_COMFORT[`dateCounter${c}`] = 365;
-          for (let i = 1; i < 24; i++) {
-            hour1 = i / timestep;
-            date1 = (new Date(2000, 0, window.SOLAR_COMFORT[`dateCounter${c}`], i - offset1 - TimeZone, (i % parseInt(i)) * 60));
-            dates1.push(date1);
-          }
-        }
+          for (let i = 0; i < 24; i++) {
+            let date1 = new Date(Date.UTC(2000, 0, 1, 12)); //J2000
+            date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
+            date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`dateCounter${c}`]));
 
+            dates1.push(date1);
+          }
+
+          window.SOLAR_COMFORT[`dateCounter${c}`] += 1;
+        }
 
         xPointLoc = [];
         yPointLoc = [];
 
         // [ azimuth in degress, elevation in degrees ]
+        // daily & annual
         coordinates = [];
-        for (let i = 1; i < 23; i++) {
+        for (let i = 0; i < dates1.length; i++) {
           coordinates.push(solarCalculator([Lon, Lat]).position(dates1[i]));
         }
 
@@ -622,25 +620,26 @@ renderGraphicsAndRunSimulation = caseNumber => {
           }
         }
 
-        if (singleHour == 1) {
-          coordinates = [];
-          let coordinates2 = [];
-          for (let i = 1; i <= HOUR_TIME_STEPS; i++) {
-            coordinates.push(solarCalculator([Lon, Lat]).position(date));
-          }
-          for (let i = 1; i <= HOUR_TIME_STEPS; i++) {
-            coordinates2.push(solarCalculator([Lon, Lat]).position(date2));
-          }
-          xPointLoc = [];
-          yPointLoc = [];
-          for (let i = 0; i < coordinates2.length; i++) {
-            if (coordinates2[i][1] > 0) {
-              xPointLoc.push((36 - (36 * (coordinates2[i][1] / 180))) * p.sin((coordinates2[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
-              yPointLoc.push(((22 - (22 * (coordinates2[i][1] / 180))) * p.cos((coordinates2[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (coordinates2[i][1] * .3));
-              //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
-            }
-          }
-        }
+        // TODO
+        // this never runs, we don't do single hour in an annual simulation currently
+        // if (singleHour == 1) {
+        //   console.error('THIS NEVER RUNS')
+        //   coordinates = [];
+        //   let coordinates2 = [];
+        //   for (let i = 1; i <= TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION; i++) {
+        //     coordinates.push(solarCalculator([Lon, Lat]).position(date));
+        //     coordinates2.push(solarCalculator([Lon, Lat]).position(date2));
+        //   }
+        //   xPointLoc = [];
+        //   yPointLoc = [];
+        //   for (let i = 0; i < coordinates2.length; i++) {
+        //     if (coordinates2[i][1] > 0) {
+        //       xPointLoc.push((36 - (36 * (coordinates2[i][1] / 180))) * p.sin((coordinates2[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
+        //       yPointLoc.push(((22 - (22 * (coordinates2[i][1] / 180))) * p.cos((coordinates2[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (coordinates2[i][1] * .3));
+        //       //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+        //     }
+        //   }
+        // }
       } else {
         if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1 && currentStudy == singleHour) {
           // console.log(1);
@@ -682,8 +681,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
           xPointLoc = [];
           yPointLoc = [];
 
+          // 95 coordinate locations
+          // 24 hours * 4 timesteps -1???? = 95
+          // TODO fix shouldn't be -1?
           coordinates = [];
-          for (let i = 1; i <= (24 * timestep) - 1; i++) {
+          for (let i = 1; i <= (24 * TIME_STEPS_PER_HOUR_DAY_SIMULATION) - 1; i++) {
             coordinates.push(solarCalculator([Lon, Lat]).position(dates[i]));
           }
 
@@ -698,10 +700,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
           if (singleHour == 1) {
             coordinates = [];
             let coordinates2 = [];
-            for (let i = 1; i <= HOUR_TIME_STEPS; i++) {
+            for (let i = 1; i <= TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION; i++) {
               coordinates.push(solarCalculator([Lon, Lat]).position(date));
             }
-            for (let i = 1; i <= HOUR_TIME_STEPS; i++) {
+            for (let i = 1; i <= TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION; i++) {
               coordinates2.push(solarCalculator([Lon, Lat]).position(date2));
             }
             xPointLoc = [];
@@ -1965,9 +1967,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
         annualSimulationDone = true;
       }
     
-      if(p.frameCount === 60*1 && caseNumber === 1) {
-        console.log(coordinates.map(c => c[1]));
-      }
+      // if(p.frameCount === 60*1 && caseNumber === 1) {
+      //   console.log(coordinates.map(c => c[1]));
+      // }
     }
 
     p.reload = function () {
