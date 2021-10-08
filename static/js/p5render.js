@@ -1226,7 +1226,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
         }
 
         // Annual
-        window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal - 1, 1);
+        // do this 1 time once annual simulation has completed
+        if (window.SOLAR_COMFORT[`dateCounter${c}`] === 365 && annualOn && annualSimulationDone === false) {
+          window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal - 1, 1);
+          console.log('annual simulation done, updating global grid results array ', window.SOLAR_COMFORT[`globalGridColor${c}`], gridColorArray);
+        }
 
         if (window.SOLAR_COMFORT[`dateCounter${c}`] == 1) {
           for (let i = 0; i < gridColorArray.length; i++) {

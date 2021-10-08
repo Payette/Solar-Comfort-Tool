@@ -112,6 +112,11 @@ function gatherCase2Inputs() {
 function hoursOfSunFloorGridToCSV(globalGridColor) {
     let str = "";
 
+    if(globalGridColor.length <= 0) {
+        console.error('error: globalGridColor should be a 2d array');
+        return "";
+    }
+
     // header
     let length = globalGridColor[0].length;
     str += "depth, ";
