@@ -24,3 +24,13 @@ twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numStep
   
     return gridColorArray2D
   }
+
+  javascriptDateAddHours = (date, hours) => {
+    date.setTime(date.getTime() + (hours*60*60*1000));
+    return date;
+  }
+
+  javascriptDateAddDays = (date, days) => {
+    date.setTime(date.getTime() + (days*24*60*60*1000));
+    return date;
+  }
