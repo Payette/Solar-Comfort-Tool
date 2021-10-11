@@ -123,20 +123,18 @@ exports.regressionTests = [
             { id: "hour1", value: 16 }
         ]
     },
-    // TODO re-enable
-    // these aren't passing on Github
-    // {
-    //     name: "month-day-hour",
-    //     inputs: [
-    //         { id: "dsHour", command: "click" },
-    //         { id: "mon", value: 5 },
-    //         { id: "day", value: 4 },
-    //         { id: "hour", value: 9 },
-    //         { id: "mon1", value: 3 },
-    //         { id: "day1", value: 11 },
-    //         { id: "hour1", value: 11 }
-    //     ]
-    // },
+    {
+        name: "month-day-hour",
+        inputs: [
+            { id: "dsHour", command: "click" },
+            { id: "mon", value: 5 },
+            { id: "day", value: 4 },
+            { id: "hour", value: 9 },
+            { id: "mon1", value: 3 },
+            { id: "day1", value: 11 },
+            { id: "hour1", value: 11 }
+        ]
+    },
     {
         name: "month-day-hour1",
         inputs: [
@@ -149,20 +147,18 @@ exports.regressionTests = [
             { id: "hour1", value: 14 }
         ]
     },
-    // TODO re-enable
-    // these aren't passing on Github
-    // {
-    //     name: "month-day-hour2",
-    //     inputs: [
-    //         { id: "dsHour", command: "click" },
-    //         { id: "mon", value: 12 },
-    //         { id: "day", value: 30 },
-    //         { id: "hour", value: 13 },
-    //         { id: "mon1", value: 11 },
-    //         { id: "day1", value: 17 },
-    //         { id: "hour1", value: 12 }
-    //     ]
-    // },
+    {
+        name: "month-day-hour2",
+        inputs: [
+            { id: "dsHour", command: "click" },
+            { id: "mon", value: 12 },
+            { id: "day", value: 30 },
+            { id: "hour", value: 13 },
+            { id: "mon1", value: 11 },
+            { id: "day1", value: 17 },
+            { id: "hour1", value: 12 }
+        ]
+    },
     // Climate regression tests - Latitude
     {
         name: "climate",
@@ -287,6 +283,7 @@ exports.regressionTests = [
 
         ]
     },
+
     //Annual Mode regression test - defaults and various inputs
     {
         name: "annual-defaults",
