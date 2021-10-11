@@ -109,7 +109,7 @@ function gatherCase2Inputs() {
     }
 }
 
-function hoursOfSunFloorGridToCSV(globalGridColor) {
+function hoursOfSunFloorGridToCSV(globalGridColor, asciiArt = false) {
     let str = "";
 
     if(globalGridColor.length <= 0) {
@@ -127,7 +127,8 @@ function hoursOfSunFloorGridToCSV(globalGridColor) {
     str += lengthValues.join(",") + "\n";
 
     for(let i=0; i<globalGridColor.length; i++) {
-        str += (i+1) + "," + globalGridColor[i].join(',') + "\n";
+        let value = asciiArt ? globalGridColor[i].map(number0to12toAscii) : globalGridColor[i];
+        str += (i+1) + "," + value.join(',') + "\n";
     }
 
     return str;
@@ -149,6 +150,12 @@ function createCSV() {
     let globalGridColor = window.SOLAR_COMFORT.globalGridColor;
     if(globalGridColor && globalGridColor.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColor);
+    }
+
+    csvContent += "\nCase 1 Hours of Sun Floor Grid ASCI-art (length x depth), \n";
+    let globalGridColorA = window.SOLAR_COMFORT.globalGridColor;
+    if(globalGridColorA && globalGridColorA.length > 0) {
+        csvContent += hoursOfSunFloorGridToCSV(globalGridColorA, true);
     }
 
     csvContent += "\nCase 1 Inputs, \n";
@@ -175,6 +182,12 @@ function createCSV() {
     let globalGridColor1 = window.SOLAR_COMFORT.globalGridColor1;
     if(globalGridColor1 && globalGridColor1.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColor1);
+    }
+
+    csvContent += "\nCase 2 Hours of Sun Floor Grid ASCII-art (length x depth), \n";
+    let globalGridColorA1 = window.SOLAR_COMFORT.globalGridColor1;
+    if(globalGridColorA1 && globalGridColorA1.length > 0) {
+        csvContent += hoursOfSunFloorGridToCSV(globalGridColorA1, true);
     }
 
     return csvContent;

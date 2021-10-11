@@ -7,7 +7,8 @@ let singleHour = 0;
 let fullDay = 1;
 let currentFrame = 0;
 let annualOn = false; // Check If Annual Button is Pressed
-let annualSimulationDone = false; // for regression test timing
+window.SOLAR_COMFORT.annualSimulationDone = false;
+window.SOLAR_COMFORT.annualSimulationDone1 = false;
 let Case2Button = 0;
 
 let TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION = 9;
@@ -21,6 +22,8 @@ window.SOLAR_COMFORT.MDTResult = 0;
 window.SOLAR_COMFORT.MDTResult1 = 0;
 window.SOLAR_COMFORT.globalGridColor = undefined;
 window.SOLAR_COMFORT.globalGridColor1 = undefined;
+
+
 
 let Month_Debug_Case2 = undefined;
 let Day_Debug_Case2 = undefined;
@@ -42,6 +45,8 @@ checkAnnual = function (target) { // Check If Annual Button is Pressed
   singleHour = 2;
   window.SOLAR_COMFORT.dateCounter = 0;
   window.SOLAR_COMFORT.dateCounter1 = 0;
+  window.SOLAR_COMFORT.annualSimulationDone = false;
+  window.SOLAR_COMFORT.annualSimulationDone1 = false;
 
   for (let i = 0; i <= 1; i++) {
     let c = i === 0 ? '' : '1';
@@ -599,7 +604,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             dates1.push(date1);
           }
 
-          window.SOLAR_COMFORT[`dateCounter${c}`] += 1;
+          window.SOLAR_COMFORT[`dateCounter${c}`] += 1; // dateCounter will end at 365
         }
 
         xPointLoc = [];
@@ -1226,24 +1231,27 @@ renderGraphicsAndRunSimulation = caseNumber => {
         }
 
         // Annual
+        // keep track of each day of the year
+        // NOTE at this point in the code dateCounter actually ranges from 1-365 (so 365 total days! correct)
+        if (window.SOLAR_COMFORT[`dateCounter${c}`] <= 365 && annualOn && window.SOLAR_COMFORT[`annualSimulationDone${c}`] === false) {
+          for (let i = 0; i < gridColorArray.length; i++) {
+            if (window.SOLAR_COMFORT[`dateCounter${c}`] == 1) {
+              // first loop
+              bigArrayColor[i] = gridColorArray[i];
+            } else {
+              bigArrayColor[i] += gridColorArray[i];
+            }
+          }
+        }
+
+        // Annual
         // do this 1 time once annual simulation has completed
-        if (window.SOLAR_COMFORT[`dateCounter${c}`] === 365 && annualOn && annualSimulationDone === false) {
-          window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal - 1, 1);
-          console.log('annual simulation done, updating global grid results array ', window.SOLAR_COMFORT[`globalGridColor${c}`], gridColorArray);
+        if (window.SOLAR_COMFORT[`dateCounter${c}`] === 365 && annualOn && window.SOLAR_COMFORT[`annualSimulationDone${c}`] === false) {
+          let annualGridColorAverage = bigArrayColor.map(v => round4Decimals(v / 365.0));
+          window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(annualGridColorAverage, wallDepVal - 1, 1);
         }
-
-        if (window.SOLAR_COMFORT[`dateCounter${c}`] == 1) {
-          for (let i = 0; i < gridColorArray.length; i++) {
-            bigArrayColor.push(gridColor);
-          }
-        } else if (window.SOLAR_COMFORT[`dateCounter${c}`] < 365) {
-          for (let i = 0; i < gridColorArray.length; i++) {
-            bigArrayColor[i] += gridColorArray[i];
-          }
-        }
-
       } else {
-
+        // day and hour simulation
         bigArrayColor = [];
 
         if (vertShadeOn == 1) { // Variable height louvers
@@ -1733,7 +1741,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             p.pop();
           }
         } else {
-
+          // single day or single hour
           if (gridColorArray[i * gridY] / (timestep - .1) > valMDST / timestep && gridColorArray[(i * gridY) + 1] / (timestep - .1) < valMDST / timestep) {
             p.push();
             p.strokeWeight(1);
@@ -1968,7 +1976,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       // An annual simulation has completed
       if (window.SOLAR_COMFORT[`dateCounter${c}`] === 365 && annualOn) {
-        annualSimulationDone = true;
+        window.SOLAR_COMFORT[`annualSimulationDone${c}`] = true;
       }
     
       // if(p.frameCount === 60*1 && caseNumber === 1) {
