@@ -39,13 +39,18 @@ twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numStep
     return flippedArray;
   }
 
+  javascriptDateAddMinutes = (date, minutes) => {
+    date.setTime(date.getTime() + Math.floor(minutes*60*1000));
+    return date;
+  }
+
   javascriptDateAddHours = (date, hours) => {
-    date.setTime(date.getTime() + (hours*60*60*1000));
+    date.setTime(date.getTime() + Math.floor(hours*60*60*1000));
     return date;
   }
 
   javascriptDateAddDays = (date, days) => {
-    date.setTime(date.getTime() + (days*24*60*60*1000));
+    date.setTime(date.getTime() + Math.floor(days*24*60*60*1000));
     return date;
   }
 

@@ -598,7 +598,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         if (window.SOLAR_COMFORT[`dateCounter${c}`] < 365) {
           for (let i = 0; i < 24; i++) {
             let date1 = new Date(Date.UTC(2000, 0, 1, 12)); // January 1st 2000 at Noon
-            date1 = javascriptDateAddHours(date1, parseInt(i - TimeZone) - 12);
+            date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
             date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`dateCounter${c}`]));
 
             dates1.push(date1);
@@ -661,21 +661,27 @@ renderGraphicsAndRunSimulation = caseNumber => {
           // TODO
           // calculate all dates in UTC!
           // see above
-          offset = (new Date().getTimezoneOffset()) / 60;
-          var dates = []
-          var date;
-          var date2;
-          for (i = 1; i <= 24 * timestep; i++) {
-            hour = i / timestep;
-            if (i == ((parseInt(24 - Hour)) * timestep)) { 
-              date = new Date(2000, Month - 1, Day, hour - offset - TimeZone, (hour % parseInt(hour)) * 60);
-              date2 = new Date(2000, Month - 1, Day, Hour - offset - TimeZone, 0);
-            }
-            dates.push(new Date(2000, Month - 1, Day, hour - offset - TimeZone, (hour % parseInt(hour)) * 60));
-          }
-          //console.log(dates);
-          //console.log(date);
 
+/*
+            let date = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
+            let hourOffset = parseInt(Hour) - parseInt(TimeZone) - 12;
+            date = javascriptDateAddHours(date, hourOffset);
+            date = javascriptDateAddDays(date, parseInt(Day) - 1);
+
+*/
+
+          // offset = (new Date().getTimezoneOffset()) / 60;
+          var dates = []
+          for (i = 1; i <= 24 * timestep; i++) {
+            let hourI = (i-1) / timestep;
+            let minutes = Math.floor(((i-1)/timestep - Math.floor((i-1)/timestep)) * 60.0);
+            let newDate = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
+            newDate = javascriptDateAddDays(newDate, parseInt(Day) - 1);
+            newDate = javascriptDateAddHours(newDate, Math.floor(hourI) + parseInt(TimeZone) - 12);
+            newDate = javascriptDateAddMinutes(newDate, minutes);
+
+            dates.push(newDate);
+          }
 
           sunPathGraphicPixelX = [];
           sunPathGraphicPixelY = [];
@@ -698,7 +704,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
           // Single hour, re-calculate solarCoordinates just for a single hour
           if (singleHour == 1) {
-            date = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
+            let date = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
             let hourOffset = parseInt(Hour) - parseInt(TimeZone) - 12;
             date = javascriptDateAddHours(date, hourOffset);
             date = javascriptDateAddDays(date, parseInt(Day) - 1);
