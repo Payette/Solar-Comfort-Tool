@@ -2,6 +2,7 @@
 // http://www.esrl.noaa.gov/gmd/grad/solcalc/
 
 (function() {
+  // January 1st 2000 at Noon
   var J2000 = Date.UTC(2000, 0, 1, 12),
       π = Math.PI,
       τ = 2 * π,

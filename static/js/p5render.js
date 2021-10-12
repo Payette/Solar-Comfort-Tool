@@ -256,10 +256,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
     let Hour;
     let Day;
     let Month;            
-    let coordinates = []; // [ azimuth in degress, elevation in degress ]
+    let solarCoordinates = []; // [ azimuth in degress, elevation in degress ]
     // let solar;
-    let xPointLoc = [];
-    let yPointLoc = [];
+    let sunPathGraphicPixelX = [];
+    let sunPathGraphicPixelY = [];
     let roomOrientationValue;
     // let myButton = 0;
     let currentStudy = 0;
@@ -597,8 +597,8 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
         if (window.SOLAR_COMFORT[`dateCounter${c}`] < 365) {
           for (let i = 0; i < 24; i++) {
-            let date1 = new Date(Date.UTC(2000, 0, 1, 12)); //J2000
-            date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
+            let date1 = new Date(Date.UTC(2000, 0, 1, 12)); // January 1st 2000 at Noon
+            date1 = javascriptDateAddHours(date1, parseInt(i - TimeZone) - 12);
             date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`dateCounter${c}`]));
 
             dates1.push(date1);
@@ -607,44 +607,23 @@ renderGraphicsAndRunSimulation = caseNumber => {
           window.SOLAR_COMFORT[`dateCounter${c}`] += 1; // dateCounter will end at 365
         }
 
-        xPointLoc = [];
-        yPointLoc = [];
+        sunPathGraphicPixelX = [];
+        sunPathGraphicPixelY = [];
 
         // [ azimuth in degress, elevation in degrees ]
         // daily & annual
-        coordinates = [];
+        solarCoordinates = [];
         for (let i = 0; i < dates1.length; i++) {
-          coordinates.push(solarCalculator([Lon, Lat]).position(dates1[i]));
+          solarCoordinates.push(solarCalculator([Lon, Lat]).position(dates1[i]));
         }
 
-        for (let i = 0; i < coordinates.length; i++) {
-          if (coordinates[i][1] > 0) {
-            xPointLoc.push((36 - (36 * (coordinates[i][1] / 180))) * p.sin((coordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
-            yPointLoc.push(((22 - (22 * (coordinates[i][1] / 180))) * p.cos((coordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (coordinates[i][1] * .3));
-            //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+        for (let i = 0; i < solarCoordinates.length; i++) {
+          if (solarCoordinates[i][1] > 0) {
+            sunPathGraphicPixelX.push((36 - (36 * (solarCoordinates[i][1] / 180))) * p.sin((solarCoordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
+            sunPathGraphicPixelY.push(((22 - (22 * (solarCoordinates[i][1] / 180))) * p.cos((solarCoordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (solarCoordinates[i][1] * .3));
+            //p.point((36-(36*(solarCoordinates[i][1]/180)))*p.sin((solarCoordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(solarCoordinates[i][1]/180)))*p.cos((solarCoordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(solarCoordinates[i][1]*.3));
           }
         }
-
-        // TODO
-        // this never runs, we don't do single hour in an annual simulation currently
-        // if (singleHour == 1) {
-        //   console.error('THIS NEVER RUNS')
-        //   coordinates = [];
-        //   let coordinates2 = [];
-        //   for (let i = 1; i <= TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION; i++) {
-        //     coordinates.push(solarCalculator([Lon, Lat]).position(date));
-        //     coordinates2.push(solarCalculator([Lon, Lat]).position(date2));
-        //   }
-        //   xPointLoc = [];
-        //   yPointLoc = [];
-        //   for (let i = 0; i < coordinates2.length; i++) {
-        //     if (coordinates2[i][1] > 0) {
-        //       xPointLoc.push((36 - (36 * (coordinates2[i][1] / 180))) * p.sin((coordinates2[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
-        //       yPointLoc.push(((22 - (22 * (coordinates2[i][1] / 180))) * p.cos((coordinates2[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (coordinates2[i][1] * .3));
-        //       //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
-        //     }
-        //   }
-        // }
       } else {
         if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1 && currentStudy == singleHour) {
           // console.log(1);
@@ -665,16 +644,31 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
           //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
 
+/*
+            let date1 = new Date(Date.UTC(2000, 0, 1, 12)); //J2000
+            date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
+            date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`dateCounter${c}`]));
+
+                      for (let i = 0; i < 24; i++) {
+            let date1 = new Date(Date.UTC(2000, 0, 1, 12)); //J2000
+            date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
+            date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`dateCounter${c}`]));
+
+            dates1.push(date1);
+          }
+*/
+
+          // TODO
+          // calculate all dates in UTC!
+          // see above
           offset = (new Date().getTimezoneOffset()) / 60;
           var dates = []
           var date;
           var date2;
           for (i = 1; i <= 24 * timestep; i++) {
             hour = i / timestep;
-            if (i == ((parseInt(24 - Hour)) * timestep)) {
+            if (i == ((parseInt(24 - Hour)) * timestep)) { 
               date = new Date(2000, Month - 1, Day, hour - offset - TimeZone, (hour % parseInt(hour)) * 60);
-              //console.log((hour%parseInt(hour))*60 + " " + Hour);
-              let mytime = 24 - hour;
               date2 = new Date(2000, Month - 1, Day, Hour - offset - TimeZone, 0);
             }
             dates.push(new Date(2000, Month - 1, Day, hour - offset - TimeZone, (hour % parseInt(hour)) * 60));
@@ -683,44 +677,45 @@ renderGraphicsAndRunSimulation = caseNumber => {
           //console.log(date);
 
 
-          xPointLoc = [];
-          yPointLoc = [];
+          sunPathGraphicPixelX = [];
+          sunPathGraphicPixelY = [];
 
           // 95 coordinate locations
           // 24 hours * 4 timesteps -1???? = 95
           // TODO fix shouldn't be -1?
-          coordinates = [];
+          solarCoordinates = [];
           for (let i = 1; i <= (24 * TIME_STEPS_PER_HOUR_DAY_SIMULATION) - 1; i++) {
-            coordinates.push(solarCalculator([Lon, Lat]).position(dates[i]));
+            solarCoordinates.push(solarCalculator([Lon, Lat]).position(dates[i]));
           }
 
-          for (let i = 0; i < coordinates.length; i += parseInt(timestep)) {
-            if (coordinates[i][1] > 0) {
-              xPointLoc.push((36 - (36 * (coordinates[i][1] / 180))) * p.sin((coordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
-              yPointLoc.push(((22 - (22 * (coordinates[i][1] / 180))) * p.cos((coordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (coordinates[i][1] * .3));
-              //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
+          for (let i = 0; i < solarCoordinates.length; i += parseInt(timestep)) {
+            if (solarCoordinates[i][1] > 0) {
+              sunPathGraphicPixelX.push((36 - (36 * (solarCoordinates[i][1] / 180))) * p.sin((solarCoordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
+              sunPathGraphicPixelY.push(((22 - (22 * (solarCoordinates[i][1] / 180))) * p.cos((solarCoordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (solarCoordinates[i][1] * .3));
+              //p.point((36-(36*(solarCoordinates[i][1]/180)))*p.sin((solarCoordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(solarCoordinates[i][1]/180)))*p.cos((solarCoordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(solarCoordinates[i][1]*.3));
             }
           }
 
+          // Single hour, re-calculate solarCoordinates just for a single hour
           if (singleHour == 1) {
-            coordinates = [];
-            let coordinates2 = [];
+            date = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
+            let hourOffset = parseInt(Hour) - parseInt(TimeZone) - 12;
+            date = javascriptDateAddHours(date, hourOffset);
+            date = javascriptDateAddDays(date, parseInt(Day) - 1);
+
+            solarCoordinates = [];
             for (let i = 1; i <= TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION; i++) {
-              coordinates.push(solarCalculator([Lon, Lat]).position(date));
+              solarCoordinates.push(solarCalculator([Lon, Lat]).position(date));
             }
-            for (let i = 1; i <= TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION; i++) {
-              coordinates2.push(solarCalculator([Lon, Lat]).position(date2));
-            }
-            xPointLoc = [];
-            yPointLoc = [];
-            // TODO for Hourly simulation why are we grabbing coordinates[0] coordinates[4] and coordinates[8]
-            for (let i = 0; i < coordinates2.length; i += parseInt(timestep)) {
-              if (coordinates2[i][1] > 0) {
-                xPointLoc.push((36 - (36 * (coordinates2[i][1] / 180))) * p.sin((coordinates2[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
-                yPointLoc.push(((22 - (22 * (coordinates2[i][1] / 180))) * p.cos((coordinates2[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (coordinates2[i][1] * .3));
-                //p.point((36-(36*(coordinates[i][1]/180)))*p.sin((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)), ((22-(22*(coordinates[i][1]/180)))*p.cos((coordinates[i][0]-45+roomOrientationValue)*(-3.1415926 / 180)))-(coordinates[i][1]*.3));
-              }
-            }
+            
+            // Calculate sun path graphic info            
+            let solarCoordinatesForDate = solarCalculator([Lon, Lat]).position(date); // returns: [ azimuth in degress, elevation in degress ]
+            let solarAzimuth = solarCoordinatesForDate[0];
+            let solarElevation = solarCoordinatesForDate[1];
+            sunPathGraphicPixelX = [];
+            sunPathGraphicPixelY = [];
+            sunPathGraphicPixelX.push((36 - (36 * (solarElevation / 180))) * p.sin((solarAzimuth - 45 - roomOrientationValue) * (-3.1415926 / 180)));
+            sunPathGraphicPixelY.push(((22 - (22 * (solarElevation / 180))) * p.cos((solarAzimuth - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (solarElevation * .3));
           }
         }
 
@@ -764,20 +759,17 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       p.strokeWeight(4);
       p.stroke(light_black);
-      p.point(xPointLoc[0], yPointLoc[0]);
-      for (let i = 0; i < xPointLoc.length - 1; i++) {
+      p.point(sunPathGraphicPixelX[0], sunPathGraphicPixelY[0]);
+      for (let i = 0; i < sunPathGraphicPixelX.length - 1; i++) {
         p.strokeWeight(1);
         //p.stroke(light_black);
-        p.line(xPointLoc[i], yPointLoc[i], xPointLoc[i + 1], yPointLoc[i + 1]);
+        p.line(sunPathGraphicPixelX[i], sunPathGraphicPixelY[i], sunPathGraphicPixelX[i + 1], sunPathGraphicPixelY[i + 1]);
         p.strokeWeight(4);
         //p.stroke(100);
-        p.point(xPointLoc[i + 1], yPointLoc[i + 1]);
+        p.point(sunPathGraphicPixelX[i + 1], sunPathGraphicPixelY[i + 1]);
       }
       p.strokeWeight(3);
       p.stroke(100);
-      // for (let i = 0; i < xPointLoc.length; i++){
-      //   p.point(xPointLoc[i], yPointLoc[i]);
-      // }
       p.pop();
 
       roomOrientationValue = roomOrientationValue * -1
@@ -1029,18 +1021,23 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
 
 
-      //THIS IS A FIX THAT ALLOWS THE ROOM ORIENTATION TO ROTATE A FULL 360 DEGREES
-      let newCoordinateArray = [];
-      for (let k = 0; k < coordinates.length; k++) {
-        //console.log(coordinates[k][0]+float(roomOrientationValue-180))
-        if (coordinates[k][0] + p.float(roomOrientationValue - 180) < -180) {
-          newCoordinateArray.push(coordinates[k][0] + p.float(roomOrientationValue - 180) + 360);
-        } else if (coordinates[k][0] + p.float(roomOrientationValue - 180) > 180) {
-          newCoordinateArray.push(coordinates[k][0] + p.float(roomOrientationValue - 180) - 360);
-        } else {
-          newCoordinateArray.push(coordinates[k][0] + p.float(roomOrientationValue - 180));
-        }
+      // THIS IS A FIX THAT ALLOWS THE ROOM ORIENTATION TO ROTATE A FULL 360 DEGREES
+      // essentially, we are rotating the solar azimuth in our solar solarCoordinates array
+      // relative to the room orientation, instead of taking into account room orientation during all our calculations
+      let solarCoordinatesRoomOrientationAdjusted = [];
+      for (let k = 0; k < solarCoordinates.length; k++) {
+        //console.log(solarCoordinates[k][0]+float(roomOrientationValue-180))
+        let windowOrientation = roomOrientationValue - 180;
+        solarCoordinatesRoomOrientationAdjusted.push((solarCoordinates[k][0] + p.float(windowOrientation)) % 360);
+        // if (solarCoordinates[k][0] + p.float(windowOrientation) < -180) {
+        //   solarCoordinatesRoomOrientationAdjusted.push(solarCoordinates[k][0] + p.float(windowOrientation) + 360);
+        // } else if (solarCoordinates[k][0] + p.float(windowOrientation) > 180) {
+        //   solarCoordinatesRoomOrientationAdjusted.push(solarCoordinates[k][0] + p.float(windowOrientation) - 360);
+        // } else {
+        //   solarCoordinatesRoomOrientationAdjusted.push(solarCoordinates[k][0] + p.float(windowOrientation));
+        // }
       }
+//      // returns: [ azimuth in degress, elevation in degress ]
 
 
       let LouverList1 = [];
@@ -1069,11 +1066,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
           filledList.push(0);
           for (let j = 0; j < gridY; j++) {
             b1 = 0;
-            for (let k = 0; k < coordinates.length; k++) {
+            for (let k = 0; k < solarCoordinates.length; k++) {
               let XYLouver1 = 0;
               let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-              if (newCoordinateArray[k] < 88.0 && newCoordinateArray[k] > -88.0) {
-                XlocationOnWall = Math.tan(newCoordinateArray[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+              if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+                XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
               }
               AWArray1.push(XlocationOnWall);
               let xCoord = 0;
@@ -1089,9 +1086,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
                 let newBigBArray = [];
                 for (let p = 0; p < parseInt(vertShadeNum); p++) { //for each shade in this window...
 
-                  let angleA = abs(newCoordinateArray[k]);
-                  let angleB = 90.0 - abs(newCoordinateArray[k]);
-                  if (newCoordinateArray[k] > 0) {
+                  let angleA = abs(solarCoordinatesRoomOrientationAdjusted[k]);
+                  let angleB = 90.0 - abs(solarCoordinatesRoomOrientationAdjusted[k]);
+                  if (solarCoordinatesRoomOrientationAdjusted[k] > 0) {
                     angleB = angleB * -1;
                   }
                   let bigA;
@@ -1143,10 +1140,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
           b = 0;
           for (let j = 0; j < gridY; j++) {
             b = 0;
-            for (let k = 0; k < coordinates.length; k++) {
+            for (let k = 0; k < solarCoordinates.length; k++) {
               let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-              if (newCoordinateArray[k] < 88.0 && newCoordinateArray[k] > -88.0) {
-                XlocationOnWall = Math.tan(newCoordinateArray[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+              if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+                XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
                 //console.log(XlocationOnWall);
               }
               AWArray.push(XlocationOnWall);
@@ -1180,16 +1177,16 @@ renderGraphicsAndRunSimulation = caseNumber => {
           a = 0;
           for (let j = 0; j < gridY; j++) {
             a = 0;
-            for (let k = 0; k < coordinates.length; k++) {
-              let angleHeight = Math.tan((coordinates[k][1]) * (3.1415926 / 180)) * distanceFromWall;
-              AHArray.push(coordinates[k][1]);
-              if (coordinates[k][1] < 0) {
+            for (let k = 0; k < solarCoordinates.length; k++) {
+              let angleHeight = Math.tan((solarCoordinates[k][1]) * (3.1415926 / 180)) * distanceFromWall;
+              AHArray.push(solarCoordinates[k][1]);
+              if (solarCoordinates[k][1] < 0) {
                 a = 0;
               } else if (angleHeight > r.glzCoords[0][0][2] - gridHt && angleHeight < (r.glzCoords[0][2][2] - gridHt)) {
                 let testArray1 = [1];
                 for (let n = 0; n < horzShadeNum; n++) {
-                  let sinLawDist = (horzShadeDist * (Math.sin(3.1415926 - (((90) - coordinates[k][1]) * (3.1415926 / 180)) - (90 * (3.1415926 / 180))))) / Math.sin(((90) - coordinates[k][1]) * (3.1415926 / 180));
-                  let sinLawAngle = (horzShadeDep * (Math.sin(3.1415926 - (((90) - coordinates[k][1]) * (3.1415926 / 180)) - (horzShadeAngle * (3.1415926 / 180))))) / Math.sin(((90) - coordinates[k][1]) * (3.1415926 / 180));
+                  let sinLawDist = (horzShadeDist * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (90 * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
+                  let sinLawAngle = (horzShadeDep * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (horzShadeAngle * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
 
                   if (angleHeight < (r.glzCoords[0][2][2] - gridHt) - (horzShadeSpace * n) - (sinLawDist) + (p.float(horzShadeHeight) * .5) && angleHeight > ((r.glzCoords[0][2][2] - gridHt) - (horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(horzShadeHeight) * .5))) {
                     testArray1.push(0);
@@ -1224,7 +1221,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             gridColor = gridColor + 1;
           } else {
             gridColor = gridColor + 0;
-          } if (i % coordinates.length == (coordinates.length) - 1) {
+          } if (i % solarCoordinates.length == (solarCoordinates.length) - 1) {
             gridColorArray.push(gridColor);
             gridColor = 0;
           }
@@ -1273,7 +1270,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             let filledListJ = [];
             for (let j = 0; j < gridY; j++) {
               let filledListK = [];
-              for (let k = 0; k < coordinates.length; k++) {
+              for (let k = 0; k < solarCoordinates.length; k++) {
                 let filledListN = [];
                 for (let n = 0; n < r.glzCoords.length; n++) {
                   let filledListP = [];
@@ -1294,7 +1291,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             let filledListJ = [];
             for (let j = 0; j < gridY; j++) {
               let filledListK = [];
-              for (let k = 0; k < coordinates.length; k++) {
+              for (let k = 0; k < solarCoordinates.length; k++) {
                 let filledListN = [];
                 for (let n = 0; n < r.glzCoords.length; n++) {
                   let filledListP = [];
@@ -1316,11 +1313,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
             filledList.push(0);
             for (let j = 0; j < gridY; j++) {
               b1 = 0;
-              for (let k = 0; k < coordinates.length; k++) {
+              for (let k = 0; k < solarCoordinates.length; k++) {
                 let XYLouver1 = 0;
                 let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-                if (newCoordinateArray[k] < 88.0 && newCoordinateArray[k] > -88.0) {
-                  XlocationOnWall = Math.tan(newCoordinateArray[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+                if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+                  XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
                 }
                 AWArray1.push(XlocationOnWall);
                 let xCoord = 0;
@@ -1336,9 +1333,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
                   let newBigBArray = [];
                   for (let p = 0; p < parseInt(vertShadeNum); p++) { //for each shade in this window...
 
-                    let angleA = abs(newCoordinateArray[k]);
-                    let angleB = 90.0 - abs(newCoordinateArray[k]);
-                    if (newCoordinateArray[k] > 0) {
+                    let angleA = abs(solarCoordinatesRoomOrientationAdjusted[k]);
+                    let angleB = 90.0 - abs(solarCoordinatesRoomOrientationAdjusted[k]);
+                    if (solarCoordinatesRoomOrientationAdjusted[k] > 0) {
                       angleB = angleB * -1;
                     }
                     let bigA;
@@ -1385,17 +1382,17 @@ renderGraphicsAndRunSimulation = caseNumber => {
             a1 = 0;
             for (let j = 0; j < gridY; j++) {
               a1 = 0;
-              for (let k = 0; k < coordinates.length; k++) {
+              for (let k = 0; k < solarCoordinates.length; k++) {
                 let distanceBeyondWall = 0;
                 let anotherCounter = 0;
-                let angleHeight = Math.tan((coordinates[k][1]) * (3.1415926 / 180)) * distanceFromWall;
+                let angleHeight = Math.tan((solarCoordinates[k][1]) * (3.1415926 / 180)) * distanceFromWall;
 
                 for (let n = 0; n < r.glzCoords.length; n++) {
 
                   for (let ru = 0; ru < vertShadeNum; ru++) {
                     distanceBeyondWall = (superD[newCounter][n][ru]);
 
-                    let angleHeight2 = Math.tan((coordinates[k][1]) * (3.1415926 / 180)) * distanceBeyondWall;
+                    let angleHeight2 = Math.tan((solarCoordinates[k][1]) * (3.1415926 / 180)) * distanceBeyondWall;
 
 
                     let myVar;
@@ -1422,7 +1419,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
           let decider = 0;
           for (let i = 0; i < gridX; i++) {
             for (let j = 0; j < gridY; j++) {
-              for (let k = 0; k < coordinates.length; k++) {
+              for (let k = 0; k < solarCoordinates.length; k++) {
                 let nextLevel = 0;
                 for (let n = 0; n < r.glzCoords.length; n++) {
                   for (let p = 0; p < parseInt(vertShadeNum); p++) {
@@ -1463,11 +1460,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
             filledList.push(0);
             for (let j = 0; j < gridY; j++) {
               b1 = 0;
-              for (let k = 0; k < coordinates.length; k++) {
+              for (let k = 0; k < solarCoordinates.length; k++) {
                 let XYLouver1 = 0;
                 let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-                if (newCoordinateArray[k] < 88.0 && newCoordinateArray[k] > -88.0) {
-                  XlocationOnWall = Math.tan(newCoordinateArray[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+                if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+                  XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
                 }
                 AWArray1.push(XlocationOnWall);
                 let xCoord = 0;
@@ -1483,9 +1480,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
                   let newBigBArray = [];
                   for (let p = 0; p < parseInt(vertShadeNum); p++) { //for each shade in this window...
 
-                    let angleA = abs(newCoordinateArray[k]);
-                    let angleB = 90.0 - abs(newCoordinateArray[k]);
-                    if (newCoordinateArray[k] > 0) {
+                    let angleA = abs(solarCoordinatesRoomOrientationAdjusted[k]);
+                    let angleB = 90.0 - abs(solarCoordinatesRoomOrientationAdjusted[k]);
+                    if (solarCoordinatesRoomOrientationAdjusted[k] > 0) {
                       angleB = angleB * -1;
                     }
                     let bigA;
@@ -1534,10 +1531,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
           b = 0;
           for (let j = 0; j < gridY; j++) {
             b = 0;
-            for (let k = 0; k < coordinates.length; k++) {
+            for (let k = 0; k < solarCoordinates.length; k++) {
               let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-              if (newCoordinateArray[k] < 88.0 && newCoordinateArray[k] > -88.0) {
-                XlocationOnWall = Math.tan(newCoordinateArray[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+              if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+                XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
                 //console.log(XlocationOnWall);
               }
               AWArray.push(XlocationOnWall);
@@ -1572,16 +1569,16 @@ renderGraphicsAndRunSimulation = caseNumber => {
           a = 0;
           for (let j = 0; j < gridY; j++) {
             a = 0;
-            for (let k = 0; k < coordinates.length; k++) {
-              let angleHeight = Math.tan((coordinates[k][1]) * (3.1415926 / 180)) * distanceFromWall;
-              AHArray.push(coordinates[k][1]);
-              if (coordinates[k][1] < 0) {
+            for (let k = 0; k < solarCoordinates.length; k++) {
+              let angleHeight = Math.tan((solarCoordinates[k][1]) * (3.1415926 / 180)) * distanceFromWall;
+              AHArray.push(solarCoordinates[k][1]);
+              if (solarCoordinates[k][1] < 0) {
                 a = 0;
               } else if (angleHeight > r.glzCoords[0][0][2] - gridHt && angleHeight < (r.glzCoords[0][2][2] - gridHt)) {
                 let testArray1 = [1];
                 for (let n = 0; n < horzShadeNum; n++) {
-                  let sinLawDist = (horzShadeDist * (Math.sin(3.1415926 - (((90) - coordinates[k][1]) * (3.1415926 / 180)) - (90 * (3.1415926 / 180))))) / Math.sin(((90) - coordinates[k][1]) * (3.1415926 / 180));
-                  let sinLawAngle = (horzShadeDep * (Math.sin(3.1415926 - (((90) - coordinates[k][1]) * (3.1415926 / 180)) - (horzShadeAngle * (3.1415926 / 180))))) / Math.sin(((90) - coordinates[k][1]) * (3.1415926 / 180));
+                  let sinLawDist = (horzShadeDist * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (90 * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
+                  let sinLawAngle = (horzShadeDep * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (horzShadeAngle * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
 
                   if (angleHeight < (r.glzCoords[0][2][2] - gridHt) - (horzShadeSpace * n) - (sinLawDist) + (p.float(horzShadeHeight) * .5) && angleHeight > ((r.glzCoords[0][2][2] - gridHt) - (horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(horzShadeHeight) * .5))) {
                     testArray1.push(0);
@@ -1617,7 +1614,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
           } else {
             gridColor = gridColor + 0;
           }
-          if (i % coordinates.length == (coordinates.length) - 1) {
+          if (i % solarCoordinates.length == (solarCoordinates.length) - 1) {
             gridColorArray.push(gridColor);
             gridColor = 0;
           }
@@ -1628,10 +1625,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
         window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal - 1, stepDelta);
 
         let deltaMRT_grid_for_each_coordinate = [];
-        for(let i=0; i<coordinates.length; i++) {
-          let coordinate = coordinates[i];
+        for(let i=0; i<solarCoordinates.length; i++) {
+          let coordinate = solarCoordinates[i];
 
-          /* coordinates = [ azimuth in degress, elevation in degrees (aka altitude) ] */
+          /* solarCoordinates = [ azimuth in degress, elevation in degrees (aka altitude) ] */
           let elevation = coordinate[1];
           let azimuth = coordinate[0];
 
@@ -1980,7 +1977,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       }
     
       // if(p.frameCount === 60*1 && caseNumber === 1) {
-      //   console.log(coordinates.map(c => c[1]));
+      //   console.log(solarCoordinates.map(c => c[1]));
       // }
     }
 
