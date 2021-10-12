@@ -1227,6 +1227,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
           }
         }
 
+        // FIX
+        // all calculations are flipped left to right
+        // we will just flip the entire array in the room width direction
+        // instead of updating the direction of all arrays above... 
+        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, wallDepVal - 1);
+
         // Annual
         // keep track of each day of the year
         // NOTE at this point in the code dateCounter actually ranges from 1-365 (so 365 total days! correct)
