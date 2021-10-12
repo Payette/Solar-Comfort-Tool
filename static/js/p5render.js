@@ -1604,7 +1604,6 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let gridColor = 0;
         //let gridColorArray = []
         for (let i = 0; i < XYtest.length; i++) {
-
           let XYLouv = LouverList1[i];
           let XYcolor = XYtest[i];
           let Zcolor = Ztest[i];
@@ -1619,6 +1618,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
             gridColor = 0;
           }
         }
+
+        // FIX
+        // all calculations are flipped left to right
+        // we will just flip the entire array in the room width direction
+        // instead of updating the direction of all arrays above... 
+        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, wallDepVal - 1);
 
         // Hour or Day
         let stepDelta = singleHour == 1 ? 9 : 4;

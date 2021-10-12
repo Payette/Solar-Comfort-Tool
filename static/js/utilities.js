@@ -25,6 +25,20 @@ twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numStep
     return gridColorArray2D
   }
 
+  flipWidthForOneDimensionalRoomArray = (oneDimensionalArray, dimY) => {
+    let flippedArray = [];
+
+    for(let i=0; i<oneDimensionalArray.length; i++) {
+      let row = Math.floor(i/dimY);
+      let ii = i % dimY;
+
+      let index = Math.floor(row*dimY + dimY - ii - 1);
+      flippedArray[index] = oneDimensionalArray[i];
+    }
+
+    return flippedArray;
+  }
+
   javascriptDateAddHours = (date, hours) => {
     date.setTime(date.getTime() + (hours*60*60*1000));
     return date;
