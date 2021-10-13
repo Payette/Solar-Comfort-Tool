@@ -23,7 +23,61 @@ window.SOLAR_COMFORT.MDTResult1 = 0;
 window.SOLAR_COMFORT.globalGridColor = undefined;
 window.SOLAR_COMFORT.globalGridColor1 = undefined;
 
+// These input fields are shared by case 1 and case 2
+window.SOLAR_COMFORT.globalInputFieldNames = [
+  `ppdRadio`,
+  `dsHour`,
+  `dsDay`,
+  `windowWidthCheck`,
+  `glazingRatioCheck`
+];
 
+// Case 2 has a 1 appended to the end of these name
+// IE hour refers to case 1, and hour1 refers to case 2
+window.SOLAR_COMFORT.caseInputFieldNames = [
+  `long`,
+  `lat`,
+  `timeZone`,
+  `outdoorTemp`,
+  `hour`,
+  `day`,
+  `mon`,
+  `airTemp`,
+  `humidity`,
+  `airSpeed`,
+  `clothing`,
+  `metabolic`,
+  `posture`,
+  `asa`,
+  `north`,
+  `gridHt`,
+  `ceiling`,
+  `wallWidth`,
+  `wallDep`,
+  `wallR`,
+  `windowHeight`,
+  `windowWidth`,
+  `glazing`,
+  `sill`,
+  `distWindow`,
+  `windowU`,
+  `shgc`,
+  `hShadeDep`,
+  `hShadeNum`,
+  `hShadeSpace`,
+  `hShadeDist`,
+  `hShadeHeight`,
+  `hShadeAngle`,
+  `vShadeOn`,
+  `vShadeDep`,
+  `vShadeNum`,
+  `vShadeSpace`,
+  `vShadeShift`,
+  `vShadeDist`,
+  `vShadeHeight`,
+  `vShadeScale`,
+  `vShadeStart`
+];
 
 let Month_Debug_Case2 = undefined;
 let Day_Debug_Case2 = undefined;
@@ -48,105 +102,30 @@ checkAnnual = function (target) { // Check If Annual Button is Pressed
   window.SOLAR_COMFORT.annualSimulationDone = false;
   window.SOLAR_COMFORT.annualSimulationDone1 = false;
 
-  for (let i = 0; i <= 1; i++) {
-    let c = i === 0 ? '' : '1';
+  if (!annualOn) {
+    // Annual simulation is not running, enable all fields
+    document.getElementById(`annualWarning`).innerHTML = '';
 
-    if (!annualOn) {
-      document.getElementById(`annualWarning`).innerHTML = '';
-      document.getElementById(`ppdRadio`).disabled = false;
-      document.getElementById(`dsHour`).disabled = false;
-      document.getElementById(`dsDay`).disabled = false;
-      document.getElementById(`long${c}`).disabled = false;
-      document.getElementById(`lat${c}`).disabled = false;
-      document.getElementById(`timeZone${c}`).disabled = false;
-      document.getElementById(`outdoorTemp${c}`).disabled = false;
-      document.getElementById(`hour${c}`).disabled = false;
-      document.getElementById(`day${c}`).disabled = false;
-      document.getElementById(`mon${c}`).disabled = false;
-      document.getElementById(`airTemp${c}`).disabled = false;
-      document.getElementById(`humidity${c}`).disabled = false;
-      document.getElementById(`airSpeed${c}`).disabled = false;
-      document.getElementById(`clothing${c}`).disabled = false;
-      document.getElementById(`metabolic${c}`).disabled = false;
-      document.getElementById(`posture${c}`).disabled = false;
-      document.getElementById(`asa${c}`).disabled = false;
-      document.getElementById(`north${c}`).disabled = false;
-      document.getElementById(`gridHt${c}`).disabled = false;
-      document.getElementById(`ceiling${c}`).disabled = false;
-      document.getElementById(`wallWidth${c}`).disabled = false;
-      document.getElementById(`wallDep${c}`).disabled = false;
-      document.getElementById(`wallR${c}`).disabled = false;
-      document.getElementById(`windowHeight${c}`).disabled = false;
-      document.getElementById(`windowWidth${c}`).disabled = false;
-      document.getElementById(`glazing${c}`).disabled = false;
-      document.getElementById(`sill${c}`).disabled = false;
-      document.getElementById(`distWindow${c}`).disabled = false;
-      document.getElementById(`windowU${c}`).disabled = false;
-      document.getElementById(`shgc${c}`).disabled = false;
-      document.getElementById(`hShadeDep${c}`).disabled = false;
-      document.getElementById(`hShadeNum${c}`).disabled = false;
-      document.getElementById(`hShadeSpace${c}`).disabled = false;
-      document.getElementById(`hShadeDist${c}`).disabled = false;
-      document.getElementById(`hShadeHeight${c}`).disabled = false;
-      document.getElementById(`hShadeAngle${c}`).disabled = false;
-      document.getElementById(`vShadeOn${c}`).disabled = false;
-      document.getElementById(`vShadeDep${c}`).disabled = false;
-      document.getElementById(`vShadeNum${c}`).disabled = false;
-      document.getElementById(`vShadeSpace${c}`).disabled = false;
-      document.getElementById(`vShadeShift${c}`).disabled = false;
-      document.getElementById(`vShadeDist${c}`).disabled = false;
-      document.getElementById(`vShadeHeight${c}`).disabled = false;
-      document.getElementById(`vShadeScale${c}`).disabled = false;
-      document.getElementById(`vShadeStart${c}`).disabled = false;
-    } else {
-      // Case2Button = 0;
-      document.getElementById(`annualWarning`).innerHTML = 'Chages to inputs are disabled.<br>Turn off Annual to enable changes.';
-      document.getElementById(`ppdRadio`).disabled = true;
-      document.getElementById(`dsHour`).disabled = true;
-      document.getElementById(`dsDay`).disabled = true;
-      document.getElementById(`long${c}`).disabled = true;
-      document.getElementById(`lat${c}`).disabled = true;
-      document.getElementById(`timeZone${c}`).disabled = true;
-      document.getElementById(`outdoorTemp${c}`).disabled = true;
-      document.getElementById(`hour${c}`).disabled = true;
-      document.getElementById(`day${c}`).disabled = true;
-      document.getElementById(`mon${c}`).disabled = true;
-      document.getElementById(`airTemp${c}`).disabled = true;
-      document.getElementById(`humidity${c}`).disabled = true;
-      document.getElementById(`airSpeed${c}`).disabled = true;
-      document.getElementById(`clothing${c}`).disabled = true;
-      document.getElementById(`metabolic${c}`).disabled = true;
-      document.getElementById(`posture${c}`).disabled = true;
-      document.getElementById(`asa${c}`).disabled = true;
-      document.getElementById(`north${c}`).disabled = true;
-      document.getElementById(`gridHt${c}`).disabled = true;
-      document.getElementById(`ceiling${c}`).disabled = true;
-      document.getElementById(`wallWidth${c}`).disabled = true;
-      document.getElementById(`wallDep${c}`).disabled = true;
-      document.getElementById(`wallR${c}`).disabled = true;
-      document.getElementById(`windowHeight${c}`).disabled = true;
-      document.getElementById(`windowWidth${c}`).disabled = true;
-      document.getElementById(`glazing${c}`).disabled = true;
-      document.getElementById(`sill${c}`).disabled = true;
-      document.getElementById(`distWindow${c}`).disabled = true;
-      document.getElementById(`windowU${c}`).disabled = true;
-      document.getElementById(`shgc${c}`).disabled = true;
-      document.getElementById(`hShadeDep${c}`).disabled = true;
-      document.getElementById(`hShadeNum${c}`).disabled = true;
-      document.getElementById(`hShadeSpace${c}`).disabled = true;
-      document.getElementById(`hShadeDist${c}`).disabled = true;
-      document.getElementById(`hShadeHeight${c}`).disabled = true;
-      document.getElementById(`hShadeAngle${c}`).disabled = true;
-      document.getElementById(`vShadeOn${c}`).disabled = true;
-      document.getElementById(`vShadeDep${c}`).disabled = true;
-      document.getElementById(`vShadeNum${c}`).disabled = true;
-      document.getElementById(`vShadeSpace${c}`).disabled = true;
-      document.getElementById(`vShadeShift${c}`).disabled = true;
-      document.getElementById(`vShadeDist${c}`).disabled = true;
-      document.getElementById(`vShadeHeight${c}`).disabled = true;
-      document.getElementById(`vShadeScale${c}`).disabled = true;
-      document.getElementById(`vShadeStart${c}`).disabled = true;
+    for(let i=0; i<window.SOLAR_COMFORT.globalInputFieldNames.length; i++) {
+      document.getElementById(window.SOLAR_COMFORT.globalInputFieldNames[i]).disabled = false;
     }
+    for(let i=0; i<window.SOLAR_COMFORT.caseInputFieldNames.length; i++) {
+      document.getElementById(window.SOLAR_COMFORT.caseInputFieldNames[i]).disabled = false;
+      document.getElementById(`${window.SOLAR_COMFORT.caseInputFieldNames[i]}1`).disabled = false; // case 2
+    }
+    document.getElementsByName("button1").forEach(e => e.disabled = false);
+  } else {
+    // Annual simulation is running, disable all fields
+    document.getElementById(`annualWarning`).innerHTML = 'Chages to inputs are disabled.<br>Turn off Annual to enable changes.';
+
+    for(let i=0; i<window.SOLAR_COMFORT.globalInputFieldNames.length; i++) {
+      document.getElementById(window.SOLAR_COMFORT.globalInputFieldNames[i]).disabled = true;
+    }
+    for(let i=0; i<window.SOLAR_COMFORT.caseInputFieldNames.length; i++) {
+      document.getElementById(window.SOLAR_COMFORT.caseInputFieldNames[i]).disabled = true;
+      document.getElementById(`${window.SOLAR_COMFORT.caseInputFieldNames[i]}1`).disabled = true; // case 2
+    }
+    document.getElementsByName("button1").forEach(e => e.disabled = true);
   }
 }
 
@@ -303,49 +282,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
           document.getElementsByName("button1")[3].className = "button1OFF";
   
           $("input.case2, select.case2").css("visibility", "hidden");
-  
-          document.getElementById("long1").disabled = true;
-          document.getElementById("lat1").disabled = true;
-          document.getElementById("timeZone1").disabled = true;
-          document.getElementById("outdoorTemp1").disabled = true;
-          document.getElementById("hour1").disabled = true;
-          document.getElementById("day1").disabled = true;
-          document.getElementById("mon1").disabled = true;
-          document.getElementById("airTemp1").disabled = true;
-          document.getElementById("humidity1").disabled = true;
-          document.getElementById("airSpeed1").disabled = true;
-          document.getElementById("clothing1").disabled = true;
-          document.getElementById("metabolic1").disabled = true;
-          document.getElementById("posture1").disabled = true;
-          document.getElementById("asa1").disabled = true;
-          document.getElementById("north1").disabled = true;
-          document.getElementById("gridHt1").disabled = true;
-          document.getElementById("ceiling1").disabled = true;
-          document.getElementById("wallWidth1").disabled = true;
-          document.getElementById("wallDep1").disabled = true;
-          document.getElementById("wallR1").disabled = true;
-          document.getElementById("windowHeight1").disabled = true;
-          document.getElementById("windowWidth1").disabled = true;
-          document.getElementById("glazing1").disabled = true;
-          document.getElementById("sill1").disabled = true;
-          document.getElementById("distWindow1").disabled = true;
-          document.getElementById("windowU1").disabled = true;
-          document.getElementById("shgc1").disabled = true;
-          document.getElementById("hShadeDep1").disabled = true;
-          document.getElementById("hShadeNum1").disabled = true;
-          document.getElementById("hShadeSpace1").disabled = true;
-          document.getElementById("hShadeDist1").disabled = true;
-          document.getElementById("hShadeHeight1").disabled = true;
-          document.getElementById("hShadeAngle1").disabled = true;
-          document.getElementById("vShadeOn1").disabled = true;
-          document.getElementById("vShadeDep1").disabled = true;
-          document.getElementById("vShadeNum1").disabled = true;
-          document.getElementById("vShadeSpace1").disabled = true;
-          document.getElementById("vShadeShift1").disabled = true;
-          document.getElementById("vShadeDist1").disabled = true;
-          document.getElementById("vShadeHeight1").disabled = true;
-          document.getElementById("vShadeScale1").disabled = true;
-          document.getElementById("vShadeStart1").disabled = true;
+
         } else {
           document.getElementsByName("button1")[0].className = "button1ON";
           document.getElementsByName("button1")[1].className = "button1ON";
@@ -353,49 +290,6 @@ renderGraphicsAndRunSimulation = caseNumber => {
           document.getElementsByName("button1")[3].className = "button1ON";
   
           $("input.case2, select.case2").css("visibility", "visible");
-  
-          document.getElementById("long1").disabled = false;
-          document.getElementById("lat1").disabled = false;
-          document.getElementById("timeZone1").disabled = false;
-          document.getElementById("outdoorTemp1").disabled = false;
-          document.getElementById("hour1").disabled = false;
-          document.getElementById("day1").disabled = false;
-          document.getElementById("mon1").disabled = false;
-          document.getElementById("airTemp1").disabled = false;
-          document.getElementById("humidity1").disabled = false;
-          document.getElementById("airSpeed1").disabled = false;
-          document.getElementById("clothing1").disabled = false;
-          document.getElementById("metabolic1").disabled = false;
-          document.getElementById("posture1").disabled = false;
-          document.getElementById("asa1").disabled = false;
-          document.getElementById("north1").disabled = false;
-          document.getElementById("gridHt1").disabled = false;
-          document.getElementById("ceiling1").disabled = false;
-          document.getElementById("wallWidth1").disabled = false;
-          document.getElementById("wallDep1").disabled = false;
-          document.getElementById("wallR1").disabled = false;
-          document.getElementById("windowHeight1").disabled = false;
-          document.getElementById("windowWidth1").disabled = false;
-          document.getElementById("glazing1").disabled = false;
-          document.getElementById("sill1").disabled = false;
-          document.getElementById("distWindow1").disabled = false;
-          document.getElementById("windowU1").disabled = false;
-          document.getElementById("shgc1").disabled = false;
-          document.getElementById("hShadeDep1").disabled = false;
-          document.getElementById("hShadeNum1").disabled = false;
-          document.getElementById("hShadeSpace1").disabled = false;
-          document.getElementById("hShadeDist1").disabled = false;
-          document.getElementById("hShadeHeight1").disabled = false;
-          document.getElementById("hShadeAngle1").disabled = false;
-          document.getElementById("vShadeOn1").disabled = false;
-          document.getElementById("vShadeDep1").disabled = false;
-          document.getElementById("vShadeNum1").disabled = false;
-          document.getElementById("vShadeSpace1").disabled = false;
-          document.getElementById("vShadeShift1").disabled = false;
-          document.getElementById("vShadeDist1").disabled = false;
-          document.getElementById("vShadeHeight1").disabled = false;
-          document.getElementById("vShadeScale1").disabled = false;
-          document.getElementById("vShadeStart1").disabled = false;
         }
       }
 

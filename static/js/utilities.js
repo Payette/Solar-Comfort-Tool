@@ -3,7 +3,7 @@ window.SOLAR_COMFORT = {};
 window.SOLAR_COMFORT.BODY_POSITION_SIT = 'seated';
 window.SOLAR_COMFORT.BODY_POSITION_STAND = 'standing';
 
-twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numSteps) => {
+let twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numSteps) => {
     let gridColorArray2D = [];
     let gridColorArray2DX  = 0;
     let gridColorArray2DY  = 0;
@@ -25,7 +25,7 @@ twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numStep
     return gridColorArray2D
   }
 
-  flipWidthForOneDimensionalRoomArray = (oneDimensionalArray, dimY) => {
+  let flipWidthForOneDimensionalRoomArray = (oneDimensionalArray, dimY) => {
     let flippedArray = [];
 
     for(let i=0; i<oneDimensionalArray.length; i++) {
@@ -39,23 +39,23 @@ twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numStep
     return flippedArray;
   }
 
-  javascriptDateAddMinutes = (date, minutes) => {
+  let javascriptDateAddMinutes = (date, minutes) => {
     date.setTime(date.getTime() + Math.floor(minutes*60*1000));
     return date;
   }
 
-  javascriptDateAddHours = (date, hours) => {
+  let javascriptDateAddHours = (date, hours) => {
     date.setTime(date.getTime() + Math.floor(hours*60*60*1000));
     return date;
   }
 
-  javascriptDateAddDays = (date, days) => {
+  let javascriptDateAddDays = (date, days) => {
     date.setTime(date.getTime() + Math.floor(days*24*60*60*1000));
     return date;
   }
 
   // https://stackoverflow.com/a/11832950
-  round4Decimals = (value) => {
+  let round4Decimals = (value) => {
     return Math.round((value + Number.EPSILON) * 10000) / 10000;
   }
 
@@ -63,7 +63,7 @@ twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numStep
   // allow us to have nice visually comparable data tables in our CSV exports
   // useful for regression testing and validating changes during bug fixing
   let ASCII_GRAYSCALE = ['⬛','█','▮','▰','◼','◾','▬','▪','•','=','-','.',' '];
-  number0to12toAscii = (value) => {
+  let number0to12toAscii = (value) => {
     let i = Math.round(value);
     i = (ASCII_GRAYSCALE.length-1) - i; // reverse
     i = i < 0 ? 0 : (i > (ASCII_GRAYSCALE.length-1) ? ASCII_GRAYSCALE.length-1 : i);
