@@ -16,7 +16,10 @@ exports.testCompareRegression = (goldFile, newContents, testName) => {
 
         if (newContents !== goldContents) {
             console.error(`'${testName}' failed, diff vs gold file:`);
-            const diff = Diff.diffTrimmedLines(goldContents, newContents);
+            const diff = Diff.diffLines(goldContents, newContents, {
+                ignoreWhitespace: true,
+                newlineIsToken: false
+            });
             let numberOfDifferences = 0;
             diff.forEach((part) => {
                 // green for additions, red for deletions
