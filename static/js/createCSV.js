@@ -138,36 +138,36 @@ function hoursOfSunFloorGridToCSV(globalGridColor, asciiArt = false) {
 function createCSV() {
     // console.log(window.SOLAR_COMFORT[`deltaMRTGrid`]);
 
-    var csvContent = "Global Inputs, \n";
+    var csvContent = "Global Inputs\n";
     Object.values(gatherGlobalInputs()).forEach(function(obj) {
         csvContent += obj.label + ',' + obj.value + '\n';
     });
 
-    csvContent += "\nCase 1 Result, \n";
+    csvContent += "\nCase 1 Result\n";
     csvContent += window.SOLAR_COMFORT.MDTResult;
 
-    csvContent += "\nCase 1 Hours of Sun Floor Grid (length x depth), \n";
+    csvContent += "\nCase 1 Hours of Sun Floor Grid (length x depth)\n";
     let globalGridColor = window.SOLAR_COMFORT.globalGridColor;
     if(globalGridColor && globalGridColor.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColor);
     }
 
-    csvContent += "\nCase 1 Hours of Sun Floor Grid ASCI-art (length x depth), \n";
+    csvContent += "\nCase 1 Hours of Sun Floor Grid ASCI-art (length x depth)\n";
     let globalGridColorA = window.SOLAR_COMFORT.globalGridColor;
     if(globalGridColorA && globalGridColorA.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColorA, true);
     }
 
-    csvContent += "\nCase 1 Inputs, \n";
+    csvContent += "\nCase 1 Inputs\n";
     Object.values(gatherCase1Inputs()).forEach(function(obj) {
         csvContent += obj.label + ',' + obj.value + '\n';
     });
 
-    csvContent += "\nCase 2 Inputs, \n";
+    csvContent += "\nCase 2 Inputs\n";
     // Check if Case 2 is activated
-    if(Case2Button == 0) {
+    if(window.SOLAR_COMFORT.Case2Button == 0) {
         Object.values(gatherCase2Inputs()).forEach(function(obj) {
-            csvContent += obj.label + ', \n';
+            csvContent += obj.label + '\n';
         });
     } else {
         Object.values(gatherCase2Inputs()).forEach(function(obj) {
@@ -175,16 +175,16 @@ function createCSV() {
         });
     }
 
-    csvContent += "\nCase 2 Result, \n";
+    csvContent += "\nCase 2 Result\n";
     csvContent += window.SOLAR_COMFORT.MDTResult1;
 
-    csvContent += "\nCase 2 Hours of Sun Floor Grid (length x depth), \n";
+    csvContent += "\nCase 2 Hours of Sun Floor Grid (length x depth)\n";
     let globalGridColor1 = window.SOLAR_COMFORT.globalGridColor1;
     if(globalGridColor1 && globalGridColor1.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColor1);
     }
 
-    csvContent += "\nCase 2 Hours of Sun Floor Grid ASCII-art (length x depth), \n";
+    csvContent += "\nCase 2 Hours of Sun Floor Grid ASCII-art (length x depth)\n";
     let globalGridColorA1 = window.SOLAR_COMFORT.globalGridColor1;
     if(globalGridColorA1 && globalGridColorA1.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColorA1, true);

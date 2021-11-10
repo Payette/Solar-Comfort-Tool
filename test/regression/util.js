@@ -50,9 +50,20 @@ exports.testCompareRegression = (goldFile, newContents, testName) => {
 }
 
 exports.case2On = async (page) => {
-    const case2btn = await page.$x("//button[@name='button1']");
-    case2btn[0].click();
-    await delay(3000);
+    // await delay(2000);
+    //await page.waitForTimeout(1000)
+
+    await page.evaluate(input => {
+        let el = document.getElementById('maincasetwobutton');
+        if(el) {
+            el.click();
+        }else{
+            console.error('could not find case 2 button for Puppeteer')
+        }
+    }, "ignored input");
+
+    //await page.waitForTimeout(1000)
+    // await delay(2000);
 }
 
 exports.updateInput = async (page, input) => {

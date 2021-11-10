@@ -334,7 +334,7 @@ if(debug) {
       // then wait a tad more, and grab our CSV export
       var annualDoneCheck = setInterval(function() {
         let simulationCase1Done = window.SOLAR_COMFORT.annualSimulationDone;
-        let simulationCase2Done = Case2Button === 1 ? window.SOLAR_COMFORT.annualSimulationDone1 : true;
+        let simulationCase2Done = window.SOLAR_COMFORT.Case2Button === 1 ? window.SOLAR_COMFORT.annualSimulationDone1 : true;
 
         if (simulationCase1Done && simulationCase2Done) {
           setTimeout(showCSVOnPage, 500);

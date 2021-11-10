@@ -9,7 +9,8 @@ let currentFrame = 0;
 let annualOn = false; // Check If Annual Button is Pressed
 window.SOLAR_COMFORT.annualSimulationDone = false;
 window.SOLAR_COMFORT.annualSimulationDone1 = false;
-let Case2Button = 0;
+
+window.SOLAR_COMFORT.Case2Button = 0;
 
 let TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION = 9;
 let TIME_STEPS_PER_HOUR_DAY_SIMULATION = 4;
@@ -92,6 +93,17 @@ function msg2() {
   singleHour = 0;
   fullDay = 1;
 }
+
+function checkButton() {
+  if (window.SOLAR_COMFORT.Case2Button == 1) {
+    window.SOLAR_COMFORT.Case2Button = 0;
+  } else {
+    window.SOLAR_COMFORT.Case2Button = 1;
+  }
+}
+document.getElementsByName("button1").forEach(e => {
+  e.addEventListener('click', checkButton)
+});
 
 checkAnnual = function (target) { // Check If Annual Button is Pressed
   annualOn = target.checked;
@@ -262,12 +274,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.cnv.parent(`sketch${c}`);
       p.noStroke();
 
-      if (caseNumber === 2) {
-        document.getElementsByName("button1")[0].addEventListener('click', p.checkButton);
-        document.getElementsByName("button1")[1].addEventListener('click', p.checkButton);
-        document.getElementsByName("button1")[2].addEventListener('click', p.checkButton);
-        document.getElementsByName("button1")[3].addEventListener('click', p.checkButton);
-      }
+      // if (caseNumber === 1) {
+      //   console.log('adding button1 listener')
+      //   document.getElementsByName("button1").forEach(e => e.addEventListener('click', checkButton));
+      // }
     };
 
     p.draw = function () {
@@ -275,7 +285,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.background(255);
 
       if (caseNumber === 2) {
-        if (Case2Button == 0) {
+        if (window.SOLAR_COMFORT.Case2Button == 0) {
           document.getElementsByName("button1")[0].className = "button1OFF";
           document.getElementsByName("button1")[1].className = "button1OFF";
           document.getElementsByName("button1")[2].className = "button1OFF";
@@ -324,12 +334,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       document.getElementsByName(`glazingRadio`)[0].addEventListener('input', p.reload);
       document.getElementsByName(`glazingRadio`)[1].addEventListener('input', p.reload);
 
-
-      // document.getElementsByName("button1")[0].addEventListener('click', p.checkButton);
-      //console.log(myButton);
-
       // CLIMATE
-
       let Lon1 = document.getElementById(`long${c}`).value;
       document.getElementsByName(`long${c}`)[0].addEventListener('input', p.reload);
 
@@ -1908,15 +1913,17 @@ renderGraphicsAndRunSimulation = caseNumber => {
     //     myButton = 1;
     //   }
     // }
-    p.checkButton = function () {
-      //p.loop();
-      //noLoop();
-      if (Case2Button == 1) {
-        Case2Button = 0;
-      } else {
-        Case2Button = 1;
-      }
-    }
+    // p.checkButton = function () {
+    //   //p.loop();
+    //   //noLoop();
+    //   if (window.SOLAR_COMFORT.Case2Button == 1) {
+    //     console.log('turning off case 2')
+    //     window.SOLAR_COMFORT.Case2Button = 0;
+    //   } else {
+    //     console.log('turning on case 2')
+    //     window.SOLAR_COMFORT.Case2Button = 1;
+    //   }
+    // }
   }
 }
 
