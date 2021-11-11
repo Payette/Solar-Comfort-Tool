@@ -96,3 +96,36 @@ window.SOLAR_COMFORT.calculateDeltaMRT_for_Grid = (room_depth, room_width, posit
     }
     return delta_mrt_grid;
 }
+
+window.SOLAR_COMFORT.calculateMRT_for_Grid = (room_depth, room_width, geoResult, windowU, wallR, airTemp, outdoorTemp, clothing, metabolic, airSpeed, humidity) => {
+    let intLowEChecked = true;
+    let intLowEEmissivity = 0.2; //  TODO verify
+    let radiantFloorChecked = false; // TODO verify we don't want this?
+
+    // TODO verify do these need to be inputs?
+    let ppdValue = 0.2; // Acceptable PPD from Downdraft    
+    let ppdValue2 = 0.1; // Acceptable PPD from Radiant Loss
+
+    let mrt_grid = [];
+    let roomWidthCenter = room_width / 2.0;
+    for(let i=0; i<room_depth; i++) {
+        mrt_grid[i] = [];
+        /* occupant distance from wall, IE room depth
+         * formulas only work for non-zero positive values
+         */
+        let occDistFromFacade = i + 1; 
+        for(let j=0; j<room_width; j++) {
+            let occDistToWallCenter = j - roomWidthCenter; /* occupant horizontal position relative to room center */
+            var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, occDistToWallCenter, occDistFromFacade)
+            
+            var comfortResult = comf.getFullPPD(viewResult.wallViews, viewResult.glzViews, viewResult.facadeDist, viewResult.windIntervals,
+                occDistToWallCenter, geoResult.windowHeight, geoResult.sillHeight,
+                windowU, intLowEChecked, intLowEEmissivity,
+                parseFloat(wallR), parseFloat(airTemp), parseFloat(outdoorTemp),
+                radiantFloorChecked, parseFloat(clothing), parseFloat(metabolic), parseFloat(airSpeed),
+                parseFloat(humidity), ppdValue, ppdValue2);
+            mrt_grid[i].push(comfortResult)
+        }
+    }
+    return mrt_grid;
+}

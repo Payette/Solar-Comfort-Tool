@@ -18,7 +18,6 @@
 
 	<script src="//d3js.org/d3.v3.min.js"></script>
 
-	<script type="text/javascript" charset="utf-8" src="static/js/geo.js"></script>
 	<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
 	<script language="javascript" type="text/javascript" src="libraries/p5.svg.js"></script>
 
@@ -241,7 +240,7 @@
 						<div class="col-6">
 							<label><strong>Thermal Comfort</strong></label><br>
 							<label for="ppdRadio"><input type="radio" id="ppdRadio" name="studyType"
-									value="Thermal Comfort - Single Hour">Single Hour</label><br>
+									value="Thermal Comfort - Single Hour" onclick="thermalComfortSingleHourChange()">Single Hour</label><br>
 						</div>
 						<div class="col-6">
 							<label><strong>Direct Sun</strong></label><br>
@@ -572,6 +571,9 @@
 
 	<!-- <script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script> -->
 	<script type="text/javascript" src="static/js/utilities.js"></script>
+	<script type="text/javascript" src="static/js/units.js"></script>
+	<script type="text/javascript" src="static/js/geo.js"></script>
+	<script type="text/javascript" src="static/js/PPDCalc.js"></script>
 	<script type="text/javascript" src="static/js/ladybug.js"></script>
 	<script type="text/javascript" src="static/js/deltaMRT.js"></script>
 	<script type="text/javascript" src="static/js/locationData.js"></script>

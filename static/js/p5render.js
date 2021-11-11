@@ -1,6 +1,13 @@
 //THIS UPDATES THE FLOOR AREA LOSS, MAX DIRECT SUNTIME AND TIMESTEP PER HOUR VALUES
 //IT ALSO REMEMBERS THEM SO THEY CAN BE USED IN THE D3 COLOR CHART BEFORE THE DRAW LOOP
 
+function lazyDeepEquals(a, b) {
+  if(a === b) return true;
+  if(!(Array.isArray(a) && Array.isArray(b))) return false;
+  
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
 let debug2 = true;
 
 let singleHour = 0;
@@ -92,6 +99,12 @@ function msg() {
 function msg2() {
   singleHour = 0;
   fullDay = 1;
+}
+
+function thermalComfortSingleHourChange(e) {
+  singleHour = 1;
+  fullDay = 0;
+  thermalComfortSingleHour = true;
 }
 
 function checkButton() {
@@ -278,6 +291,55 @@ renderGraphicsAndRunSimulation = caseNumber => {
       //   console.log('adding button1 listener')
       //   document.getElementsByName("button1").forEach(e => e.addEventListener('click', checkButton));
       // }
+
+      document.getElementById(`ppdRadio`).addEventListener('input', p.reload);
+      document.getElementsByName(`glazingRadio`)[0].addEventListener('input', p.reload);
+      document.getElementsByName(`glazingRadio`)[1].addEventListener('input', p.reload);
+      document.getElementsByName(`long${c}`)[0].addEventListener('input', p.reload);
+      document.getElementsByName(`lat${c}`)[0].addEventListener('input', p.reload);
+      document.getElementsByName(`timeZone${c}`)[0].addEventListener('input', p.reload);
+      document.getElementsByName(`hour${c}`)[0].addEventListener('input', p.reload);
+      document.getElementsByName("day")[0].addEventListener('input', p.reload);
+      document.getElementsByName("mon")[0].addEventListener('input', p.reload);
+      document.getElementsByName("timeStep")[0].addEventListener('input', p.reload);
+      document.getElementsByName("airTemp")[0].addEventListener('input', p.reload);
+      document.getElementsByName("humidity")[0].addEventListener('input', p.reload);
+      document.getElementsByName("airSpeed")[0].addEventListener('input', p.reload);
+      document.getElementsByName("clothing")[0].addEventListener('input', p.reload);
+      document.getElementsByName("metabolic")[0].addEventListener('input', p.reload);
+      document.getElementsByName("posture")[0].addEventListener('select', p.reload);
+      document.getElementsByName("asa")[0].addEventListener('input', p.reload);
+      document.getElementsByName("north")[0].addEventListener('input', p.reload);
+      document.getElementsByName("gridHt")[0].addEventListener('input', p.reload);
+      document.getElementsByName("ceiling")[0].addEventListener('input', p.reload);
+      document.getElementsByName("ceiling")[0].addEventListener('input', p.reload);
+      document.getElementsByName("wallWidth")[0].addEventListener('input', p.reload);
+      document.getElementsByName("wallDep")[0].addEventListener('input', p.reload);
+      document.getElementsByName("wallR")[0].addEventListener('input', p.reload);
+      document.getElementsByName("windowHeight")[0].addEventListener('input', p.reload);
+      document.getElementsByName("windowWidth")[0].addEventListener('input', p.reload);
+      document.getElementsByName("glazing")[0].addEventListener('input', p.reload);
+      document.getElementsByName("sill")[0].addEventListener('input', p.reload);
+      document.getElementsByName("distWindow")[0].addEventListener('input', p.reload);
+      document.getElementsByName("windowU")[0].addEventListener('input', p.reload);
+      document.getElementsByName("shgc")[0].addEventListener('input', p.reload);
+      document.getElementsByName("hShadeDep")[0].addEventListener('input', p.reload);
+      document.getElementsByName("hShadeNum")[0].addEventListener('input', p.reload);
+      document.getElementsByName("hShadeSpace")[0].addEventListener('input', p.reload);
+      document.getElementsByName("hShadeDist")[0].addEventListener('input', p.reload);
+      document.getElementsByName("hShadeHeight")[0].addEventListener('input', p.reload);
+      document.getElementsByName("hShadeAngle")[0].addEventListener('input', p.reload);
+      document.getElementsByName("vShadeDep")[0].addEventListener('input', p.reload);
+      document.getElementsByName("vShadeNum")[0].addEventListener('input', p.reload);
+      document.getElementsByName("vShadeSpace")[0].addEventListener('input', p.reload);
+      document.getElementsByName("vShadeStart")[0].addEventListener('input', p.reload);
+      document.getElementsByName("vShadeShift")[0].addEventListener('input', p.reload);
+      document.getElementsByName("vShadeDist")[0].addEventListener('input', p.reload);
+      document.getElementsByName("vShadeOn")[0].addEventListener('click', p.reload);
+      document.getElementsByName("vShadeHeight")[0].addEventListener('input', p.reload);
+      document.getElementsByName("vShadeScale")[0].addEventListener('input', p.reload);
+      document.getElementsByName("fal")[0].addEventListener('input', p.reload1);
+      document.getElementsByName("mdst")[0].addEventListener('input', p.reload1);
     };
 
     p.draw = function () {
@@ -328,167 +390,124 @@ renderGraphicsAndRunSimulation = caseNumber => {
         p.pop();
       }
 
-
+      // Study
+      let thermalComfortSingleHour = !!document.getElementById(`ppdRadio`).checked;
+      
+      
       let glzOrWidth = document.getElementById(`glazingRatioCheck`).checked;
       //console.log(Radiox);
-      document.getElementsByName(`glazingRadio`)[0].addEventListener('input', p.reload);
-      document.getElementsByName(`glazingRadio`)[1].addEventListener('input', p.reload);
 
+      
       // CLIMATE
       let Lon1 = document.getElementById(`long${c}`).value;
-      document.getElementsByName(`long${c}`)[0].addEventListener('input', p.reload);
-
+      
       let Lat1 = document.getElementById(`lat${c}`).value;
-      document.getElementsByName(`lat${c}`)[0].addEventListener('input', p.reload);
-
+      
       let TimeZone1 = document.getElementById(`timeZone${c}`).value;
-      document.getElementsByName(`timeZone${c}`)[0].addEventListener('input', p.reload);
-
+      
       let outdoorTemp = document.getElementById(`outdoorTemp${c}`).value;
-
+      
       // TIME CONFIG
-
+      
       let Hour1 = document.getElementById(`hour${c}`).value;
-      document.getElementsByName(`hour${c}`)[0].addEventListener('input', p.reload);
-
+      
       let Day1 = document.getElementById(`day${c}`).value;
-      document.getElementsByName("day")[0].addEventListener('input', p.reload);
-
+      
       let Month1 = document.getElementById(`mon${c}`).value;
-      document.getElementsByName("mon")[0].addEventListener('input', p.reload);
-
+      
       let timestep = document.getElementById(`timeStep`).value;
-      document.getElementsByName("timeStep")[0].addEventListener('input', p.reload);
-
-
+      
+      
       // INDOOR CONDITIONS
       let airTemp = document.getElementById(`airTemp${c}`).value;
-      document.getElementsByName("airTemp")[0].addEventListener('input', p.reload);
-
+      
       let humidity = document.getElementById(`humidity${c}`).value;
-      document.getElementsByName("humidity")[0].addEventListener('input', p.reload);
-
+      
       let airSpeed = document.getElementById(`airSpeed${c}`).value;
-      document.getElementsByName("airSpeed")[0].addEventListener('input', p.reload);
-
+      
       let clothing = document.getElementById(`clothing${c}`).value;
-      document.getElementsByName("clothing")[0].addEventListener('input', p.reload);
-
+      
       let metabolic = document.getElementById(`metabolic${c}`).value;
-      document.getElementsByName("metabolic")[0].addEventListener('input', p.reload);
-
+      
       let posture = document.getElementById(`posture${c}`).value;
-      document.getElementsByName("posture")[0].addEventListener('select', p.reload);
-
+      
       let asa = document.getElementById(`asa${c}`).value;
-      document.getElementsByName("asa")[0].addEventListener('input', p.reload);
-
+      
       // ROOM GEOMETRY
       let roomOrientationValue1 = document.getElementById(`north${c}`).value;
-      document.getElementsByName("north")[0].addEventListener('input', p.reload);
-
+      
       let gridHeightValue = document.getElementById(`gridHt${c}`).value;
-      document.getElementsByName("gridHt")[0].addEventListener('input', p.reload);
-
+      
       let ceilingHeightValue = document.getElementById(`ceiling${c}`).value;
-      document.getElementsByName("ceiling")[0].addEventListener('input', p.reload);
       let ceilingHeightValue1 = document.getElementById(`ceiling${c}`).value;
-      document.getElementsByName("ceiling")[0].addEventListener('input', p.reload);
-
+      
       let wallLen = document.getElementById(`wallWidth${c}`).value;
-      document.getElementsByName("wallWidth")[0].addEventListener('input', p.reload);
-
+      
       let wallDepVal = document.getElementById(`wallDep${c}`).value;
-      document.getElementsByName("wallDep")[0].addEventListener('input', p.reload);
-
+      
       let wallR = document.getElementById(`wallR${c}`).value;
-      document.getElementsByName("wallR")[0].addEventListener('input', p.reload);
-
+      
       // WINDOW GEOMETRY
-
+      
       let windowHeightValue = document.getElementById(`windowHeight${c}`).value * 10;
-      document.getElementsByName("windowHeight")[0].addEventListener('input', p.reload);
       windowHeightValue = windowHeightValue / 10;
-
+      
       let windowWidthValue = document.getElementById(`windowWidth${c}`).value;
-      document.getElementsByName("windowWidth")[0].addEventListener('input', p.reload);
-
+      
       let glzRatioValue = document.getElementById(`glazing${c}`).value;
-      document.getElementsByName("glazing")[0].addEventListener('input', p.reload);
-
+      
       let sillHeightValue = document.getElementById(`sill${c}`).value;
-      document.getElementsByName("sill")[0].addEventListener('input', p.reload);
-
+      
       let distanceWindows = document.getElementById(`distWindow${c}`).value;
-      document.getElementsByName("distWindow")[0].addEventListener('input', p.reload);
-
+      
       let windowU = document.getElementById(`windowU${c}`).value;
-      document.getElementsByName("windowU")[0].addEventListener('input', p.reload);
-
+      
       let shgc = document.getElementById(`shgc${c}`).value;
-      document.getElementsByName("shgc")[0].addEventListener('input', p.reload);
-
-
+      
+      
       // SHADE GEOMETRY
-
+      
       let horzShadeDep = document.getElementById(`hShadeDep${c}`).value;
-      document.getElementsByName("hShadeDep")[0].addEventListener('input', p.reload);
-
+      
       let horzShadeNum = document.getElementById(`hShadeNum${c}`).value;
-      document.getElementsByName("hShadeNum")[0].addEventListener('input', p.reload);
-
+      
       let horzShadeSpace = document.getElementById(`hShadeSpace${c}`).value;
-      document.getElementsByName("hShadeSpace")[0].addEventListener('input', p.reload);
-
+      
       let horzShadeDist = document.getElementById(`hShadeDist${c}`).value;
-      document.getElementsByName("hShadeDist")[0].addEventListener('input', p.reload);
-
+      
       let horzShadeHeight = document.getElementById(`hShadeHeight${c}`).value;
-      document.getElementsByName("hShadeHeight")[0].addEventListener('input', p.reload);
-
+      
       let horzShadeAngle = document.getElementById(`hShadeAngle${c}`).value;
-      document.getElementsByName("hShadeAngle")[0].addEventListener('input', p.reload);
-
+      
       let vertShadeDep = document.getElementById(`vShadeDep${c}`).value;
-      document.getElementsByName("vShadeDep")[0].addEventListener('input', p.reload);
-
+      
       let vertShadeNum = document.getElementById(`vShadeNum${c}`).value;
-      document.getElementsByName("vShadeNum")[0].addEventListener('input', p.reload);
-
+      
       let vertShadeSpace = document.getElementById(`vShadeSpace${c}`).value;
-      document.getElementsByName("vShadeSpace")[0].addEventListener('input', p.reload);
-
+      
       let vertShadeStart = document.getElementById(`vShadeStart${c}`).value;
-      document.getElementsByName("vShadeStart")[0].addEventListener('input', p.reload);
-
+      
       let vertShadeShift = document.getElementById(`vShadeShift${c}`).value;
-      document.getElementsByName("vShadeShift")[0].addEventListener('input', p.reload);
-
+      
       let vertShadeDist = document.getElementById(`vShadeDist${c}`).value;
-      document.getElementsByName("vShadeDist")[0].addEventListener('input', p.reload);
-
+      
       let vertShadeOn = document.getElementById(`vShadeOn${c}`).value;
-      document.getElementsByName("vShadeOn")[0].addEventListener('click', p.reload);
-
+      
       let vShadeCheckbox = document.querySelector("input[name=vShadeOn]");
-
+      
       if (vShadeCheckbox.checked) {
         vertShadeOn = 0;
       } else {
         vertShadeOn = 1;
       }
-
+      
       let vertShadeHeight = document.getElementById(`vShadeHeight${c}`).value;
-      document.getElementsByName("vShadeHeight")[0].addEventListener('input', p.reload);
-
+      
       let vertShadeScale = document.getElementById(`vShadeScale${c}`).value;
-      document.getElementsByName("vShadeScale")[0].addEventListener('input', p.reload);
-
+      
       let valFal = document.getElementById(`fal`).value; //FLOOR AREA LOSS
-      document.getElementsByName("fal")[0].addEventListener('input', p.reload1);
-
+      
       let valMDST = document.getElementById(`mdst`).value; // MAX DIRECT SUN TIME
-      document.getElementsByName("mdst")[0].addEventListener('input', p.reload1);
 
 
       if (annualOn) { // Check If Annual Button is Pressed
@@ -1540,9 +1559,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let stepDelta = singleHour == 1 ? 9 : 4;
         window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal - 1, stepDelta);
 
-        let deltaMRT_grid_for_each_coordinate = [];
-        for(let i=0; i<solarCoordinates.length; i++) {
-          let coordinate = solarCoordinates[i];
+        if(thermalComfortSingleHour && solarCoordinates.length > 0) {
+          /* when in single hour mode we have 9 coordinates (subsets of hour)
+           * just grab the 1st one, IE top of the hour */
+          let coordinate = solarCoordinates[0];
 
           /* solarCoordinates = [ azimuth in degress, elevation in degrees (aka altitude) ] */
           let elevation = coordinate[1];
@@ -1557,10 +1577,33 @@ renderGraphicsAndRunSimulation = caseNumber => {
             shgc,
             asa
           );
-          deltaMRT_grid_for_each_coordinate.push(deltaMRT_grid);          
-        }
-        window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = deltaMRT_grid_for_each_coordinate;
+          window.SOLAR_COMFORT[`PREV_deltaMRTGrid${c}`] = window.SOLAR_COMFORT[`deltaMRTGrid${c}`];
+          window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = deltaMRT_grid;
 
+          let MRT_grid = window.SOLAR_COMFORT.calculateMRT_for_Grid(
+            wallLen,    /* wallLen is room depth!! perpindicular to windows */
+            wallDepVal, /* wallDepVal is room width!! parallel to windows */
+            geoResult,
+            windowU,
+            wallR,
+            airTemp,
+            outdoorTemp,
+            clothing,
+            metabolic,
+            airSpeed,
+            humidity
+          );
+          window.SOLAR_COMFORT[`PREV_MRTGrid${c}`] = window.SOLAR_COMFORT[`MRTGrid${c}`];
+          window.SOLAR_COMFORT[`MRTGrid${c}`] = MRT_grid;
+  
+          // if(!lazyDeepEquals(window.SOLAR_COMFORT[`PREV_deltaMRTGrid${c}`], window.SOLAR_COMFORT[`deltaMRTGrid${c}`])) {
+            // console.log(`deltaMRTGrid${c}`, window.SOLAR_COMFORT[`deltaMRTGrid${c}`]);
+            // console.log(`MRTGrid${c}`, window.SOLAR_COMFORT[`MRTGrid${c}`]);
+          // }
+        } else {
+          window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = undefined;
+          window.SOLAR_COMFORT[`MRTGrid${c}`] = undefined;
+        }
       }
 
       //END OF TRIG

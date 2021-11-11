@@ -371,27 +371,30 @@ geo.calcViewFacs = function(srfCoords, locPts) {
 
 
 //Calculate all viewFactors for the graph.
-geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall){
+geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall, occDistFromFacade){
 	var facadeDist = []// The distance from the facade at which we are evaluating comfort.
 	var locationPts = [] // The pointlocations in relation to the facade where we are evaluating comfort.
 
 	if (unitSys == "IP"){
 		var seatH = 2 // The average height above the ground that the occupan is located in feet.
-		var numPts = 12 // The number of points to generate.  They will be generated at each foot.
+		// var numPts = 12 // The number of points to generate.  They will be generated at each foot.
+
+		// copied from Winter Comfort tool which is 1d, since we have a 2d grid this function is already being 
+		// called for every grid point, so we only generate a single variation
 	} else {
 		var seatH = 0.6096 // The average height above the ground that the occupan is located in meters.
-		var numPts = 8 // The number of points to generate.  They will be generated at 50 cm.
+		// var numPts = 8 // The number of points to generate.  They will be generated at 50 cm.
 	}
 
-	for (var i = 0; i < numPts; i++) {
-		if (unitSys == "IP"){
-			var dist = i+1
-		} else {
-			var dist = (i+1)*0.5
-		}
-		facadeDist.push(dist)
-		locationPts.push([parseFloat(occDistToWall),dist,seatH])
-	}
+	// for (var i = 0; i < numPts; i++) {
+	// 	if (unitSys == "IP"){
+	// 		var dist = i+1
+	// 	} else {
+	// 		var dist = (i+1)*0.5
+	// 	}
+	// 	facadeDist.push(dist)
+	// 	locationPts.push([parseFloat(occDistToWall),dist,seatH])
+	// }
 	// Add a point for the occupant distance from facade.
 	facadeDist.push(parseFloat(occDistFromFacade))
 	locationPts.push([parseFloat(occDistToWall),parseFloat(occDistFromFacade),seatH])

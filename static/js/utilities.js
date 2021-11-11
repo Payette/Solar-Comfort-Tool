@@ -3,6 +3,8 @@ window.SOLAR_COMFORT = {};
 window.SOLAR_COMFORT.BODY_POSITION_SIT = 'seated';
 window.SOLAR_COMFORT.BODY_POSITION_STAND = 'standing';
 
+unitSys = "IP";
+
 let twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numSteps) => {
     let gridColorArray2D = [];
     let gridColorArray2DX  = 0;
