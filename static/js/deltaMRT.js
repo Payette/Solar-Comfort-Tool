@@ -98,12 +98,11 @@ window.SOLAR_COMFORT.calculateDeltaMRT_for_Grid = (room_depth, room_width, posit
 }
 
 window.SOLAR_COMFORT.calculateMRT_for_Grid = (room_depth, room_width, geoResult, windowU, wallR, airTemp, outdoorTemp, clothing, metabolic, airSpeed, humidity) => {
-    let intLowEChecked = true;
-    let intLowEEmissivity = 0.2; //  TODO verify
-    let radiantFloorChecked = false; // TODO verify we don't want this?
+    let intLowEChecked = false; // we aren't letting the user model this
+    let intLowEEmissivity = 0.2; // UNUSED when intLowEChecked = false
+    let radiantFloorChecked = false; // we aren't letting the user model this
 
-    // TODO verify do these need to be inputs?
-    let ppdValue = 0.2; // Acceptable PPD from Downdraft    
+    let ppdValue = 0.2; // Acceptable PPD from Downdraft   
     let ppdValue2 = 0.1; // Acceptable PPD from Radiant Loss
 
     let mrt_grid = [];
