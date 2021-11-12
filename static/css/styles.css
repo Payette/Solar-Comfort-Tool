@@ -1106,3 +1106,12 @@ div.case2, #inputs input.case2, #inputs select.case2, hr.case2 {
 #sketch, #sketch1 {
 	margin: 0 50px;
 }
+
+.error {
+	font-size: 0.9em;
+	color: red;
+	font-weight: bold;
+}
+.errorhidden {
+	display: none
+}

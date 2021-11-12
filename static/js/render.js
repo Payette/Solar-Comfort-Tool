@@ -1,5 +1,4 @@
-//var jsonObj = JSON.parse(LocationData);
-//console.log(jsonObj.AFRICA);
+var coolingDDY = window.SOLAR_COMFORT.COOLING_DDY;
 var designTemp;
 var designTemp1;
 var designTemp2;
@@ -217,9 +216,22 @@ $("#city").on("change", function(event) {
   designTemp = jsonObj[selCont.toUpperCase()][selNation][selState][selCity].lon
   designTemp1 = jsonObj[selCont.toUpperCase()][selNation][selState][selCity].lat
   designTemp2 = jsonObj[selCont.toUpperCase()][selNation][selState][selCity].tz
-  // if (unitSys == "IP"){
-  //   designTemp = (Math.round(units.C2F(designTemp)* 10) / 10)
-  // }
+  
+  designTemp3 = coolingDDY && coolingDDY[selCont.toUpperCase()] && coolingDDY[selCont.toUpperCase()][selNation] && coolingDDY[selCont.toUpperCase()][selNation][selState][selCity]
+  if (typeof designTemp3 !== 'undefined') {
+    designTemp3 = parseFloat(designTemp3);
+    if (unitSys == "IP"){
+      designTemp3 = (Math.round(units.C2F(designTemp3)* 10) / 10)
+    }
+    $('#missingtemperature').addClass('errorhidden');
+
+    $("#outTempTextArea3").append(parseFloat(designTemp3));
+    $("#outTempTextArea3").select();  
+  } else {
+    $('#missingtemperature').removeClass('errorhidden');
+    $("#outTempTextArea3").val('');
+    $("#outTempTextArea3").select();  
+  }
 
   // Grab the temperature text menu.
   var designTempTexArea = document.getElementById("outTempTextArea")
@@ -228,6 +240,8 @@ $("#city").on("change", function(event) {
   designTempTexArea1.disabled=false
   var designTempTexArea2 = document.getElementById("outTempTextArea2")
   designTempTexArea2.disabled=false
+  var designTempTexArea3 = document.getElementById("outTempTextArea3")
+  designTempTexArea3.disabled=false
   if ($("#outTempDiv").hasClass("temperatureEmpty") == true) {
     $("#outTempDiv").removeClass("temperatureEmpty");
     $("#outTempDiv").addClass("temperature");
@@ -256,10 +270,14 @@ $("#Apply").click(function(event) {
   document.getElementById("long").value = parseInt(designTemp);
   document.getElementById("lat").value = parseInt(designTemp1);
   document.getElementById("timeZone").value = parseInt(designTemp2);
+  
   document.getElementById("long1").value = parseInt(designTemp);
   document.getElementById("lat1").value = parseInt(designTemp1);
-  document.getElementById("timeZone1").value = parseInt(designTemp2);
 
+  if(typeof designTemp3 == 'number') {
+    document.getElementById("outdoorTemp").value = parseFloat(designTemp3);
+    document.getElementById("outdoorTemp1").value = parseFloat(designTemp3);
+  }
 
   $("#Outdoorpop").dialog("close");
 })
