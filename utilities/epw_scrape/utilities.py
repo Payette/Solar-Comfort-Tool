@@ -93,7 +93,7 @@ def download_weather_files_links(sourceFolder, destinationFolder):
 # Generate CSV files that will contain links to EPW files for each region
 # uncomment this or the other main to run script
 # async def main():
-#     folder = '/home/aringler/code/Solar-Comfort-Tool/old-util/utilities/epw_scrape'
+#     folder = '/home/aringler/code/Solar-Comfort-Tool/utilities/epw_scrape'
 #     await collect_weather_files_links(folder)
 
 # asyncio.get_event_loop().run_until_complete(main())
@@ -101,8 +101,8 @@ def download_weather_files_links(sourceFolder, destinationFolder):
 
 # Download all EPW files from our CSV files
 def main():
-    sourceFolder = '/home/aringler/code/Solar-Comfort-Tool/old-util/utilities/epw_scrape'
-    destinationFolder = '/home/aringler/code/Solar-Comfort-Tool/old-util/utilities/epw_scrape/downloads'
+    sourceFolder = '/home/aringler/code/Solar-Comfort-Tool/utilities/epw_scrape'
+    destinationFolder = '/home/aringler/code/Solar-Comfort-Tool/utilities/epw_scrape/downloads'
     download_weather_files_links(sourceFolder, destinationFolder)
 main()
 
