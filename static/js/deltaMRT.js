@@ -130,6 +130,23 @@ window.SOLAR_COMFORT.calculateMRT_for_Grid = (room_depth, room_width, geoResult,
 }
 
 window.SOLAR_COMFORT.zeroOutDeltaMRT_for_Locations_with_no_Direct_Sun = (deltaMRTGrid, directSunGrid) => {
-    // TODO    
-    //console.log(deltaMRTGrid, directSunGrid)
+    for(var i=0; i<deltaMRTGrid.length; i++){
+        for(var j=0; j<deltaMRTGrid[i].length; j++){
+            if(directSunGrid[i][j] == 0) {
+                deltaMRTGrid[i][j] = 0;
+            }
+        }
+    }
+}
+
+window.SOLAR_COMFORT.add2DArrays = (a, b) => {
+    let added = [];
+
+    for(var i=0; i<a.length; i++){
+        added[i] = [];
+        for(var j=0; j<a[i].length; j++){
+            added[i][j] = a[i][j] + b[i][j];
+        }
+    }
+    return added;
 }

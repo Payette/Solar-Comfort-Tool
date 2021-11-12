@@ -1570,23 +1570,22 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
           let deltaMRT_grid = window.SOLAR_COMFORT.calculateDeltaMRT_for_Grid(
             wallLen,    /* wallLen is room depth!! perpindicular to windows */
-            wallDepVal, /* wallDepVal is room width!! parallel to windows */
+            wallDepVal - 1, /* wallDepVal is room width!! parallel to windows */
             posture, sillHeightValue, windowWidthValue,
             elevation,
             azimuth,
             shgc,
             asa
           );
-
           // set delta MRT value to 0 for all grid locations that don't actually get direct sunlight
-          // let deltaMRT_grid = window.SOLAR_COMFORT.zeroOutDeltaMRT_for_Locations_with_no_Direct_Sun(deltaMRT_grid, window.SOLAR_COMFORT[`globalGridColor${c}`]);
+          window.SOLAR_COMFORT.zeroOutDeltaMRT_for_Locations_with_no_Direct_Sun(deltaMRT_grid, window.SOLAR_COMFORT[`globalGridColor${c}`])
 
           window.SOLAR_COMFORT[`PREV_deltaMRTGrid${c}`] = window.SOLAR_COMFORT[`deltaMRTGrid${c}`];
           window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = deltaMRT_grid;
 
           let MRT_grid = window.SOLAR_COMFORT.calculateMRT_for_Grid(
             wallLen,    /* wallLen is room depth!! perpindicular to windows */
-            wallDepVal, /* wallDepVal is room width!! parallel to windows */
+            wallDepVal - 1, /* wallDepVal is room width!! parallel to windows */
             geoResult,
             windowU,
             wallR,
@@ -1596,14 +1595,20 @@ renderGraphicsAndRunSimulation = caseNumber => {
             metabolic,
             airSpeed,
             humidity
-          );
+          ).map(v => {
+            return v.map(v2 => {
+              return v2.occPtInfo.mrt;
+            })
+          })
           window.SOLAR_COMFORT[`PREV_MRTGrid${c}`] = window.SOLAR_COMFORT[`MRTGrid${c}`];
           window.SOLAR_COMFORT[`MRTGrid${c}`] = MRT_grid;
+
+          window.SOLAR_COMFORT[`MRT_SolarAdjusted${c}`] = window.SOLAR_COMFORT.add2DArrays(MRT_grid, deltaMRT_grid);
   
           if(!lazyDeepEquals(window.SOLAR_COMFORT[`PREV_deltaMRTGrid${c}`], window.SOLAR_COMFORT[`deltaMRTGrid${c}`])) {
-            //window.SOLAR_COMFORT.zeroOutDeltaMRT_for_Locations_with_no_Direct_Sun(deltaMRT_grid, window.SOLAR_COMFORT[`globalGridColor${c}`])
-            // console.log(`deltaMRTGrid${c}`, window.SOLAR_COMFORT[`deltaMRTGrid${c}`]);
-            // console.log(`MRTGrid${c}`, window.SOLAR_COMFORT[`MRTGrid${c}`]);
+            console.log(`MRTGrid${c}`, window.SOLAR_COMFORT[`MRTGrid${c}`]);
+            console.log(`deltaMRTGrid${c}`, window.SOLAR_COMFORT[`deltaMRTGrid${c}`]);
+            console.log(`MRT_SolarAdjusted${c}`, window.SOLAR_COMFORT[`MRT_SolarAdjusted${c}`]);
           }
         } else {
           window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = undefined;
