@@ -1577,6 +1577,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
             shgc,
             asa
           );
+
+          // set delta MRT value to 0 for all grid locations that don't actually get direct sunlight
+          // let deltaMRT_grid = window.SOLAR_COMFORT.zeroOutDeltaMRT_for_Locations_with_no_Direct_Sun(deltaMRT_grid, window.SOLAR_COMFORT[`globalGridColor${c}`]);
+
           window.SOLAR_COMFORT[`PREV_deltaMRTGrid${c}`] = window.SOLAR_COMFORT[`deltaMRTGrid${c}`];
           window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = deltaMRT_grid;
 
@@ -1596,10 +1600,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
           window.SOLAR_COMFORT[`PREV_MRTGrid${c}`] = window.SOLAR_COMFORT[`MRTGrid${c}`];
           window.SOLAR_COMFORT[`MRTGrid${c}`] = MRT_grid;
   
-          // if(!lazyDeepEquals(window.SOLAR_COMFORT[`PREV_deltaMRTGrid${c}`], window.SOLAR_COMFORT[`deltaMRTGrid${c}`])) {
+          if(!lazyDeepEquals(window.SOLAR_COMFORT[`PREV_deltaMRTGrid${c}`], window.SOLAR_COMFORT[`deltaMRTGrid${c}`])) {
+            //window.SOLAR_COMFORT.zeroOutDeltaMRT_for_Locations_with_no_Direct_Sun(deltaMRT_grid, window.SOLAR_COMFORT[`globalGridColor${c}`])
             // console.log(`deltaMRTGrid${c}`, window.SOLAR_COMFORT[`deltaMRTGrid${c}`]);
             // console.log(`MRTGrid${c}`, window.SOLAR_COMFORT[`MRTGrid${c}`]);
-          // }
+          }
         } else {
           window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = undefined;
           window.SOLAR_COMFORT[`MRTGrid${c}`] = undefined;

@@ -128,3 +128,8 @@ window.SOLAR_COMFORT.calculateMRT_for_Grid = (room_depth, room_width, geoResult,
     }
     return mrt_grid;
 }
+
+window.SOLAR_COMFORT.zeroOutDeltaMRT_for_Locations_with_no_Direct_Sun = (deltaMRTGrid, directSunGrid) => {
+    // TODO    
+    //console.log(deltaMRTGrid, directSunGrid)
+}
