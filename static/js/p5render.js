@@ -1,12 +1,7 @@
 //THIS UPDATES THE FLOOR AREA LOSS, MAX DIRECT SUNTIME AND TIMESTEP PER HOUR VALUES
 //IT ALSO REMEMBERS THEM SO THEY CAN BE USED IN THE D3 COLOR CHART BEFORE THE DRAW LOOP
 
-function lazyDeepEquals(a, b) {
-  if(a === b) return true;
-  if(!(Array.isArray(a) && Array.isArray(b))) return false;
-  
-  return JSON.stringify(a) === JSON.stringify(b);
-}
+
 
 let debug2 = true;
 
@@ -1594,21 +1589,23 @@ renderGraphicsAndRunSimulation = caseNumber => {
             clothing,
             metabolic,
             airSpeed,
-            humidity
-          ).map(v => {
-            return v.map(v2 => {
-              return v2.occPtInfo.mrt;
-            })
-          })
+            humidity,
+            deltaMRT_grid
+          )
+          // .map(v => {
+          //   return v.map(v2 => {
+          //     return v2.occPtInfo.mrt;
+          //   })
+          // })
           window.SOLAR_COMFORT[`PREV_MRTGrid${c}`] = window.SOLAR_COMFORT[`MRTGrid${c}`];
           window.SOLAR_COMFORT[`MRTGrid${c}`] = MRT_grid;
 
-          window.SOLAR_COMFORT[`MRT_SolarAdjusted${c}`] = window.SOLAR_COMFORT.add2DArrays(MRT_grid, deltaMRT_grid);
+          // window.SOLAR_COMFORT[`MRT_SolarAdjusted${c}`] = window.SOLAR_COMFORT.add2DArrays(MRT_grid, deltaMRT_grid);
   
-          if(!lazyDeepEquals(window.SOLAR_COMFORT[`PREV_deltaMRTGrid${c}`], window.SOLAR_COMFORT[`deltaMRTGrid${c}`])) {
+          if(!_.isEqual(window.SOLAR_COMFORT[`PREV_deltaMRTGrid${c}`], window.SOLAR_COMFORT[`deltaMRTGrid${c}`])) {
             console.log(`MRTGrid${c}`, window.SOLAR_COMFORT[`MRTGrid${c}`]);
-            console.log(`deltaMRTGrid${c}`, window.SOLAR_COMFORT[`deltaMRTGrid${c}`]);
-            console.log(`MRT_SolarAdjusted${c}`, window.SOLAR_COMFORT[`MRT_SolarAdjusted${c}`]);
+            // console.log(`deltaMRTGrid${c}`, window.SOLAR_COMFORT[`deltaMRTGrid${c}`]);
+            // console.log(`MRT_SolarAdjusted${c}`, window.SOLAR_COMFORT[`MRT_SolarAdjusted${c}`]);
           }
         } else {
           window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = undefined;

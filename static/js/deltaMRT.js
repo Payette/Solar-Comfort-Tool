@@ -97,7 +97,7 @@ window.SOLAR_COMFORT.calculateDeltaMRT_for_Grid = (room_depth, room_width, posit
     return delta_mrt_grid;
 }
 
-window.SOLAR_COMFORT.calculateMRT_for_Grid = (room_depth, room_width, geoResult, windowU, wallR, airTemp, outdoorTemp, clothing, metabolic, airSpeed, humidity) => {
+window.SOLAR_COMFORT.calculateMRT_for_Grid = (room_depth, room_width, geoResult, windowU, wallR, airTemp, outdoorTemp, clothing, metabolic, airSpeed, humidity, deltaMRTGrid) => {
     let intLowEChecked = false; // we aren't letting the user model this
     let intLowEEmissivity = 0.2; // UNUSED when intLowEChecked = false
     let radiantFloorChecked = false; // we aren't letting the user model this
@@ -114,6 +114,8 @@ window.SOLAR_COMFORT.calculateMRT_for_Grid = (room_depth, room_width, geoResult,
          */
         let occDistFromFacade = i + 1; 
         for(let j=0; j<room_width; j++) {
+            let deltaMRT = deltaMRTGrid[i][j];
+
             let occDistToWallCenter = j - roomWidthCenter; /* occupant horizontal position relative to room center */
             var viewResult = geo.computeAllViewFac(geoResult.wallCoords, geoResult.glzCoords, occDistToWallCenter, occDistFromFacade)
             
@@ -122,7 +124,9 @@ window.SOLAR_COMFORT.calculateMRT_for_Grid = (room_depth, room_width, geoResult,
                 windowU, intLowEChecked, intLowEEmissivity,
                 parseFloat(wallR), parseFloat(airTemp), parseFloat(outdoorTemp),
                 radiantFloorChecked, parseFloat(clothing), parseFloat(metabolic), parseFloat(airSpeed),
-                parseFloat(humidity), ppdValue, ppdValue2);
+                parseFloat(humidity), ppdValue, ppdValue2,
+                deltaMRT
+            );
             mrt_grid[i].push(comfortResult)
         }
     }
