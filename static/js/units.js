@@ -3,6 +3,9 @@ var units = units || {};
 
 // Temperature
 units.C2F = function(x){
+    if(isNaN(x)) {
+        return x;
+    }
     return x * 9 / 5 + 32;
 }
 units.F2C = function(x) {

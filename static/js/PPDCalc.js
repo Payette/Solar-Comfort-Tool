@@ -434,7 +434,7 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
     var ptMRT = pow( (opaView*pow(opaqueTKelvin,4)) + ((indoorView+((1-lowEmissivity)*winView))*pow(indoorTKelvin,4)) + (lowEmissivity*winView*pow(winTKelvin,4)), 0.25) - 273.15
   }
 
-  let solarAdjustedMRT = ptMRT + deltaMRT;
+  let solarAdjustedMRT = isNaN(deltaMRT) ? ptMRT : ptMRT + deltaMRT;
 
   //Compute the PMV at the point
   var mrtResult = comf.pmvElevatedAirspeed(airTemp, solarAdjustedMRT, vel, rh, met, clo, 0)
@@ -501,7 +501,7 @@ comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, ou
 	// Return the results.
 	var r = {}
   r.mrt = MRT;
-  r.deltaMRT = deltaMRT;
+  r.deltaMRT = [deltaMRT];
   r.solarAdjustedMRT = solarAdjustedMRT;
   r.ppd = mrtPPD;
 	r.pmv = mrtPMV;

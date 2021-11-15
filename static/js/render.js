@@ -4,7 +4,10 @@ var designTemp1;
 var designTemp2;
 
 var urlParams = new URLSearchParams(window.location.search);
-let debug = urlParams.get('debug');
+let debug = urlParams.get('debug') === 'true';
+// TODO, don't include MRT calculations in regression tests while we are debugging troubleshooting these
+// so we don't need to re-generate gold files while this is in flux
+let hideMRTCalculations = urlParams.get('hidemrtcalculations') === 'true';
 
 // show Outdoor Temprature in modal alert
     $(".optionButton#CitySearch").click(function(event) {
@@ -334,7 +337,7 @@ $(".optionButton#csv").click(function() {
 });
 
 function showCSVOnPage() {
-  var csvContent = createCSV();
+  var csvContent = createCSV(hideMRTCalculations);
   
   let csvDiv=document.createElement('pre');
   csvDiv.setAttribute('id', 'debugcsv')

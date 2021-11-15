@@ -134,8 +134,41 @@ function hoursOfSunFloorGridToCSV(globalGridColor, asciiArt = false) {
     return str;
 }
 
+function gridValueToCSV(globalGridColor, key, asciiArt = false, min = 0, max = 1) {
+    let str = "";
+    let scale = d3.scale.linear().clamp(true).domain([min, max]).range([0, 12]);
+
+    if(globalGridColor.length <= 0) {
+        console.error('error: globalGridColor should be a 2d array');
+        return "";
+    }
+
+    // header
+    let length = globalGridColor[0].length;
+    str += "depth, ";
+    let lengthValues = [];
+    for(let i=length; i>=1; i--) {
+        lengthValues.push(i);
+    }
+    str += lengthValues.join(",") + "\n";
+
+    var map0to12 = v => {
+        if(isNaN(v)) {
+            return v;
+        }
+        return scale(v);
+    }
+
+    for(let i=0; i<globalGridColor.length; i++) {
+        let value = asciiArt ? globalGridColor[i].map(v => map0to12(v[key])).map(number0to12toAscii) : globalGridColor[i].map(v => v[key]);
+        str += (i+1) + "," + value.join(',') + "\n";
+    }
+
+    return str;
+}
+
 // CREATE CSV CONTENT
-function createCSV() {
+function createCSV(hideMRTCalculations = false) {
     // console.log(window.SOLAR_COMFORT[`deltaMRTGrid`]);
 
     var csvContent = "Global Inputs\n";
@@ -156,6 +189,40 @@ function createCSV() {
     let globalGridColorA = window.SOLAR_COMFORT.globalGridColor;
     if(globalGridColorA && globalGridColorA.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColorA, true);
+    }
+
+    if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
+        let MRTGrid = window.SOLAR_COMFORT.MRTGrid;
+
+        csvContent += "\nCase 1 MRT Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'mrt');
+
+        csvContent += "\nCase 1 MRT Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'mrt', true, 50, 100);
+
+        csvContent += "\nCase 1 Delta-MRT Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'deltaMRT');
+
+        csvContent += "\nCase 1 Delta-MRT Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'deltaMRT', true, -100, 100);
+
+        csvContent += "\nCase 1 Solar Adjusted MRT Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'solarAdjustedMRT');
+
+        csvContent += "\nCase 1 Solar Adjusted MRT Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'solarAdjustedMRT', true, 50, 100);
+        
+        csvContent += "\nCase 1 PMV Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'pmv');
+
+        csvContent += "\nCase 1 PMV Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'pmv', true, -1, 1);
+        
+        csvContent += "\nCase 1 PPD Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'ppd');
+
+        csvContent += "\nCase 1 PPD Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid, 'ppd', true, 0, 100);
     }
 
     csvContent += "\nCase 1 Inputs\n";
@@ -188,6 +255,40 @@ function createCSV() {
     let globalGridColorA1 = window.SOLAR_COMFORT.globalGridColor1;
     if(globalGridColorA1 && globalGridColorA1.length > 0) {
         csvContent += hoursOfSunFloorGridToCSV(globalGridColorA1, true);
+    }
+
+    if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid1 && window.SOLAR_COMFORT.MRTGrid1.length > 0) {
+        let MRTGrid1 = window.SOLAR_COMFORT.MRTGrid1;
+
+        csvContent += "\nCase 2 MRT Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'mrt');
+
+        csvContent += "\nCase 2 MRT Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'mrt', true, 50, 100);
+
+        csvContent += "\nCase 2 Delta-MRT Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'deltaMRT');
+
+        csvContent += "\nCase 2 Delta-MRT Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'deltaMRT', true, -100, 100);
+
+        csvContent += "\nCase 2 Solar Adjusted MRT Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'solarAdjustedMRT');
+
+        csvContent += "\nCase 2 Solar Adjusted MRT Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'solarAdjustedMRT', true, 50, 100);
+        
+        csvContent += "\nCase 2 PMV Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'pmv');
+
+        csvContent += "\nCase 2 PMV Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'pmv', true, -1, 1);
+        
+        csvContent += "\nCase 2 PPD Grid (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'ppd');
+
+        csvContent += "\nCase 2 PPD Grid ASCI-art (length x depth)\n";
+        csvContent += gridValueToCSV(MRTGrid1, 'ppd', true, 0, 100);
     }
 
     return csvContent;

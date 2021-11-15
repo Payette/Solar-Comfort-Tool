@@ -87,7 +87,7 @@ window.SOLAR_COMFORT.calculateDeltaMRT_for_Grid = (room_depth, room_width, posit
             let d = i + 1;
             if(isNaN(beta) || beta < 0 || isNaN(solar_azimuth)) {
                 // solar elevation is negative when the sun has dropped below the horizon hence it is night-time
-                delta_mrt_grid[i][j] = 0;
+                delta_mrt_grid[i][j] = Number.NaN;
             } else {
                 let deltaMRT = window.SOLAR_COMFORT.calculateDeltaMRT(position_body, h, w, d, beta, solar_azimuth, SHGC, alpha_sw);
                 delta_mrt_grid[i][j] = deltaMRT;    
@@ -137,20 +137,20 @@ window.SOLAR_COMFORT.zeroOutDeltaMRT_for_Locations_with_no_Direct_Sun = (deltaMR
     for(var i=0; i<deltaMRTGrid.length; i++){
         for(var j=0; j<deltaMRTGrid[i].length; j++){
             if(directSunGrid[i][j] == 0) {
-                deltaMRTGrid[i][j] = 0;
+                deltaMRTGrid[i][j] = Number.NaN;
             }
         }
     }
 }
 
-window.SOLAR_COMFORT.add2DArrays = (a, b) => {
-    let added = [];
+// window.SOLAR_COMFORT.add2DArrays = (a, b) => {
+//     let added = [];
 
-    for(var i=0; i<a.length; i++){
-        added[i] = [];
-        for(var j=0; j<a[i].length; j++){
-            added[i][j] = a[i][j] + b[i][j];
-        }
-    }
-    return added;
-}
+//     for(var i=0; i<a.length; i++){
+//         added[i] = [];
+//         for(var j=0; j<a[i].length; j++){
+//             added[i][j] = a[i][j] + b[i][j];
+//         }
+//     }
+//     return added;
+// }

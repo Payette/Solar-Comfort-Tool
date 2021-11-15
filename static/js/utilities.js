@@ -66,6 +66,10 @@ let twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, num
   // useful for regression testing and validating changes during bug fixing
   let ASCII_GRAYSCALE = ['⬛','█','▮','▰','◼','◾','▬','▪','•','=','-','.',' '];
   let number0to12toAscii = (value) => {
+    if(isNaN(value)) {
+      return ' ';
+    }
+
     let i = Math.round(value);
     i = (ASCII_GRAYSCALE.length-1) - i; // reverse
     i = i < 0 ? 0 : (i > (ASCII_GRAYSCALE.length-1) ? ASCII_GRAYSCALE.length-1 : i);

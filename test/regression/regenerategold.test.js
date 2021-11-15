@@ -6,7 +6,7 @@ jest.setTimeout(500000);
 async function generateGold(fileName, inputs) {
   page.on('console', (msg) => console.log(msg.text()));
 
-  await page.goto('http://localhost:3000/?debug=true', {
+  await page.goto('http://localhost:3000/?debug=true&hidemrtcalculations=true', {
     waitUntil: 'load',
   });
   await delay(3000)
