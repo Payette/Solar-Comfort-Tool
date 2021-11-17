@@ -9,6 +9,20 @@ let singleHour = 0;
 let fullDay = 1;
 let currentFrame = 0;
 let annualOn = false; // Check If Annual Button is Pressed
+
+let thermalComfortSingleHour = !!document.getElementById(`ppdRadio`).checked;
+document.getElementsByName(`studyType`).forEach(e => e.addEventListener('click', () => {
+  if(e.id === 'ppdRadio') {
+    thermalComfortSingleHour = true;
+    Array.from(document.getElementsByClassName("directsunlegend")).forEach(e => e.classList.add('hidefromall'));
+    Array.from(document.getElementsByClassName("ppdlegend")).forEach(e => e.classList.remove('hidefromall'));
+  } else {
+    thermalComfortSingleHour = false;
+    Array.from(document.getElementsByClassName("directsunlegend")).forEach(e => e.classList.remove('hidefromall'));
+    Array.from(document.getElementsByClassName("ppdlegend")).forEach(e => e.classList.add('hidefromall'));
+  }
+}))
+
 window.SOLAR_COMFORT.annualSimulationDone = false;
 window.SOLAR_COMFORT.annualSimulationDone1 = false;
 
@@ -190,58 +204,109 @@ $("#mdst").on("change", function (event) {
 //D3 COLOR CHART
 // https://andrewringler.github.io/palettes/#/9|d|ff91a2|258811|1|1|1|
 // var ppdColorScale0to100 = d3.scale.quantize().domain([100, 80, 60, 40, 20, 0]).range(['#340000', '#663b3b', '#987777', '#cbb9b9', '#ffffff']);
-var ppdColorScale10to100 = d3.scale.quantize().domain([10, 100]).range(['#e4e7a5', '#e9c1a2', '#ed9a9f', '#f2749d', '#f64d9a', '#fb2797', '#ff0094']);
-var ppdColorScale0to10 = d3.scale.quantize().domain([0, 10]).range(['#258811', '#45982a', '#65a842', '#85b85b', '#a4c774', '#c4d78c', '#e4e7a5']);
+let ppd10to100Colors = ['#e4e7a5', '#e9c1a2', '#ed9a9f', '#f2749d', '#f64d9a', '#fb2797', '#ff0094'];
+let ppd0to10Colors = ['#258811', '#45982a', '#65a842', '#85b85b', '#a4c774', '#c4d78c', '#e4e7a5'];
+let ppdAllColors = ppd0to10Colors.concat(ppd10to100Colors.slice(1,ppd10to100Colors.length));
+var ppdColorScale10to100 = d3.scale.quantize().domain([10, 100]).range(ppd10to100Colors);
+var ppdColorScale0to10 = d3.scale.quantize().domain([0, 10]).range(ppd0to10Colors);
 
-
-d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327)
-var vis = d3.select("svg")
-var arr = d3.range(13 * timeStepValue)
 var ColorScaleArray = [];
-var dataset = [0, 2, 4, 6, 8, 10, 12];
 
-//position scale
-var xScale = d3.scale.linear().domain([0, 13]).range([0, 325])
+// Direct Sun Legend
+function directSunLegend() {
+  d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class','directsunlegend')
+  var vis = d3.select(".directsunlegend")
+  var arr = d3.range(13 * timeStepValue)
+  var dataset = [0, 2, 4, 6, 8, 10, 12];
+  
+  //position scale
+  var xScale = d3.scale.linear().domain([0, 13]).range([0, 325])
+  
+  var colorScale = d3.scale.linear().domain([0, 6, 13])
+    .range(["#ffffff", "#e2706a", "#893132"])
+  
+  vis.selectAll('rect').data(arr).enter()
+    .append('rect')
+    .attr({
+      x: function (d) { return xScale(d) + 1 },
+      y: 16,
+      height: 12,
+      width: 25,
+      stroke: d3.rgb(0, 0, 0),
+      fill: function (d) { ColorScaleArray.push(d3.rgb(colorScale(d))); return colorScale(d) }
+    });
+  
+    vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
+      .data(dataset)
+      .enter()
+      .append("text") // <-- Same here!
+      .text(function (d) { return d; })
+      .attr("text-anchor", "middle")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "9px")
+      .attr({
+        x: function (d) { return xScale(d) + 12 },
+        y: 40
+      });
+  
+      vis.append("text")
+        .attr("x", 0)
+        .attr("y", 12)
+        .text("Hours of Day in Direct Sun")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+}
+directSunLegend();
 
-//The mystical polylinear color scale
-// var colorScale = d3.scale.linear().domain([0, 2, 3, 5, 12])
-//     .range([d3.rgb(255,255,255), d3.rgb(255,222,60), d3.rgb(218,93,127), d3.rgb(220,26,85), d3.rgb(220,26,85)])
-var colorScale = d3.scale.linear().domain([0, 6, 13])
-  .range(["#ffffff", "#e2706a", "#893132"])
+// PPD Legend
+function ppdLegend() {
+  d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class','ppdlegend hidefromall')
+  var vis = d3.select(".ppdlegend")
+  let numBlocks = 14
+  let width = 325
+  var arr = d3.range(numBlocks)
+  var dataset = [0, 20, 100];
+  
+  //position scale
+  var blockXScale = d3.scale.linear().domain([0, 13]).range([0, width])
+  var colorScale = d3.scale.quantize().domain([0, 20, 100]).range(ppdAllColors);
 
-vis.selectAll('rect').data(arr).enter()
-  .append('rect')
-  .attr({
-    x: function (d) { return xScale(d) + 1 },
-    y: 16,
-    height: 12,
-    width: 25,
-    stroke: d3.rgb(0, 0, 0),
-    fill: function (d) { ColorScaleArray.push(d3.rgb(colorScale(d))); return colorScale(d) }
-  });
-
-
-vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
-  .data(dataset)
-  .enter()
-  .append("text") // <-- Same here!
-  .text(function (d) { return d; })
-  .attr("text-anchor", "middle")
-  .attr("font-family", "sans-serif")
-  .attr("font-size", "9px")
-  .attr({
-    x: function (d) { return xScale(d) + 12 },
-    y: 40
-  });
-
-vis.append("text")
-  .attr("x", 0)
-  .attr("y", 12)
-  .text("Hours of Day in Direct Sun")
-  .attr("font-family", "sans-serif")
-  .attr("font-size", "12px")
-
-
+  vis.selectAll('rect').data(arr).enter()
+    .append('rect')
+    .attr({
+      x: function (d) { return blockXScale(d) + 1 },
+      y: 16,
+      height: 12,
+      width: 25,
+      stroke: d3.rgb(0, 0, 0),
+      fill: function (d) { let c = d / (numBlocks-1) * 100; return colorScale(c) }
+    });
+  
+    vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
+      .data(dataset)
+      .enter()
+      .append("text") // <-- Same here!
+      .text(function (d) { return d; })
+      .attr("text-anchor", "middle")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "9px")
+      .attr({
+        x: function (d, i) { 
+          if(i === 0) return 12;
+          if(i === 1) return 12 + width/2;
+          if(i === 2) return width -12;  
+        },
+        y: 40
+      });
+  
+      vis.append("text")
+        .attr("x", 0)
+        .attr("y", 12)
+        .text("Predicted Percentage of Dissatisfied (PPD)")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+}
+ppdLegend();
 
 //INIT SKETCH1 P5 CANVAS
 
@@ -391,7 +456,6 @@ renderGraphicsAndRunSimulation = caseNumber => {
       }
 
       // Study
-      let thermalComfortSingleHour = !!document.getElementById(`ppdRadio`).checked;
       
       
       let glzOrWidth = document.getElementById(`glazingRatioCheck`).checked;
@@ -1918,22 +1982,30 @@ renderGraphicsAndRunSimulation = caseNumber => {
       window.SOLAR_COMFORT[`MDTResult${c}`] = "% > max direct sun time, " + MDTPercentage + "%, ";
 
       p.push();
+
       if (MDTPercentage < valFal) {
-        p.fill(0, 255, 0);
-        p.image(imgCheck, 310, 2, 30, 30);
+        if(!thermalComfortSingleHour) {
+          p.fill(0, 255, 0);
+          p.image(imgCheck, 310, 2, 30, 30);
+        }
         window.SOLAR_COMFORT[`MDTResult${c}`] += "Pass\n";
       } else {
-        p.fill(255, 0, 0);
-        p.image(imgNope, 310, 2, 30, 30);
+        if(!thermalComfortSingleHour) {
+          p.fill(255, 0, 0);
+          p.image(imgNope, 310, 2, 30, 30);
+        }
         window.SOLAR_COMFORT[`MDTResult${c}`] += "Fail\n";
       }
 
       p.fill(0);
       p.textSize(50);
 
-      p.text(MDTPercentage + "%", 340, 38);
-      p.textSize(10);
-      p.text("> max direct sun time", 340, 50);
+      if(!thermalComfortSingleHour) {
+        p.text(MDTPercentage + "%", 340, 38);
+        p.textSize(10);
+        p.text("> max direct sun time", 340, 50);
+      }
+
       // p.pop();
       //
       // //console.log(p.frameCount);

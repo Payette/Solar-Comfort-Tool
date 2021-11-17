@@ -1120,3 +1120,10 @@ div.case2, #inputs input.case2, #inputs select.case2, hr.case2 {
 	right: 10px;
 	top: 10px;
 }
+.hidefromall {
+	display: none;
+}
+#visualization {
+	width: 350px;
+	height: 80px;
+}
