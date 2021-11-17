@@ -346,6 +346,18 @@ function showCSVOnPage() {
 }
 
 if(debug) {
+  let debugButton=document.createElement('button');
+  debugButton.setAttribute('id', 'debugbutton');
+  debugButton.textContent="Print Debug";
+  document.body.appendChild(debugButton);
+  debugButtonEl = document.getElementById('debugbutton');
+  debugButtonEl.addEventListener('click', () => {
+    console.log('MRTGrid Case 1: ', window.SOLAR_COMFORT.MRTGrid);
+    if(window.SOLAR_COMFORT.Case2Button === 1) {
+      console.log('MRTGrid Case 2: ', window.SOLAR_COMFORT.MRTGrid1);
+    }
+  })
+
   // wait for everything to load
   // wait for our tests to finish updating the UI inputes
   // then grab our CSV exports and display on the page

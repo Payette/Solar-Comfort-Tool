@@ -386,8 +386,9 @@ comf.pierceSET = function(ta, tr, vel, rh, met, clo, wme) {
 comf.pmvElevatedAirspeed = function(ta, tr, vel, rh, met, clo, wme) {
     var r = {}
     var set = 0
+    var pmv = {};
     if (vel <= comf.still_air_threshold) {
-        var pmv = comf.pmv(ta, tr, vel, rh, met, clo, wme)
+        pmv = comf.pmv(ta, tr, vel, rh, met, clo, wme)
         var ta_adj = ta
         var ce = 0
     } else {
@@ -402,10 +403,11 @@ comf.pmvElevatedAirspeed = function(ta, tr, vel, rh, met, clo, wme) {
         if (isNaN(ce)) {
             ce = util.bisect(ce_l, ce_r, fn, eps, 0);
         }
-        var pmv = comf.pmv(ta - ce, tr - ce, comf.still_air_threshold, rh, met, clo, wme);
+        pmv = comf.pmv(ta - ce, tr - ce, comf.still_air_threshold, rh, met, clo, wme);
     }
     r.pmv = pmv.pmv;
     r.ppd = pmv.ppd;
+
     r.ta_adj = ta - ce;
     r.tr_adj = tr - ce;
     r.cooling_effect = ce;
@@ -439,7 +441,8 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
   //Compute the PMV at the point
   var mrtResult = comf.pmvElevatedAirspeed(airTemp, solarAdjustedMRT, vel, rh, met, clo, 0)
 	if (mrtResult.pmv > 0){
-		var finalMRTPPD = 5
+		// var finalMRTPPD = 5
+    var finalMRTPPD = mrtResult.ppd
   } else {
 		var finalMRTPPD = mrtResult.ppd
   }
@@ -503,6 +506,7 @@ comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, ou
   r.mrt = MRT;
   r.deltaMRT = [deltaMRT];
   r.solarAdjustedMRT = solarAdjustedMRT;
+
   r.ppd = mrtPPD;
 	r.pmv = mrtPMV;
 	r.windowTemp = windowTemp;
@@ -645,6 +649,7 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
       ptInfo.solarAdjustedMRT = units.C2F(mrtPPDResult.solarAdjustedMRT[i])
       ptInfo.deltaMRT = units.C2F(mrtPPDResult.deltaMRT[i])
     } else {
+
       ptInfo.mrt = mrtPPDResult.mrt[i];
       ptInfo.solarAdjustedMRT = mrtPPDResult.solarAdjustedMRT[i];
       ptInfo.deltaMRT = mrtPPDResult.deltaMRT[i];

@@ -219,10 +219,10 @@ function createCSV(hideMRTCalculations = false) {
         csvContent += gridValueToCSV(MRTGrid, 'pmv', true, -1, 1);
         
         csvContent += "\nCase 1 PPD Grid (length x depth)\n";
-        csvContent += gridValueToCSV(MRTGrid, 'ppd');
+        csvContent += gridValueToCSV(MRTGrid, 'mrtppd');
 
         csvContent += "\nCase 1 PPD Grid ASCI-art (length x depth)\n";
-        csvContent += gridValueToCSV(MRTGrid, 'ppd', true, 0, 100);
+        csvContent += gridValueToCSV(MRTGrid, 'mrtppd', true, 0, 100);
     }
 
     csvContent += "\nCase 1 Inputs\n";
@@ -285,10 +285,10 @@ function createCSV(hideMRTCalculations = false) {
         csvContent += gridValueToCSV(MRTGrid1, 'pmv', true, -1, 1);
         
         csvContent += "\nCase 2 PPD Grid (length x depth)\n";
-        csvContent += gridValueToCSV(MRTGrid1, 'ppd');
+        csvContent += gridValueToCSV(MRTGrid1, 'mrtppd');
 
         csvContent += "\nCase 2 PPD Grid ASCI-art (length x depth)\n";
-        csvContent += gridValueToCSV(MRTGrid1, 'ppd', true, 0, 100);
+        csvContent += gridValueToCSV(MRTGrid1, 'mrtppd', true, 0, 100);
     }
 
     return csvContent;

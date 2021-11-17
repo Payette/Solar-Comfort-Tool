@@ -188,6 +188,11 @@ $("#mdst").on("change", function (event) {
 });
 
 //D3 COLOR CHART
+// https://andrewringler.github.io/palettes/#/9|d|ff91a2|258811|1|1|1|
+// var ppdColorScale0to100 = d3.scale.quantize().domain([100, 80, 60, 40, 20, 0]).range(['#340000', '#663b3b', '#987777', '#cbb9b9', '#ffffff']);
+var ppdColorScale10to100 = d3.scale.quantize().domain([10, 100]).range(['#e4e7a5', '#e9c1a2', '#ed9a9f', '#f2749d', '#f64d9a', '#fb2797', '#ff0094']);
+var ppdColorScale0to10 = d3.scale.quantize().domain([0, 10]).range(['#258811', '#45982a', '#65a842', '#85b85b', '#a4c774', '#c4d78c', '#e4e7a5']);
+
 
 d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327)
 var vis = d3.select("svg")
@@ -1756,9 +1761,24 @@ renderGraphicsAndRunSimulation = caseNumber => {
           }
 
           mySun = parseInt(mySun);
-
+          
           // draw colored grid square on floor representing % of time in direct sun
-          p.fill(ColorScaleArray[mySun].r, ColorScaleArray[mySun].g, ColorScaleArray[mySun].b, 200);
+          if(thermalComfortSingleHour && window.SOLAR_COMFORT[`MRTGrid${c}`]) {
+            let mrtValues = window.SOLAR_COMFORT[`MRTGrid${c}`][i][j];
+            let gridColor = '#ffffff';
+            if(mrtValues.mrtppd >= 10 && mrtValues.mrtppd <= 100) {
+              gridColor = ppdColorScale10to100(mrtValues.mrtppd);
+            }
+            else if(mrtValues.mrtppd >= 0 && mrtValues.mrtppd < 10) {
+              gridColor = ppdColorScale0to10(mrtValues.mrtppd);
+            } else {
+              console.log(mrtValues.mrtppd)
+              gridColor = "#000000";
+            }
+            p.fill(gridColor);
+          } else {
+            p.fill(ColorScaleArray[mySun].r, ColorScaleArray[mySun].g, ColorScaleArray[mySun].b, 200);
+          }
           p.quad(newX1, newY1 - GridHt, newX2, newY2 - GridHt, newX3, newY3 - GridHt, newX4, newY4 - GridHt);
 
           if (annualOn && window.SOLAR_COMFORT[`dateCounter${c}`] > 364) {
