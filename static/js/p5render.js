@@ -204,11 +204,18 @@ $("#mdst").on("change", function (event) {
 //D3 COLOR CHART
 // https://andrewringler.github.io/palettes/#/9|d|ff91a2|258811|1|1|1|
 // var ppdColorScale0to100 = d3.scale.quantize().domain([100, 80, 60, 40, 20, 0]).range(['#340000', '#663b3b', '#987777', '#cbb9b9', '#ffffff']);
-let ppd10to100Colors = ['#e4e7a5', '#e9c1a2', '#ed9a9f', '#f2749d', '#f64d9a', '#fb2797', '#ff0094'];
-let ppd0to10Colors = ['#258811', '#45982a', '#65a842', '#85b85b', '#a4c774', '#c4d78c', '#e4e7a5'];
-let ppdAllColors = ppd0to10Colors.concat(ppd10to100Colors.slice(1,ppd10to100Colors.length));
-var ppdColorScale10to100 = d3.scale.quantize().domain([10, 100]).range(ppd10to100Colors);
-var ppdColorScale0to10 = d3.scale.quantize().domain([0, 10]).range(ppd0to10Colors);
+// let ppd10to100Colors = ['#e4e7a5', '#e9c1a2', '#ed9a9f', '#f2749d', '#f64d9a', '#fb2797', '#ff0094'];
+// let ppd0to10Colors = ['#258811', '#45982a', '#65a842', '#85b85b', '#a4c774', '#c4d78c', '#e4e7a5'];
+// let ppdAllColors = ppd0to10Colors.concat(ppd10to100Colors.slice(1,ppd10to100Colors.length));
+// var ppdColorScale10to100 = d3.scale.quantize().domain([10, 100]).range(ppd10to100Colors);
+// var ppdColorScale0to10 = d3.scale.quantize().domain([0, 10]).range(ppd0to10Colors);
+
+let ppdColors0to30 = ['#258811', '#549b33', '#79ae50', '#9dc16c', '#c1d488', /* green to yellow, 5 steps */
+
+/* yellow to pink, 10 steps */
+'#e4e7a5', '#ead6a4', '#f0c5a2', '#f4b3a0', '#f8a19e', '#fa8d9d', '#fc789b', '#fe6098', '#ff4296', '#ff0094'];
+
+let ppdColorScale0to30 = d3.scale.quantize().domain([0, 30]).range(ppdColors0to30);
 
 var ColorScaleArray = [];
 
@@ -262,14 +269,15 @@ directSunLegend();
 function ppdLegend() {
   d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class','ppdlegend hidefromall')
   var vis = d3.select(".ppdlegend")
-  let numBlocks = 14
+  let numBlocks = 15+1
   let width = 325
   var arr = d3.range(numBlocks)
-  var dataset = [0, 20, 100];
+  var dataset = [0, 10, 20, 30];
   
   //position scale
-  var blockXScale = d3.scale.linear().domain([0, 13]).range([0, width])
-  var colorScale = d3.scale.quantize().domain([0, 20, 100]).range(ppdAllColors);
+  var blockXScale = d3.scale.linear().domain([0, numBlocks-1]).range([0, width])
+  // var colorScale = d3.scale.quantize().domain([0, 30]).range(ppdColors0to30);
+  var textPosition = d3.scale.linear().domain([0, 30]).range([0, width])
 
   vis.selectAll('rect').data(arr).enter()
     .append('rect')
@@ -279,7 +287,7 @@ function ppdLegend() {
       height: 12,
       width: 25,
       stroke: d3.rgb(0, 0, 0),
-      fill: function (d) { let c = d / (numBlocks-1) * 100; return colorScale(c) }
+      fill: function (d) { return ppdColorScale0to30(2 * d) }
     });
   
     vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
@@ -293,8 +301,8 @@ function ppdLegend() {
       .attr({
         x: function (d, i) { 
           if(i === 0) return 12;
-          if(i === 1) return 12 + width/2;
-          if(i === 2) return width -12;  
+          if(i === dataset.length-1) return width - 12;  
+          return textPosition(d) + 12
         },
         y: 40
       });
@@ -1830,13 +1838,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
           if(thermalComfortSingleHour && window.SOLAR_COMFORT[`MRTGrid${c}`]) {
             let mrtValues = window.SOLAR_COMFORT[`MRTGrid${c}`][i][(gridY - 1) - j]; /* flip left-to-right room is actually drawn 0 feet on the right */
             let gridColor = '#ffffff';
-            if(mrtValues.mrtppd >= 10 && mrtValues.mrtppd <= 100) {
-              gridColor = ppdColorScale10to100(mrtValues.mrtppd);
-            }
-            else if(mrtValues.mrtppd >= 0 && mrtValues.mrtppd < 10) {
-              gridColor = ppdColorScale0to10(mrtValues.mrtppd);
+            if(mrtValues.mrtppd >= 0 && mrtValues.mrtppd <= 30) {
+              gridColor = ppdColorScale0to30(mrtValues.mrtppd);
+            } else if (mrtValues.mrtppd <= 100) {
+              gridColor = ppdColorScale0to30[ppdColors0to30.length-1];
             } else {
-              console.log(mrtValues.mrtppd)
+              console.error('invalid PPD: ', mrtValues.mrtppd);
               gridColor = "#000000";
             }
             p.fill(gridColor);
