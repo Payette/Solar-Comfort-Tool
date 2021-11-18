@@ -1828,7 +1828,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
           
           // draw colored grid square on floor representing % of time in direct sun
           if(thermalComfortSingleHour && window.SOLAR_COMFORT[`MRTGrid${c}`]) {
-            let mrtValues = window.SOLAR_COMFORT[`MRTGrid${c}`][i][j];
+            let mrtValues = window.SOLAR_COMFORT[`MRTGrid${c}`][i][(gridY - 1) - j]; /* flip left-to-right room is actually drawn 0 feet on the right */
             let gridColor = '#ffffff';
             if(mrtValues.mrtppd >= 10 && mrtValues.mrtppd <= 100) {
               gridColor = ppdColorScale10to100(mrtValues.mrtppd);
