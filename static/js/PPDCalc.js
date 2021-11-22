@@ -399,9 +399,9 @@ comf.pmvElevatedAirspeed = function(ta, tr, vel, rh, met, clo, wme) {
         var fn = function(ce){
             return (set - comf.pierceSET(ta - ce, tr - ce, comf.still_air_threshold, rh, met, clo, wme));
         };
-        var ce = util.secant(ce_l, ce_r, fn, eps);
+        var ce = window.SOLAR_COMFORT.secant(ce_l, ce_r, fn, eps);
         if (isNaN(ce)) {
-            ce = util.bisect(ce_l, ce_r, fn, eps, 0);
+            ce = window.SOLAR_COMFORT.bisect(ce_l, ce_r, fn, eps, 0);
         }
         pmv = comf.pmv(ta - ce, tr - ce, comf.still_air_threshold, rh, met, clo, wme);
     }

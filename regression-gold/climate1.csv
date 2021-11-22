@@ -80,11 +80,11 @@ Time Step per Hour,4
 Longitude,-71
 Latitude,2
 Time Zone Offset,-5
-Outdoor Temperature (°F),10
-Indoor Temperature (°F),72
-Relative Humidity (%),20
+Outdoor Temperature (°F),90.9
+Indoor Temperature (°F),76
+Relative Humidity (%),60
 Air Speed (fpm),10
-Clothing Level (clo),0.85
+Clothing Level (clo),0.5
 Metabolic Rate (met),1.2
 Occupant Posture,seated
 Average Shortwave Absorptivity,0.67
@@ -124,11 +124,11 @@ Time Step per Hour,4
 Longitude,-71
 Latitude,60
 Time Zone Offset,-5
-Outdoor Temperature (°F),10
-Indoor Temperature (°F),72
-Relative Humidity (%),20
+Outdoor Temperature (°F),90.9
+Indoor Temperature (°F),76
+Relative Humidity (%),60
 Air Speed (fpm),10
-Clothing Level (clo),0.85
+Clothing Level (clo),0.5
 Metabolic Rate (met),1.2
 Occupant Posture,seated
 Average Shortwave Absorptivity,0.67
