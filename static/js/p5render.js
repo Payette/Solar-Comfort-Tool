@@ -46,19 +46,19 @@ window.SOLAR_COMFORT.globalInputFieldNames = [
   `dsHour`,
   `dsDay`,
   `windowWidthCheck`,
-  `glazingRatioCheck`
-];
-
-// Case 2 has a 1 appended to the end of these name
-// IE hour refers to case 1, and hour1 refers to case 2
-window.SOLAR_COMFORT.caseInputFieldNames = [
+  `glazingRatioCheck`,
   `long`,
   `lat`,
   `timeZone`,
   `outdoorTemp`,
   `hour`,
   `day`,
-  `mon`,
+  `mon`
+];
+
+// Case 2 has a 1 appended to the end of these name
+// IE hour refers to case 1, and hour1 refers to case 2
+window.SOLAR_COMFORT.caseInputFieldNames = [
   `airTemp`,
   `humidity`,
   `airSpeed`,
@@ -363,10 +363,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
       document.getElementById(`ppdRadio`).addEventListener('input', p.reload);
       document.getElementsByName(`glazingRadio`)[0].addEventListener('input', p.reload);
       document.getElementsByName(`glazingRadio`)[1].addEventListener('input', p.reload);
-      document.getElementsByName(`long${c}`)[0].addEventListener('input', p.reload);
-      document.getElementsByName(`lat${c}`)[0].addEventListener('input', p.reload);
-      document.getElementsByName(`timeZone${c}`)[0].addEventListener('input', p.reload);
-      document.getElementsByName(`hour${c}`)[0].addEventListener('input', p.reload);
+      document.getElementsByName(`long`)[0].addEventListener('input', p.reload);
+      document.getElementsByName(`lat`)[0].addEventListener('input', p.reload);
+      document.getElementsByName(`timeZone`)[0].addEventListener('input', p.reload);
+      document.getElementsByName(`hour`)[0].addEventListener('input', p.reload);
       document.getElementsByName("day")[0].addEventListener('input', p.reload);
       document.getElementsByName("mon")[0].addEventListener('input', p.reload);
       document.getElementsByName("timeStep")[0].addEventListener('input', p.reload);
@@ -416,18 +416,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       if (caseNumber === 2) {
         if (window.SOLAR_COMFORT.Case2Button == 0) {
-          document.getElementsByName("button1")[0].className = "button1OFF";
-          document.getElementsByName("button1")[1].className = "button1OFF";
-          document.getElementsByName("button1")[2].className = "button1OFF";
-          document.getElementsByName("button1")[3].className = "button1OFF";
+          document.getElementsByName("button1").forEach(e => e.className = "button1OFF")
   
           $("input.case2, select.case2").css("visibility", "hidden");
 
         } else {
-          document.getElementsByName("button1")[0].className = "button1ON";
-          document.getElementsByName("button1")[1].className = "button1ON";
-          document.getElementsByName("button1")[2].className = "button1ON";
-          document.getElementsByName("button1")[3].className = "button1ON";
+          document.getElementsByName("button1").forEach(e => e.className = "button1ON");
   
           $("input.case2, select.case2").css("visibility", "visible");
         }
@@ -466,21 +460,21 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       
       // CLIMATE
-      let Lon1 = document.getElementById(`long${c}`).value;
+      let Lon1 = document.getElementById(`long`).value;
       
-      let Lat1 = document.getElementById(`lat${c}`).value;
+      let Lat1 = document.getElementById(`lat`).value;
       
-      let TimeZone1 = document.getElementById(`timeZone${c}`).value;
+      let TimeZone1 = document.getElementById(`timeZone`).value;
       
-      let outdoorTemp = document.getElementById(`outdoorTemp${c}`).value;
+      let outdoorTemp = document.getElementById(`outdoorTemp`).value;
       
       // TIME CONFIG
       
-      let Hour1 = document.getElementById(`hour${c}`).value;
+      let Hour1 = document.getElementById(`hour`).value;
       
-      let Day1 = document.getElementById(`day${c}`).value;
+      let Day1 = document.getElementById(`day`).value;
       
-      let Month1 = document.getElementById(`mon${c}`).value;
+      let Month1 = document.getElementById(`mon`).value;
       
       let timestep = document.getElementById(`timeStep`).value;
       

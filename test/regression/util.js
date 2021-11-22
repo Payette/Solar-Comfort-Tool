@@ -94,9 +94,7 @@ exports.regressionTests = [
         name: "defaults",
         inputs: [
             { id: "mon", value: 9 },
-            { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 }
+            { id: "day", value: 21 }
         ]
     },
     // Time regression tests - Month, Day, Hour
@@ -104,36 +102,14 @@ exports.regressionTests = [
         name: "month",
         inputs: [
             { id: "mon", value: 1 },
-            { id: "mon1", value: 2 },
-            { id: "day", value: 21 },
-            { id: "day1", value: 21 }
+            { id: "day", value: 21 }
         ]
     },
     {
         name: "day",
         inputs: [
             { id: "mon", value: 10 },
-            { id: "day", value: 15 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 10 }
-        ]
-    },
-    {
-        name: "day1",
-        inputs: [
-            { id: "mon", value: 6 },
-            { id: "day", value: 7 },
-            { id: "mon1", value: 7 },
-            { id: "day1", value: 8 },
-        ]
-    },
-    {
-        name: "day2",
-        inputs: [
-            { id: "mon", value: 3 },
-            { id: "day", value: 22 },
-            { id: "mon1", value: 4 },
-            { id: "day1", value: 14 },
+            { id: "day", value: 15 }
         ]
     },
     {
@@ -141,12 +117,8 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
-
             { id: "dsHour", command: "click" },
-            { id: "hour", value: 14 },
-            { id: "hour1", value: 16 },
+            { id: "hour", value: 14 }
         ]
     },
     {
@@ -155,34 +127,7 @@ exports.regressionTests = [
             { id: "dsHour", command: "click" },
             { id: "mon", value: 5 },
             { id: "day", value: 4 },
-            { id: "hour", value: 9 },
-            { id: "mon1", value: 3 },
-            { id: "day1", value: 11 },
-            { id: "hour1", value: 11 }
-        ]
-    },
-    {
-        name: "month-day-hour1",
-        inputs: [
-            { id: "dsHour", command: "click" },
-            { id: "mon", value: 8 },
-            { id: "day", value: 18 },
-            { id: "hour", value: 15 },
-            { id: "mon1", value: 8 },
-            { id: "day1", value: 26 },
-            { id: "hour1", value: 14 }
-        ]
-    },
-    {
-        name: "month-day-hour2",
-        inputs: [
-            { id: "dsHour", command: "click" },
-            { id: "mon", value: 12 },
-            { id: "day", value: 30 },
-            { id: "hour", value: 13 },
-            { id: "mon1", value: 11 },
-            { id: "day1", value: 17 },
-            { id: "hour1", value: 12 }
+            { id: "hour", value: 9 }
         ]
     },
     // Climate regression tests - Latitude
@@ -191,23 +136,7 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
-
-            { id: "lat", value: 10 },
-            { id: "lat1", value: 50 }
-        ]
-    },
-    {
-        name: "climate1",
-        inputs: [
-            { id: "mon", value: 9 },
-            { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
-
-            { id: "lat", value: 2 },
-            { id: "lat1", value: 60 }
+            { id: "lat", value: 10 }
         ]
     },
     // Room Geometry regression tests - Room Orientation, Length, Depth
@@ -216,8 +145,6 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
 
             { id: "north", value: 45 },
             { id: "north1", value: -90 },
@@ -232,8 +159,6 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
 
             { id: "north", value: 60 },
             { id: "north1", value: -60 },
@@ -249,8 +174,6 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
 
             { id: "windowHeight", value: 9.5 },
             { id: "windowHeight1", value: 5 },
@@ -270,8 +193,6 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
 
             { id: "hShadeNum", value: 3 },
             { id: "hShadeNum1", value: 2 },
@@ -293,8 +214,6 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
 
             { id: "vShadeNum", value: 3 },
             { id: "vShadeNum1", value: 4 },
@@ -318,8 +237,6 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
 
             { id: "hShadeNum", value: 2 },
             { id: "hShadeNum1", value: 4 },
@@ -356,8 +273,6 @@ exports.regressionTests = [
         inputs: [
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
 
             { id: "dsAnnual", command: "click" }
         ]
@@ -365,9 +280,6 @@ exports.regressionTests = [
     {
         name: "annual",
         inputs: [
-            { id: "mon1", value: 9 },
-            { id: "day1", value: 21 },
-
             { id: "mon", value: 10 },
             { id: "day", value: 24 },
             { id: "lat", value: 39 },
@@ -379,23 +291,5 @@ exports.regressionTests = [
             { id: "hShadeAngle", value: 81 },
             { id: "dsAnnual", command: "click" },
         ]
-    },
-    {
-        name: "annual1",
-        inputs: [
-            { id: "mon", value: 9 },
-            { id: "day", value: 21 },
-
-            { id: "mon1", value: 10 },
-            { id: "day1", value: 24 },
-            { id: "lat1", value: 39 },
-            { id: "north1", value: 72 },
-            { id: "wallDep1", value: 38 },
-            { id: "windowHeight1", value: 8 },
-            { id: "windowWidth1", value: 17.5 },
-            { id: "hShadeNum1", value: 2 },
-            { id: "hShadeAngle1", value: 81 },
-            { id: "dsAnnual", command: "click" },
-        ]
-    },    
+    }
 ]

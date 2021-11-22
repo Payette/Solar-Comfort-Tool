@@ -274,12 +274,8 @@ $("#Apply").click(function(event) {
   document.getElementById("lat").value = parseInt(designTemp1);
   document.getElementById("timeZone").value = parseInt(designTemp2);
   
-  document.getElementById("long1").value = parseInt(designTemp);
-  document.getElementById("lat1").value = parseInt(designTemp1);
-
   if(typeof designTemp3 == 'number') {
     document.getElementById("outdoorTemp").value = parseFloat(designTemp3);
-    document.getElementById("outdoorTemp1").value = parseFloat(designTemp3);
   }
 
   $("#Outdoorpop").dialog("close");

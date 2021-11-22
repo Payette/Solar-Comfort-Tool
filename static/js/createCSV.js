@@ -64,14 +64,14 @@ function gatherCase1Inputs() {
 // GATHER CASE 2 INPUTS
 function gatherCase2Inputs() {
     return {
-        month: {label: "Month", value: $("input#mon1").val()},
-        day: {label: "Day", value: $("input#day1").val()},
-        hour: {label: "Hour", value: $("input#hour1").val()},
+        month: {label: "Month", value: $("input#mon").val()},
+        day: {label: "Day", value: $("input#day").val()},
+        hour: {label: "Hour", value: $("input#hour").val()},
         timeStep: {label: "Time Step per Hour", value: $("input#timeStep").val()},
-        long: {label: "Longitude", value: $("input#long1").val()},
-        lat: {label: "Latitude", value: $("input#lat1").val()},
-        timeZone: {label: "Time Zone Offset", value: $("input#timeZone1").val()},
-        outdoorTemp: {label: "Outdoor Temperature (°F)", value: $("input#outdoorTemp1").val()},
+        long: {label: "Longitude", value: $("input#long").val()},
+        lat: {label: "Latitude", value: $("input#lat").val()},
+        timeZone: {label: "Time Zone Offset", value: $("input#timeZone").val()},
+        outdoorTemp: {label: "Outdoor Temperature (°F)", value: $("input#outdoorTemp").val()},
         airTemp: {label: "Indoor Temperature (°F)", value: $("input#airTemp1").val()},
         humidity: {label: "Relative Humidity (%)", value: $("input#humidity1").val()},
         airSpeed: {label: "Air Speed (fpm)", value: $("input#airSpeed1").val()},

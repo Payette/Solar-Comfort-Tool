@@ -117,12 +117,12 @@ Height Above Window (ft),0
 Height Relative to Window (ft),0
 
 Case 2 Inputs
-Month,9
-Day,21
+Month,10
+Day,24
 Hour,12
 Time Step per Hour,4
 Longitude,-71
-Latitude,42
+Latitude,39
 Time Zone Offset,-5
 Outdoor Temperature (°F),90.9
 Indoor Temperature (°F),76
