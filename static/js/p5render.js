@@ -203,17 +203,10 @@ $("#mdst").on("change", function (event) {
 
 //D3 COLOR CHART
 // https://andrewringler.github.io/palettes/#/9|d|ff91a2|258811|1|1|1|
-// var ppdColorScale0to100 = d3.scale.quantize().domain([100, 80, 60, 40, 20, 0]).range(['#340000', '#663b3b', '#987777', '#cbb9b9', '#ffffff']);
-// let ppd10to100Colors = ['#e4e7a5', '#e9c1a2', '#ed9a9f', '#f2749d', '#f64d9a', '#fb2797', '#ff0094'];
-// let ppd0to10Colors = ['#258811', '#45982a', '#65a842', '#85b85b', '#a4c774', '#c4d78c', '#e4e7a5'];
-// let ppdAllColors = ppd0to10Colors.concat(ppd10to100Colors.slice(1,ppd10to100Colors.length));
-// var ppdColorScale10to100 = d3.scale.quantize().domain([10, 100]).range(ppd10to100Colors);
-// var ppdColorScale0to10 = d3.scale.quantize().domain([0, 10]).range(ppd0to10Colors);
-
-let ppdColors0to30 = ['#258811', '#549b33', '#79ae50', '#9dc16c', '#c1d488', /* green to yellow, 5 steps */
+let ppdColors0to30 = ['#258811', '#5da03b', '#8bb85e', '#b8cf81', '#e4e7a5', /* green to yellow, 5 steps */
 
 /* yellow to pink, 10 steps */
-'#e4e7a5', '#ead6a4', '#f0c5a2', '#f4b3a0', '#f8a19e', '#fa8d9d', '#fc789b', '#fe6098', '#ff4296', '#ff0094'];
+'#ead8a4', '#efc8a2', '#f3b8a1', '#f6a89f', '#f9979e', '#fb859c', '#fd719a', '#fe5b98', '#ff3f96', '#ff0094'];
 
 let ppdColorScale0to30 = d3.scale.quantize().domain([0, 30]).range(ppdColors0to30);
 
@@ -267,17 +260,16 @@ directSunLegend();
 
 // PPD Legend
 function ppdLegend() {
-  d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class','ppdlegend hidefromall')
+  let svgWidth = 327;
+  d3.select("#visualization").append('svg').attr("height", 80).attr("width", svgWidth).attr('class','ppdlegend hidefromall')
   var vis = d3.select(".ppdlegend")
-  let numBlocks = 15+1
-  let width = 325
+  let numBlocks = 15
+  let width = svgWidth - 5;
   var arr = d3.range(numBlocks)
   var dataset = [0, 10, 20, 30];
   
   //position scale
-  var blockXScale = d3.scale.linear().domain([0, numBlocks-1]).range([0, width])
-  // var colorScale = d3.scale.quantize().domain([0, 30]).range(ppdColors0to30);
-  var textPosition = d3.scale.linear().domain([0, 30]).range([0, width])
+  var blockXScale = d3.scale.linear().domain([0, numBlocks]).range([0, width])
 
   vis.selectAll('rect').data(arr).enter()
     .append('rect')
@@ -287,7 +279,7 @@ function ppdLegend() {
       height: 12,
       width: 25,
       stroke: d3.rgb(0, 0, 0),
-      fill: function (d) { return ppdColorScale0to30(2 * d) }
+      fill: function (d) { return ppdColorScale0to30(Math.floor(2 * d)) }
     });
   
     vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
@@ -301,8 +293,8 @@ function ppdLegend() {
       .attr({
         x: function (d, i) { 
           if(i === 0) return 12;
-          if(i === dataset.length-1) return width - 12;  
-          return textPosition(d) + 12
+          if(i === dataset.length-1) return width - 10;  
+          return Math.floor(d/30*numBlocks)/numBlocks * width - 10;
         },
         y: 40
       });
