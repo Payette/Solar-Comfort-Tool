@@ -203,10 +203,13 @@ $("#mdst").on("change", function (event) {
 
 //D3 COLOR CHART
 // https://andrewringler.github.io/palettes/#/9|d|ff91a2|258811|1|1|1|
-let ppdColors0to30 = ['#258811', '#5da03b', '#8bb85e', '#b8cf81', '#e4e7a5', /* green to yellow, 5 steps */
-
-/* yellow to pink, 10 steps */
-'#ead8a4', '#efc8a2', '#f3b8a1', '#f6a89f', '#f9979e', '#fb859c', '#fd719a', '#fe5b98', '#ff3f96', '#ff0094'];
+let ppdColors0to30 = [
+  /* green to yellow, 5 steps */
+  '#258811', '#5da03b', '#8bb85e', '#b8cf81', '#e4e7a5', 
+  
+  /* yellow to pink, 10 steps */
+  '#ead8a4', '#efc8a2', '#f3b8a1', '#f6a89f', '#f9979e', '#fb859c', '#fd719a', '#fe5b98', '#ff3f96', '#ff0094'
+];
 
 let ppdColorScale0to30 = d3.scale.quantize().domain([0, 30]).range(ppdColors0to30);
 
