@@ -1830,7 +1830,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             if(mrtValues.mrtppd >= 0 && mrtValues.mrtppd <= 30) {
               gridColor = ppdColorScale0to30(mrtValues.mrtppd);
             } else if (mrtValues.mrtppd <= 100) {
-              gridColor = ppdColorScale0to30[ppdColors0to30.length-1];
+              gridColor = ppdColors0to30[ppdColors0to30.length-1];
             } else {
               console.error('invalid PPD: ', mrtValues.mrtppd);
               gridColor = "#000000";
