@@ -411,6 +411,8 @@ renderGraphicsAndRunSimulation = caseNumber => {
     };
 
     p.draw = function () {
+      window.SOLAR_COMFORT.frameCount = p.frameCount;
+
       p.clear();
       p.background(255);
 
@@ -763,8 +765,8 @@ renderGraphicsAndRunSimulation = caseNumber => {
       //FIRST MAKE IT, THEN RE-DO IT USING A MULTIPLIER TO INCREASE OR DECREASE THE SCALE SO IT STAYS WITHIN THE BOUNDS OF THE CANVAS
 
       //let CeilHt = CeilingSlider.value();//Ceiling Height (ft) - this moves the whole grid down.
-      let gridX = wallLen; // number of y grids - should be fixed size normally at 60
-      let gridY = wallDepVal - 1; // number of x grids - should be fixed size normally at 30
+      let gridX = parseInt(wallLen); // number of y grids - should be fixed size normally at 60
+      let gridY = parseInt(wallDepVal); // number of x grids - should be fixed size normally at 30
       let gridHt = gridHeightValue;
       //let sunRotation = SunRotationSlider.value() * (3.1415926/180);
 
@@ -1216,7 +1218,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // all calculations are flipped left to right
         // we will just flip the entire array in the room width direction
         // instead of updating the direction of all arrays above... 
-        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, wallDepVal - 1);
+        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, parseInt(wallDepVal));
 
         // Annual
         // keep track of each day of the year
@@ -1236,7 +1238,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // do this 1 time once annual simulation has completed
         if (window.SOLAR_COMFORT[`dateCounter${c}`] === 365 && annualOn && window.SOLAR_COMFORT[`annualSimulationDone${c}`] === false) {
           let annualGridColorAverage = bigArrayColor.map(v => round4Decimals(v / 365.0));
-          window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(annualGridColorAverage, wallDepVal - 1, 1);
+          window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(annualGridColorAverage, parseInt(wallDepVal), 1);
         }
       } else {
         // day and hour simulation
@@ -1613,12 +1615,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // FIX
         // all calculations are flipped left to right
         // we will just flip the entire array in the room width direction
-        // instead of updating the direction of all arrays above... 
-        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, wallDepVal - 1);
+        // instead of updating the direction of all arrays above...
+        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, parseInt(wallDepVal));
 
         // Hour or Day
         let stepDelta = singleHour == 1 ? 9 : 4;
-        window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, wallDepVal - 1, stepDelta);
+        window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, parseInt(wallDepVal), stepDelta);
 
         if(thermalComfortSingleHour && solarCoordinates.length > 0) {
           /* when in single hour mode we have 9 coordinates (subsets of hour)
@@ -1631,7 +1633,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
           let deltaMRT_grid = window.SOLAR_COMFORT.calculateDeltaMRT_for_Grid(
             wallLen,    /* wallLen is room depth!! perpindicular to windows */
-            wallDepVal - 1, /* wallDepVal is room width!! parallel to windows */
+            wallDepVal, /* wallDepVal is room width!! parallel to windows */
             posture, sillHeightValue, windowWidthValue,
             elevation,
             azimuth,
@@ -1644,7 +1646,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
           let MRT_grid = window.SOLAR_COMFORT.calculateMRT_for_Grid(
             wallLen,    /* wallLen is room depth!! perpindicular to windows */
-            wallDepVal - 1, /* wallDepVal is room width!! parallel to windows */
+            wallDepVal, /* wallDepVal is room width!! parallel to windows */
             geoResult,
             windowU,
             wallR,
