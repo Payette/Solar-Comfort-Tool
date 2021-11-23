@@ -1669,7 +1669,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       // CREATE GRID
       //GRID X ROW
-      let MDT; //Max Direct Time
+      let MDT = 0; //Max Direct Time
       let Percentage = valMDST;
       //console.log(gridColorArray);
 
@@ -1704,11 +1704,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
         if (annualOn) {
           if (mySun > Percentage / timestep) {
-            MDT = MDT + 1;
+            // MDT = MDT + 1;
           }
         } else {
           if (mySun > Percentage / timestep) {
-            MDT = MDT + 1;
+            // MDT = MDT + 1;
           }
           mySun = p.int(mySun / timestep);
         }
@@ -1963,9 +1963,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
       //CHECK IF MEETS CONDITION TEXT
       let MDTPercentage = 0;
       if (annualOn) {
-        MDTPercentage = p.int((p.float(MDT) / (wallLen * wallDepVal)) * 100);
+        MDTPercentage = p.int((p.float(MDT) / (parseInt(wallLen) * parseInt(wallDepVal))) * 100);
       } else {
-        MDTPercentage = p.int((p.float(MDT) / (wallLen * wallDepVal)) * 100);
+        MDTPercentage = p.int((p.float(MDT) / (parseInt(wallLen) * parseInt(wallDepVal))) * 100);        
       }
 
 
