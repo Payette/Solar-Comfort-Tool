@@ -93,6 +93,8 @@ exports.regressionTests = [
     {
         name: "defaults",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 9 },
             { id: "day", value: 21 }
         ]
@@ -101,6 +103,8 @@ exports.regressionTests = [
     {
         name: "month",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 1 },
             { id: "day", value: 21 }
         ]
@@ -108,6 +112,8 @@ exports.regressionTests = [
     {
         name: "day",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 10 },
             { id: "day", value: 15 }
         ]
@@ -125,6 +131,7 @@ exports.regressionTests = [
         name: "month-day-hour",
         inputs: [
             { id: "dsHour", command: "click" },
+
             { id: "mon", value: 5 },
             { id: "day", value: 4 },
             { id: "hour", value: 9 }
@@ -134,6 +141,8 @@ exports.regressionTests = [
     {
         name: "climate",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
             { id: "lat", value: 10 }
@@ -143,6 +152,8 @@ exports.regressionTests = [
     {
         name: "room-geometry",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
 
@@ -157,6 +168,8 @@ exports.regressionTests = [
     {
         name: "room-geometry1",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
 
@@ -172,6 +185,8 @@ exports.regressionTests = [
     {
         name: "window-geometry",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
 
@@ -191,6 +206,8 @@ exports.regressionTests = [
     {
         name: "horizontal-shades",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
 
@@ -212,6 +229,8 @@ exports.regressionTests = [
     {
         name: "vertical-shades",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
 
@@ -235,6 +254,8 @@ exports.regressionTests = [
     {
         name: "horizontal-vertical-shades",
         inputs: [
+            { id: "dsDay", command: "click" },
+
             { id: "mon", value: 9 },
             { id: "day", value: 21 },
 

@@ -5,8 +5,8 @@
 
 let debug2 = true;
 
-let singleHour = 0;
-let fullDay = 1;
+let singleHour = 1;
+let fullDay = 0;
 let currentFrame = 0;
 let annualOn = false; // Check If Annual Button is Pressed
 
@@ -217,7 +217,7 @@ var ColorScaleArray = [];
 
 // Direct Sun Legend
 function directSunLegend() {
-  d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class','directsunlegend')
+  d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class','directsunlegend hidefromall')
   var vis = d3.select(".directsunlegend")
   var arr = d3.range(13 * timeStepValue)
   var dataset = [0, 2, 4, 6, 8, 10, 12];
@@ -264,7 +264,7 @@ directSunLegend();
 // PPD Legend
 function ppdLegend() {
   let svgWidth = 327;
-  d3.select("#visualization").append('svg').attr("height", 80).attr("width", svgWidth).attr('class','ppdlegend hidefromall')
+  d3.select("#visualization").append('svg').attr("height", 80).attr("width", svgWidth).attr('class','ppdlegend')
   var vis = d3.select(".ppdlegend")
   let numBlocks = 15
   let width = svgWidth - 5;
