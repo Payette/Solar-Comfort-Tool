@@ -34,16 +34,17 @@ let Idir_lookup_table = {
     80: 920,
     90: 925
 }
-// TODO interpolate these values
-window.SOLAR_COMFORT.Idir_f = (solarAltitude) => {
-    let solarAltitude_lookup = parseInt(Math.round(solarAltitude / 10.0) * 10);
-    solarAltitude_lookup = solarAltitude_lookup === 0 ? 5 : solarAltitude_lookup;
-    let Idir = Idir_lookup_table[solarAltitude_lookup];
-    if(typeof Idir === 'undefined') {
-        console.error('error trying to lookup Idir', solarAltitude);
-    }
+var Idir_interpolation = d3.scale.linear().domain([5, 10, 20, 30, 40, 50, 60, 70, 80, 90])
+.range([210, 390, 620, 740, 810, 860, 890, 910, 920, 925])
 
-    return Idir;    
+window.SOLAR_COMFORT.Idir_f = (solarAltitude) => {
+    if(solarAltitude >= 5 && solarAltitude <= 90) {
+        return Idir_interpolation(solarAltitude);
+    }
+    if(solarAltitude <= 5) {
+        return 210;
+    }
+    return 925;   
 }
 
 window.SOLAR_COMFORT.delta_MRT_f = (ERF_solar, feff) => {
