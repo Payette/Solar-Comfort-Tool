@@ -220,20 +220,32 @@ $("#city").on("change", function(event) {
   designTemp1 = jsonObj[selCont.toUpperCase()][selNation][selState][selCity].lat
   designTemp2 = jsonObj[selCont.toUpperCase()][selNation][selState][selCity].tz
   
-  designTemp3 = coolingDDY && coolingDDY[selCont.toUpperCase()] && coolingDDY[selCont.toUpperCase()][selNation] && coolingDDY[selCont.toUpperCase()][selNation][selState][selCity]
-  if (typeof designTemp3 !== 'undefined') {
-    designTemp3 = parseFloat(designTemp3);
+  designTempData = coolingDDY && coolingDDY[selCont.toUpperCase()] && coolingDDY[selCont.toUpperCase()][selNation] && coolingDDY[selCont.toUpperCase()][selNation][selState][selCity]
+  designTemp3 = undefined;
+  if (typeof designTempData === 'object') {
+    designTemp3 = parseFloat(designTempData.temperature);
     if (unitSys == "IP"){
-      designTemp3 = (Math.round(units.C2F(designTemp3)* 10) / 10)
+      designTemp3 = (Math.round(units.C2F(designTempData.temperature)* 10) / 10)
     }
     $('#missingtemperature').addClass('errorhidden');
 
     $("#outTempTextArea3").append(parseFloat(designTemp3));
     $("#outTempTextArea3").select();  
+
+    $("#outTempTextArea4").append(parseFloat(designTempData.month));
+    $("#outTempTextArea4").select();  
+
+    $("#outTempTextArea5").append(parseFloat(designTempData.dayOfMonth));
+    $("#outTempTextArea5").select();  
+
   } else {
     $('#missingtemperature').removeClass('errorhidden');
     $("#outTempTextArea3").val('');
     $("#outTempTextArea3").select();  
+    $("#outTempTextArea4").val('');
+    $("#outTempTextArea4").select();  
+    $("#outTempTextArea5").val('');
+    $("#outTempTextArea5").select();  
   }
 
   // Grab the temperature text menu.
@@ -245,6 +257,10 @@ $("#city").on("change", function(event) {
   designTempTexArea2.disabled=false
   var designTempTexArea3 = document.getElementById("outTempTextArea3")
   designTempTexArea3.disabled=false
+  var designTempTexArea4 = document.getElementById("outTempTextArea4")
+  designTempTexArea4.disabled=false
+  var designTempTexArea5 = document.getElementById("outTempTextArea5")
+  designTempTexArea5.disabled=false
   if ($("#outTempDiv").hasClass("temperatureEmpty") == true) {
     $("#outTempDiv").removeClass("temperatureEmpty");
     $("#outTempDiv").addClass("temperature");
@@ -274,8 +290,11 @@ $("#Apply").click(function(event) {
   document.getElementById("lat").value = parseInt(designTemp1);
   document.getElementById("timeZone").value = parseInt(designTemp2);
   
-  if(typeof designTemp3 == 'number') {
+  if(typeof designTempData == 'object') {
     document.getElementById("outdoorTemp").value = parseFloat(designTemp3);
+    document.getElementById("mon").value = parseFloat(designTempData.month);
+    document.getElementById("day").value = parseFloat(designTempData.dayOfMonth);
+    document.getElementById("hour").value = 12;
   }
 
   $("#Outdoorpop").dialog("close");

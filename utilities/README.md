@@ -33,7 +33,7 @@ then run:
 4) Parse summer cooling temperature from extracted files into a CoolingDDY.json file to use in our tool
 
     cd utilities
-    python3 parseDddyDatabase.py
+    python3 parseDdyDatabase.py
 
 
 ## New Developer Setup (1 time)

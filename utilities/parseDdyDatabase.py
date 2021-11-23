@@ -64,6 +64,8 @@ for folder in os.listdir(extractDir):
             # ddy = open(ddyFile, 'r')
             with open(ddyFile, encoding="ISO-8859-1") as ddy:
                 designTemp = None
+                dayOfMonth = None
+                month = None
                 locList = location.split("_")
                 nation = locList[0]
                 city = " ".join(locList[-2].split('.')[:-1])
@@ -85,10 +87,17 @@ for folder in os.listdir(extractDir):
                     if "No Design Conditions found for this Location" in line:
                         noDesignData = True
                         break
+                    if foundCorrectSection and designTemp == None and "Maximum Dry-Bulb Temperature" in line:
+                        designTemp = line.split(',')[0].strip()
+                    if foundCorrectSection and dayOfMonth == None and "Day of Month" in line:
+                        dayOfMonth = line.split(',')[0].strip()
+                    if foundCorrectSection and month == None and "Month" in line:
+                        month = line.split(',')[0].strip()
+
                     if "Ann Clg .4% Condns DB=>MWB" in line:
                         foundCorrectSection = True
-                    if foundCorrectSection and "Maximum Dry-Bulb Temperature" in line:
-                        designTemp = line.split(',')[0].strip()
+
+                    if foundCorrectSection and designTemp and dayOfMonth and month:
                         break
                 ddy.close()
 
@@ -102,6 +111,8 @@ for folder in os.listdir(extractDir):
 
                 # Write the information into the json.
                 if designTemp != None:
+                    jsonValue = "{\n" + '"temperature": ' +  designTemp + ', "month": ' + month + ', "dayOfMonth": ' + dayOfMonth + "\n}\n"
+
                     if nation not in nationList:
                         if continentTrigger == True:
                             continentTrigger = False
@@ -110,18 +121,18 @@ for folder in os.listdir(extractDir):
                             fd.write("\t\t},\n")
                         fd.write("\t\t" + nation + " : {\n")
                         fd.write("\t\t\t" + province + " : {\n")
-                        fd.write("\t\t\t\t" + city + ": " + designTemp)
+                        fd.write("\t\t\t\t" + city + ": " + jsonValue)
                         nationList.append(nation)
                         privonceList.append(province)
                         cityList.append(city)
                     elif province not in privonceList:
                         fd.write("\n\t\t\t},\n")
                         fd.write("\t\t\t" + province + " : {\n")
-                        fd.write("\t\t\t\t" + city + ": " + designTemp)
+                        fd.write("\t\t\t\t" + city + ": " + jsonValue)
                         privonceList.append(province)
                         cityList.append(city)
                     elif city not in cityList:
-                        fd.write(",\n\t\t\t\t" + city + ": " + designTemp)
+                        fd.write(",\n\t\t\t\t" + city + ": " + jsonValue)
                         cityList.append(city)
 
                     #print(nation + " " + province + " " + city + " - " + designTemp)
