@@ -416,7 +416,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.clear();
       p.background(255);
 
-      if (caseNumber === 2) {
+      if (caseNumber === 1) {
         if (window.SOLAR_COMFORT.Case2Button == 0) {
           document.getElementsByName("button1").forEach(e => e.className = "button1OFF")
   
@@ -427,6 +427,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
   
           $("input.case2, select.case2").css("visibility", "visible");
         }
+      }
+
+      if (caseNumber === 2 && window.SOLAR_COMFORT.Case2Button === 0) {
+        // this is the render code for Case 2, but case 2 is currently disabled
+        // just return early to save some CPU cycles and ensure graphics are hidden
+        return;
       }
 
       if (annualOn) { // Check If Annual Button is Pressed
@@ -2051,5 +2057,5 @@ renderGraphicsAndRunSimulation = caseNumber => {
   }
 }
 
-var iso1 = new p5(renderGraphicsAndRunSimulation(1));
-var iso2 = new p5(renderGraphicsAndRunSimulation(2));
+new p5(renderGraphicsAndRunSimulation(1));
+new p5(renderGraphicsAndRunSimulation(2));
