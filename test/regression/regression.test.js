@@ -9,7 +9,7 @@ async function runAndVerifyAgainstGold(fileName, inputs, testName) {
     waitUntil: 'load',
   });
   await delay(3000)
-  case2On(page);
+  await case2On(page);
 
   for(let i=0; i<inputs.length; i++) {
     updateInput(page, inputs[i]);

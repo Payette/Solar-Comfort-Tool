@@ -116,15 +116,15 @@ function thermalComfortSingleHourChange(e) {
   thermalComfortSingleHour = true;
 }
 
-function checkButton() {
-  if (window.SOLAR_COMFORT.Case2Button == 1) {
+window.SOLAR_COMFORT.checkButton = function() {
+  if (window.SOLAR_COMFORT.Case2Button === 1) {
     window.SOLAR_COMFORT.Case2Button = 0;
   } else {
     window.SOLAR_COMFORT.Case2Button = 1;
   }
 }
 document.getElementsByName("button1").forEach(e => {
-  e.addEventListener('click', checkButton)
+  e.addEventListener('click', window.SOLAR_COMFORT.checkButton)
 });
 
 checkAnnual = function (target) { // Check If Annual Button is Pressed
@@ -417,7 +417,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.background(255);
 
       if (caseNumber === 1) {
-        if (window.SOLAR_COMFORT.Case2Button == 0) {
+        if (window.SOLAR_COMFORT.Case2Button === 0) {
           document.getElementsByName("button1").forEach(e => e.className = "button1OFF")
   
           $("input.case2, select.case2").css("visibility", "hidden");

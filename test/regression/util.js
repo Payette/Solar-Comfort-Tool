@@ -9,6 +9,15 @@ function delay(time) {
 }
 exports.delay = delay;
 
+async function inBrowserWait(page) {
+    return await page.evaluate(async () => {
+        await new Promise(function(resolve) {
+           setTimeout(resolve, 150)
+        });
+     });
+}
+exports.inBrowserWait = inBrowserWait;
+
 exports.testCompareRegression = (goldFile, newContents, testName) => {
     return readFile(goldFile)
     .then(fileBuffer => {
@@ -50,9 +59,6 @@ exports.testCompareRegression = (goldFile, newContents, testName) => {
 }
 
 exports.case2On = async (page) => {
-    // await delay(2000);
-    //await page.waitForTimeout(1000)
-
     await page.evaluate(input => {
         let el = document.getElementById('maincasetwobutton');
         if(el) {
@@ -62,8 +68,7 @@ exports.case2On = async (page) => {
         }
     }, "ignored input");
 
-    //await page.waitForTimeout(1000)
-    // await delay(2000);
+    return await inBrowserWait(page)
 }
 
 exports.updateInput = async (page, input) => {
