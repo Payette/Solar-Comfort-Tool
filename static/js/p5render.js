@@ -1646,6 +1646,8 @@ renderGraphicsAndRunSimulation = caseNumber => {
             totalWindowArea += width * height;
           }
         }
+        window.SOLAR_COMFORT[`totalWindowArea${c}`] = totalWindowArea;
+
         if (singleHour === 1 && Array.isArray(windowsCoordinates) && windowsCoordinates.length > 0 && Array.isArray(solarCoordinates) && solarCoordinates.length > 0) {
           let roomRotationAdjustedSolarAzimuthDegrees = solarCoordinatesRoomOrientationAdjusted[0];
           let solarElevation = solarCoordinates[0][1];
