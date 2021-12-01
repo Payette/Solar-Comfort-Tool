@@ -5,6 +5,7 @@ var designTemp2;
 
 var urlParams = new URLSearchParams(window.location.search);
 let debug = urlParams.get('debug') === 'true';
+window.SOLAR_COMFORT.debug = debug;
 // TODO, don't include MRT calculations in regression tests while we are debugging troubleshooting these
 // so we don't need to re-generate gold files while this is in flux
 let hideMRTCalculations = urlParams.get('hidemrtcalculations') === 'true';

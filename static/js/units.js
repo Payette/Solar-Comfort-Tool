@@ -43,3 +43,8 @@ units.fpm2mps = function(x){
 units.mps2fpm = function(x) {
     return x / 0.00508;
 }
+
+// 1 Watt/square Meter [W/m^2] == 0.3169983306 Btu (IT)/hour/square Foot
+units.wattsPerMeterSquaredToBtuPerHourPerFootSquared = function(x) {
+    return x * 0.3169983306;
+}

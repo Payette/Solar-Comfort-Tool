@@ -1,10 +1,6 @@
 //THIS UPDATES THE FLOOR AREA LOSS, MAX DIRECT SUNTIME AND TIMESTEP PER HOUR VALUES
 //IT ALSO REMEMBERS THEM SO THEY CAN BE USED IN THE D3 COLOR CHART BEFORE THE DRAW LOOP
 
-
-
-let debug2 = true;
-
 let singleHour = 1;
 let fullDay = 0;
 let currentFrame = 0;
@@ -12,7 +8,7 @@ let annualOn = false; // Check If Annual Button is Pressed
 
 let thermalComfortSingleHour = !!document.getElementById(`ppdRadio`).checked;
 document.getElementsByName(`studyType`).forEach(e => e.addEventListener('click', () => {
-  if(e.id === 'ppdRadio') {
+  if (e.id === 'ppdRadio') {
     thermalComfortSingleHour = true;
     Array.from(document.getElementsByClassName("directsunlegend")).forEach(e => e.classList.add('hidefromall'));
     Array.from(document.getElementsByClassName("ppdlegend")).forEach(e => e.classList.remove('hidefromall'));
@@ -31,6 +27,12 @@ window.SOLAR_COMFORT.Case2Button = 0;
 let TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION = 9;
 let TIME_STEPS_PER_HOUR_DAY_SIMULATION = 4;
 let TIME_STEPS_PER_HOUR_ANNUAL_SIMULATION = 1;
+
+// Minimum and Maximum azimuths the sun can be and still be 
+// considered to directly hit a 0degree north facing window
+// TODO reference, why are these -88 and 88 instead of -90 and 90?
+let MIN_AZIMUTH_DIRECT_SUN = -88.0;
+let MAX_AZIMUTH_DIRECT_SUN = 88.0;
 
 window.SOLAR_COMFORT.dateCounter = 0;
 window.SOLAR_COMFORT.dateCounter1 = 0;
@@ -116,7 +118,7 @@ function thermalComfortSingleHourChange(e) {
   thermalComfortSingleHour = true;
 }
 
-window.SOLAR_COMFORT.checkButton = function() {
+window.SOLAR_COMFORT.checkButton = function () {
   if (window.SOLAR_COMFORT.Case2Button === 1) {
     window.SOLAR_COMFORT.Case2Button = 0;
   } else {
@@ -140,10 +142,10 @@ checkAnnual = function (target) { // Check If Annual Button is Pressed
     // Annual simulation is not running, enable all fields
     document.getElementById(`annualWarning`).innerHTML = '';
 
-    for(let i=0; i<window.SOLAR_COMFORT.globalInputFieldNames.length; i++) {
+    for (let i = 0; i < window.SOLAR_COMFORT.globalInputFieldNames.length; i++) {
       document.getElementById(window.SOLAR_COMFORT.globalInputFieldNames[i]).disabled = false;
     }
-    for(let i=0; i<window.SOLAR_COMFORT.caseInputFieldNames.length; i++) {
+    for (let i = 0; i < window.SOLAR_COMFORT.caseInputFieldNames.length; i++) {
       document.getElementById(window.SOLAR_COMFORT.caseInputFieldNames[i]).disabled = false;
       document.getElementById(`${window.SOLAR_COMFORT.caseInputFieldNames[i]}1`).disabled = false; // case 2
     }
@@ -152,10 +154,10 @@ checkAnnual = function (target) { // Check If Annual Button is Pressed
     // Annual simulation is running, disable all fields
     document.getElementById(`annualWarning`).innerHTML = 'Chages to inputs are disabled.<br>Turn off Annual to enable changes.';
 
-    for(let i=0; i<window.SOLAR_COMFORT.globalInputFieldNames.length; i++) {
+    for (let i = 0; i < window.SOLAR_COMFORT.globalInputFieldNames.length; i++) {
       document.getElementById(window.SOLAR_COMFORT.globalInputFieldNames[i]).disabled = true;
     }
-    for(let i=0; i<window.SOLAR_COMFORT.caseInputFieldNames.length; i++) {
+    for (let i = 0; i < window.SOLAR_COMFORT.caseInputFieldNames.length; i++) {
       document.getElementById(window.SOLAR_COMFORT.caseInputFieldNames[i]).disabled = true;
       document.getElementById(`${window.SOLAR_COMFORT.caseInputFieldNames[i]}1`).disabled = true; // case 2
     }
@@ -205,8 +207,8 @@ $("#mdst").on("change", function (event) {
 // https://andrewringler.github.io/palettes/#/9|d|ff91a2|258811|1|1|1|
 let ppdColors0to30 = [
   /* green to yellow, 5 steps */
-  '#258811', '#5da03b', '#8bb85e', '#b8cf81', '#e4e7a5', 
-  
+  '#258811', '#5da03b', '#8bb85e', '#b8cf81', '#e4e7a5',
+
   /* yellow to pink, 10 steps */
   '#ead8a4', '#efc8a2', '#f3b8a1', '#f6a89f', '#f9979e', '#fb859c', '#fd719a', '#fe5b98', '#ff3f96', '#ff0094'
 ];
@@ -217,17 +219,17 @@ var ColorScaleArray = [];
 
 // Direct Sun Legend
 function directSunLegend() {
-  d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class','directsunlegend hidefromall')
+  d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class', 'directsunlegend hidefromall')
   var vis = d3.select(".directsunlegend")
   var arr = d3.range(13 * timeStepValue)
   var dataset = [0, 2, 4, 6, 8, 10, 12];
-  
+
   //position scale
   var xScale = d3.scale.linear().domain([0, 13]).range([0, 325])
-  
+
   var colorScale = d3.scale.linear().domain([0, 6, 13])
     .range(["#ffffff", "#e2706a", "#893132"])
-  
+
   vis.selectAll('rect').data(arr).enter()
     .append('rect')
     .attr({
@@ -238,39 +240,39 @@ function directSunLegend() {
       stroke: d3.rgb(0, 0, 0),
       fill: function (d) { ColorScaleArray.push(d3.rgb(colorScale(d))); return colorScale(d) }
     });
-  
-    vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
-      .data(dataset)
-      .enter()
-      .append("text") // <-- Same here!
-      .text(function (d) { return d; })
-      .attr("text-anchor", "middle")
-      .attr("font-family", "sans-serif")
-      .attr("font-size", "9px")
-      .attr({
-        x: function (d) { return xScale(d) + 12 },
-        y: 40
-      });
-  
-      vis.append("text")
-        .attr("x", 0)
-        .attr("y", 12)
-        .text("Hours of Day in Direct Sun")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "12px")
+
+  vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
+    .data(dataset)
+    .enter()
+    .append("text") // <-- Same here!
+    .text(function (d) { return d; })
+    .attr("text-anchor", "middle")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "9px")
+    .attr({
+      x: function (d) { return xScale(d) + 12 },
+      y: 40
+    });
+
+  vis.append("text")
+    .attr("x", 0)
+    .attr("y", 12)
+    .text("Hours of Day in Direct Sun")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "12px")
 }
 directSunLegend();
 
 // PPD Legend
 function ppdLegend() {
   let svgWidth = 327;
-  d3.select("#visualization").append('svg').attr("height", 80).attr("width", svgWidth).attr('class','ppdlegend')
+  d3.select("#visualization").append('svg').attr("height", 80).attr("width", svgWidth).attr('class', 'ppdlegend')
   var vis = d3.select(".ppdlegend")
   let numBlocks = 15
   let width = svgWidth - 5;
   var arr = d3.range(numBlocks)
   var dataset = [0, 10, 20, 30];
-  
+
   //position scale
   var blockXScale = d3.scale.linear().domain([0, numBlocks]).range([0, width])
 
@@ -284,30 +286,30 @@ function ppdLegend() {
       stroke: d3.rgb(0, 0, 0),
       fill: function (d) { return ppdColorScale0to30(Math.floor(2 * d)) }
     });
-  
-    vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
-      .data(dataset)
-      .enter()
-      .append("text") // <-- Same here!
-      .text(function (d) { return d; })
-      .attr("text-anchor", "middle")
-      .attr("font-family", "sans-serif")
-      .attr("font-size", "9px")
-      .attr({
-        x: function (d, i) { 
-          if(i === 0) return 12;
-          if(i === dataset.length-1) return width - 10;  
-          return Math.floor(d/30*numBlocks)/numBlocks * width - 10;
-        },
-        y: 40
-      });
-  
-      vis.append("text")
-        .attr("x", 0)
-        .attr("y", 12)
-        .text("Predicted Percentage of Dissatisfied (PPD)")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "12px")
+
+  vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
+    .data(dataset)
+    .enter()
+    .append("text") // <-- Same here!
+    .text(function (d) { return d; })
+    .attr("text-anchor", "middle")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "9px")
+    .attr({
+      x: function (d, i) {
+        if (i === 0) return 12;
+        if (i === dataset.length - 1) return width - 10;
+        return Math.floor(d / 30 * numBlocks) / numBlocks * width - 10;
+      },
+      y: 40
+    });
+
+  vis.append("text")
+    .attr("x", 0)
+    .attr("y", 12)
+    .text("Predicted Percentage of Dissatisfied (PPD)")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "12px")
 }
 ppdLegend();
 
@@ -327,7 +329,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
     let TimeZone;
     let Hour;
     let Day;
-    let Month;            
+    let Month;
     let solarCoordinates = []; // [ azimuth in degress, elevation in degress ]
     // let solar;
     let sunPathGraphicPixelX = [];
@@ -419,12 +421,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
       if (caseNumber === 1) {
         if (window.SOLAR_COMFORT.Case2Button === 0) {
           document.getElementsByName("button1").forEach(e => e.className = "button1OFF")
-  
+
           $("input.case2, select.case2").css("visibility", "hidden");
 
         } else {
           document.getElementsByName("button1").forEach(e => e.className = "button1ON");
-  
+
           $("input.case2, select.case2").css("visibility", "visible");
         }
       }
@@ -461,121 +463,121 @@ renderGraphicsAndRunSimulation = caseNumber => {
       }
 
       // Study
-      
-      
+
+
       let glzOrWidth = document.getElementById(`glazingRatioCheck`).checked;
       //console.log(Radiox);
 
-      
+
       // CLIMATE
       let Lon1 = document.getElementById(`long`).value;
-      
+
       let Lat1 = document.getElementById(`lat`).value;
-      
+
       let TimeZone1 = document.getElementById(`timeZone`).value;
-      
+
       let outdoorTemp = document.getElementById(`outdoorTemp`).value;
-      
+
       // TIME CONFIG
-      
+
       let Hour1 = document.getElementById(`hour`).value;
-      
+
       let Day1 = document.getElementById(`day`).value;
-      
+
       let Month1 = document.getElementById(`mon`).value;
-      
+
       let timestep = document.getElementById(`timeStep`).value;
-      
-      
+
+
       // INDOOR CONDITIONS
       let airTemp = document.getElementById(`airTemp${c}`).value;
-      
+
       let humidity = document.getElementById(`humidity${c}`).value;
-      
+
       let airSpeed = document.getElementById(`airSpeed${c}`).value;
-      
+
       let clothing = document.getElementById(`clothing${c}`).value;
-      
+
       let metabolic = document.getElementById(`metabolic${c}`).value;
-      
+
       let posture = document.getElementById(`posture${c}`).value;
-      
+
       let asa = document.getElementById(`asa${c}`).value;
-      
+
       // ROOM GEOMETRY
       let roomOrientationValue1 = document.getElementById(`north${c}`).value;
-      
+
       let gridHeightValue = document.getElementById(`gridHt${c}`).value;
-      
+
       let ceilingHeightValue = document.getElementById(`ceiling${c}`).value;
       let ceilingHeightValue1 = document.getElementById(`ceiling${c}`).value;
-      
+
       let wallLen = document.getElementById(`wallWidth${c}`).value;
-      
+
       let wallDepVal = document.getElementById(`wallDep${c}`).value;
-      
+
       let wallR = document.getElementById(`wallR${c}`).value;
-      
+
       // WINDOW GEOMETRY
-      
+
       let windowHeightValue = document.getElementById(`windowHeight${c}`).value * 10;
       windowHeightValue = windowHeightValue / 10;
-      
+
       let windowWidthValue = document.getElementById(`windowWidth${c}`).value;
-      
+
       let glzRatioValue = document.getElementById(`glazing${c}`).value;
-      
+
       let sillHeightValue = document.getElementById(`sill${c}`).value;
-      
+
       let distanceWindows = document.getElementById(`distWindow${c}`).value;
-      
+
       let windowU = document.getElementById(`windowU${c}`).value;
-      
+
       let shgc = document.getElementById(`shgc${c}`).value;
-      
-      
+
+
       // SHADE GEOMETRY
-      
+
       let horzShadeDep = document.getElementById(`hShadeDep${c}`).value;
-      
+
       let horzShadeNum = document.getElementById(`hShadeNum${c}`).value;
-      
+
       let horzShadeSpace = document.getElementById(`hShadeSpace${c}`).value;
-      
+
       let horzShadeDist = document.getElementById(`hShadeDist${c}`).value;
-      
+
       let horzShadeHeight = document.getElementById(`hShadeHeight${c}`).value;
-      
+
       let horzShadeAngle = document.getElementById(`hShadeAngle${c}`).value;
-      
+
       let vertShadeDep = document.getElementById(`vShadeDep${c}`).value;
-      
+
       let vertShadeNum = document.getElementById(`vShadeNum${c}`).value;
-      
+
       let vertShadeSpace = document.getElementById(`vShadeSpace${c}`).value;
-      
+
       let vertShadeStart = document.getElementById(`vShadeStart${c}`).value;
-      
+
       let vertShadeShift = document.getElementById(`vShadeShift${c}`).value;
-      
+
       let vertShadeDist = document.getElementById(`vShadeDist${c}`).value;
-      
+
       let vertShadeOn = document.getElementById(`vShadeOn${c}`).value;
-      
+
       let vShadeCheckbox = document.querySelector("input[name=vShadeOn]");
-      
+
       if (vShadeCheckbox.checked) {
         vertShadeOn = 0;
       } else {
         vertShadeOn = 1;
       }
-      
+
       let vertShadeHeight = document.getElementById(`vShadeHeight${c}`).value;
-      
+
       let vertShadeScale = document.getElementById(`vShadeScale${c}`).value;
-      
+
       let valFal = document.getElementById(`fal`).value; //FLOOR AREA LOSS
-      
+
       let valMDST = document.getElementById(`mdst`).value; // MAX DIRECT SUN TIME
 
 
@@ -631,37 +633,37 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
           //SunVectors - TAKEN FROM THE OLD SUNVECTORS.JS FILE
 
-/*
-            let date1 = new Date(Date.UTC(2000, 0, 1, 12)); //J2000
-            date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
-            date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`dateCounter${c}`]));
-
-                      for (let i = 0; i < 24; i++) {
-            let date1 = new Date(Date.UTC(2000, 0, 1, 12)); //J2000
-            date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
-            date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`dateCounter${c}`]));
-
-            dates1.push(date1);
-          }
-*/
+          /*
+                      let date1 = new Date(Date.UTC(2000, 0, 1, 12)); //J2000
+                      date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
+                      date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`dateCounter${c}`]));
+          
+                                for (let i = 0; i < 24; i++) {
+                      let date1 = new Date(Date.UTC(2000, 0, 1, 12)); //J2000
+                      date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
+                      date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`dateCounter${c}`]));
+          
+                      dates1.push(date1);
+                    }
+          */
 
           // TODO
           // calculate all dates in UTC!
           // see above
 
-/*
-            let date = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
-            let hourOffset = parseInt(Hour) - parseInt(TimeZone) - 12;
-            date = javascriptDateAddHours(date, hourOffset);
-            date = javascriptDateAddDays(date, parseInt(Day) - 1);
-
-*/
+          /*
+                      let date = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
+                      let hourOffset = parseInt(Hour) - parseInt(TimeZone) - 12;
+                      date = javascriptDateAddHours(date, hourOffset);
+                      date = javascriptDateAddDays(date, parseInt(Day) - 1);
+          
+          */
 
           // offset = (new Date().getTimezoneOffset()) / 60;
           var dates = []
           for (i = 1; i <= 24 * timestep; i++) {
-            let hourI = (i-1) / timestep;
-            let minutes = Math.floor(((i-1)/timestep - Math.floor((i-1)/timestep)) * 60.0);
+            let hourI = (i - 1) / timestep;
+            let minutes = Math.floor(((i - 1) / timestep - Math.floor((i - 1) / timestep)) * 60.0);
             let newDate = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
             newDate = javascriptDateAddDays(newDate, parseInt(Day) - 1);
             newDate = javascriptDateAddHours(newDate, Math.floor(hourI) + parseInt(TimeZone) - 12);
@@ -700,7 +702,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             for (let i = 1; i <= TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION; i++) {
               solarCoordinates.push(solarCalculator([Lon, Lat]).position(date));
             }
-            
+
             // Calculate sun path graphic info            
             let solarCoordinatesForDate = solarCalculator([Lon, Lat]).position(date); // returns: [ azimuth in degress, elevation in degress ]
             let solarAzimuth = solarCoordinatesForDate[0];
@@ -1030,7 +1032,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         //   solarCoordinatesRoomOrientationAdjusted.push(solarCoordinates[k][0] + p.float(windowOrientation));
         // }
       }
-//      // returns: [ azimuth in degress, elevation in degress ]
+      //      // returns: [ azimuth in degress, elevation in degress ]
 
 
       let LouverList1 = [];
@@ -1062,7 +1064,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             for (let k = 0; k < solarCoordinates.length; k++) {
               let XYLouver1 = 0;
               let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-              if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+              if (solarCoordinatesRoomOrientationAdjusted[k] < MAX_AZIMUTH_DIRECT_SUN && solarCoordinatesRoomOrientationAdjusted[k] > MIN_AZIMUTH_DIRECT_SUN) {
                 XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
               }
               AWArray1.push(XlocationOnWall);
@@ -1135,7 +1137,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             b = 0;
             for (let k = 0; k < solarCoordinates.length; k++) {
               let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-              if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+              if (solarCoordinatesRoomOrientationAdjusted[k] < MAX_AZIMUTH_DIRECT_SUN && solarCoordinatesRoomOrientationAdjusted[k] > MIN_AZIMUTH_DIRECT_SUN) {
                 XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
                 //console.log(XlocationOnWall);
               }
@@ -1315,7 +1317,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
               for (let k = 0; k < solarCoordinates.length; k++) {
                 let XYLouver1 = 0;
                 let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-                if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+                if (solarCoordinatesRoomOrientationAdjusted[k] < MAX_AZIMUTH_DIRECT_SUN && solarCoordinatesRoomOrientationAdjusted[k] > MIN_AZIMUTH_DIRECT_SUN) {
                   XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
                 }
                 AWArray1.push(XlocationOnWall);
@@ -1462,7 +1464,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
               for (let k = 0; k < solarCoordinates.length; k++) {
                 let XYLouver1 = 0;
                 let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-                if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+                if (solarCoordinatesRoomOrientationAdjusted[k] < MAX_AZIMUTH_DIRECT_SUN && solarCoordinatesRoomOrientationAdjusted[k] > MIN_AZIMUTH_DIRECT_SUN) {
                   XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
                 }
                 AWArray1.push(XlocationOnWall);
@@ -1532,7 +1534,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             b = 0;
             for (let k = 0; k < solarCoordinates.length; k++) {
               let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
-              if (solarCoordinatesRoomOrientationAdjusted[k] < 88.0 && solarCoordinatesRoomOrientationAdjusted[k] > -88.0) {
+              if (solarCoordinatesRoomOrientationAdjusted[k] < MAX_AZIMUTH_DIRECT_SUN && solarCoordinatesRoomOrientationAdjusted[k] > MIN_AZIMUTH_DIRECT_SUN) {
                 XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
                 //console.log(XlocationOnWall);
               }
@@ -1618,6 +1620,158 @@ renderGraphicsAndRunSimulation = caseNumber => {
           }
         }
 
+        /************************* 
+         * Total Window Area:
+         * 
+         *        total window area that received direct sun
+         *        for use in Solar Load Calculation
+         *        0 if nighttime (or angle of window is > 90 from sun)
+         *        otherwise it is the total window area of all windows
+         *        minus area that is blocked by vertical and horizontal shades
+         * 
+         *************************/
+        let windowGridSquareGetsDirectSun = [];
+        let totalWindowArea = 0;
+        let windowAreaDirectSun = 0;
+        let windowSolarCoolingLoad = 0;
+        let windowsCoordinates = r.glzCoords;
+        let wallWidthHalf = parseFloat(wallDepVal) / 2.0;
+        let gTL = 0, gTR = 1, gBR = 2, gBL = 3;
+        let gX = 0, gY = 2, gZ = 0;
+        for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
+          let window = windowsCoordinates[windowIndex];
+          let width = window[gTR][gX] - window[gTL][gX];
+          let height = window[gBL][gY] - window[gTL][gY];
+          if(width > 0 && height > 0) {
+            totalWindowArea += width * height;
+          }
+        }
+        if (singleHour === 1 && Array.isArray(windowsCoordinates) && windowsCoordinates.length > 0 && Array.isArray(solarCoordinates) && solarCoordinates.length > 0) {
+          let roomRotationAdjustedSolarAzimuthDegrees = solarCoordinatesRoomOrientationAdjusted[0];
+          let solarElevation = solarCoordinates[0][1];
+
+          /* Azimuth
+           * if window is facing the sun within tolerance, then
+           * we have direct sun in the azimuth dimension
+           * and we assume that the sun will be able to hit 100% of all windows (shades for now)
+           * 
+           * Elevation
+           * if it is positive then the sun is visible in the horizon (IE daytime)
+           */
+          if (solarElevation > 0 && roomRotationAdjustedSolarAzimuthDegrees > MIN_AZIMUTH_DIRECT_SUN && roomRotationAdjustedSolarAzimuthDegrees < MAX_AZIMUTH_DIRECT_SUN) {
+            /* Prepare arrays for each window divided into 1x1 foot squares
+             * for each square we will determine if the shades are blocking it from the sun
+             * initialize all grid squares as true and turn them to false anytime a shade blocks one of them */
+            for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
+              let window = windowsCoordinates[windowIndex];
+              let width = window[gTR][gX] - window[gTL][gX];
+              let height = window[gBL][gY] - window[gTL][gY];
+              let windowArray = [];
+              for (let i = 0; i < height; i++) {
+                windowArray[i] = [];
+                for (let j = 0; j < width; j++) {
+                  windowArray[i][j] = true;
+                }
+              }
+              windowGridSquareGetsDirectSun.push(windowArray);
+            }
+
+            /* Vertical Shades
+            * 
+            * see if given sun's azimuth the vertical shades
+            * are blocking parts of windows, we will grid the window into 1x1 foot squares
+            * and assume that if any part of the 1x1 foot square is blocked 100% of the square is blocked */
+            for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
+              let window = windowsCoordinates[windowIndex];
+              let width = window[gTR][gX] - window[gTL][gX];
+              let height = window[gBL][gY] - window[gTL][gY];
+              let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
+              if (roomRotationAdjustedSolarAzimuthDegrees < MAX_AZIMUTH_DIRECT_SUN && roomRotationAdjustedSolarAzimuthDegrees > MIN_AZIMUTH_DIRECT_SUN) {
+                // XlocationOnWall = Math.tan(roomRotationAdjustedSolarAzimuthDegrees * (3.1415926 / 180)) * 2;
+                XlocationOnWall = 0;
+              }
+
+              // for each 1x1 foot grid square in this window
+              for (let i = 0; i < height; i++) {
+                for (let j = 0; j < width; j++) {
+                  let newBigBArray = [];
+                  //for each shade in this window
+                  for (let p = 0; p < parseInt(vertShadeNum); p++) { 
+                    let angleA = abs(roomRotationAdjustedSolarAzimuthDegrees);
+                    let angleB = 90.0 - abs(roomRotationAdjustedSolarAzimuthDegrees);
+                    if (roomRotationAdjustedSolarAzimuthDegrees > 0) {
+                      angleB = angleB * -1;
+                    }
+                    let shadePositionX;
+                    if (vertShadeStart == "L") {
+                      shadePositionX = ((XlocationOnWall + j + (window[gTL][gX]) + (p * parseInt(vertShadeSpace) - parseInt(vertShadeShift))));
+                    } else {
+                      shadePositionX = ((XlocationOnWall + j+1 - (window[gTL][gX] + wallWidthHalf) + (-p * parseInt(vertShadeSpace) - parseInt(vertShadeShift))));
+                    }
+
+                    let ratioAngleBtoA = Math.sin(angleB * (Math.PI / 180)) / Math.sin(angleA * (Math.PI / 180));
+                    let bigB = ratioAngleBtoA * shadePositionX;
+                    newBigBArray.push(bigB);
+                  }
+
+                  for (let q = 0; q < newBigBArray.length; q++) {
+                    if (newBigBArray[q] > parseInt(vertShadeDist) && newBigBArray[q] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))) {
+                      // Vertical shade is blocking the sun at this window grid square
+                      windowGridSquareGetsDirectSun[windowIndex][i][j] = false;
+                    }
+                  }
+                }
+              }
+            }
+
+            /* Horizontal Shades
+            * 
+            * see if given sun's elevation the horizontal shades
+            * are blocking parts of windows, we will grid the window into 1x1 foot squares
+            * and assume that if any part of the 1x1 foot square is blocked 100% of the square is blocked */
+            let angleHeight = Math.tan(solarElevation * (Math.PI / 180)) * 1;
+            for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
+              let window = windowsCoordinates[windowIndex];
+              let width = window[gTR][gX] - window[gTL][gX];
+              let height = window[gBL][gY] - window[gTL][gY];
+
+              // for each 1x1 foot grid square in this window
+              for (let i = 0; i < height; i++) {
+                for (let j = 0; j < width; j++) {
+                  for (let n = 0; n < horzShadeNum; n++) {
+                    let sinLawDist = (horzShadeDist * (Math.sin(Math.PI - (((90) - solarElevation) * (Math.PI / 180)) - (90 * (Math.PI / 180))))) / Math.sin(((90) - solarElevation) * (Math.PI / 180));
+                    let sinLawAngle = (horzShadeDep * (Math.sin(Math.PI - (((90) - solarElevation) * (Math.PI / 180)) - (horzShadeAngle * (Math.PI / 180))))) / Math.sin(((90) - solarElevation) * (Math.PI / 180));
+  
+                    if (angleHeight < (window[gTR][gY] + i) - (horzShadeSpace * n) - (sinLawDist) + (p.float(horzShadeHeight) * .5) && angleHeight > ((window[gTR][gY] + i) - (horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(horzShadeHeight) * .5))) {
+                      // Horizontal shade is blocking the sun at this window grid square
+                      windowGridSquareGetsDirectSun[windowIndex][i][j] = false;
+                    }
+                  }  
+                }
+              }
+            }
+
+            /* Window Area:
+            * calculate total window area that received direct sun */
+            for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
+              let window = windowsCoordinates[windowIndex];
+              let width = window[gTR][gX] - window[gTL][gX];
+              let height = window[gBL][gY] - window[gTL][gY];
+              for (let i = 0; i < height; i++) {
+                for (let j = 0; j < width; j++) {
+                  if(windowGridSquareGetsDirectSun[windowIndex][i][j]) {                    
+                    windowAreaDirectSun = windowAreaDirectSun + 1; // windowGridSquareGetsDirectSun represents a 1x1 foot square
+                  }
+                }
+              }
+            }
+            let iDir = window.SOLAR_COMFORT.Idir_f(solarElevation);
+            windowSolarCoolingLoad = units.wattsPerMeterSquaredToBtuPerHourPerFootSquared(iDir) * windowAreaDirectSun * shgc;
+          }
+        }
+        window.SOLAR_COMFORT[`windowAreaDirectSun${c}`] = windowAreaDirectSun;
+        window.SOLAR_COMFORT[`windowSolarCoolingLoad${c}`] = windowSolarCoolingLoad;
+
         // FIX
         // all calculations are flipped left to right
         // we will just flip the entire array in the room width direction
@@ -1628,7 +1782,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let stepDelta = singleHour == 1 ? 9 : 4;
         window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, parseInt(wallDepVal), stepDelta);
 
-        if(thermalComfortSingleHour && solarCoordinates.length > 0) {
+        if (thermalComfortSingleHour && solarCoordinates.length > 0) {
           /* when in single hour mode we have 9 coordinates (subsets of hour)
            * just grab the 1st one, IE top of the hour */
           let coordinate = solarCoordinates[0];
@@ -1830,15 +1984,15 @@ renderGraphicsAndRunSimulation = caseNumber => {
           }
 
           mySun = parseInt(mySun);
-          
+
           // draw colored grid square on floor representing % of time in direct sun
-          if(thermalComfortSingleHour && window.SOLAR_COMFORT[`MRTGrid${c}`]) {
+          if (thermalComfortSingleHour && window.SOLAR_COMFORT[`MRTGrid${c}`]) {
             let mrtValues = window.SOLAR_COMFORT[`MRTGrid${c}`][i][(gridY - 1) - j]; /* flip left-to-right room is actually drawn 0 feet on the right */
             let gridColor = '#ffffff';
-            if(mrtValues.mrtppd >= 0 && mrtValues.mrtppd <= 30) {
+            if (mrtValues.mrtppd >= 0 && mrtValues.mrtppd <= 30) {
               gridColor = ppdColorScale0to30(mrtValues.mrtppd);
             } else if (mrtValues.mrtppd <= 100) {
-              gridColor = ppdColors0to30[ppdColors0to30.length-1];
+              gridColor = ppdColors0to30[ppdColors0to30.length - 1];
             } else {
               console.error('invalid PPD: ', mrtValues.mrtppd);
               gridColor = "#000000";
@@ -1971,7 +2125,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       if (annualOn) {
         MDTPercentage = p.int((p.float(MDT) / (parseInt(wallLen) * parseInt(wallDepVal))) * 100);
       } else {
-        MDTPercentage = p.int((p.float(MDT) / (parseInt(wallLen) * parseInt(wallDepVal))) * 100);        
+        MDTPercentage = p.int((p.float(MDT) / (parseInt(wallLen) * parseInt(wallDepVal))) * 100);
       }
 
 
@@ -1988,13 +2142,13 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.push();
 
       if (MDTPercentage < valFal) {
-        if(!thermalComfortSingleHour) {
+        if (!thermalComfortSingleHour) {
           p.fill(0, 255, 0);
           p.image(imgCheck, 310, 2, 30, 30);
         }
         window.SOLAR_COMFORT[`MDTResult${c}`] += "Pass\n";
       } else {
-        if(!thermalComfortSingleHour) {
+        if (!thermalComfortSingleHour) {
           p.fill(255, 0, 0);
           p.image(imgNope, 310, 2, 30, 30);
         }
@@ -2004,10 +2158,16 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.fill(0);
       p.textSize(50);
 
-      if(!thermalComfortSingleHour) {
+      if (!thermalComfortSingleHour) {
         p.text(MDTPercentage + "%", 340, 38);
         p.textSize(10);
         p.text("> max direct sun time", 340, 50);
+      } else {
+        let solarCoolingLoad = Math.round(window.SOLAR_COMFORT[`windowSolarCoolingLoad${c}`]);
+        p.textSize(30);
+        p.text(solarCoolingLoad + "", 340, 38);
+        p.textSize(10);
+        p.text("solar cooling load", 340, 50);
       }
 
       // p.pop();
@@ -2021,7 +2181,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       if (window.SOLAR_COMFORT[`dateCounter${c}`] === 365 && annualOn) {
         window.SOLAR_COMFORT[`annualSimulationDone${c}`] = true;
       }
-    
+
       // if(p.frameCount === 60*1 && caseNumber === 1) {
       //   console.log(solarCoordinates.map(c => c[1]));
       // }
