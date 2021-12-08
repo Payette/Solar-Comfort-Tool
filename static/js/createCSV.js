@@ -175,9 +175,19 @@ function createCSV(hideMRTCalculations = false) {
     Object.values(gatherGlobalInputs()).forEach(function(obj) {
         csvContent += obj.label + ',' + obj.value + '\n';
     });
+    if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
+        csvContent += `Solar Azimuth (degrees), ${window.SOLAR_COMFORT.solarAzimuthDegrees}\n`;
+        csvContent += `Solar Elevation (degrees), ${window.SOLAR_COMFORT.solarElevationDegrees}\n`;
+    }
 
     csvContent += "\nCase 1 Result\n";
     csvContent += window.SOLAR_COMFORT.MDTResult;
+    if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
+        csvContent += `Solar Cooling Load (Btu/hr), ${window.SOLAR_COMFORT.windowSolarCoolingLoad}\n`;
+        csvContent += `Window Area Total (sf), ${window.SOLAR_COMFORT.totalWindowArea}\n`;
+        csvContent += `Window Area With Direct Sun Total (sf), ${window.SOLAR_COMFORT.windowAreaDirectSun}\n`;
+        csvContent += `Direct Normal Irradiance (Idir), ${window.SOLAR_COMFORT.iDir}\n`;
+    }
 
     csvContent += "\nCase 1 Hours of Sun Floor Grid (length x depth)\n";
     let globalGridColor = window.SOLAR_COMFORT.globalGridColor;
@@ -193,15 +203,6 @@ function createCSV(hideMRTCalculations = false) {
 
     if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
         let MRTGrid = window.SOLAR_COMFORT.MRTGrid;
-
-        csvContent += "\nCase 1 Total Window Area (sf)\n";
-        csvContent += window.SOLAR_COMFORT.totalWindowArea + "\n";
-
-        csvContent += "\nCase 1 Total Window Area With Direct Sun (sf)\n";
-        csvContent += window.SOLAR_COMFORT.windowAreaDirectSun + "\n";
-
-        csvContent += "\nCase 1 Window Solar Cooling Load (Btu/hr)\n";
-        csvContent += window.SOLAR_COMFORT.windowSolarCoolingLoad + "\n";
 
         csvContent += "\nCase 1 MRT Grid (length x depth)\n";
         csvContent += gridValueToCSV(MRTGrid, 'mrt');
@@ -238,6 +239,9 @@ function createCSV(hideMRTCalculations = false) {
     Object.values(gatherCase1Inputs()).forEach(function(obj) {
         csvContent += obj.label + ',' + obj.value + '\n';
     });
+    if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
+        csvContent += `Solar Azimuth + Window Direction (degrees), ${window.SOLAR_COMFORT.solarAzimuthDegreesRoomRotationAdjusted}\n`;
+    }
 
     csvContent += "\nCase 2 Inputs\n";
     // Check if Case 2 is activated
@@ -250,9 +254,18 @@ function createCSV(hideMRTCalculations = false) {
             csvContent += obj.label + ',' + obj.value + '\n';
         });
     }
+    if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
+        csvContent += `Solar Azimuth + Window Direction (degrees), ${window.SOLAR_COMFORT.solarAzimuthDegreesRoomRotationAdjusted1}\n`;
+    }
 
     csvContent += "\nCase 2 Result\n";
     csvContent += window.SOLAR_COMFORT.MDTResult1;
+    if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
+        csvContent += `Solar Cooling Load (Btu/hr), ${window.SOLAR_COMFORT.windowSolarCoolingLoad1}\n`;
+        csvContent += `Window Area Total (sf), ${window.SOLAR_COMFORT.totalWindowArea1}\n`;
+        csvContent += `Window Area With Direct Sun Total (sf), ${window.SOLAR_COMFORT.windowAreaDirectSun1}\n`;
+        csvContent += `Direct Normal Irradiance (Idir), ${window.SOLAR_COMFORT.iDir1}\n`;
+    }
 
     csvContent += "\nCase 2 Hours of Sun Floor Grid (length x depth)\n";
     let globalGridColor1 = window.SOLAR_COMFORT.globalGridColor1;
@@ -268,15 +281,6 @@ function createCSV(hideMRTCalculations = false) {
 
     if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid1 && window.SOLAR_COMFORT.MRTGrid1.length > 0) {
         let MRTGrid1 = window.SOLAR_COMFORT.MRTGrid1;
-
-        csvContent += "\nCase 2 Total Window Area (sf)\n";
-        csvContent += window.SOLAR_COMFORT.totalWindowArea1 + "\n";
-
-        csvContent += "\nCase 2 Total Window Area With Direct Sun (sf)\n";
-        csvContent += window.SOLAR_COMFORT.windowAreaDirectSun1 + "\n";
-
-        csvContent += "\nCase 2 Window Solar Cooling Load (Btu/hr)\n";
-        csvContent += window.SOLAR_COMFORT.windowSolarCoolingLoad1 + "\n";
 
         csvContent += "\nCase 2 MRT Grid (length x depth)\n";
         csvContent += gridValueToCSV(MRTGrid1, 'mrt');

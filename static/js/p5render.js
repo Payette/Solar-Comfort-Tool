@@ -1651,6 +1651,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
         if (singleHour === 1 && Array.isArray(windowsCoordinates) && windowsCoordinates.length > 0 && Array.isArray(solarCoordinates) && solarCoordinates.length > 0) {
           let roomRotationAdjustedSolarAzimuthDegrees = solarCoordinatesRoomOrientationAdjusted[0];
           let solarElevation = solarCoordinates[0][1];
+          let solarAzimuthDegrees = solarCoordinates[0][0];
+
+          window.SOLAR_COMFORT[`solarAzimuthDegrees`] = solarAzimuthDegrees;
+          window.SOLAR_COMFORT[`solarElevationDegrees`] = solarElevation;
+          window.SOLAR_COMFORT[`solarAzimuthDegreesRoomRotationAdjusted${c}`] = roomRotationAdjustedSolarAzimuthDegrees;
+          window.SOLAR_COMFORT[`iDir${c}`] = window.SOLAR_COMFORT.Idir_f(solarElevation);
 
           /* Azimuth
            * if window is facing the sun within tolerance, then
