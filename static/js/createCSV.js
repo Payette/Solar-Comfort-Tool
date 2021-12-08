@@ -180,6 +180,14 @@ function createCSV(hideMRTCalculations = false) {
         csvContent += `Solar Elevation (degrees), ${window.SOLAR_COMFORT.solarElevationDegrees}\n`;
     }
 
+    csvContent += "\nCase 1 Inputs\n";
+    Object.values(gatherCase1Inputs()).forEach(function(obj) {
+        csvContent += obj.label + ',' + obj.value + '\n';
+    });
+    if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
+        csvContent += `Solar Azimuth + Window Direction (degrees), ${window.SOLAR_COMFORT.solarAzimuthDegreesRoomRotationAdjusted}\n`;
+    }
+
     csvContent += "\nCase 1 Result\n";
     csvContent += window.SOLAR_COMFORT.MDTResult;
     if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
@@ -235,13 +243,6 @@ function createCSV(hideMRTCalculations = false) {
         csvContent += gridValueToCSV(MRTGrid, 'mrtppd', true, 0, 100);
     }
 
-    csvContent += "\nCase 1 Inputs\n";
-    Object.values(gatherCase1Inputs()).forEach(function(obj) {
-        csvContent += obj.label + ',' + obj.value + '\n';
-    });
-    if(!hideMRTCalculations && window.SOLAR_COMFORT.MRTGrid && window.SOLAR_COMFORT.MRTGrid.length > 0) {
-        csvContent += `Solar Azimuth + Window Direction (degrees), ${window.SOLAR_COMFORT.solarAzimuthDegreesRoomRotationAdjusted}\n`;
-    }
 
     csvContent += "\nCase 2 Inputs\n";
     // Check if Case 2 is activated

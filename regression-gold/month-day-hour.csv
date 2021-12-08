@@ -3,6 +3,50 @@ Study Type,Direct Sun - Single Hour
 Floor Area Loss,40%
 Max Direct Sun Time,3 hr
 
+Case 1 Inputs
+Month,5
+Day,4
+Hour,9
+Time Step per Hour,4
+Longitude,-71
+Latitude,42
+Time Zone Offset,-5
+Outdoor Temperature (°F),90.9
+Indoor Temperature (°F),76
+Relative Humidity (%),60
+Air Speed (fpm),10
+Clothing Level (clo),0.5
+Metabolic Rate (met),1.2
+Occupant Posture,seated
+Average Shortwave Absorptivity,0.67
+Room Orientation,0
+Ceiling Height (ft),12
+Grid Height (ft),3
+Room Length (ft),40
+Room Depth (ft),30
+Wall R-Value (ft²hr°F/Btu),15
+Window Height from Sill (ft),7.0
+Sill Height (ft),2.0
+Window Width (ft),14
+Window-to-Wall Ratio (%),39
+Window Seperation (ft),12
+Window U-Value (Btu/ft²hr°F),0.35
+Solar Heat Gain Coefficient (shgc),0.35
+Horizontal Shade Depth (ft),1
+Number of Shades (Horizontal),0
+Spacing (Horizontal) (ft),3
+Distance from Facade (Horizontal) (ft),0
+Height Above Window (ft),0
+Angle,90
+Vertical Shade Depth (ft),3
+Number of Shades (Vertical),0
+Spacing (Vertical) (ft),3
+Left/Right,L
+Left/Right Shift,0
+Distance from Facade (Vertical) (ft),0
+Height Above Window (ft),0
+Height Relative to Window (ft),0
+
 Case 1 Result
 % > max direct sun time, 10%, Pass
 
@@ -71,50 +115,6 @@ depth, 40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,1
 28, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 
 29, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 
 30, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 
-
-Case 1 Inputs
-Month,5
-Day,4
-Hour,9
-Time Step per Hour,4
-Longitude,-71
-Latitude,42
-Time Zone Offset,-5
-Outdoor Temperature (°F),90.9
-Indoor Temperature (°F),76
-Relative Humidity (%),60
-Air Speed (fpm),10
-Clothing Level (clo),0.5
-Metabolic Rate (met),1.2
-Occupant Posture,seated
-Average Shortwave Absorptivity,0.67
-Room Orientation,0
-Ceiling Height (ft),12
-Grid Height (ft),3
-Room Length (ft),40
-Room Depth (ft),30
-Wall R-Value (ft²hr°F/Btu),15
-Window Height from Sill (ft),7.0
-Sill Height (ft),2.0
-Window Width (ft),14
-Window-to-Wall Ratio (%),39
-Window Seperation (ft),12
-Window U-Value (Btu/ft²hr°F),0.35
-Solar Heat Gain Coefficient (shgc),0.35
-Horizontal Shade Depth (ft),1
-Number of Shades (Horizontal),0
-Spacing (Horizontal) (ft),3
-Distance from Facade (Horizontal) (ft),0
-Height Above Window (ft),0
-Angle,90
-Vertical Shade Depth (ft),3
-Number of Shades (Vertical),0
-Spacing (Vertical) (ft),3
-Left/Right,L
-Left/Right Shift,0
-Distance from Facade (Vertical) (ft),0
-Height Above Window (ft),0
-Height Relative to Window (ft),0
 
 Case 2 Inputs
 Month,5
