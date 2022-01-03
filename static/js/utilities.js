@@ -1,5 +1,7 @@
 window.SOLAR_COMFORT = {};
 
+window.SOLAR_COMFORT.settings = {};
+window.SOLAR_COMFORT.settings1 = {};
 window.SOLAR_COMFORT.BODY_POSITION_SIT = 'seated';
 window.SOLAR_COMFORT.BODY_POSITION_STAND = 'standing';
 

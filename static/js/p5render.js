@@ -6,14 +6,17 @@ let fullDay = 0;
 let currentFrame = 0;
 let annualOn = false; // Check If Annual Button is Pressed
 
-let thermalComfortSingleHour = !!document.getElementById(`ppdRadio`).checked;
+window.SOLAR_COMFORT.settings.thermalComfortSingleHour = !!document.getElementById(`ppdRadio`).checked;
+window.SOLAR_COMFORT.settings1.thermalComfortSingleHour = window.SOLAR_COMFORT.settings.thermalComfortSingleHour
 document.getElementsByName(`studyType`).forEach(e => e.addEventListener('click', () => {
   if (e.id === 'ppdRadio') {
-    thermalComfortSingleHour = true;
+    window.SOLAR_COMFORT.settings.thermalComfortSingleHour = true;
+    window.SOLAR_COMFORT.settings1.thermalComfortSingleHour = true;
     Array.from(document.getElementsByClassName("directsunlegend")).forEach(e => e.classList.add('hidefromall'));
     Array.from(document.getElementsByClassName("ppdlegend")).forEach(e => e.classList.remove('hidefromall'));
   } else {
-    thermalComfortSingleHour = false;
+    window.SOLAR_COMFORT.settings.thermalComfortSingleHour = false;
+    window.SOLAR_COMFORT.settings1.thermalComfortSingleHour = false;
     Array.from(document.getElementsByClassName("directsunlegend")).forEach(e => e.classList.remove('hidefromall'));
     Array.from(document.getElementsByClassName("ppdlegend")).forEach(e => e.classList.add('hidefromall'));
   }
@@ -115,7 +118,8 @@ function msg2() {
 function thermalComfortSingleHourChange(e) {
   singleHour = 1;
   fullDay = 0;
-  thermalComfortSingleHour = true;
+  window.SOLAR_COMFORT.settings.thermalComfortSingleHour = true;
+  window.SOLAR_COMFORT.settings1.thermalComfortSingleHour = true;
 }
 
 window.SOLAR_COMFORT.checkButton = function () {
@@ -464,121 +468,118 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       // Study
 
-
-      let glzOrWidth = document.getElementById(`glazingRatioCheck`).checked;
+      window.SOLAR_COMFORT[`settings${c}`].glzOrWidth = document.getElementById(`glazingRatioCheck`).checked;
       //console.log(Radiox);
 
 
       // CLIMATE
-      let Lon1 = document.getElementById(`long`).value;
+      window.SOLAR_COMFORT[`settings${c}`].Lon1 = document.getElementById(`long`).value;
 
-      let Lat1 = document.getElementById(`lat`).value;
+      window.SOLAR_COMFORT[`settings${c}`].Lat1 = document.getElementById(`lat`).value;
 
-      let TimeZone1 = document.getElementById(`timeZone`).value;
+      window.SOLAR_COMFORT[`settings${c}`].TimeZone1 = document.getElementById(`timeZone`).value;
 
-      let outdoorTemp = document.getElementById(`outdoorTemp`).value;
+      window.SOLAR_COMFORT[`settings${c}`].outdoorTemp = document.getElementById(`outdoorTemp`).value;
 
       // TIME CONFIG
 
-      let Hour1 = document.getElementById(`hour`).value;
+      window.SOLAR_COMFORT[`settings${c}`].Hour1 = document.getElementById(`hour`).value;
 
-      let Day1 = document.getElementById(`day`).value;
+      window.SOLAR_COMFORT[`settings${c}`].Day1 = document.getElementById(`day`).value;
 
-      let Month1 = document.getElementById(`mon`).value;
+      window.SOLAR_COMFORT[`settings${c}`].Month1 = document.getElementById(`mon`).value;
 
-      let timestep = document.getElementById(`timeStep`).value;
+      window.SOLAR_COMFORT[`settings${c}`].timestep = document.getElementById(`timeStep`).value;
 
 
       // INDOOR CONDITIONS
-      let airTemp = document.getElementById(`airTemp${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].airTemp = document.getElementById(`airTemp${c}`).value;
 
-      let humidity = document.getElementById(`humidity${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].humidity = document.getElementById(`humidity${c}`).value;
 
-      let airSpeed = document.getElementById(`airSpeed${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].airSpeed = document.getElementById(`airSpeed${c}`).value;
 
-      let clothing = document.getElementById(`clothing${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].clothing = document.getElementById(`clothing${c}`).value;
 
-      let metabolic = document.getElementById(`metabolic${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].metabolic = document.getElementById(`metabolic${c}`).value;
 
-      let posture = document.getElementById(`posture${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].posture = document.getElementById(`posture${c}`).value;
 
-      let asa = document.getElementById(`asa${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].asa = document.getElementById(`asa${c}`).value;
 
       // ROOM GEOMETRY
-      let roomOrientationValue1 = document.getElementById(`north${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].roomOrientationValue1 = document.getElementById(`north${c}`).value;
 
-      let gridHeightValue = document.getElementById(`gridHt${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].gridHeightValue = document.getElementById(`gridHt${c}`).value;
 
-      let ceilingHeightValue = document.getElementById(`ceiling${c}`).value;
-      let ceilingHeightValue1 = document.getElementById(`ceiling${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue = document.getElementById(`ceiling${c}`).value;
 
-      let wallLen = document.getElementById(`wallWidth${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].wallLen = document.getElementById(`wallWidth${c}`).value;
 
-      let wallDepVal = document.getElementById(`wallDep${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].wallDepVal = document.getElementById(`wallDep${c}`).value;
 
-      let wallR = document.getElementById(`wallR${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].wallR = document.getElementById(`wallR${c}`).value;
 
       // WINDOW GEOMETRY
 
-      let windowHeightValue = document.getElementById(`windowHeight${c}`).value * 10;
-      windowHeightValue = windowHeightValue / 10;
+      window.SOLAR_COMFORT[`settings${c}`].windowHeightValue = (document.getElementById(`windowHeight${c}`).value * 10) / 10;
 
-      let windowWidthValue = document.getElementById(`windowWidth${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].windowWidthValue = document.getElementById(`windowWidth${c}`).value;
 
-      let glzRatioValue = document.getElementById(`glazing${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].glzRatioValue = document.getElementById(`glazing${c}`).value;
 
-      let sillHeightValue = document.getElementById(`sill${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].sillHeightValue = document.getElementById(`sill${c}`).value;
 
-      let distanceWindows = document.getElementById(`distWindow${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].distanceWindows = document.getElementById(`distWindow${c}`).value;
 
-      let windowU = document.getElementById(`windowU${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].windowU = document.getElementById(`windowU${c}`).value;
 
-      let shgc = document.getElementById(`shgc${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].shgc = document.getElementById(`shgc${c}`).value;
 
 
       // SHADE GEOMETRY
 
-      let horzShadeDep = document.getElementById(`hShadeDep${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].horzShadeDep = document.getElementById(`hShadeDep${c}`).value;
 
-      let horzShadeNum = document.getElementById(`hShadeNum${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].horzShadeNum = document.getElementById(`hShadeNum${c}`).value;
 
-      let horzShadeSpace = document.getElementById(`hShadeSpace${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace = document.getElementById(`hShadeSpace${c}`).value;
 
-      let horzShadeDist = document.getElementById(`hShadeDist${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].horzShadeDist = document.getElementById(`hShadeDist${c}`).value;
 
-      let horzShadeHeight = document.getElementById(`hShadeHeight${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight = document.getElementById(`hShadeHeight${c}`).value;
 
-      let horzShadeAngle = document.getElementById(`hShadeAngle${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle = document.getElementById(`hShadeAngle${c}`).value;
 
-      let vertShadeDep = document.getElementById(`vShadeDep${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].vertShadeDep = document.getElementById(`vShadeDep${c}`).value;
 
-      let vertShadeNum = document.getElementById(`vShadeNum${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].vertShadeNum = document.getElementById(`vShadeNum${c}`).value;
 
-      let vertShadeSpace = document.getElementById(`vShadeSpace${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace = document.getElementById(`vShadeSpace${c}`).value;
 
-      let vertShadeStart = document.getElementById(`vShadeStart${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].vertShadeStart = document.getElementById(`vShadeStart${c}`).value;
 
-      let vertShadeShift = document.getElementById(`vShadeShift${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].vertShadeShift = document.getElementById(`vShadeShift${c}`).value;
 
-      let vertShadeDist = document.getElementById(`vShadeDist${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].vertShadeDist = document.getElementById(`vShadeDist${c}`).value;
 
-      let vertShadeOn = document.getElementById(`vShadeOn${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].vertShadeOn = document.getElementById(`vShadeOn${c}`).value;
 
-      let vShadeCheckbox = document.querySelector("input[name=vShadeOn]");
+      window.SOLAR_COMFORT[`settings${c}`].vShadeCheckbox = document.querySelector("input[name=vShadeOn]");
 
-      if (vShadeCheckbox.checked) {
-        vertShadeOn = 0;
+      if (window.SOLAR_COMFORT[`settings${c}`].vShadeCheckbox.checked) {
+        window.SOLAR_COMFORT[`settings${c}`].vertShadeOn = 0;
       } else {
-        vertShadeOn = 1;
+        window.SOLAR_COMFORT[`settings${c}`].vertShadeOn = 1;
       }
 
-      let vertShadeHeight = document.getElementById(`vShadeHeight${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight = document.getElementById(`vShadeHeight${c}`).value;
 
-      let vertShadeScale = document.getElementById(`vShadeScale${c}`).value;
+      window.SOLAR_COMFORT[`settings${c}`].vertShadeScale = document.getElementById(`vShadeScale${c}`).value;
 
-      let valFal = document.getElementById(`fal`).value; //FLOOR AREA LOSS
+      window.SOLAR_COMFORT[`settings${c}`].valFal = document.getElementById(`fal`).value; //FLOOR AREA LOSS
 
-      let valMDST = document.getElementById(`mdst`).value; // MAX DIRECT SUN TIME
+      window.SOLAR_COMFORT[`settings${c}`].valMDST = document.getElementById(`mdst`).value; // MAX DIRECT SUN TIME
 
 
       if (annualOn) { // Check If Annual Button is Pressed
@@ -614,17 +615,17 @@ renderGraphicsAndRunSimulation = caseNumber => {
           }
         }
       } else {
-        if (Lon == Lon1 && Lat == Lat1 && Hour == Hour1 && Day == Day1 && Month == Month1 && TimeZone == TimeZone1 && roomOrientationValue == roomOrientationValue1 && currentStudy == singleHour) {
+        if (Lon == window.SOLAR_COMFORT[`settings${c}`].Lon1 && Lat == window.SOLAR_COMFORT[`settings${c}`].Lat1 && Hour == window.SOLAR_COMFORT[`settings${c}`].Hour1 && Day == window.SOLAR_COMFORT[`settings${c}`].Day1 && Month == window.SOLAR_COMFORT[`settings${c}`].Month1 && TimeZone == window.SOLAR_COMFORT[`settings${c}`].TimeZone1 && roomOrientationValue == window.SOLAR_COMFORT[`settings${c}`].roomOrientationValue1 && currentStudy == singleHour) {
           // console.log(1);
         } else {
           // console.log(0);
-          Lon = Lon1;
-          Lat = Lat1;
-          Hour = Hour1;
-          Day = Day1;
-          Month = Month1;
-          TimeZone = TimeZone1;
-          roomOrientationValue = roomOrientationValue1;
+          Lon = window.SOLAR_COMFORT[`settings${c}`].Lon1;
+          Lat = window.SOLAR_COMFORT[`settings${c}`].Lat1;
+          Hour = window.SOLAR_COMFORT[`settings${c}`].Hour1;
+          Day = window.SOLAR_COMFORT[`settings${c}`].Day1;
+          Month = window.SOLAR_COMFORT[`settings${c}`].Month1;
+          TimeZone = window.SOLAR_COMFORT[`settings${c}`].TimeZone1;
+          roomOrientationValue = window.SOLAR_COMFORT[`settings${c}`].roomOrientationValue1;
           currentStudy = singleHour;
 
           window.SOLAR_COMFORT[`dateCounter${c}`] = 0;
@@ -661,9 +662,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
           // offset = (new Date().getTimezoneOffset()) / 60;
           var dates = []
-          for (i = 1; i <= 24 * timestep; i++) {
-            let hourI = (i - 1) / timestep;
-            let minutes = Math.floor(((i - 1) / timestep - Math.floor((i - 1) / timestep)) * 60.0);
+          for (i = 1; i <= 24 * window.SOLAR_COMFORT[`settings${c}`].timestep; i++) {
+            let hourI = (i - 1) / window.SOLAR_COMFORT[`settings${c}`].timestep;
+            let minutes = Math.floor(((i - 1) / window.SOLAR_COMFORT[`settings${c}`].timestep - Math.floor((i - 1) / window.SOLAR_COMFORT[`settings${c}`].timestep)) * 60.0);
             let newDate = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
             newDate = javascriptDateAddDays(newDate, parseInt(Day) - 1);
             newDate = javascriptDateAddHours(newDate, Math.floor(hourI) + parseInt(TimeZone) - 12);
@@ -683,7 +684,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             solarCoordinates.push(solarCalculator([Lon, Lat]).position(dates[i]));
           }
 
-          for (let i = 0; i < solarCoordinates.length; i += parseInt(timestep)) {
+          for (let i = 0; i < solarCoordinates.length; i += parseInt(window.SOLAR_COMFORT[`settings${c}`].timestep)) {
             if (solarCoordinates[i][1] > 0) {
               sunPathGraphicPixelX.push((36 - (36 * (solarCoordinates[i][1] / 180))) * p.sin((solarCoordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180)));
               sunPathGraphicPixelY.push(((22 - (22 * (solarCoordinates[i][1] / 180))) * p.cos((solarCoordinates[i][0] - 45 - roomOrientationValue) * (-3.1415926 / 180))) - (solarCoordinates[i][1] * .3));
@@ -718,7 +719,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       //GEO Result - TAKES DATA FROM THE GEO.JS FILE
       //geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth, changedVar)
-      var geoResult = geo.createGlazingForRect(parseFloat(ceilingHeightValue), parseFloat(wallDepVal), glzRatioValue / 100, parseFloat(windowWidthValue), parseFloat(windowHeightValue), parseFloat(sillHeightValue), parseFloat(distanceWindows), glzOrWidth);
+      var geoResult = geo.createGlazingForRect(parseFloat(window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue), parseFloat(window.SOLAR_COMFORT[`settings${c}`].wallDepVal), window.SOLAR_COMFORT[`settings${c}`].glzRatioValue / 100, parseFloat(window.SOLAR_COMFORT[`settings${c}`].windowWidthValue), parseFloat(window.SOLAR_COMFORT[`settings${c}`].windowHeightValue), parseFloat(window.SOLAR_COMFORT[`settings${c}`].sillHeightValue), parseFloat(window.SOLAR_COMFORT[`settings${c}`].distanceWindows), window.SOLAR_COMFORT[`settings${c}`].glzOrWidth);
       var r = {}
       r.wallCoords = geoResult.wallCoords;
       r.glzCoords = geoResult.glzCoords;
@@ -773,9 +774,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
       //FIRST MAKE IT, THEN RE-DO IT USING A MULTIPLIER TO INCREASE OR DECREASE THE SCALE SO IT STAYS WITHIN THE BOUNDS OF THE CANVAS
 
       //let CeilHt = CeilingSlider.value();//Ceiling Height (ft) - this moves the whole grid down.
-      let gridX = parseInt(wallLen); // number of y grids - should be fixed size normally at 60
-      let gridY = parseInt(wallDepVal); // number of x grids - should be fixed size normally at 30
-      let gridHt = gridHeightValue;
+      let gridX = parseInt(window.SOLAR_COMFORT[`settings${c}`].wallLen); // number of y grids - should be fixed size normally at 60
+      let gridY = parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal); // number of x grids - should be fixed size normally at 30
+      let gridHt = window.SOLAR_COMFORT[`settings${c}`].gridHeightValue;
       //let sunRotation = SunRotationSlider.value() * (3.1415926/180);
 
 
@@ -784,7 +785,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       let y = 60;
       let xNext = 200 - x;
       let yNext = 120 - y;
-      let Ceil = ceilingHeightValue * 120;
+      let Ceil = window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue * 120;
       let yShift = 0; //x * gridY
 
       //SINGLE GRID BLOCK - NOT VISIBLE
@@ -814,7 +815,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       y = 60 * m;
       xNext = (200 * m) - x;
       yNext = (120 * m) - y;
-      Ceil = (ceilingHeightValue * m) * 120;
+      Ceil = (window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue * m) * 120;
       yShift = x * (gridY);
       let GridHt = (gridHt * m) * 120;
 
@@ -851,22 +852,22 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.textSize(10);
       p.fill(0);
       p.noStroke();
-      p.text(wallDepVal, ((x3 + (xNext * (gridX))) - (x * (gridY))) + 10, ((y3 + (y * (gridX))) + (yNext * (gridY))) + 16);
-      p.text(wallLen, ((x3 + (xNext * (gridX))) - (x * (gridY))) - 24, ((y3 + (y * (gridX))) + (yNext * (gridY))) + 16);
+      p.text(window.SOLAR_COMFORT[`settings${c}`].wallDepVal, ((x3 + (xNext * (gridX))) - (x * (gridY))) + 10, ((y3 + (y * (gridX))) + (yNext * (gridY))) + 16);
+      p.text(window.SOLAR_COMFORT[`settings${c}`].wallLen, ((x3 + (xNext * (gridX))) - (x * (gridY))) - 24, ((y3 + (y * (gridX))) + (yNext * (gridY))) + 16);
       p.stroke(150, 150, 150);
       p.strokeWeight(1);
       //p.point(((x3+(xNext*(gridX)))-(x*(gridY)))+10, ((y3+(y*(gridX)))+(yNext*(gridY)))+6);
       p.line(((x3 + (xNext * (gridX))) - (x * (gridY))) + 10, ((y3 + (y * (gridX))) + (yNext * (gridY))) + 6, ((x3 + (xNext * (gridX))) - (x * (gridY))) + 10 - x, ((y3 + (y * (gridX))) + (yNext * (gridY))) + 6 - y);
       p.line(((x3 + (xNext * (gridX))) - (x * (gridY))) - 10, ((y3 + (y * (gridX))) + (yNext * (gridY))) + 6, ((x3 + (xNext * (gridX))) - (x * (gridY))) - 10 + x, ((y3 + (y * (gridX))) + (yNext * (gridY))) + 6 - y);
       //p.point(((x3+(xNext*(gridX)))-(x*(gridY)))-10, ((y3+(y*(gridX)))+(yNext*(gridY)))+6);
-      for (let RLen = 0; RLen < wallDepVal; RLen = RLen + 5) {
+      for (let RLen = 0; RLen < window.SOLAR_COMFORT[`settings${c}`].wallDepVal; RLen = RLen + 5) {
         p.stroke(150, 150, 150);
         p.strokeWeight(1);
         let myNewX = ((x2 + (xNext * (gridX))) + 10) - (((x3 + (xNext * (gridX))) - (x * (gridY))) + 10);
         let myNewY = (((y3 + (y * (gridX))) + (yNext * (gridY))) + 6) - ((y2 + (y * (gridX))) + 6);
-        myNewX = myNewX / (wallDepVal);
+        myNewX = myNewX / (window.SOLAR_COMFORT[`settings${c}`].wallDepVal);
         myNewX = myNewX * RLen;
-        myNewY = myNewY / (wallDepVal);
+        myNewY = myNewY / (window.SOLAR_COMFORT[`settings${c}`].wallDepVal);
         myNewY = myNewY * RLen;
         //p.point((x2+(xNext*(gridX)))+10-myNewX, (y2+(y*(gridX)))+6+myNewY);
         p.line((x2 + (xNext * (gridX))) + 10 - myNewX, (y2 + (y * (gridX))) + 6 + myNewY, (x2 + (xNext * (gridX))) + 10 - myNewX - x, (y2 + (y * (gridX))) + 6 + myNewY - y);
@@ -874,14 +875,14 @@ renderGraphicsAndRunSimulation = caseNumber => {
         p.noStroke();
         p.text(RLen, (x2 + (xNext * (gridX))) + 12 - myNewX, (y2 + (y * (gridX))) + 16 + myNewY);
       }
-      for (let RDep = 0; RDep < wallLen; RDep = RDep + 5) {
+      for (let RDep = 0; RDep < window.SOLAR_COMFORT[`settings${c}`].wallLen; RDep = RDep + 5) {
         p.stroke(150, 150, 150);
         p.strokeWeight(1);
         let myNewX = ((x3 + (xNext * (gridX))) - (x * (gridY))) - 10 - (x - 10);
         let myNewY = (y * (gridY + 2)) + Ceil - ((y3 + (y * (gridX))) + (yNext * (gridY)));
-        myNewX = myNewX / (wallLen);
+        myNewX = myNewX / (window.SOLAR_COMFORT[`settings${c}`].wallLen);
         myNewX = myNewX * RDep;
-        myNewY = myNewY / (wallLen);
+        myNewY = myNewY / (window.SOLAR_COMFORT[`settings${c}`].wallLen);
         myNewY = myNewY * RDep;
         //p.point( x-10 + myNewX, (y*(gridY+2))+Ceil+6  - myNewY);
         if (RDep > 0) {
@@ -910,8 +911,8 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let arrayX = [];
         let arrayY = [];
         for (let j = 0; j < 4; j++) {
-          arrayX.push(((1 - (r.glzCoords[i][j][0] + (wallDepVal / 2)) / wallDepVal) * FullRoomWidthX) + x);
-          arrayY.push(((((r.glzCoords[i][j][0] + (wallDepVal / 2)) / wallDepVal) * FullRoomWidthY) + y2) - (((r.glzCoords[i][j][2]) / ceilingHeightValue) * Ceil));
+          arrayX.push(((1 - (r.glzCoords[i][j][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) / window.SOLAR_COMFORT[`settings${c}`].wallDepVal) * FullRoomWidthX) + x);
+          arrayY.push(((((r.glzCoords[i][j][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) / window.SOLAR_COMFORT[`settings${c}`].wallDepVal) * FullRoomWidthY) + y2) - (((r.glzCoords[i][j][2]) / window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue) * Ceil));
         }
         p.quad(arrayX[0], arrayY[0], arrayX[1], arrayY[1], arrayX[2], arrayY[2], arrayX[3], arrayY[3]);
         //console.log(arrayX[0] + ", " + arrayY[0]+ ", " + arrayX[1]+ ", " + arrayY[1]+ ", " + arrayX[2]+ ", " + arrayY[2]+ ", " + arrayX[3]+ ", " + arrayY[3]);
@@ -928,23 +929,23 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let arrayX = [];
         let arrayY = [];
         for (let j = 0; j < 4; j++) {
-          arrayX.push(((1 - (r.glzCoords[i][j][0] + (wallDepVal / 2)) / wallDepVal) * FullRoomWidthX) + x);
-          arrayY.push(((((r.glzCoords[i][j][0] + (wallDepVal / 2)) / wallDepVal) * FullRoomWidthY) + y2) - (((r.glzCoords[i][j][2]) / ceilingHeightValue) * Ceil));
+          arrayX.push(((1 - (r.glzCoords[i][j][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) / window.SOLAR_COMFORT[`settings${c}`].wallDepVal) * FullRoomWidthX) + x);
+          arrayY.push(((((r.glzCoords[i][j][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) / window.SOLAR_COMFORT[`settings${c}`].wallDepVal) * FullRoomWidthY) + y2) - (((r.glzCoords[i][j][2]) / window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue) * Ceil));
         }
-        for (let k = 0; k < horzShadeNum; k++) {
-          let hSX1 = arrayX[2] - (((200 * m) - x) * horzShadeDep) - (((200 * m) - x) * horzShadeDist);
-          let hSY1 = arrayY[2] - (y * horzShadeDep) + (k * y * horzShadeSpace * 2) - (horzShadeHeight * y) - (y * horzShadeDist);
-          let hSX2 = arrayX[3] - (((200 * m) - x) * horzShadeDep) - (((200 * m) - x) * horzShadeDist);
-          let hSY2 = arrayY[3] - (y * horzShadeDep) + (k * y * horzShadeSpace * 2) - (horzShadeHeight * y) - (y * horzShadeDist);
-          let hSX3 = arrayX[3] - (((200 * m) - x) * horzShadeDist);
-          let hSY3 = arrayY[3] + (k * y * horzShadeSpace * 2) - (horzShadeHeight * y) - (y * horzShadeDist);
-          let hSX4 = arrayX[2] - (((200 * m) - x) * horzShadeDist);
-          let hSY4 = arrayY[2] + (k * y * horzShadeSpace * 2) - (horzShadeHeight * y) - (y * horzShadeDist);
+        for (let k = 0; k < window.SOLAR_COMFORT[`settings${c}`].horzShadeNum; k++) {
+          let hSX1 = arrayX[2] - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist);
+          let hSY1 = arrayY[2] - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep) + (k * y * window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * 2) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight * y) - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist);
+          let hSX2 = arrayX[3] - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist);
+          let hSY2 = arrayY[3] - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep) + (k * y * window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * 2) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight * y) - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist);
+          let hSX3 = arrayX[3] - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist);
+          let hSY3 = arrayY[3] + (k * y * window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * 2) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight * y) - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist);
+          let hSX4 = arrayX[2] - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist);
+          let hSY4 = arrayY[2] + (k * y * window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * 2) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight * y) - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist);
 
-          let rotHSX1 = arrayX[2] - (((200 * m) - x) * horzShadeDist) + (x * horzShadeDep) + (x * 2 * horzShadeDep * Math.sin(((-horzShadeAngle * 2 / 3) - 30) * p.TWO_PI / 360));
-          let rotHSY1 = arrayY[2] + (k * y * horzShadeSpace * 2) - (horzShadeHeight * y) - (y * horzShadeDist) - (y * horzShadeDep) + (x * 2 * horzShadeDep * Math.cos(((-horzShadeAngle * 2 / 3) - 30) * p.TWO_PI / 360))
-          let rotHSX2 = arrayX[3] - (((200 * m) - x) * horzShadeDist) + (x * horzShadeDep) + (x * 2 * horzShadeDep * Math.sin(((-horzShadeAngle * 2 / 3) - 30) * p.TWO_PI / 360));
-          let rotHSY2 = arrayY[3] + (k * y * horzShadeSpace * 2) - (horzShadeHeight * y) - (y * horzShadeDist) - (y * horzShadeDep) + (x * 2 * horzShadeDep * Math.cos(((-horzShadeAngle * 2 / 3) - 30) * p.TWO_PI / 360))
+          let rotHSX1 = arrayX[2] - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist) + (x * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep) + (x * 2 * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep * Math.sin(((-window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle * 2 / 3) - 30) * p.TWO_PI / 360));
+          let rotHSY1 = arrayY[2] + (k * y * window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * 2) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight * y) - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist) - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep) + (x * 2 * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep * Math.cos(((-window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle * 2 / 3) - 30) * p.TWO_PI / 360))
+          let rotHSX2 = arrayX[3] - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist) + (x * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep) + (x * 2 * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep * Math.sin(((-window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle * 2 / 3) - 30) * p.TWO_PI / 360));
+          let rotHSY2 = arrayY[3] + (k * y * window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * 2) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight * y) - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDist) - (y * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep) + (x * 2 * window.SOLAR_COMFORT[`settings${c}`].horzShadeDep * Math.cos(((-window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle * 2 / 3) - 30) * p.TWO_PI / 360))
 
           p.quad(rotHSX1, rotHSY1, rotHSX2, rotHSY2, hSX3, hSY3, hSX4, hSY4);
         }
@@ -957,9 +958,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.stroke(light_black);
       p.fill(50, 50);
 
-      if (vertShadeOn == 0) {
-        vertShadeHeight = ceilingHeightValue1 - (r.glzCoords[0][2][2]);
-        vertShadeScale = ceilingHeightValue1 - (r.glzCoords[0][2][2]) + r.glzCoords[0][0][2];
+      if (window.SOLAR_COMFORT[`settings${c}`].vertShadeOn == 0) {
+        window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight = window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue - (r.glzCoords[0][2][2]);
+        window.SOLAR_COMFORT[`settings${c}`].vertShadeScale = window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue - (r.glzCoords[0][2][2]) + r.glzCoords[0][0][2];
       }
 
       //VERTICAL SHADE LOUVERS
@@ -967,34 +968,34 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let arrayX = [];
         let arrayY = [];
         for (let j = 0; j < 4; j++) {
-          arrayX.push(((1 - (r.glzCoords[i][j][0] + (wallDepVal / 2)) / wallDepVal) * FullRoomWidthX) + x);
-          arrayY.push(((((r.glzCoords[i][j][0] + (wallDepVal / 2)) / wallDepVal) * FullRoomWidthY) + y2) - (((r.glzCoords[i][j][2]) / ceilingHeightValue) * Ceil));
+          arrayX.push(((1 - (r.glzCoords[i][j][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) / window.SOLAR_COMFORT[`settings${c}`].wallDepVal) * FullRoomWidthX) + x);
+          arrayY.push(((((r.glzCoords[i][j][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) / window.SOLAR_COMFORT[`settings${c}`].wallDepVal) * FullRoomWidthY) + y2) - (((r.glzCoords[i][j][2]) / window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue) * Ceil));
         }
 
-        if (vertShadeStart == "L") {
-          for (let k = 0; k < vertShadeNum; k++) {
-            let vSX1 = arrayX[2] + (k * x * vertShadeSpace) - (((200 * m) - x) * vertShadeDep) - (((200 * m) - x) * vertShadeDist) - (vertShadeShift * x);
-            let vSY1 = arrayY[2] - (y * vertShadeDep) - (k * y * vertShadeSpace) - (vertShadeHeight * y * 2) - (y * vertShadeDist) + (vertShadeShift * y);
-            let vSX2 = arrayX[2] + (k * x * vertShadeSpace) - (((200 * m) - x) * vertShadeDist) - (vertShadeShift * x);
-            let vSY2 = arrayY[2] - (k * y * vertShadeSpace) - (vertShadeHeight * y * 2) - (y * vertShadeDist) + (vertShadeShift * y);
-            let vSX4 = arrayX[1] + (k * x * vertShadeSpace) - (((200 * m) - x) * vertShadeDep) - (((200 * m) - x) * vertShadeDist) - (vertShadeShift * x);
-            let vSY4 = arrayY[1] - (y * vertShadeDep) - (k * y * vertShadeSpace) - (vertShadeHeight * y * 2) - (y * vertShadeDist) + (vertShadeScale * y * 2) + (vertShadeShift * y);
-            let vSX3 = arrayX[1] + (k * x * vertShadeSpace) - (((200 * m) - x) * vertShadeDist) - (vertShadeShift * x);
-            let vSY3 = arrayY[1] - (k * y * vertShadeSpace) - (vertShadeHeight * y * 2) - (y * vertShadeDist) + (vertShadeScale * y * 2) + (vertShadeShift * y);
+        if (window.SOLAR_COMFORT[`settings${c}`].vertShadeStart == "L") {
+          for (let k = 0; k < window.SOLAR_COMFORT[`settings${c}`].vertShadeNum; k++) {
+            let vSX1 = arrayX[2] + (k * x * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDep) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * x);
+            let vSY1 = arrayY[2] - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDep) - (k * y * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight * y * 2) - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * y);
+            let vSX2 = arrayX[2] + (k * x * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * x);
+            let vSY2 = arrayY[2] - (k * y * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight * y * 2) - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * y);
+            let vSX4 = arrayX[1] + (k * x * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDep) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * x);
+            let vSY4 = arrayY[1] - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDep) - (k * y * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight * y * 2) - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeScale * y * 2) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * y);
+            let vSX3 = arrayX[1] + (k * x * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * x);
+            let vSY3 = arrayY[1] - (k * y * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight * y * 2) - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeScale * y * 2) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * y);
             //p.line(vSX1, vSY1, vSX2, vSY2);
             //p.line(vSX3, vSY3, vSX4, vSY4);
             p.quad(vSX1, vSY1, vSX2, vSY2, vSX3, vSY3, vSX4, vSY4)
           }
         } else {
-          for (let k = 0; k < vertShadeNum; k++) {
-            let vSX1 = arrayX[3] - (k * x * vertShadeSpace) - (((200 * m) - x) * vertShadeDep) - (((200 * m) - x) * vertShadeDist) + (vertShadeShift * x);
-            let vSY1 = arrayY[3] - (y * vertShadeDep) + (k * y * vertShadeSpace) - (vertShadeHeight * y * 2) - (y * vertShadeDist) - (vertShadeShift * y);
-            let vSX2 = arrayX[3] - (k * x * vertShadeSpace) - (((200 * m) - x) * vertShadeDist) + (vertShadeShift * x);
-            let vSY2 = arrayY[3] + (k * y * vertShadeSpace) - (vertShadeHeight * y * 2) - (y * vertShadeDist) - (vertShadeShift * y);
-            let vSX4 = arrayX[0] - (k * x * vertShadeSpace) - (((200 * m) - x) * vertShadeDep) - (((200 * m) - x) * vertShadeDist) + (vertShadeShift * x);
-            let vSY4 = arrayY[0] - (y * vertShadeDep) + (k * y * vertShadeSpace) - (vertShadeHeight * y * 2) - (y * vertShadeDist) + (vertShadeScale * y * 2) - (vertShadeShift * y);
-            let vSX3 = arrayX[0] - (k * x * vertShadeSpace) - (((200 * m) - x) * vertShadeDist) + (vertShadeShift * x);
-            let vSY3 = arrayY[0] + (k * y * vertShadeSpace) - (vertShadeHeight * y * 2) - (y * vertShadeDist) + (vertShadeScale * y * 2) - (vertShadeShift * y);
+          for (let k = 0; k < window.SOLAR_COMFORT[`settings${c}`].vertShadeNum; k++) {
+            let vSX1 = arrayX[3] - (k * x * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDep) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * x);
+            let vSY1 = arrayY[3] - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDep) + (k * y * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight * y * 2) - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * y);
+            let vSX2 = arrayX[3] - (k * x * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * x);
+            let vSY2 = arrayY[3] + (k * y * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight * y * 2) - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * y);
+            let vSX4 = arrayX[0] - (k * x * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDep) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * x);
+            let vSY4 = arrayY[0] - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDep) + (k * y * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight * y * 2) - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeScale * y * 2) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * y);
+            let vSX3 = arrayX[0] - (k * x * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (((200 * m) - x) * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * x);
+            let vSY3 = arrayY[0] + (k * y * window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight * y * 2) - (y * window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + (window.SOLAR_COMFORT[`settings${c}`].vertShadeScale * y * 2) - (window.SOLAR_COMFORT[`settings${c}`].vertShadeShift * y);
             //p.line(vSX1, vSY1, vSX2, vSY2);
             //p.line(vSX3, vSY3, vSX4, vSY4);
             p.quad(vSX1, vSY1, vSX2, vSY2, vSX3, vSY3, vSX4, vSY4)
@@ -1079,7 +1080,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                 // xCoord = 1;
                 //}if(xCoord > 0){ //if this specific gridpoint and sun angle goes through a window...
                 let newBigBArray = [];
-                for (let p = 0; p < parseInt(vertShadeNum); p++) { //for each shade in this window...
+                for (let p = 0; p < parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeNum); p++) { //for each shade in this window...
 
                   let angleA = abs(solarCoordinatesRoomOrientationAdjusted[k]);
                   let angleB = 90.0 - abs(solarCoordinatesRoomOrientationAdjusted[k]);
@@ -1087,10 +1088,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
                     angleB = angleB * -1;
                   }
                   let bigA;
-                  if (vertShadeStart == "L") {
-                    bigA = ((XlocationOnWall + (j + 1) + (r.glzCoords[n][0][0] - (wallDepVal / 2)) + (p * parseInt(vertShadeSpace) - vertShadeShift)));
+                  if (window.SOLAR_COMFORT[`settings${c}`].vertShadeStart == "L") {
+                    bigA = ((XlocationOnWall + (j + 1) + (r.glzCoords[n][0][0] - (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) + (p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - window.SOLAR_COMFORT[`settings${c}`].vertShadeShift)));
                   } else {
-                    bigA = ((XlocationOnWall + (j + 1) - (r.glzCoords[n][0][0] + (wallDepVal / 2)) + (-p * parseInt(vertShadeSpace) - vertShadeShift)));
+                    bigA = ((XlocationOnWall + (j + 1) - (r.glzCoords[n][0][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) + (-p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - window.SOLAR_COMFORT[`settings${c}`].vertShadeShift)));
                   }
                   bigB = ((Math.sin(angleB * (3.1415926 / 180)) * bigA) / (Math.sin(angleA * (3.1415926 / 180))));
                   bigBArray.push(bigB);
@@ -1101,7 +1102,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
               superD.push(superC);
               for (let q = 0; q < superC.length; q++) { // I think the problem exists here... need a second layer of for loop?
                 for (let g = 0; g < superC[0].length; g++) {
-                  if (superC[q][g] > parseInt(vertShadeDist) && superC[q][g] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))) {
+                  if (superC[q][g] > parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) && superC[q][g] < (parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDep))) {
                     XYLouver1 = XYLouver1 + 1;
                   } else {
                   }
@@ -1146,7 +1147,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
               let vertLouverXdistance = [];
               for (let m = 0; m < r.glzCoords.length; m++) {
 
-                if (XlocationOnWall + (j + 1) > r.glzCoords[m][0][0] + (wallDepVal / 2) && XlocationOnWall + (j + 1) < r.glzCoords[m][1][0] + (wallDepVal / 2)) { //cycle through all the windows, check if the wall position exists within the bounds of the window
+                if (XlocationOnWall + (j + 1) > r.glzCoords[m][0][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2) && XlocationOnWall + (j + 1) < r.glzCoords[m][1][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) { //cycle through all the windows, check if the wall position exists within the bounds of the window
                   xCoord = xCoord + 1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
                 }
               }
@@ -1179,11 +1180,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
                 a = 0;
               } else if (angleHeight > r.glzCoords[0][0][2] - gridHt && angleHeight < (r.glzCoords[0][2][2] - gridHt)) {
                 let testArray1 = [1];
-                for (let n = 0; n < horzShadeNum; n++) {
-                  let sinLawDist = (horzShadeDist * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (90 * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
-                  let sinLawAngle = (horzShadeDep * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (horzShadeAngle * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
+                for (let n = 0; n < window.SOLAR_COMFORT[`settings${c}`].horzShadeNum; n++) {
+                  let sinLawDist = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDist * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (90 * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
+                  let sinLawAngle = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDep * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
 
-                  if (angleHeight < (r.glzCoords[0][2][2] - gridHt) - (horzShadeSpace * n) - (sinLawDist) + (p.float(horzShadeHeight) * .5) && angleHeight > ((r.glzCoords[0][2][2] - gridHt) - (horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(horzShadeHeight) * .5))) {
+                  if (angleHeight < (r.glzCoords[0][2][2] - gridHt) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5) && angleHeight > ((r.glzCoords[0][2][2] - gridHt) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5))) {
                     testArray1.push(0);
                   } else {
                     testArray1.push(1);
@@ -1226,7 +1227,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // all calculations are flipped left to right
         // we will just flip the entire array in the room width direction
         // instead of updating the direction of all arrays above... 
-        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, parseInt(wallDepVal));
+        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal));
 
         // Annual
         // keep track of each day of the year
@@ -1246,13 +1247,13 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // do this 1 time once annual simulation has completed
         if (window.SOLAR_COMFORT[`dateCounter${c}`] === 365 && annualOn && window.SOLAR_COMFORT[`annualSimulationDone${c}`] === false) {
           let annualGridColorAverage = bigArrayColor.map(v => round4Decimals(v / 365.0));
-          window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(annualGridColorAverage, parseInt(wallDepVal), 1);
+          window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(annualGridColorAverage, parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal), 1);
         }
       } else {
         // day and hour simulation
         bigArrayColor = [];
 
-        if (vertShadeOn == 1) { // Variable height louvers
+        if (window.SOLAR_COMFORT[`settings${c}`].vertShadeOn == 1) { // Variable height louvers
 
 
           // VERTICAL SHADES XY
@@ -1275,7 +1276,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                 let filledListN = [];
                 for (let n = 0; n < r.glzCoords.length; n++) {
                   let filledListP = [];
-                  for (let p = 0; p < parseInt(vertShadeNum); p++) {
+                  for (let p = 0; p < parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeNum); p++) {
                     filledListP.push(0);
                   }
                   filledListN.push(filledListP);
@@ -1296,7 +1297,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                 let filledListN = [];
                 for (let n = 0; n < r.glzCoords.length; n++) {
                   let filledListP = [];
-                  for (let p = 0; p < parseInt(vertShadeNum); p++) {
+                  for (let p = 0; p < parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeNum); p++) {
                     filledListP.push(0);
                   }
                   filledListN.push(filledListP);
@@ -1332,7 +1333,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                   // xCoord = 1;
                   //}if(xCoord > 0){ //if this specific gridpoint and sun angle goes through a window...
                   let newBigBArray = [];
-                  for (let p = 0; p < parseInt(vertShadeNum); p++) { //for each shade in this window...
+                  for (let p = 0; p < parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeNum); p++) { //for each shade in this window...
 
                     let angleA = abs(solarCoordinatesRoomOrientationAdjusted[k]);
                     let angleB = 90.0 - abs(solarCoordinatesRoomOrientationAdjusted[k]);
@@ -1340,10 +1341,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
                       angleB = angleB * -1;
                     }
                     let bigA;
-                    if (vertShadeStart == "L") {
-                      bigA = ((XlocationOnWall + (j + 1) + (r.glzCoords[n][0][0] - (wallDepVal / 2)) + (p * parseInt(vertShadeSpace) - vertShadeShift)));
+                    if (window.SOLAR_COMFORT[`settings${c}`].vertShadeStart == "L") {
+                      bigA = ((XlocationOnWall + (j + 1) + (r.glzCoords[n][0][0] - (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) + (p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - window.SOLAR_COMFORT[`settings${c}`].vertShadeShift)));
                     } else {
-                      bigA = ((XlocationOnWall + (j + 1) - (r.glzCoords[n][0][0] + (wallDepVal / 2)) + (-p * parseInt(vertShadeSpace) - vertShadeShift)));
+                      bigA = ((XlocationOnWall + (j + 1) - (r.glzCoords[n][0][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) + (-p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - window.SOLAR_COMFORT[`settings${c}`].vertShadeShift)));
                     }
                     bigB = ((Math.sin(angleB * (3.1415926 / 180)) * bigA) / (Math.sin(angleA * (3.1415926 / 180))));
                     bigBArray.push(bigB);
@@ -1354,7 +1355,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                 superD.push(superC);
                 for (let q = 0; q < superC.length; q++) { // I think the problem exists here... need a second layer of for loop?
                   for (let g = 0; g < superC[0].length; g++) {
-                    if (superC[q][g] > parseInt(vertShadeDist) && superC[q][g] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))) {
+                    if (superC[q][g] > parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) && superC[q][g] < (parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDep))) {
                       XYLouver1 = XYLouver1 + 1;
                       filledListI[i][j][k][q][g] = 1;
                     } else {
@@ -1390,14 +1391,14 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
                 for (let n = 0; n < r.glzCoords.length; n++) {
 
-                  for (let ru = 0; ru < vertShadeNum; ru++) {
+                  for (let ru = 0; ru < window.SOLAR_COMFORT[`settings${c}`].vertShadeNum; ru++) {
                     distanceBeyondWall = (superD[newCounter][n][ru]);
 
                     let angleHeight2 = Math.tan((solarCoordinates[k][1]) * (3.1415926 / 180)) * distanceBeyondWall;
 
 
                     let myVar;
-                    if (angleHeight + angleHeight2 > (r.glzCoords[0][0][2] - gridHt) - parseInt(vertShadeScale) + parseInt(vertShadeHeight) && angleHeight + angleHeight2 < (r.glzCoords[0][2][2] - gridHt) + parseInt(vertShadeHeight)) {
+                    if (angleHeight + angleHeight2 > (r.glzCoords[0][0][2] - gridHt) - parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeScale) + parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight) && angleHeight + angleHeight2 < (r.glzCoords[0][2][2] - gridHt) + parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight)) {
                       myVar = 0;
                       //if this condintion, it hits the full size louver
                     } else {
@@ -1407,7 +1408,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                     filledListZ[i][j][k][n][ru] = myVar;
                   }
                 }
-                if (anotherCounter > 0 + vertShadeNum) {
+                if (anotherCounter > 0 + window.SOLAR_COMFORT[`settings${c}`].vertShadeNum) {
                   XYLouverTest[newCounter - 1] = 0;
                 }
                 newCounter = newCounter + 1;
@@ -1423,7 +1424,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
               for (let k = 0; k < solarCoordinates.length; k++) {
                 let nextLevel = 0;
                 for (let n = 0; n < r.glzCoords.length; n++) {
-                  for (let p = 0; p < parseInt(vertShadeNum); p++) {
+                  for (let p = 0; p < parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeNum); p++) {
                     decider = 0;
                     if (filledListI[i][j][k][n][p] == 1) {
                       decider = 1;
@@ -1479,7 +1480,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                   // xCoord = 1;
                   //}if(xCoord > 0){ //if this specific gridpoint and sun angle goes through a window...
                   let newBigBArray = [];
-                  for (let p = 0; p < parseInt(vertShadeNum); p++) { //for each shade in this window...
+                  for (let p = 0; p < parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeNum); p++) { //for each shade in this window...
 
                     let angleA = abs(solarCoordinatesRoomOrientationAdjusted[k]);
                     let angleB = 90.0 - abs(solarCoordinatesRoomOrientationAdjusted[k]);
@@ -1487,10 +1488,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
                       angleB = angleB * -1;
                     }
                     let bigA;
-                    if (vertShadeStart == "L") {
-                      bigA = ((XlocationOnWall + (j + 1) + (r.glzCoords[n][0][0] - (wallDepVal / 2)) + (p * parseInt(vertShadeSpace) - vertShadeShift)));
+                    if (window.SOLAR_COMFORT[`settings${c}`].vertShadeStart == "L") {
+                      bigA = ((XlocationOnWall + (j + 1) + (r.glzCoords[n][0][0] - (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) + (p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - window.SOLAR_COMFORT[`settings${c}`].vertShadeShift)));
                     } else {
-                      bigA = ((XlocationOnWall + (j + 1) - (r.glzCoords[n][0][0] + (wallDepVal / 2)) + (-p * parseInt(vertShadeSpace) - vertShadeShift)));
+                      bigA = ((XlocationOnWall + (j + 1) - (r.glzCoords[n][0][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) + (-p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - window.SOLAR_COMFORT[`settings${c}`].vertShadeShift)));
                     }
                     bigB = ((Math.sin(angleB * (3.1415926 / 180)) * bigA) / (Math.sin(angleA * (3.1415926 / 180))));
                     bigBArray.push(bigB);
@@ -1501,7 +1502,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                 superD.push(superC);
                 for (let q = 0; q < superC.length; q++) { // I think the problem exists here... need a second layer of for loop?
                   for (let g = 0; g < superC[0].length; g++) {
-                    if (superC[q][g] > parseInt(vertShadeDist) && superC[q][g] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))) {
+                    if (superC[q][g] > parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) && superC[q][g] < (parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDep))) {
                       XYLouver1 = XYLouver1 + 1;
                     } else {
                     }
@@ -1543,7 +1544,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
               let vertLouverXdistance = [];
               for (let m = 0; m < r.glzCoords.length; m++) {
 
-                if (XlocationOnWall + (j + 1) > r.glzCoords[m][0][0] + (wallDepVal / 2) && XlocationOnWall + (j + 1) < r.glzCoords[m][1][0] + (wallDepVal / 2)) { //cycle through all the windows, check if the wall position exists within the bounds of the window
+                if (XlocationOnWall + (j + 1) > r.glzCoords[m][0][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2) && XlocationOnWall + (j + 1) < r.glzCoords[m][1][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) { //cycle through all the windows, check if the wall position exists within the bounds of the window
                   xCoord = xCoord + 1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
                 }
               }
@@ -1577,11 +1578,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
                 a = 0;
               } else if (angleHeight > r.glzCoords[0][0][2] - gridHt && angleHeight < (r.glzCoords[0][2][2] - gridHt)) {
                 let testArray1 = [1];
-                for (let n = 0; n < horzShadeNum; n++) {
-                  let sinLawDist = (horzShadeDist * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (90 * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
-                  let sinLawAngle = (horzShadeDep * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (horzShadeAngle * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
+                for (let n = 0; n < window.SOLAR_COMFORT[`settings${c}`].horzShadeNum; n++) {
+                  let sinLawDist = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDist * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (90 * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
+                  let sinLawAngle = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDep * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
 
-                  if (angleHeight < (r.glzCoords[0][2][2] - gridHt) - (horzShadeSpace * n) - (sinLawDist) + (p.float(horzShadeHeight) * .5) && angleHeight > ((r.glzCoords[0][2][2] - gridHt) - (horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(horzShadeHeight) * .5))) {
+                  if (angleHeight < (r.glzCoords[0][2][2] - gridHt) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5) && angleHeight > ((r.glzCoords[0][2][2] - gridHt) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5))) {
                     testArray1.push(0);
                   } else {
                     testArray1.push(1);
@@ -1635,13 +1636,13 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let windowAreaDirectSun = 0;
         let windowSolarCoolingLoad = 0;
         let windowsCoordinates = r.glzCoords;
-        let wallWidthHalf = parseFloat(wallDepVal) / 2.0;
+        let wallWidthHalf = parseFloat(window.SOLAR_COMFORT[`settings${c}`].wallDepVal) / 2.0;
         let gTL = 0, gTR = 1, gBR = 2, gBL = 3;
         let gX = 0, gY = 2, gZ = 0;
         for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
-          let window = windowsCoordinates[windowIndex];
-          let width = window[gTR][gX] - window[gTL][gX];
-          let height = window[gBL][gY] - window[gTL][gY];
+          let window1 = windowsCoordinates[windowIndex];
+          let width = window1[gTR][gX] - window1[gTL][gX];
+          let height = window1[gBL][gY] - window1[gTL][gY];
           if(width > 0 && height > 0) {
             totalWindowArea += width * height;
           }
@@ -1671,9 +1672,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
              * for each square we will determine if the shades are blocking it from the sun
              * initialize all grid squares as true and turn them to false anytime a shade blocks one of them */
             for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
-              let window = windowsCoordinates[windowIndex];
-              let width = window[gTR][gX] - window[gTL][gX];
-              let height = window[gBL][gY] - window[gTL][gY];
+              let window1 = windowsCoordinates[windowIndex];
+              let width = window1[gTR][gX] - window1[gTL][gX];
+              let height = window1[gBL][gY] - window1[gTL][gY];
               let windowArray = [];
               for (let i = 0; i < height; i++) {
                 windowArray[i] = [];
@@ -1690,9 +1691,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
             * are blocking parts of windows, we will grid the window into 1x1 foot squares
             * and assume that if any part of the 1x1 foot square is blocked 100% of the square is blocked */
             for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
-              let window = windowsCoordinates[windowIndex];
-              let width = window[gTR][gX] - window[gTL][gX];
-              let height = window[gBL][gY] - window[gTL][gY];
+              let window1 = windowsCoordinates[windowIndex];
+              let width = window1[gTR][gX] - window1[gTL][gX];
+              let height = window1[gBL][gY] - window1[gTL][gY];
               let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
               if (roomRotationAdjustedSolarAzimuthDegrees < MAX_AZIMUTH_DIRECT_SUN && roomRotationAdjustedSolarAzimuthDegrees > MIN_AZIMUTH_DIRECT_SUN) {
                 // XlocationOnWall = Math.tan(roomRotationAdjustedSolarAzimuthDegrees * (3.1415926 / 180)) * 2;
@@ -1703,18 +1704,19 @@ renderGraphicsAndRunSimulation = caseNumber => {
               for (let i = 0; i < height; i++) {
                 for (let j = 0; j < width; j++) {
                   let newBigBArray = [];
+
                   //for each shade in this window
-                  for (let p = 0; p < parseInt(vertShadeNum); p++) { 
+                  for (let p = 0; p < parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeNum); p++) { 
                     let angleA = abs(roomRotationAdjustedSolarAzimuthDegrees);
                     let angleB = 90.0 - abs(roomRotationAdjustedSolarAzimuthDegrees);
                     if (roomRotationAdjustedSolarAzimuthDegrees > 0) {
                       angleB = angleB * -1;
                     }
                     let shadePositionX;
-                    if (vertShadeStart == "L") {
-                      shadePositionX = ((XlocationOnWall + j + (window[gTL][gX]) + (p * parseInt(vertShadeSpace) - parseInt(vertShadeShift))));
+                    if (window.SOLAR_COMFORT[`settings${c}`].vertShadeStart == "L") {
+                      shadePositionX = ((XlocationOnWall + j + (window[gTL][gX]) + (p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeShift))));
                     } else {
-                      shadePositionX = ((XlocationOnWall + j+1 - (window[gTL][gX] + wallWidthHalf) + (-p * parseInt(vertShadeSpace) - parseInt(vertShadeShift))));
+                      shadePositionX = ((XlocationOnWall + j+1 - (window[gTL][gX] + wallWidthHalf) + (-p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeShift))));
                     }
 
                     let ratioAngleBtoA = Math.sin(angleB * (Math.PI / 180)) / Math.sin(angleA * (Math.PI / 180));
@@ -1723,7 +1725,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                   }
 
                   for (let q = 0; q < newBigBArray.length; q++) {
-                    if (newBigBArray[q] > parseInt(vertShadeDist) && newBigBArray[q] < (parseInt(vertShadeDist) + parseInt(vertShadeDep))) {
+                    if (newBigBArray[q] > parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) && newBigBArray[q] < (parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDep))) {
                       // Vertical shade is blocking the sun at this window grid square
                       windowGridSquareGetsDirectSun[windowIndex][i][j] = false;
                     }
@@ -1739,18 +1741,18 @@ renderGraphicsAndRunSimulation = caseNumber => {
             * and assume that if any part of the 1x1 foot square is blocked 100% of the square is blocked */
             let angleHeight = Math.tan(solarElevation * (Math.PI / 180)) * 1;
             for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
-              let window = windowsCoordinates[windowIndex];
-              let width = window[gTR][gX] - window[gTL][gX];
-              let height = window[gBL][gY] - window[gTL][gY];
+              let window1 = windowsCoordinates[windowIndex];
+              let width = window1[gTR][gX] - window1[gTL][gX];
+              let height = window1[gBL][gY] - window1[gTL][gY];
 
               // for each 1x1 foot grid square in this window
               for (let i = 0; i < height; i++) {
                 for (let j = 0; j < width; j++) {
-                  for (let n = 0; n < horzShadeNum; n++) {
-                    let sinLawDist = (horzShadeDist * (Math.sin(Math.PI - (((90) - solarElevation) * (Math.PI / 180)) - (90 * (Math.PI / 180))))) / Math.sin(((90) - solarElevation) * (Math.PI / 180));
-                    let sinLawAngle = (horzShadeDep * (Math.sin(Math.PI - (((90) - solarElevation) * (Math.PI / 180)) - (horzShadeAngle * (Math.PI / 180))))) / Math.sin(((90) - solarElevation) * (Math.PI / 180));
+                  for (let n = 0; n < window.SOLAR_COMFORT[`settings${c}`].horzShadeNum; n++) {
+                    let sinLawDist = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDist * (Math.sin(Math.PI - (((90) - solarElevation) * (Math.PI / 180)) - (90 * (Math.PI / 180))))) / Math.sin(((90) - solarElevation) * (Math.PI / 180));
+                    let sinLawAngle = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDep * (Math.sin(Math.PI - (((90) - solarElevation) * (Math.PI / 180)) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle * (Math.PI / 180))))) / Math.sin(((90) - solarElevation) * (Math.PI / 180));
   
-                    if (angleHeight < (window[gTR][gY] + i) - (horzShadeSpace * n) - (sinLawDist) + (p.float(horzShadeHeight) * .5) && angleHeight > ((window[gTR][gY] + i) - (horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(horzShadeHeight) * .5))) {
+                    if (angleHeight < (window[gTR][gY] + i) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5) && angleHeight > ((window[gTR][gY] + i) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5))) {
                       // Horizontal shade is blocking the sun at this window grid square
                       windowGridSquareGetsDirectSun[windowIndex][i][j] = false;
                     }
@@ -1762,9 +1764,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
             /* Window Area:
             * calculate total window area that received direct sun */
             for (let windowIndex = 0; windowIndex < windowsCoordinates.length; windowIndex++) {
-              let window = windowsCoordinates[windowIndex];
-              let width = window[gTR][gX] - window[gTL][gX];
-              let height = window[gBL][gY] - window[gTL][gY];
+              let window1 = windowsCoordinates[windowIndex];
+              let width = window1[gTR][gX] - window1[gTL][gX];
+              let height = window1[gBL][gY] - window1[gTL][gY];
               for (let i = 0; i < height; i++) {
                 for (let j = 0; j < width; j++) {
                   if(windowGridSquareGetsDirectSun[windowIndex][i][j]) {                    
@@ -1774,7 +1776,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
               }
             }
             let iDir = window.SOLAR_COMFORT.Idir_f(solarElevation);
-            windowSolarCoolingLoad = units.wattsPerMeterSquaredToBtuPerHourPerFootSquared(iDir) * windowAreaDirectSun * shgc;
+            windowSolarCoolingLoad = units.wattsPerMeterSquaredToBtuPerHourPerFootSquared(iDir) * windowAreaDirectSun * window.SOLAR_COMFORT[`settings${c}`].shgc;
           }
         }
         window.SOLAR_COMFORT[`windowAreaDirectSun${c}`] = windowAreaDirectSun;
@@ -1784,13 +1786,13 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // all calculations are flipped left to right
         // we will just flip the entire array in the room width direction
         // instead of updating the direction of all arrays above...
-        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, parseInt(wallDepVal));
+        gridColorArray = flipWidthForOneDimensionalRoomArray(gridColorArray, parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal));
 
         // Hour or Day
         let stepDelta = singleHour == 1 ? 9 : 4;
-        window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, parseInt(wallDepVal), stepDelta);
+        window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(gridColorArray, parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal), stepDelta);
 
-        if (thermalComfortSingleHour && solarCoordinates.length > 0) {
+        if (window.SOLAR_COMFORT[`settings${c}`].thermalComfortSingleHour && solarCoordinates.length > 0) {
           /* when in single hour mode we have 9 coordinates (subsets of hour)
            * just grab the 1st one, IE top of the hour */
           let coordinate = solarCoordinates[0];
@@ -1800,30 +1802,30 @@ renderGraphicsAndRunSimulation = caseNumber => {
           let azimuth = coordinate[0];
 
           let deltaMRT_grid = window.SOLAR_COMFORT.calculateDeltaMRT_for_Grid(
-            wallLen,    /* wallLen is room depth!! perpindicular to windows */
-            wallDepVal, /* wallDepVal is room width!! parallel to windows */
-            posture, sillHeightValue, windowWidthValue,
+            window.SOLAR_COMFORT[`settings${c}`].wallLen,    /* wallLen is room depth!! perpindicular to windows */
+            window.SOLAR_COMFORT[`settings${c}`].wallDepVal, /* wallDepVal is room width!! parallel to windows */
+            window.SOLAR_COMFORT[`settings${c}`].posture, window.SOLAR_COMFORT[`settings${c}`].sillHeightValue, window.SOLAR_COMFORT[`settings${c}`].windowWidthValue,
             elevation,
             azimuth,
-            shgc,
-            asa
+            window.SOLAR_COMFORT[`settings${c}`].shgc,
+            window.SOLAR_COMFORT[`settings${c}`].asa
           );
           // set delta MRT value to 0 for all grid locations that don't actually get direct sunlight
           window.SOLAR_COMFORT.zeroOutDeltaMRT_for_Locations_with_no_Direct_Sun(deltaMRT_grid, window.SOLAR_COMFORT[`globalGridColor${c}`])
           window.SOLAR_COMFORT[`deltaMRTGrid${c}`] = deltaMRT_grid;
 
           let MRT_grid = window.SOLAR_COMFORT.calculateMRT_for_Grid(
-            wallLen,    /* wallLen is room depth!! perpindicular to windows */
-            wallDepVal, /* wallDepVal is room width!! parallel to windows */
+            window.SOLAR_COMFORT[`settings${c}`].wallLen,    /* wallLen is room depth!! perpindicular to windows */
+            window.SOLAR_COMFORT[`settings${c}`].wallDepVal, /* wallDepVal is room width!! parallel to windows */
             geoResult,
-            windowU,
-            wallR,
-            airTemp,
-            outdoorTemp,
-            clothing,
-            metabolic,
-            airSpeed,
-            humidity,
+            window.SOLAR_COMFORT[`settings${c}`].windowU,
+            window.SOLAR_COMFORT[`settings${c}`].wallR,
+            window.SOLAR_COMFORT[`settings${c}`].airTemp,
+            window.SOLAR_COMFORT[`settings${c}`].outdoorTemp,
+            window.SOLAR_COMFORT[`settings${c}`].clothing,
+            window.SOLAR_COMFORT[`settings${c}`].metabolic,
+            window.SOLAR_COMFORT[`settings${c}`].airSpeed,
+            window.SOLAR_COMFORT[`settings${c}`].humidity,
             deltaMRT_grid
           );
           window.SOLAR_COMFORT[`MRTGrid${c}`] = MRT_grid;
@@ -1838,7 +1840,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       // CREATE GRID
       //GRID X ROW
       let MDT = 0; //Max Direct Time
-      let Percentage = valMDST;
+      let Percentage = window.SOLAR_COMFORT[`settings${c}`].valMDST;
       //console.log(gridColorArray);
 
       for (let i = 0; i < gridX; i++) {
@@ -1871,14 +1873,14 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
 
         if (annualOn) {
-          if (mySun > Percentage / timestep) {
+          if (mySun > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
             // MDT = MDT + 1;
           }
         } else {
-          if (mySun > Percentage / timestep) {
+          if (mySun > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
             // MDT = MDT + 1;
           }
-          mySun = p.int(mySun / timestep);
+          mySun = p.int(mySun / window.SOLAR_COMFORT[`settings${c}`].timestep);
         }
         if (mySun == null) {
           mySun = 0;
@@ -1902,21 +1904,21 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
         if (annualOn) {
 
-          if (gridColorArray[i * gridY] / .99 > valMDST && gridColorArray[(i * gridY) + 1] / .99 < valMDST) {
+          if (gridColorArray[i * gridY] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST && gridColorArray[(i * gridY) + 1] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST) {
             p.push();
             p.strokeWeight(1);
             p.stroke(0);
             p.line(X3, Y3 - GridHt, X4, Y4 - GridHt);
             p.pop();
           }
-          if (gridColorArray[(i * gridY)] / .99 < valMDST && gridColorArray[(i * gridY) + gridY] / .99 > valMDST) {
+          if (gridColorArray[(i * gridY)] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST && gridColorArray[(i * gridY) + gridY] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST) {
             p.push();
             p.strokeWeight(1);
             p.stroke(0);
             p.line(X2, Y2 - GridHt, X3, Y3 - GridHt);
             p.pop();
           }
-          if (gridColorArray[(i * gridY)] / .99 > valMDST && gridColorArray[(i * gridY) + gridY] / .99 < valMDST) {
+          if (gridColorArray[(i * gridY)] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST && gridColorArray[(i * gridY) + gridY] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST) {
             p.push();
             p.strokeWeight(1);
             p.stroke(0);
@@ -1925,21 +1927,21 @@ renderGraphicsAndRunSimulation = caseNumber => {
           }
         } else {
           // single day or single hour
-          if (gridColorArray[i * gridY] / (timestep - .1) > valMDST / timestep && gridColorArray[(i * gridY) + 1] / (timestep - .1) < valMDST / timestep) {
+          if (gridColorArray[i * gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + 1] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
             p.push();
             p.strokeWeight(1);
             p.stroke(0);
             p.line(X3, Y3 - GridHt, X4, Y4 - GridHt);
             p.pop();
           }
-          if (gridColorArray[(i * gridY)] / (timestep - .1) < valMDST / timestep && gridColorArray[(i * gridY) + gridY] / (timestep - .1) > valMDST / timestep) {
+          if (gridColorArray[(i * gridY)] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
             p.push();
             p.strokeWeight(1);
             p.stroke(0);
             p.line(X2, Y2 - GridHt, X3, Y3 - GridHt);
             p.pop();
           }
-          if (gridColorArray[(i * gridY)] / (timestep - .1) > valMDST / timestep && gridColorArray[(i * gridY) + gridY] / (timestep - .1) < valMDST / timestep) {
+          if (gridColorArray[(i * gridY)] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
             p.push();
             p.strokeWeight(1);
             p.stroke(0);
@@ -1978,14 +1980,14 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
           //console.log(mySun);
           if (annualOn) {
-            if (mySun > Percentage / timestep) {
+            if (mySun > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               MDT = p.int(MDT) + 1;
             }
           } else {
-            if (mySun / timestep > Percentage / timestep) {
+            if (mySun / window.SOLAR_COMFORT[`settings${c}`].timestep > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               MDT = p.int(MDT) + 1;
             }
-            mySun = p.int(mySun / timestep);
+            mySun = p.int(mySun / window.SOLAR_COMFORT[`settings${c}`].timestep);
           }
           if (mySun == null) {
             mySun = 0;
@@ -1994,7 +1996,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
           mySun = parseInt(mySun);
 
           // draw colored grid square on floor representing % of time in direct sun
-          if (thermalComfortSingleHour && window.SOLAR_COMFORT[`MRTGrid${c}`]) {
+          if (window.SOLAR_COMFORT[`settings${c}`].thermalComfortSingleHour && window.SOLAR_COMFORT[`MRTGrid${c}`]) {
             let mrtValues = window.SOLAR_COMFORT[`MRTGrid${c}`][i][(gridY - 1) - j]; /* flip left-to-right room is actually drawn 0 feet on the right */
             let gridColor = '#ffffff';
             if (mrtValues.mrtppd >= 0 && mrtValues.mrtppd <= 30) {
@@ -2012,28 +2014,28 @@ renderGraphicsAndRunSimulation = caseNumber => {
           p.quad(newX1, newY1 - GridHt, newX2, newY2 - GridHt, newX3, newY3 - GridHt, newX4, newY4 - GridHt);
 
           if (annualOn && window.SOLAR_COMFORT[`dateCounter${c}`] > 364) {
-            if (bigArrayColor[(i * gridY) + j] / .99 < valMDST / timestep * 365 && bigArrayColor[(i * gridY) + j + 1] / .99 > valMDST / timestep * 365) {
+            if (bigArrayColor[(i * gridY) + j] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365 && bigArrayColor[(i * gridY) + j + 1] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
               p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
               p.pop();
             }
-            if (bigArrayColor[(i * gridY) + j] / .99 > valMDST / timestep * 365 && bigArrayColor[(i * gridY) + j + 1] / .99 < valMDST / timestep * 365) {
+            if (bigArrayColor[(i * gridY) + j] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365 && bigArrayColor[(i * gridY) + j + 1] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
               p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
               p.pop();
             }
-            if (bigArrayColor[(i * gridY) + j] / .99 < valMDST / timestep * 365 && bigArrayColor[(i * gridY) + j + gridY] / .99 > valMDST / timestep * 365) {
+            if (bigArrayColor[(i * gridY) + j] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365 && bigArrayColor[(i * gridY) + j + gridY] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
               p.line(newX2, newY2 - GridHt, newX3, newY3 - GridHt);
               p.pop();
             }
-            if (bigArrayColor[(i * gridY) + j] / .99 > valMDST / timestep * 365 && bigArrayColor[(i * gridY) + j + gridY] / .99 < valMDST / timestep * 365) {
+            if (bigArrayColor[(i * gridY) + j] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365 && bigArrayColor[(i * gridY) + j + gridY] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
@@ -2041,28 +2043,28 @@ renderGraphicsAndRunSimulation = caseNumber => {
               p.pop();
             }
           } else if (annualOn) {
-            if (gridColorArray[(i * gridY) + j] / .99 < valMDST / timestep && gridColorArray[(i * gridY) + j + 1] / .99 > valMDST / timestep) {
+            if (gridColorArray[(i * gridY) + j] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + 1] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
               p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
               p.pop();
             }
-            if (gridColorArray[(i * gridY) + j] / .99 > valMDST / timestep && gridColorArray[(i * gridY) + j + 1] / .99 < valMDST / timestep) {
+            if (gridColorArray[(i * gridY) + j] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + 1] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
               p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
               p.pop();
             }
-            if (gridColorArray[(i * gridY) + j] / .99 < valMDST / timestep && gridColorArray[(i * gridY) + j + gridY] / .99 > valMDST / timestep) {
+            if (gridColorArray[(i * gridY) + j] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + gridY] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
               p.line(newX2, newY2 - GridHt, newX3, newY3 - GridHt);
               p.pop();
             }
-            if (gridColorArray[(i * gridY) + j] / .99 > valMDST / timestep && gridColorArray[(i * gridY) + j + gridY] / .99 < valMDST / timestep) {
+            if (gridColorArray[(i * gridY) + j] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + gridY] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
@@ -2070,28 +2072,28 @@ renderGraphicsAndRunSimulation = caseNumber => {
               p.pop();
             }
           } else {
-            if (gridColorArray[(i * gridY) + j] / (timestep - .1) < valMDST / timestep && gridColorArray[(i * gridY) + j + 1] / (timestep - .1) > valMDST / timestep) {
+            if (gridColorArray[(i * gridY) + j] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + 1] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
               p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
               p.pop();
             }
-            if (gridColorArray[(i * gridY) + j] / (timestep - .1) > valMDST / timestep && gridColorArray[(i * gridY) + j + 1] / (timestep - .1) < valMDST / timestep) {
+            if (gridColorArray[(i * gridY) + j] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + 1] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
               p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
               p.pop();
             }
-            if (gridColorArray[(i * gridY) + j] / (timestep - .1) < valMDST / timestep && gridColorArray[(i * gridY) + j + gridY] / (timestep - .1) > valMDST / timestep) {
+            if (gridColorArray[(i * gridY) + j] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
               p.line(newX2, newY2 - GridHt, newX3, newY3 - GridHt);
               p.pop();
             }
-            if (gridColorArray[(i * gridY) + j] / (timestep - .1) > valMDST / timestep && gridColorArray[(i * gridY) + j + gridY] / (timestep - .1) < valMDST / timestep) {
+            if (gridColorArray[(i * gridY) + j] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
               p.push();
               p.strokeWeight(1);
               p.stroke(0);
@@ -2131,9 +2133,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
       //CHECK IF MEETS CONDITION TEXT
       let MDTPercentage = 0;
       if (annualOn) {
-        MDTPercentage = p.int((p.float(MDT) / (parseInt(wallLen) * parseInt(wallDepVal))) * 100);
+        MDTPercentage = p.int((p.float(MDT) / (parseInt(window.SOLAR_COMFORT[`settings${c}`].wallLen) * parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal))) * 100);
       } else {
-        MDTPercentage = p.int((p.float(MDT) / (parseInt(wallLen) * parseInt(wallDepVal))) * 100);
+        MDTPercentage = p.int((p.float(MDT) / (parseInt(window.SOLAR_COMFORT[`settings${c}`].wallLen) * parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal))) * 100);
       }
 
 
@@ -2149,14 +2151,14 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       p.push();
 
-      if (MDTPercentage < valFal) {
-        if (!thermalComfortSingleHour) {
+      if (MDTPercentage < window.SOLAR_COMFORT[`settings${c}`].valFal) {
+        if (!window.SOLAR_COMFORT[`settings${c}`].thermalComfortSingleHour) {
           p.fill(0, 255, 0);
           p.image(imgCheck, 310, 2, 30, 30);
         }
         window.SOLAR_COMFORT[`MDTResult${c}`] += "Pass\n";
       } else {
-        if (!thermalComfortSingleHour) {
+        if (!window.SOLAR_COMFORT[`settings${c}`].thermalComfortSingleHour) {
           p.fill(255, 0, 0);
           p.image(imgNope, 310, 2, 30, 30);
         }
@@ -2166,7 +2168,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.fill(0);
       p.textSize(50);
 
-      if (!thermalComfortSingleHour) {
+      if (!window.SOLAR_COMFORT[`settings${c}`].thermalComfortSingleHour) {
         p.text(MDTPercentage + "%", 340, 38);
         p.textSize(10);
         p.text("> max direct sun time", 340, 50);
