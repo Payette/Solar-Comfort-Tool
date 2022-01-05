@@ -322,6 +322,14 @@ window.SOLAR_COMFORT.updateSettings = function(c) {
   window.SOLAR_COMFORT[`settings${c}`].valFal = document.getElementById(`fal`).value; //FLOOR AREA LOSS
 
   window.SOLAR_COMFORT[`settings${c}`].valMDST = document.getElementById(`mdst`).value; // MAX DIRECT SUN TIME
+
+  var selectedStudyType;
+  if($('#dsAnnual').is(':checked')) {
+      selectedStudyType = $('#dsAnnual');
+  } else {
+      selectedStudyType = $("input[name=studyType]:checked")
+  }
+  window.SOLAR_COMFORT[`settings${c}`].studyType = selectedStudyType.val();
 }
 
 window.SOLAR_COMFORT.copyCase1ToCase2 = function() {

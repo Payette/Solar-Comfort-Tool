@@ -45,6 +45,9 @@ window.SOLAR_COMFORT.MDTResult1 = 0;
 window.SOLAR_COMFORT.globalGridColor = undefined;
 window.SOLAR_COMFORT.globalGridColor1 = undefined;
 
+window.SOLAR_COMFORT.solarCoordinatesHourly = [];
+window.SOLAR_COMFORT.solarCoordinatesHourly1 = [];
+
 let Month_Debug_Case2 = undefined;
 let Day_Debug_Case2 = undefined;
 let Hour_Debug_Case2 = undefined;
@@ -519,9 +522,15 @@ renderGraphicsAndRunSimulation = caseNumber => {
           // 24 hours * 4 timesteps -1???? = 95
           // TODO fix shouldn't be -1?
           solarCoordinates = [];
+          let solarCoordinatesHourly = [];
           for (let i = 1; i <= (24 * TIME_STEPS_PER_HOUR_DAY_SIMULATION) - 1; i++) {
-            solarCoordinates.push(solarCalculator([Lon, Lat]).position(dates[i]));
+            let newCoordinate = solarCalculator([Lon, Lat]).position(dates[i]);
+            solarCoordinates.push(newCoordinate);
+            if((i-1) % TIME_STEPS_PER_HOUR_DAY_SIMULATION === 0) {
+              solarCoordinatesHourly.push(newCoordinate);
+            }
           }
+          window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`] = solarCoordinatesHourly;
 
           for (let i = 0; i < solarCoordinates.length; i += parseInt(window.SOLAR_COMFORT[`settings${c}`].timestep)) {
             if (solarCoordinates[i][1] > 0) {
@@ -542,6 +551,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             for (let i = 1; i <= TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION; i++) {
               solarCoordinates.push(solarCalculator([Lon, Lat]).position(date));
             }
+            window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`] = [solarCoordinates[0]];
 
             // Calculate sun path graphic info            
             let solarCoordinatesForDate = solarCalculator([Lon, Lat]).position(date); // returns: [ azimuth in degress, elevation in degress ]
@@ -568,46 +578,141 @@ renderGraphicsAndRunSimulation = caseNumber => {
       r.sillHeight = geoResult.sillHeight;
       r.centLineDist = geoResult.centLineDist;
 
-      // MAKE SUN PATH CORNER GRAPHIC
-
-      roomOrientationValue = roomOrientationValue * -1
+      // draw sun path graphic
+      let roomOrientationValueNeg = roomOrientationValue - 47 /* we draw the room at a ~47degree offset?? */;
+      let SUN_PATH_RADIUS = 20;
+      let SUN_PATH_DIAMETER = SUN_PATH_RADIUS*2;
+      let NORTH_LABEL_OFFSET = 13;
       p.push();
-      p.translate(380, 280);
-      p.strokeCap(p.SQUARE);
-      p.stroke(light_black + 100);
-      p.strokeWeight(1);
-      p.noFill();
-      p.ellipse(0, 0, 75, 45); //main circle
-      p.fill(light_black + 100);
-      p.line(0, 0, 45 * p.sin((roomOrientationValue + 45) * (-3.1415926 / 180)), 27 * p.cos((roomOrientationValue + 45) * (-3.1415926 / 180)));
-      p.line(0, 0, 45 * p.sin((roomOrientationValue + 135) * (-3.1415926 / 180)), 27 * p.cos((roomOrientationValue + 135) * (-3.1415926 / 180)));
-      p.line(0, 0, 45 * p.sin((roomOrientationValue + 225) * (-3.1415926 / 180)), 27 * p.cos((roomOrientationValue + 225) * (-3.1415926 / 180)));
       p.textAlign(p.CENTER, p.CENTER);
       p.textSize(10);
-      p.text("N", 56 * p.sin((roomOrientationValue - 45) * (-3.1415926 / 180)), 34 * p.cos((roomOrientationValue - 45) * (-3.1415926 / 180)));
-      p.strokeWeight(4);
-      p.line(0, 0, 45 * p.sin((roomOrientationValue - 45) * (-3.1415926 / 180)), 27 * p.cos((roomOrientationValue - 45) * (-3.1415926 / 180)));
-      //p.translate(36*p.sin((roomOrientationValue+45)*(-3.1415926 / 180)), 22*p.cos((roomOrientationValue+45)*(-3.1415926 / 180)));
-      //p.point(0,0);
-      p.stroke(10);
-      p.strokeWeight(3);
+      p.strokeCap(p.SQUARE);
+      p.strokeWeight(1);
+      p.translate(325, 280);
 
-      p.strokeWeight(4);
-      p.stroke(light_black);
-      p.point(sunPathGraphicPixelX[0], sunPathGraphicPixelY[0]);
-      for (let i = 0; i < sunPathGraphicPixelX.length - 1; i++) {
-        p.strokeWeight(1);
-        //p.stroke(light_black);
-        p.line(sunPathGraphicPixelX[i], sunPathGraphicPixelY[i], sunPathGraphicPixelX[i + 1], sunPathGraphicPixelY[i + 1]);
-        p.strokeWeight(4);
-        //p.stroke(100);
-        p.point(sunPathGraphicPixelX[i + 1], sunPathGraphicPixelY[i + 1]);
-      }
-      p.strokeWeight(3);
-      p.stroke(100);
+      // Azimuth Graphic
+      p.fill(light_black + 50);
+      p.noStroke();
+      p.text("AZIMUTH", 0, SUN_PATH_RADIUS + 2*NORTH_LABEL_OFFSET);
+      
+      p.stroke(light_black + 100);
+      p.noFill();
+
+      // Compass outline
+      p.ellipse(0, 0, SUN_PATH_DIAMETER, SUN_PATH_DIAMETER);
+
+      // East to West Line
+      p.line(SUN_PATH_RADIUS * p.sin((roomOrientationValueNeg + 90) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((roomOrientationValueNeg + 90) * (-Math.PI / 180)),
+      SUN_PATH_RADIUS * p.sin((roomOrientationValueNeg - 90) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((roomOrientationValueNeg - 90) * (-Math.PI / 180)));
+
+      // North to South Line
+      p.line(0, 0, SUN_PATH_RADIUS * p.sin((roomOrientationValueNeg + 180) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((roomOrientationValueNeg + 180) * (-Math.PI / 180)));
+
+      // North line
+      p.strokeWeight(5);
+      p.line(0, 0, SUN_PATH_RADIUS * p.sin((roomOrientationValueNeg) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((roomOrientationValueNeg) * (-Math.PI / 180)));
+
+      // North label
+      p.strokeWeight(1);
+      p.text("N", (SUN_PATH_RADIUS+NORTH_LABEL_OFFSET) * p.sin((roomOrientationValueNeg) * (-Math.PI / 180)), (SUN_PATH_RADIUS+NORTH_LABEL_OFFSET) * p.cos((roomOrientationValueNeg) * (-Math.PI / 180)));
+
+      // Draw sun positions (azimuth)
+      window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`].forEach(sunCoordinate => {
+        let azimuth = sunCoordinate[0];
+        let elevation = sunCoordinate[1];
+        let azimuthRoomAndGraphicAdjusted = (azimuth + roomOrientationValueNeg) % 360;
+
+        if(elevation >= 0) {
+          p.strokeWeight(4);
+          p.stroke(0);
+          p.point(SUN_PATH_RADIUS * p.sin((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)));
+        }
+
+        if(window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`].length === 1) {
+          p.fill(light_black + 50);
+          p.noStroke();
+          p.text(`${Math.round(azimuth)}°`, 0, SUN_PATH_RADIUS + 3*NORTH_LABEL_OFFSET);          
+        }
+      });
+      
+      // Elevation graphic
+      p.translate(50, SUN_PATH_RADIUS);
+      p.noFill();
+      p.strokeWeight(1);
+      p.stroke(light_black + 100);
+      p.line(0, 0, 0, -SUN_PATH_DIAMETER);
+      p.line(0, 0, SUN_PATH_DIAMETER, 0);
+
+      
+      // elevation full arc
+      p.noFill();
+      p.stroke(light_black + 100);
+      p.arc(0, 0, 2*SUN_PATH_DIAMETER, 2*SUN_PATH_DIAMETER, Math.PI + Math.PI/2, 0, p.PIE);
+      
+      p.fill(light_black + 50);
+      p.noStroke();
+      p.textAlign(p.LEFT, p.CENTER);
+      p.text("ELEVATION", 0, 2*NORTH_LABEL_OFFSET);
+
+      // Draw sun positions (elevation)
+      window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`].forEach(sunCoordinate => {
+        let elevation = sunCoordinate[1];
+
+        if(elevation >= 0) {
+          p.strokeWeight(4);
+          p.stroke(0);
+          p.point(SUN_PATH_DIAMETER * p.sin((270-elevation) * (-Math.PI / 180)), SUN_PATH_DIAMETER * p.cos((270-elevation) * (-Math.PI / 180)));
+        }
+
+        if(window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`].length === 1) {
+          p.fill(light_black + 50);
+          p.noStroke();
+          p.text(`${Math.round(elevation)}°`, 20, 3*NORTH_LABEL_OFFSET);          
+        }
+      });
+
       p.pop();
 
-      roomOrientationValue = roomOrientationValue * -1
+
+      // OLD DRAW SUN PATH CORNER GRAPHIC
+      // roomOrientationValueNeg = roomOrientationValue * -1
+      // p.push();
+      // p.translate(380, 280);
+      // p.strokeCap(p.SQUARE);
+      // p.stroke(light_black + 100);
+      // p.strokeWeight(1);
+      // p.noFill();
+      // p.ellipse(0, 0, 75, 45); //main circle
+      // p.fill(light_black + 100);
+      // p.line(0, 0, 45 * p.sin((roomOrientationValueNeg + 45) * (-3.1415926 / 180)), 27 * p.cos((roomOrientationValueNeg + 45) * (-3.1415926 / 180)));
+      // p.line(0, 0, 45 * p.sin((roomOrientationValueNeg + 135) * (-3.1415926 / 180)), 27 * p.cos((roomOrientationValueNeg + 135) * (-3.1415926 / 180)));
+      // p.line(0, 0, 45 * p.sin((roomOrientationValueNeg + 225) * (-3.1415926 / 180)), 27 * p.cos((roomOrientationValueNeg + 225) * (-3.1415926 / 180)));
+      // p.textAlign(p.CENTER, p.CENTER);
+      // p.textSize(10);
+      // p.text("N", 56 * p.sin((roomOrientationValueNeg - 45) * (-3.1415926 / 180)), 34 * p.cos((roomOrientationValueNeg - 45) * (-3.1415926 / 180)));
+      // p.strokeWeight(4);
+      // p.line(0, 0, 45 * p.sin((roomOrientationValueNeg - 45) * (-3.1415926 / 180)), 27 * p.cos((roomOrientationValueNeg - 45) * (-3.1415926 / 180)));
+      // //p.translate(36*p.sin((roomOrientationValueNeg+45)*(-3.1415926 / 180)), 22*p.cos((roomOrientationValueNeg+45)*(-3.1415926 / 180)));
+      // //p.point(0,0);
+      // p.stroke(10);
+      // p.strokeWeight(3);
+
+      // p.strokeWeight(4);
+      // p.stroke(light_black);
+      // p.point(sunPathGraphicPixelX[0], sunPathGraphicPixelY[0]);
+      // for (let i = 0; i < sunPathGraphicPixelX.length - 1; i++) {
+      //   p.strokeWeight(1);
+      //   //p.stroke(light_black);
+      //   p.line(sunPathGraphicPixelX[i], sunPathGraphicPixelY[i], sunPathGraphicPixelX[i + 1], sunPathGraphicPixelY[i + 1]);
+      //   p.strokeWeight(4);
+      //   //p.stroke(100);
+      //   p.point(sunPathGraphicPixelX[i + 1], sunPathGraphicPixelY[i + 1]);
+      // }
+      // p.strokeWeight(3);
+      // p.stroke(100);
+      // p.pop();
+
+      // roomOrientationValue = roomOrientationValue * -1
 
       //DETERMINE HOW LARGE THE ISOMETRIC GRAPHIC WILL BE.
       //FIRST MAKE IT, THEN RE-DO IT USING A MULTIPLIER TO INCREASE OR DECREASE THE SCALE SO IT STAYS WITHIN THE BOUNDS OF THE CANVAS
