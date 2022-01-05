@@ -2,6 +2,9 @@ window.SOLAR_COMFORT = {};
 
 window.SOLAR_COMFORT.settings = {};
 window.SOLAR_COMFORT.settings1 = {};
+window.SOLAR_COMFORT.settings_prev = {};
+window.SOLAR_COMFORT.settings1_prev = {};
+
 window.SOLAR_COMFORT.BODY_POSITION_SIT = 'seated';
 window.SOLAR_COMFORT.BODY_POSITION_STAND = 'standing';
 
@@ -110,4 +113,108 @@ window.SOLAR_COMFORT.secant = function(a, b, fn, epsilon) {
     f2 = f3
   }
   return 100
+}
+
+window.SOLAR_COMFORT.updateSettings = function(c) {
+  window.SOLAR_COMFORT[`settings${c}`].glzOrWidth = document.getElementById(`glazingRatioCheck`).checked;
+
+  window.SOLAR_COMFORT[`settings${c}`].Lon1 = document.getElementById(`long`).value;
+  
+  window.SOLAR_COMFORT[`settings${c}`].Lat1 = document.getElementById(`lat`).value;
+  
+  window.SOLAR_COMFORT[`settings${c}`].TimeZone1 = document.getElementById(`timeZone`).value;
+  
+  // CLIMATE
+  window.SOLAR_COMFORT[`settings${c}`].outdoorTemp = document.getElementById(`outdoorTemp`).value;
+
+  // TIME CONFIG
+  window.SOLAR_COMFORT[`settings${c}`].Hour1 = document.getElementById(`hour`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].Day1 = document.getElementById(`day`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].Month1 = document.getElementById(`mon`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].timestep = document.getElementById(`timeStep`).value;
+
+
+  // INDOOR CONDITIONS
+  window.SOLAR_COMFORT[`settings${c}`].airTemp = document.getElementById(`airTemp${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].humidity = document.getElementById(`humidity${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].airSpeed = document.getElementById(`airSpeed${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].clothing = document.getElementById(`clothing${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].metabolic = document.getElementById(`metabolic${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].posture = document.getElementById(`posture${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].asa = document.getElementById(`asa${c}`).value;
+
+  // ROOM GEOMETRY
+  window.SOLAR_COMFORT[`settings${c}`].roomOrientationValue1 = document.getElementById(`north${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].gridHeightValue = document.getElementById(`gridHt${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue = document.getElementById(`ceiling${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].wallLen = document.getElementById(`wallWidth${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].wallDepVal = document.getElementById(`wallDep${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].wallR = document.getElementById(`wallR${c}`).value;
+
+  // WINDOW GEOMETRY
+
+  window.SOLAR_COMFORT[`settings${c}`].windowHeightValue = document.getElementById(`windowHeight${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].windowWidthValue = document.getElementById(`windowWidth${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].glzRatioValue = document.getElementById(`glazing${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].sillHeightValue = document.getElementById(`sill${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].distanceWindows = document.getElementById(`distWindow${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].windowU = document.getElementById(`windowU${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].shgc = document.getElementById(`shgc${c}`).value;
+
+
+  // SHADE GEOMETRY
+
+  window.SOLAR_COMFORT[`settings${c}`].horzShadeDep = document.getElementById(`hShadeDep${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].horzShadeNum = document.getElementById(`hShadeNum${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace = document.getElementById(`hShadeSpace${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].horzShadeDist = document.getElementById(`hShadeDist${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight = document.getElementById(`hShadeHeight${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle = document.getElementById(`hShadeAngle${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].vertShadeDep = document.getElementById(`vShadeDep${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].vertShadeNum = document.getElementById(`vShadeNum${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace = document.getElementById(`vShadeSpace${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].vertShadeStart = document.getElementById(`vShadeStart${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].vertShadeShift = document.getElementById(`vShadeShift${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].vertShadeDist = document.getElementById(`vShadeDist${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].vertShadeOn = document.getElementById(`vShadeOn${c}`).checked ? 0 : 1;
+
+  window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight = document.getElementById(`vShadeHeight${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].vertShadeScale = document.getElementById(`vShadeScale${c}`).value;
+
+  window.SOLAR_COMFORT[`settings${c}`].valFal = document.getElementById(`fal`).value; //FLOOR AREA LOSS
+
+  window.SOLAR_COMFORT[`settings${c}`].valMDST = document.getElementById(`mdst`).value; // MAX DIRECT SUN TIME
 }

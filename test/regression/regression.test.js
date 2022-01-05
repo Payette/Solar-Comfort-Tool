@@ -14,6 +14,7 @@ async function runAndVerifyAgainstGold(fileName, inputs, testName) {
   for(let i=0; i<inputs.length; i++) {
     updateInput(page, inputs[i]);
   }
+  updateInput(page, { id: "all_testing_inputs_set", command: "click" })
 
   const csvEl = await page.waitForSelector("#debugcsv", { timeout: 450000 });
   await delay(2000)

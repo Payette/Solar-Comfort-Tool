@@ -56,6 +56,7 @@ function gatherCase1Inputs() {
         vertShadeStart: {label: "Left/Right", value: $("input#vShadeStart").val()},
         vertShadeShift: {label: "Left/Right Shift", value: $("input#vShadeShift").val()},
         vertShadeDist: {label: "Distance from Facade (Vertical) (ft)", value: $("input#vShadeDist").val()},
+        vertShadeOn: {label: "Full Height Louvers", value: $("input#vShadeOn").prop("checked")},
         vertShadeHeight: {label: "Height Above Window (ft)", value: $("input#vShadeHeight").val()},
         vertShadeScale: {label: "Height Relative to Window (ft)", value: $("input#vShadeScale").val()}
     }
@@ -104,6 +105,7 @@ function gatherCase2Inputs() {
         vertShadeStart: {label: "Left/Right", value: $("input#vShadeStart1").val()},
         vertShadeShift: {label: "Left/Right Shift", value: $("input#vShadeShift1").val()},
         vertShadeDist: {label: "Distance from Facade (Vertical) (ft)", value: $("input#vShadeDist1").val()},
+        vertShadeOn: {label: "Full Height Louvers", value: $("input#vShadeOn1").prop("checked")},
         vertShadeHeight: {label: "Height Above Window (ft)", value: $("input#vShadeHeight1").val()},
         vertShadeScale: {label: "Height Relative to Window (ft)", value: $("input#vShadeScale1").val()}
     }

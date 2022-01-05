@@ -419,9 +419,6 @@ renderGraphicsAndRunSimulation = caseNumber => {
     p.draw = function () {
       window.SOLAR_COMFORT.frameCount = p.frameCount;
 
-      p.clear();
-      p.background(255);
-
       if (caseNumber === 1) {
         if (window.SOLAR_COMFORT.Case2Button === 0) {
           document.getElementsByName("button1").forEach(e => e.className = "button1OFF")
@@ -440,6 +437,19 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // just return early to save some CPU cycles and ensure graphics are hidden
         return;
       }
+
+      window.SOLAR_COMFORT.updateSettings(c);
+
+      if(_.isEqual(window.SOLAR_COMFORT[`settings${c}`], window.SOLAR_COMFORT[`settings${c}_prev`])) {
+        if(!(annualOn && window.SOLAR_COMFORT[`annualSimulationDone${c}`] === false)) {
+          // settings have not changed and we are not in the middle of running an annual simulation
+          // just return, everthing is up-to-date
+          return;
+        }        
+      }
+
+      p.clear();
+      p.background(255);
 
       if (annualOn) { // Check If Annual Button is Pressed
 
@@ -465,122 +475,6 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
         p.pop();
       }
-
-      // Study
-
-      window.SOLAR_COMFORT[`settings${c}`].glzOrWidth = document.getElementById(`glazingRatioCheck`).checked;
-      //console.log(Radiox);
-
-
-      // CLIMATE
-      window.SOLAR_COMFORT[`settings${c}`].Lon1 = document.getElementById(`long`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].Lat1 = document.getElementById(`lat`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].TimeZone1 = document.getElementById(`timeZone`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].outdoorTemp = document.getElementById(`outdoorTemp`).value;
-
-      // TIME CONFIG
-
-      window.SOLAR_COMFORT[`settings${c}`].Hour1 = document.getElementById(`hour`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].Day1 = document.getElementById(`day`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].Month1 = document.getElementById(`mon`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].timestep = document.getElementById(`timeStep`).value;
-
-
-      // INDOOR CONDITIONS
-      window.SOLAR_COMFORT[`settings${c}`].airTemp = document.getElementById(`airTemp${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].humidity = document.getElementById(`humidity${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].airSpeed = document.getElementById(`airSpeed${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].clothing = document.getElementById(`clothing${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].metabolic = document.getElementById(`metabolic${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].posture = document.getElementById(`posture${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].asa = document.getElementById(`asa${c}`).value;
-
-      // ROOM GEOMETRY
-      window.SOLAR_COMFORT[`settings${c}`].roomOrientationValue1 = document.getElementById(`north${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].gridHeightValue = document.getElementById(`gridHt${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue = document.getElementById(`ceiling${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].wallLen = document.getElementById(`wallWidth${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].wallDepVal = document.getElementById(`wallDep${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].wallR = document.getElementById(`wallR${c}`).value;
-
-      // WINDOW GEOMETRY
-
-      window.SOLAR_COMFORT[`settings${c}`].windowHeightValue = (document.getElementById(`windowHeight${c}`).value * 10) / 10;
-
-      window.SOLAR_COMFORT[`settings${c}`].windowWidthValue = document.getElementById(`windowWidth${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].glzRatioValue = document.getElementById(`glazing${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].sillHeightValue = document.getElementById(`sill${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].distanceWindows = document.getElementById(`distWindow${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].windowU = document.getElementById(`windowU${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].shgc = document.getElementById(`shgc${c}`).value;
-
-
-      // SHADE GEOMETRY
-
-      window.SOLAR_COMFORT[`settings${c}`].horzShadeDep = document.getElementById(`hShadeDep${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].horzShadeNum = document.getElementById(`hShadeNum${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace = document.getElementById(`hShadeSpace${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].horzShadeDist = document.getElementById(`hShadeDist${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight = document.getElementById(`hShadeHeight${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle = document.getElementById(`hShadeAngle${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].vertShadeDep = document.getElementById(`vShadeDep${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].vertShadeNum = document.getElementById(`vShadeNum${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace = document.getElementById(`vShadeSpace${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].vertShadeStart = document.getElementById(`vShadeStart${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].vertShadeShift = document.getElementById(`vShadeShift${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].vertShadeDist = document.getElementById(`vShadeDist${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].vertShadeOn = document.getElementById(`vShadeOn${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].vShadeCheckbox = document.querySelector("input[name=vShadeOn]");
-
-      if (window.SOLAR_COMFORT[`settings${c}`].vShadeCheckbox.checked) {
-        window.SOLAR_COMFORT[`settings${c}`].vertShadeOn = 0;
-      } else {
-        window.SOLAR_COMFORT[`settings${c}`].vertShadeOn = 1;
-      }
-
-      window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight = document.getElementById(`vShadeHeight${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].vertShadeScale = document.getElementById(`vShadeScale${c}`).value;
-
-      window.SOLAR_COMFORT[`settings${c}`].valFal = document.getElementById(`fal`).value; //FLOOR AREA LOSS
-
-      window.SOLAR_COMFORT[`settings${c}`].valMDST = document.getElementById(`mdst`).value; // MAX DIRECT SUN TIME
-
 
       if (annualOn) { // Check If Annual Button is Pressed
         var dates1 = [];
@@ -958,9 +852,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.stroke(light_black);
       p.fill(50, 50);
 
-      if (window.SOLAR_COMFORT[`settings${c}`].vertShadeOn == 0) {
-        window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight = window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue - (r.glzCoords[0][2][2]);
-        window.SOLAR_COMFORT[`settings${c}`].vertShadeScale = window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue - (r.glzCoords[0][2][2]) + r.glzCoords[0][0][2];
+      if (window.SOLAR_COMFORT[`settings${c}`].vertShadeOn === 0) {
+        window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight = `${window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue - (r.glzCoords[0][2][2])}`;
+        window.SOLAR_COMFORT[`settings${c}`].vertShadeScale = `${window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue - (r.glzCoords[0][2][2]) + r.glzCoords[0][0][2]}`;
+
+        document.getElementById(`vShadeHeight${c}`).value = window.SOLAR_COMFORT[`settings${c}`].vertShadeHeight;
+        document.getElementById(`vShadeScale${c}`).value = window.SOLAR_COMFORT[`settings${c}`].vertShadeScale;
       }
 
       //VERTICAL SHADE LOUVERS
@@ -1714,9 +1611,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
                     }
                     let shadePositionX;
                     if (window.SOLAR_COMFORT[`settings${c}`].vertShadeStart == "L") {
-                      shadePositionX = ((XlocationOnWall + j + (window[gTL][gX]) + (p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeShift))));
+                      shadePositionX = ((XlocationOnWall + j + (window1[gTL][gX]) + (p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeShift))));
                     } else {
-                      shadePositionX = ((XlocationOnWall + j+1 - (window[gTL][gX] + wallWidthHalf) + (-p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeShift))));
+                      shadePositionX = ((XlocationOnWall + j+1 - (window1[gTL][gX] + wallWidthHalf) + (-p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeShift))));
                     }
 
                     let ratioAngleBtoA = Math.sin(angleB * (Math.PI / 180)) / Math.sin(angleA * (Math.PI / 180));
@@ -1752,7 +1649,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
                     let sinLawDist = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDist * (Math.sin(Math.PI - (((90) - solarElevation) * (Math.PI / 180)) - (90 * (Math.PI / 180))))) / Math.sin(((90) - solarElevation) * (Math.PI / 180));
                     let sinLawAngle = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDep * (Math.sin(Math.PI - (((90) - solarElevation) * (Math.PI / 180)) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle * (Math.PI / 180))))) / Math.sin(((90) - solarElevation) * (Math.PI / 180));
   
-                    if (angleHeight < (window[gTR][gY] + i) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5) && angleHeight > ((window[gTR][gY] + i) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5))) {
+                    if (angleHeight < (window1[gTR][gY] + i) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5) && angleHeight > ((window1[gTR][gY] + i) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5))) {
                       // Horizontal shade is blocking the sun at this window grid square
                       windowGridSquareGetsDirectSun[windowIndex][i][j] = false;
                     }
@@ -2195,6 +2092,8 @@ renderGraphicsAndRunSimulation = caseNumber => {
       // if(p.frameCount === 60*1 && caseNumber === 1) {
       //   console.log(solarCoordinates.map(c => c[1]));
       // }
+    
+      window.SOLAR_COMFORT[`settings${c}_prev`] = _.cloneDeep(window.SOLAR_COMFORT[`settings${c}`]);
     }
 
     p.reload = function () {

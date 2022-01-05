@@ -1120,6 +1120,11 @@ div.case2, #inputs input.case2, #inputs select.case2, hr.case2 {
 	right: 10px;
 	top: 10px;
 }
+#all_testing_inputs_set {
+	position: absolute;
+	right: 10px;
+	top: 50px;
+}
 .hidefromall {
 	display: none;
 }

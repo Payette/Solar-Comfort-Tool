@@ -374,10 +374,16 @@ if(debug) {
     }
   })
 
-  // wait for everything to load
-  // wait for our tests to finish updating the UI inputes
-  // then grab our CSV exports and display on the page
-  setTimeout(() => {
+  let testingDoneButton=document.createElement('button');
+  testingDoneButton.setAttribute('id', 'all_testing_inputs_set');
+  testingDoneButton.textContent="Testing Code is Done Setting Inputs";
+  document.body.appendChild(testingDoneButton);
+  testingDoneButtonEl = document.getElementById('all_testing_inputs_set');
+  testingDoneButtonEl.addEventListener('click', e => {
+    e.target.classList.add('all_inputs_set');
+  })
+
+  function showCsvIfSimulationDone() {
     if($("#dsAnnual").is(":checked")) {
       // wait until annual simulation has completed
       // then wait a tad more, and grab our CSV export
@@ -393,5 +399,18 @@ if(debug) {
     } else {
       showCSVOnPage();
     }
-  }, 20000);
+  }
+
+  // wait for everything to load
+  // wait for our tests to finish updating the UI inputs
+  // then grab our CSV exports and display on the page
+  var allInputsSet = setInterval(function() {
+    testingDoneButtonEl = document.getElementById('all_testing_inputs_set');
+    if(testingDoneButtonEl.classList.contains('all_inputs_set')) {
+      clearInterval(allInputsSet);
+      setTimeout(() => {
+        showCsvIfSimulationDone();
+      }, 250)
+    }    
+  }, 250)
 }

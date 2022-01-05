@@ -83,7 +83,7 @@ exports.updateInput = async (page, input) => {
             }
         }
     }, input);
-    await delay(250);
+    await inBrowserWait(page)
 
     if(input.id === "dsAnnual") {
         await delay(1500);
