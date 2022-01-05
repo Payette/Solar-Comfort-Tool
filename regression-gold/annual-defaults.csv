@@ -44,8 +44,8 @@ Spacing (Vertical) (ft),3
 Left/Right,L
 Left/Right Shift,0
 Distance from Facade (Vertical) (ft),0
-Height Above Window (ft),0
-Height Relative to Window (ft),0
+Height Above Window (ft),3
+Height Relative to Window (ft),5
 
 Case 1 Result
 % > max direct sun time, 79%, Fail
@@ -157,8 +157,8 @@ Spacing (Vertical) (ft),3
 Left/Right,L
 Left/Right Shift,0
 Distance from Facade (Vertical) (ft),0
-Height Above Window (ft),0
-Height Relative to Window (ft),0
+Height Above Window (ft),3
+Height Relative to Window (ft),5
 
 Case 2 Result
 % > max direct sun time, 79%, Fail
