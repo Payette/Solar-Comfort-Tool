@@ -44,6 +44,7 @@ Spacing (Vertical) (ft),3
 Left/Right,L
 Left/Right Shift,0
 Distance from Facade (Vertical) (ft),0
+Full Height Louvers,true
 Height Above Window (ft),3
 Height Relative to Window (ft),5
 
@@ -157,6 +158,7 @@ Spacing (Vertical) (ft),3
 Left/Right,L
 Left/Right Shift,0
 Distance from Facade (Vertical) (ft),0
+Full Height Louvers,true
 Height Above Window (ft),3
 Height Relative to Window (ft),5
 
