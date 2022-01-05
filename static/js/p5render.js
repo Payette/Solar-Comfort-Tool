@@ -45,62 +45,6 @@ window.SOLAR_COMFORT.MDTResult1 = 0;
 window.SOLAR_COMFORT.globalGridColor = undefined;
 window.SOLAR_COMFORT.globalGridColor1 = undefined;
 
-// These input fields are shared by case 1 and case 2
-window.SOLAR_COMFORT.globalInputFieldNames = [
-  `ppdRadio`,
-  `dsHour`,
-  `dsDay`,
-  `windowWidthCheck`,
-  `glazingRatioCheck`,
-  `long`,
-  `lat`,
-  `timeZone`,
-  `outdoorTemp`,
-  `hour`,
-  `day`,
-  `mon`
-];
-
-// Case 2 has a 1 appended to the end of these name
-// IE hour refers to case 1, and hour1 refers to case 2
-window.SOLAR_COMFORT.caseInputFieldNames = [
-  `airTemp`,
-  `humidity`,
-  `airSpeed`,
-  `clothing`,
-  `metabolic`,
-  `posture`,
-  `asa`,
-  `north`,
-  `gridHt`,
-  `ceiling`,
-  `wallWidth`,
-  `wallDep`,
-  `wallR`,
-  `windowHeight`,
-  `windowWidth`,
-  `glazing`,
-  `sill`,
-  `distWindow`,
-  `windowU`,
-  `shgc`,
-  `hShadeDep`,
-  `hShadeNum`,
-  `hShadeSpace`,
-  `hShadeDist`,
-  `hShadeHeight`,
-  `hShadeAngle`,
-  `vShadeOn`,
-  `vShadeDep`,
-  `vShadeNum`,
-  `vShadeSpace`,
-  `vShadeShift`,
-  `vShadeDist`,
-  `vShadeHeight`,
-  `vShadeScale`,
-  `vShadeStart`
-];
-
 let Month_Debug_Case2 = undefined;
 let Day_Debug_Case2 = undefined;
 let Hour_Debug_Case2 = undefined;
@@ -126,6 +70,7 @@ window.SOLAR_COMFORT.checkButton = function () {
   if (window.SOLAR_COMFORT.Case2Button === 1) {
     window.SOLAR_COMFORT.Case2Button = 0;
   } else {
+    window.SOLAR_COMFORT.copyCase1ToCase2();
     window.SOLAR_COMFORT.Case2Button = 1;
   }
 }

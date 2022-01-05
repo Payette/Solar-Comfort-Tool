@@ -10,6 +10,111 @@ window.SOLAR_COMFORT.BODY_POSITION_STAND = 'standing';
 
 unitSys = "IP";
 
+// These input fields are shared by case 1 and case 2
+window.SOLAR_COMFORT.globalInputFieldNames = [
+  `ppdRadio`,
+  `dsHour`,
+  `dsDay`,
+  `windowWidthCheck`,
+  `glazingRatioCheck`,
+  `long`,
+  `lat`,
+  `timeZone`,
+  `outdoorTemp`,
+  `hour`,
+  `day`,
+  `mon`
+];
+
+// Case 2 has a 1 appended to the end of these name
+// IE hour refers to case 1, and hour1 refers to case 2
+window.SOLAR_COMFORT.caseInputFieldNames = [
+  `airTemp`,
+  `humidity`,
+  `airSpeed`,
+  `clothing`,
+  `metabolic`,
+  `posture`,
+  `asa`,
+  `north`,
+  `gridHt`,
+  `ceiling`,
+  `wallWidth`,
+  `wallDep`,
+  `wallR`,
+  `windowHeight`,
+  `windowWidth`,
+  `glazing`,
+  `sill`,
+  `distWindow`,
+  `windowU`,
+  `shgc`,
+  `hShadeDep`,
+  `hShadeNum`,
+  `hShadeSpace`,
+  `hShadeDist`,
+  `hShadeHeight`,
+  `hShadeAngle`,
+  `vShadeOn`,
+  `vShadeDep`,
+  `vShadeNum`,
+  `vShadeSpace`,
+  `vShadeShift`,
+  `vShadeDist`,
+  `vShadeHeight`,
+  `vShadeScale`,
+  `vShadeStart`
+];
+
+// case variable to input field name mappings
+window.SOLAR_COMFORT.variableNameToInputMappings = {
+  airTemp: 'airTemp',
+  humidity: 'humidity',
+  airSpeed: 'airSpeed',
+  clothing: 'clothing',
+  metabolic: 'metabolic',
+  posture: 'posture',
+  asa: 'asa',
+  roomOrientationValue1: 'north',
+  gridHeightValue: 'gridHt',
+  ceilingHeightValue: 'ceiling',
+  wallLen: 'wallWidth',
+  wallDepVal: 'wallDep',
+  wallR: 'wallR',
+  windowHeightValue: 'windowHeight',
+  windowWidthValue: 'windowWidth',
+  glzRatioValue: 'glazing',
+  sillHeightValue: 'sill',
+  distanceWindows: 'distWindow',
+  windowU: 'windowU',
+  shgc: 'shgc',
+  horzShadeDep: 'hShadeDep',
+  horzShadeNum: 'hShadeNum',
+  horzShadeSpace: 'hShadeSpace',
+  horzShadeDist: 'hShadeDist',
+  horzShadeHeight: 'hShadeHeight',
+  horzShadeAngle: 'hShadeAngle',
+  vertShadeDep: 'vShadeDep',
+  vertShadeNum: 'vShadeNum',
+  vertShadeSpace: 'vShadeSpace',
+  vertShadeStart: 'vShadeStart',
+  vertShadeShift: 'vShadeShift',
+  vertShadeDist: 'vShadeDist',
+  vertShadeOn: {
+    fieldName: 'vShadeOn',
+    domSetter: newValue => {
+      let el = document.getElementById('vShadeOn1');
+      if(newValue === 0) {
+        el.checked = true;
+      } else {
+        el.checked = false;
+      }
+    }
+  },
+  vertShadeHeight: 'vShadeHeight',
+  vertShadeScale: 'vShadeScale'
+}
+
 let twoDimensionalRoomArrayFromOneDimensional = (oneDimensionalArray, gridY, numSteps) => {
   let gridColorArray2D = [];
   let gridColorArray2DX  = 0;
@@ -217,4 +322,29 @@ window.SOLAR_COMFORT.updateSettings = function(c) {
   window.SOLAR_COMFORT[`settings${c}`].valFal = document.getElementById(`fal`).value; //FLOOR AREA LOSS
 
   window.SOLAR_COMFORT[`settings${c}`].valMDST = document.getElementById(`mdst`).value; // MAX DIRECT SUN TIME
+}
+
+window.SOLAR_COMFORT.copyCase1ToCase2 = function() {
+  Object.keys(window.SOLAR_COMFORT.variableNameToInputMappings).forEach(variableName => {
+    let inputFieldName = undefined;
+    let domSetter = undefined;
+    if(typeof window.SOLAR_COMFORT.variableNameToInputMappings[variableName] === 'object') {
+      inputFieldName = window.SOLAR_COMFORT.variableNameToInputMappings[variableName].fieldName;
+      domSetter = window.SOLAR_COMFORT.variableNameToInputMappings[variableName].domSetter;
+    } else {
+      inputFieldName = window.SOLAR_COMFORT.variableNameToInputMappings[variableName]
+    }
+    
+    // set case 2 variable on our settings object
+    let case1Value = window.SOLAR_COMFORT.settings[`${variableName}`];
+    window.SOLAR_COMFORT.settings1[`${variableName}`] = case1Value;
+
+    // set case 2 input field values in the DOM
+    if(domSetter) {
+      domSetter(window.SOLAR_COMFORT.settings[`${variableName}`])
+    } else {
+      let el = document.getElementById(`${inputFieldName}1`);
+      el.value = case1Value
+    }
+  })
 }
