@@ -2122,10 +2122,15 @@ renderGraphicsAndRunSimulation = caseNumber => {
       } else {
         let solarCoolingLoad = Math.round(window.SOLAR_COMFORT[`windowSolarCoolingLoad${c}`]);
         p.textSize(30);
-        p.text(solarCoolingLoad + "", 340, 38);
+        p.textAlign(p.RIGHT, p.BASELINE);
+        p.text(solarCoolingLoad.toLocaleString(), 390, 40);
         p.textSize(10);
-        p.text("solar cooling load", 340, 50);
+        p.textAlign(p.LEFT, p.BASELINE);
+        p.text("Btu/hr", 395, 40);
+        p.textAlign(p.CENTER, p.BASELINE);
+        p.text("SOLAR COOLING LOAD", 375, 10);
       }
+      p.textAlign(p.CENTER, p.CENTER);
 
       // p.pop();
       //
