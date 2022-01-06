@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="static/css/styles.css" />
 	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css" />
+	<link rel="stylesheet" type="text/css" href="libraries/bigfoot-default.css"/>
 
 	<!-- CDN Jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -379,7 +380,7 @@
 							<legend class="heading">Room Geometry</legend>							
 						</div>
 					</fieldset>
-					<label>Room Orientation</label>
+					<label>Room Orientation <sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
 					<input type="number" name="north" id="north" min="-360" max="360" value="0" step="1">
 					<input type="number" name="north1" id="north1" class="case2" min="-360" max="360" value="0"
 						step="1"><br>
@@ -399,7 +400,7 @@
 					<input type="number" name="wallDep1" id="wallDep1" class="case2" min="1" max="60" value="40"
 						step="1"><br>
 
-					<label>Room Depth (ft)</label>
+					<label>Room Depth (ft) <sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
 					<input type="number" name="wallWidth" id="wallWidth" min="1" max="60" value="30" step="1">
 					<input type="number" name="wallWidth1" id="wallWidth1" class="case2" min="1" max="60" value="30"
 						step="1"><br>
@@ -570,6 +571,17 @@
 	</div>
 	</div>
 
+	<div class="footnotes">
+		<ol>	
+			<li class="footnote" id="fn:1">
+				<p>Room Orientation in degrees, 0—360°. The default, 0° means the room faces North and the window(s) face South (180°). Note the 3D room graphic will not rotate as the room orientation input is changed but the position of the sun relative to the room is changing and will be reflected on the floor graphics.</p>
+			</li>
+			<li class="footnote" id="fn:2">
+				<p>Room Depth in feet. The distance between the windows and the wall opposite the windows.</p>
+			</li>
+		</ol>
+	</div>
+
 	<!-- <script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script> -->
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 	<script type="text/javascript" src="static/js/utilities.js"></script>
@@ -584,7 +596,16 @@
 	<script type="text/javascript" src="static/js/createCSV.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/solarCalculator.js"></script>
+	<script type="text/javascript" charset="utf-8" src="libraries/bigfoot.min.js"></script>
 
+	<script>
+		$.bigfoot({
+			activateOnHover: false,
+			deleteOnUnhover: false,
+			popoverDeleteDelay: 250,
+			buttonMarkup: "<div class=\"bigfoot-footnote__container\"> <button class=\"bigfoot-footnote__button\" rel=\"footnote\" id=\"{{SUP:data-footnote-backlink-ref}}\" data-footnote-number=\"{{FOOTNOTENUM}}\" data-footnote-identifier=\"{{FOOTNOTEID}}\" alt=\"See Footnote {{FOOTNOTENUM}}\" data-bigfoot-footnote=\"{{FOOTNOTECONTENT}}\">?</button></div>"
+		});
+	</script>
 
 </body>
 
