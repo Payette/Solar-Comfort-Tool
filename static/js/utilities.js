@@ -75,7 +75,7 @@ window.SOLAR_COMFORT.variableNameToInputMappings = {
   metabolic: 'metabolic',
   posture: 'posture',
   asa: 'asa',
-  roomOrientationValue1: 'north',
+  windowOrientationValue1: 'north',
   gridHeightValue: 'gridHt',
   ceilingHeightValue: 'ceiling',
   wallLen: 'wallWidth',
@@ -258,7 +258,7 @@ window.SOLAR_COMFORT.updateSettings = function(c) {
   window.SOLAR_COMFORT[`settings${c}`].asa = document.getElementById(`asa${c}`).value;
 
   // ROOM GEOMETRY
-  window.SOLAR_COMFORT[`settings${c}`].roomOrientationValue1 = document.getElementById(`north${c}`).value;
+  window.SOLAR_COMFORT[`settings${c}`].windowOrientationValue1 = document.getElementById(`north${c}`).value;
 
   window.SOLAR_COMFORT[`settings${c}`].gridHeightValue = document.getElementById(`gridHt${c}`).value;
 

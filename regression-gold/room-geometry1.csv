@@ -19,7 +19,7 @@ Clothing Level (clo),0.5
 Metabolic Rate (met),1.2
 Occupant Posture,seated
 Average Shortwave Absorptivity,0.67
-Room Orientation,60
+Window Orientation,240
 Ceiling Height (ft),12
 Grid Height (ft),3
 Room Length (ft),34
@@ -141,7 +141,7 @@ Clothing Level (clo),0.5
 Metabolic Rate (met),1.2
 Occupant Posture,seated
 Average Shortwave Absorptivity,0.67
-Room Orientation,-60
+Window Orientation,120
 Ceiling Height (ft),12
 Grid Height (ft),3
 Room Length (ft),59
