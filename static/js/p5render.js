@@ -988,7 +988,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let Ztest = [];
         let AHArray = [];
         for (let i = 0; i < gridX; i++) {
-          let distanceFromWall = (i + 1) / 4;
+          let distanceFromWall = (i + 1);
           a = 0;
           for (let j = 0; j < gridY; j++) {
             a = 0;
@@ -1199,7 +1199,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
           let newCounter = 0;
           let emptyList = [];
           for (let i = 0; i < gridX; i++) {
-            let distanceFromWall = (i + 1) / 4;
+            let distanceFromWall = (i + 1);
             a1 = 0;
             for (let j = 0; j < gridY; j++) {
               a1 = 0;
@@ -1386,22 +1386,25 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let Ztest = [];
         let AHArray = [];
         for (let i = 0; i < gridX; i++) {
-          let distanceFromWall = (i + 1) / 4;
+          let distanceFromWall = (i + 1);
           a = 0;
           for (let j = 0; j < gridY; j++) {
             a = 0;
             for (let k = 0; k < solarCoordinates.length; k++) {
-              let angleHeight = Math.tan((solarCoordinates[k][1]) * (3.1415926 / 180)) * distanceFromWall;
+              let angleHeight = Math.tan((solarCoordinates[k][1]) * (Math.PI / 180)) * distanceFromWall;
               AHArray.push(solarCoordinates[k][1]);
+              let windowBottom = Math.max(r.glzCoords[0][0][2] - gridHt, 0);
+              let windowTop = Math.max(r.glzCoords[0][2][2] - gridHt, 0);
+
               if (solarCoordinates[k][1] < 0) {
                 a = 0;
-              } else if (angleHeight > r.glzCoords[0][0][2] - gridHt && angleHeight < (r.glzCoords[0][2][2] - gridHt)) {
+              } else if (angleHeight > windowBottom && angleHeight < windowTop) {
                 let testArray1 = [1];
                 for (let n = 0; n < window.SOLAR_COMFORT[`settings${c}`].horzShadeNum; n++) {
                   let sinLawDist = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDist * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (90 * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
                   let sinLawAngle = (window.SOLAR_COMFORT[`settings${c}`].horzShadeDep * (Math.sin(3.1415926 - (((90) - solarCoordinates[k][1]) * (3.1415926 / 180)) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeAngle * (3.1415926 / 180))))) / Math.sin(((90) - solarCoordinates[k][1]) * (3.1415926 / 180));
 
-                  if (angleHeight < (r.glzCoords[0][2][2] - gridHt) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5) && angleHeight > ((r.glzCoords[0][2][2] - gridHt) - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5))) {
+                  if (angleHeight < windowTop - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5) && angleHeight > (windowTop - (window.SOLAR_COMFORT[`settings${c}`].horzShadeSpace * n) - (sinLawDist) - (sinLawAngle) + (p.float(window.SOLAR_COMFORT[`settings${c}`].horzShadeHeight) * .5))) {
                     testArray1.push(0);
                   } else {
                     testArray1.push(1);
@@ -1412,10 +1415,13 @@ renderGraphicsAndRunSimulation = caseNumber => {
                 let itemArray = SortedArray[0];
                 a = itemArray;
 
+                // console.log(r.glzCoords)
+
                 //console.log(SortedArray);
               } else {
                 a = 0;
-              } Ztest.push(a);
+              }
+              Ztest.push(a);
             }
           }
         }
