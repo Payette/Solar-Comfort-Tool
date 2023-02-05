@@ -1,0 +1,892 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Solar Comfort Tool</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="static/css/styles.css" />
+	<link rel="stylesheet" type="text/css" href="static/css/jquery-ui-1.10.4.custom.css" />
+	<link rel="stylesheet" type="text/css" href="libraries/bigfoot-default.css"/>
+
+	<!-- CDN Jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- CDN Jquery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+	<script src="//d3js.org/d3.v3.min.js"></script>
+
+	<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+	<script language="javascript" type="text/javascript" src="libraries/p5.svg.js"></script>
+	<script language="javascript" type="text/javascript" src="libraries/p5.collide2d.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="static/js/erf.js"></script>
+
+	<script type="text/javascript">
+		// Footnote Options
+
+		// Increment Buttons
+
+		// URL Alert
+		$(function () {
+			$("#URLpop").dialog({
+				autoOpen: false,
+				draggable: false,
+				closeOnEscape: true,
+				buttons: [
+					{
+						text: "Short URL",
+						click: function () {
+							var urlToShorten = $("#URLpop textarea").val();
+							shorten(urlToShorten, function (response) {
+								// replace long url with shortened url
+								$("#URLpop textarea").empty();
+								$("#URLpop textarea").append(response.data.url);
+								$("#URLpop textarea").select();
+							});
+						}
+					},
+					{
+						text: "Standard URL",
+						click: function () {
+							var standardURL = createURL(false)
+							// replace long url with shortened url
+							$("#URLpop textarea").empty();
+							$("#URLpop textarea").append(standardURL);
+							$("#URLpop textarea").select();
+						}
+					},
+					{
+						text: "Full URL",
+						click: function () {
+							var fullURL = createURL(true)
+							// replace long url with shortened url
+							$("#URLpop textarea").empty();
+							$("#URLpop textarea").append(fullURL);
+							$("#URLpop textarea").select();
+						}
+					},
+					{
+						text: "Close",
+						click: function () {
+							$(this).dialog("close");
+						}
+					},
+				],
+				modal: true,
+				width: 450,
+			});
+		});
+		// Select Outdoor Temperature Dialog
+		$(function () {
+			$("#Outdoorpop").dialog({
+				autoOpen: false,
+				draggable: false,
+				closeOnEscape: true,
+				buttons: [
+					{
+						text: "Close",
+						click: function () {
+							$(this).dialog("close");
+						}
+					},
+				],
+				modal: true,
+				width: 450,
+			});
+		});
+
+	</script>
+
+</head>
+
+
+<body>
+
+	<div id="URLpop">
+		<textarea>the link</textarea>
+	</div>
+
+	<div id="Outdoorpop">
+		<h1>Search for Location Data</h1>
+		<p>Location information provided by the<br>
+			<a href="http://www.ladybug.tools/epwmap/" target="_blank">US. Dept. of Energy EPW database</a>.
+		</p>
+
+		<div class="dropdown">
+			<legend>Continent</legend>
+			<select id="continent">
+				<option>Select</option>
+				<option>Africa</option>
+				<option>Asia</option>
+				<option>Europe</option>
+				<option>North America</option>
+				<option>South America</option>
+				<option>South Pacific</option>
+			</select>
+		</div>
+
+		<div id="countryDiv" class="empty">
+			<legend>Country Code</legend>
+			<select id="country" disabled>
+				<option> </option>
+			</select>
+		</div>
+
+		<div id="stateDiv" class="empty">
+			<legend>State/Province</legend>
+			<select id="state" disabled>
+				<option> </option>
+			</select>
+		</div>
+
+		<div id="cityDiv" class="empty">
+			<legend>City</legend>
+			<select id="city" disabled>
+				<option> </option>
+			</select>
+		</div>
+
+		<div id="outTempDiv" class="temperatureEmpty">
+			<legend>Longitude </legend>
+			<textarea id="outTempTextArea" disabled>the link</textarea>
+		</div>
+
+		<div id="outTempDiv1" class="temperatureEmpty">
+			<legend>Latitude</legend>
+			<textarea id="outTempTextArea1" disabled>the link</textarea>
+		</div>
+
+		<div id="outTempDiv2" class="temperatureEmpty">
+			<legend>Timezone Offset</legend>
+			<textarea id="outTempTextArea2" disabled>the link</textarea>
+		</div>
+
+		<div id="outTempDiv4" class="temperatureEmpty">
+			<legend>Month</legend>
+			<textarea id="outTempTextArea4" disabled>the link</textarea>
+		</div>
+
+		<div id="outTempDiv5" class="temperatureEmpty">
+			<legend>Day of Month</legend>
+			<textarea id="outTempTextArea5" disabled>the link</textarea>
+		</div>
+		
+		<div id="outTempDiv3" class="temperatureEmpty">
+			<legend>Temperature (<span class="unitsTemp IP">&deg;F</span>)</legend>
+			<textarea id="outTempTextArea3" disabled>the link</textarea>
+
+			<div id="missingtemperature" class="error errorhidden">
+				No temperature available for city
+			</div>
+		</div>
+
+		<div id="applyTempDiv" class="desButton">
+			<input type="button" name="Apply" id="Apply" value="Enter Results" disabled>
+		</div>
+
+	</div>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-8">
+				<div class="serifText">
+					<p style="font-size:80%;">This tool shows the impact of shade and glazing geometry on indoor<br>
+						occupant discomfort from direct sun.</p>
+				</div>
+			</div>
+			<div class="col-4">
+				<div id="visualization"></div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div id="sketch">
+				<!-- The canvas goes here! -->
+			</div>
+			<div id="sketch1">
+				<!-- The canvas goes here! -->
+			</div>
+		</div>
+		<div class="row justify-content-end">			
+			<div class="col-4">
+				<div id="occupancyWrapper" class="hidefromall">
+					<form id="occupantSliders" autocomplete="off">
+						<fieldset class="inputgroup">
+							<div id="caseWrapper">
+								<legend class="heading">Visualize</legend>
+							</div>
+									<!-- <legend>Occupancy Thresholds</legend>
+							<hr> -->
+							<label for="fal"> Floor Area Loss</label>
+							<div class="occSlider"><input type="range" name="fal" id="fal" value="40" min="1" max="99">
+								<p id="ppdOutput">40%</p>
+							</div>
+
+							<label for="mdst">Max Direct Sun Time</label>
+							<div class="occSlider"><input type="range" name="mdst" id="mdst" value="3" min="1" max="12">
+								<p id="ppdOutput2"> 0.75 Hr</p>
+							</div>
+
+						</fieldset>
+
+					</form>
+				</div>
+				<div id="thermalcomfortvisualizationsettings" class="inputs">
+					<fieldset class="inputgroup">
+						<div id="caseWrapper">
+							<legend class="heading">Visualize</legend>
+						</div>
+						<div>
+							<select name="thermalcomfortvisualization" id="thermalcomfortvisualization" style="width: 25em" onchange="thermalComfortVisualizationChangeHandler()">
+								<option value="ppd" selected>Predicted Percentage of Dissatisfied (PPD)</option>
+								<option value="pmv">Predicted Mean Vote (PMV)</option>
+								<option value="mrt">Longwave MRT °F</option>
+								<option value="deltamrt">Shortwave dMRT °F</option>
+								<option value="solaradjustedmrt">Mean Radiant Temperature °F</option>
+							</select>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="inputs">
+					<fieldset class="inputgroup">
+						<div id="caseWrapper">
+							<legend class="heading">Share</legend>
+						</div>
+						<div id="citySearch">
+							<input type="button" name="csv" id="csv" value="CSV" class="optionButton unselected">
+							<div style="clear:both;"></div>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-4">
+				<div class="inputs">
+					<div class="row">		
+						<div class="col-12">
+							<fieldset class="inputgroup">
+								<div id="caseWrapper">
+									<legend class="heading">Study Type</legend>
+								</div>
+							</fieldset>
+						</div>
+						<div class="col-6">
+							<label><strong>Thermal Comfort</strong></label><br>
+							<label for="ppdRadio"><input type="radio" id="ppdRadio" name="studyType"
+									value="Thermal Comfort - Single Hour" onclick="thermalComfortSingleHourChange()" checked>Single Hour</label><br>
+						</div>
+						<div class="col-6">
+							<label><strong>Direct Sun</strong></label><br>
+							<label for="dsHour"><input type="radio" id="dsHour" name="studyType"
+									value="Direct Sun - Single Hour" onclick="msg()">Single Hour</label><br>
+		
+							<label for="dsDay"><input type="radio" id="dsDay" name="studyType" value="Direct Sun - Day"
+									onclick="msg2()">Day</label><br>
+		
+							<label for="dsAnnual"><input type="checkbox" id="dsAnnual" name="studyType"
+									value="Direct Sun - Annual" onclick="checkAnnual(this)">Annual</label><br>
+							<span id="annualWarning" style="font-size: 9px; color: orange; display: inline-block; padding-left: 14px;"></span>
+						</div>
+						<div class="col-12">
+							<div id="caseWrapper">
+								<label id="timeConfigLabel" style="width: 220px !important;"><strong>Time Configuration</strong></label>
+							</div><br>
+		
+							<label for="mon">Month</label>
+							<input type="number" name="mon" id="mon" min="1" max="12" value="7" step="1"><br>
+		
+							<label for="day">Day</label>
+							<input type="number" name="day" id="day" min="1" max="31" value="21" step="1"><br>
+		
+							<span id="hideTime">
+							<label for="hour">Hour</label>
+							<input type="number" name="hour" id="hour" min="0" max="24" value="12" step="1"><br>
+		
+							<label for="timeStep">Time Step per Hour</label>
+							<input type="number" name="timeStep" id="timeStep" min="1" max="8" value="4" step="1"
+								disabled style="visibility: hidden;"><br>
+							<!-- <input type="number" name="timeStep1" id="timeStep1" min="1" max="8"  value="2" step="1"><br> -->
+							</span><br>
+						</div>					
+						<div class="col-12">
+						<fieldset class="inputgroup">
+							<div id="caseWrapper">
+								<legend class="heading">CLIMATE</legend>							
+							</div>
+							<div id="citySearch">
+								<input type="button" name="CitySearch" id="CitySearch" value="Location Lookup"
+									class="optionButton unselected">
+								<div style="clear:both;"></div>
+							</div><br>
+						</fieldset>
+						<label>Longitude</label>
+						<input type="number" name="long" id="long" min="-180" max="180" value="-71" step="1"><br>
+
+						<label>Latitude</label>
+						<input type="number" name="lat" id="lat" min="-180" max="180" value="42" step="1"><br>
+
+						<label>Time Zone Offset</label>
+						<input type="number" name="timeZone" id="timeZone" min="-12" max="12" value="-5" step="1"><br>
+
+						<label>Outdoor Temperature (°F)</label>
+						<input type="number" name="outdoorTemp" id="outdoorTemp" min="-200" max="200" value="90.9" step="1"><br><br>
+
+						<!-- COPY FROM CBE
+						<div class="col-12"></div>
+						<fieldset class="inputgroup">
+							<div id="caseWrapper">
+								<legend class="heading">CBE SolarCal</legend>
+							</div>
+							<div id="citySearch">
+								<input type="button" name="ERF" id="ERF" value="Calculator" class="optionButton unselected">
+								<div style="clear:both;"></div>
+							</div>
+						</fieldset>
+						<div id="globedialog" title="Globe to MRT converter"></div>
+						<div id="localdialog" title="Local discomfort assessment"></div>
+						<div
+						  id="ERFdialog"
+						  title="SolarCal: shortwave radiation calculator"
+						></div> -->
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="inputs">
+					<fieldset class="inputgroup">
+						<div id="caseWrapper">
+							<legend class="heading first">Indoor Conditions</legend>
+							<div id="caseSelection">
+								<!-- <label>Case1</label> -->
+								<button type="button" class="button" name="button">Case 1</button>
+								<button type="button" class="button1OFF" name="button1" id="maincasetwobutton">Case 2</button>
+							</div>
+						</div>
+					</fieldset>
+					<label>Indoor Temperature (°F) <sup id="fnref:1"><a href="#fn:1" rel="footnote">?</a></sup></label>
+					<input type="number" name="airTemp" id="airTemp" min="-300" max="300" value="76" step="1">
+					<input type="number" name="airTemp1" id="airTemp1" class="case2" min="-300" max="300" value="76"
+						step="1"><br>
+
+					<label>Relative Humidity (%) <sup id="fnref:2"><a href="#fn:2" rel="footnote">?</a></sup></label>
+					<input type="number" name="humidity" id="humidity" min="0" max="100" value="60" step="1">
+					<input type="number" name="humidity1" id="humidity1" class="case2" min="0" max="100" value="60"
+						step="1"><br>
+
+					<label>Air Speed (fpm) <sup id="fnref:3"><a href="#fn:3" rel="footnote">?</a></sup></label>
+					<input type="number" name="airSpeed" id="airSpeed" min="0" value="10" step="0.1">
+					<input type="number" name="airSpeed1" id="airSpeed1" class="case2" min="0" value="10"
+						step="0.1"><br>
+
+					<label>Clothing Level (clo) <sup id="fnref:4"><a href="#fn:4" rel="footnote">?</a></sup></label>
+					<input type="number" name="clothing" id="clothing" min="0" value="0.5" step="0.05">
+					<input type="number" name="clothing1" id="clothing1" class="case2" min="0" value="0.5"
+						step="0.05"><br>
+
+					<label>Metabolic Rate (met) <sup id="fnref:5"><a href="#fn:5" rel="footnote">?</a></sup></label>
+					<input type="number" name="metabolic" id="metabolic" min="0" value="1.2" step="0.05">
+					<input type="number" name="metabolic1" id="metabolic1" class="case2" min="0" value="1.2"
+						step="0.05"><br>
+
+					<label>Occupant Posture</label>
+					<select name="posture" id="posture">
+						<option value="seated" selected>Seated</option>
+						<option value="standing">Standing</option>
+					</select>
+					
+					<select name="posture1" id="posture1" class="case2" style="appearance: none;">
+						<option value="seated" selected>Seated</option>
+						<option value="standing">Standing</option>
+					</select><br>
+
+					<label>Average Shortwave Absorptivity <sup id="fnref:6"><a href="#fn:6" rel="footnote">?</a></sup></label>
+					<input type="number" name="asa" id="asa" min="0" max="1" value="0.7" step="0.01">
+					<input type="number" name="asa1" id="asa1" class="case2" min="0" max="1" value="0.7"
+						step="0.01"><br><br>
+					<!-- End PPD -->
+
+					<fieldset class="inputgroup">
+						<div id="caseWrapper">
+							<legend class="heading">Room Geometry</legend>							
+						</div>
+					</fieldset>
+					<label>Window Orientation <sup id="fnref:101"><a href="#fn:101" rel="footnote">?</a></sup></label>
+					<input type="number" name="north" id="north" min="0" max="360" value="180" step="1">
+					<input type="number" name="north1" id="north1" class="case2" min="0" max="360" value="180"
+						step="1"><br>
+
+					<label>Ceiling Height (ft) <sup id="fnref:14"><a href="#fn:14" rel="footnote">?</a></sup></label>
+					<input type="number" name="ceiling" id="ceiling" min="1" max="100" value="12" step="1">
+					<input type="number" name="ceiling1" id="ceiling1" class="case2" min="1" max="100" value="12"
+						step="1"><br>
+
+					<label>Grid Height (ft) <sup id="fnref:8"><a href="#fn:8" rel="footnote">?</a></sup></label>
+					<input type="number" name="gridHt" id="gridHt" min="0" max="10" value="3" step="1">
+					<input type="number" name="gridHt1" id="gridHt1" class="case2" min="0" max="10" value="3"
+						step="1"><br>
+
+					<label>Room Length (ft) <sup id="fnref:15"><a href="#fn:15" rel="footnote">?</a></sup></label>
+					<input type="number" name="wallDep" id="wallDep" min="1" max="60" value="40" step="1">
+					<input type="number" name="wallDep1" id="wallDep1" class="case2" min="1" max="60" value="40"
+						step="1"><br>
+
+					<label>Room Depth (ft) <sup id="fnref:102"><a href="#fn:102" rel="footnote">?</a></sup></label>
+					<input type="number" name="wallWidth" id="wallWidth" min="1" max="60" value="30" step="1">
+					<input type="number" name="wallWidth1" id="wallWidth1" class="case2" min="1" max="60" value="30"
+						step="1"><br>
+
+					<!-- Required for PPD -->
+					<label>Wall R-Value (ft²hr°F/Btu)</label>
+					<input type="number" name="wallR" id="wallR" min="0" value="15" step="1">
+					<input type="number" name="wallR1" id="wallR1" class="case2" min="0" value="15" step="1"><br><br>
+					<!-- End PPD -->
+
+
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="inputs">					
+					<fieldset class="inputgroup">
+						<div id="caseWrapper">
+							<legend class="heading first">Window Geometry</legend>
+							<div id="caseSelection">
+								<!-- <label>Case1</label> -->
+								<button type="button" class="button" name="button">Case 1</button>
+								<button type="button" class="button1OFF" name="button1">Case 2</button>
+							</div>
+						</div>
+					</fieldset>
+					<label>Window Height from Sill (ft) <sup id="fnref:16"><a href="#fn:16" rel="footnote">?</a></sup></label>
+					<input type="number" name="windowHeight" id="windowHeight" min="0.0" max="12.0" value="7.0"
+						step="0.5">
+					<input type="number" name="windowHeight1" id="windowHeight1" class="case2" min="0.0" max="12.0"
+						value="7.0" step="0.5"><br>
+
+					<label>Sill Height (ft) <sup id="fnref:17"><a href="#fn:17" rel="footnote">?</a></sup></label>
+					<input type="number" name="sill" id="sill" min="0" max="5" value="2.0" step="0.5">
+					<input type="number" name="sill1" id="sill1" class="case2" min="0" max="5" value="2.0"
+						step="0.5"><br>
+
+					<label id="setGlazing">Set Glazing Amount By</label><br class="glzBR">
+
+					<label for="width" id="windowWidthLabel">
+						<div class="customCheckStyle">
+							<input type="radio" name="glazingRadio" value="windowWidthCheck" id="windowWidthCheck"
+								checked>
+							<label for="windowWidthCheck" id="checkWindWidth"></label>
+						</div>Window Width (ft) <sup id="fnref:18"><a href="#fn:18" rel="footnote">?</a></sup>
+					</label>
+					<!-- <div class="inputWrapperLeft"> -->
+					<input type="number" name="windowWidth" id="windowWidth" min="0" value="14" step="0.5"
+						class="case1">
+					<input type="number" name="windowWidth1" id="windowWidth1" class="case2" min="0" value="14"
+						step="0.5" class="case1"><br>
+					<!-- </div><br> -->
+
+					<label for="glazing" id="glazingLabel">
+						<div class="customCheckStyle">
+							<input type="radio" name="glazingRadio" value="glazingRatioCheck" id="glazingRatioCheck">
+							<label for="glazingRatioCheck" id="checkGlzRatio"></label>
+						</div>Window-to-Wall Ratio (%) <sup id="fnref:19"><a href="#fn:19" rel="footnote">?</a>
+					</label>
+					<!-- <div class="inputWrapperLeft"> -->
+					<input type="number" name="glazing" id="glazing" min="1" max="95" value="39" step="1">
+					<input type="number" name="glazing1" id="glazing1" class="case2" min="1" max="95" value="39"
+						step="1"><br>
+					<!-- </div><br> -->
+					<label>Window Seperation (ft) <sup id="fnref:20"><a href="#fn:20" rel="footnote">?</a></sup></label>
+					<input type="number" name="distWindow" id="distWindow" min="0" value="12" step="1">
+					<input type="number" name="distWindow1" id="distWindow1" class="case2" min="0" value="12"
+						step="1"><br>
+
+					<!-- Required for PPD -->
+					<label>Window U-Value (Btu/ft²hr°F) <sup id="fnref:9"><a href="#fn:9" rel="footnote">?</a></sup></label>
+					<input type="number" name="windowU" id="windowU" min="0" value="0.35" step="0.01">
+					<input type="number" name="windowU1" id="windowU1" class="case2" min="0" value="0.35"
+						step="0.01"><br>
+						
+					<label>Solar Heat Gain Coefficient (SHGC)</label>
+					<input type="number" name="shgc" id="shgc" min="0" value="0.35" step="0.01">
+					<input type="number" name="shgc1" id="shgc1" class="case2" min="0" value="0.35"
+						step="0.01"><br><br>
+					<!-- End PPD -->
+
+					<fieldset class="inputgroup">
+						<div id="caseWrapper">
+							<legend class="heading first">Shade Geometry</legend>
+							<div id="caseSelection">
+								<!-- <label>Case1</label> -->
+								<button type="button" class="button" name="button">Case 1</button>
+								<button type="button" class="button1OFF" name="button1">Case 2</button>
+							</div>
+						</div>
+					</fieldset>
+					<label><strong>Horizontal Shade Depth (ft)</strong></label>
+					<input type="number" name="hShadeDep" id="hShadeDep" min="0" max="4" value="1" step="1">
+					<input type="number" name="hShadeDep1" id="hShadeDep1" class="case2" min="0" max="4" value="1"
+						step="1"><br>
+
+					<label>&emsp;Number of Shades</label>
+					<input type="number" name="hShadeNum" id="hShadeNum" min="0" max="10" value="0" step="1">
+					<input type="number" name="hShadeNum1" id="hShadeNum1" class="case2" min="0" max="10" value="0"
+						step="1"><br>
+
+					<label>&emsp;Spacing (ft) <sup id="fnref:21"><a href="#fn:21" rel="footnote">?</a></sup></label>
+					<input type="number" name="hShadeSpace" id="hShadeSpace" min="1" max="10" value="3" step="1">
+					<input type="number" name="hShadeSpace1" id="hShadeSpace1" class="case2" min="1" max="10" value="3"
+						step="1"><br>
+
+					<label>&emsp;Distance from Facade (ft) <sup id="fnref:22"><a href="#fn:22" rel="footnote">?</a></sup></label>
+					<input type="number" name="hShadeDist" id="hShadeDist" min="0" max="10" value="0" step="1">
+					<input type="number" name="hShadeDist1" id="hShadeDist1" class="case2" min="0" max="10" value="0"
+						step="1"><br>
+
+					<label>&emsp;Height Above Window (ft) <sup id="fnref:23"><a href="#fn:23" rel="footnote">?</a></sup></label>
+					<input type="number" name="hShadeHeight" id="hShadeHeight" min="-10" max="10" value="0" step="1">
+					<input type="number" name="hShadeHeight1" id="hShadeHeight1" class="case2" min="-10" max="10"
+						value="0" step="1"><br>
+
+					<label>&emsp;Angle <sup id="fnref:24"><a href="#fn:24" rel="footnote">?</a></sup></label>
+					<input type="number" name="hShadeAngle" id="hShadeAngle" min="0" max="90" value="90" step="1">
+					<input type="number" name="hShadeAngle1" id="hShadeAngle1" class="case2" min="0" max="90" value="90"
+						step="1"><br>
+
+					<label><strong>Vertical Shade Depth (ft) <sup id="fnref:26"><a href="#fn:26" rel="footnote">?</a></sup></strong></label>
+
+					<input type="number" name="vShadeDep" id="vShadeDep" min="0" max="4" value="3" step="1">
+					<input type="number" name="vShadeDep1" id="vShadeDep1" class="case2" min="0" max="4" value="3"
+						step="1"><br>
+
+
+					<label>&emsp;Number of Shades</label>
+					<input type="number" name="vShadeNum" id="vShadeNum" min="0" max="100" value="0" step="1">
+					<input type="number" name="vShadeNum1" id="vShadeNum1" class="case2" min="0" max="100" value="0"
+						step="1"><br>
+
+					<label>&emsp;Spacing (ft) <sup id="fnref:25"><a href="#fn:25" rel="footnote">?</a></sup></label>
+					<input type="number" name="vShadeSpace" id="vShadeSpace" min="1" max="10" value="3" step="1">
+					<input type="number" name="vShadeSpace1" id="vShadeSpace1" class="case2" min="1" max="10" value="3"
+						step="1"><br>
+
+					<label>Left/Right <sup id="fnref:27"><a href="#fn:27" rel="footnote">?</a></sup></label>
+					<select name="vShadeStart" id="vShadeStart">
+						<option value="L" selected>Left</option>
+						<option value="R">Right</option>
+					</select>
+					<select name="vShadeStart1" id="vShadeStart1" class="case2">
+						<option value="L" selected>Left</option>
+						<option value="R">Right</option>
+					</select>
+
+					<label>&emsp;Left/Right Shift <sup id="fnref:28"><a href="#fn:28" rel="footnote">?</a></sup></label>
+					<input type="number" name="vShadeShift" id="vShadeShift" min="-10" max="10" value="0" step="1">
+					<input type="number" name="vShadeShift1" id="vShadeShift1" class="case2" min="-10" max="10"
+						value="0" step="1"><br>
+
+					<label>&emsp;Distance from Facade (ft) <sup id="fnref:31"><a href="#fn:31" rel="footnote">?</a></sup></label>
+					<input type="number" name="vShadeDist" id="vShadeDist" min="0" max="10" value="0" step="1">
+					<input type="number" name="vShadeDist1" id="vShadeDist1" class="case2" min="0" max="10" value="0"
+						step="1"><br>
+
+					<label>&emsp;Full Height Louvers <sup id="fnref:13"><a href="#fn:13" rel="footnote">?</a></sup></label>
+					<input type="checkbox" name="vShadeOn" id="vShadeOn" checked>
+					<input type="checkbox" name="vShadeOn1" id="vShadeOn1" class="case2" checked><br>
+
+					<label for="vShadeHeight">&emsp;&emsp;&emsp;&emsp;Offset from Window Top (ft) <sup id="fnref:29"><a href="#fn:29" rel="footnote">?</a></sup></label>
+					<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10" value="0" step="1">
+					<input type="number" name="vShadeHeight1" id="vShadeHeight1" class="case2" min="0" max="10"
+						value="0" step="1"><br>
+
+					<label for="vShadeScale">&emsp;&emsp;&emsp;&emsp;Offset from Sill (ft) <sup id="fnref:30"><a href="#fn:30" rel="footnote">?</a></sup></label>
+					<input type="number" name="vShadeScale" id="vShadeScale" min="-10" max="10" value="0" step="1">
+					<input type="number" name="vShadeScale1" id="vShadeScale1" class="case2" min="0" max="10" value="0"
+						step="1"><br><br>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="footnotes">
+		<ol>	
+			<li class="footnote" id="fn:1">
+				<p>Temperature of the indoor air (or the indoor thermostat setpoint). For radiant discomfort calculations it is assumed that this also represents the temperature of the indoor surfaces (e.g. ceiling, floor and interior walls).</p>
+			</li>
+			<li class="footnote" id="fn:2">
+				<p>Indoor relative humidity factors into the thermal comfort calculations. It can be up to 60% in climates that are warm and humid in the summer.</p>
+			</li>
+			<li class="footnote" id="fn:3">
+				<p>The average indoor air speed induced by the mechanical system is typically 10-50 fpm.</p>
+			</li>
+			<li class="footnote" id="fn:4">
+				Insulating value of clothing
+				<ul>
+					<li>0.2 clo - shorts + t-shirt</li>
+					<li>0.4 clo - thin trousers/skirt + short sleeved dress shirt</li>
+					<li>0.6 clo - thick trousers/skirt + long sleeved shirt + undershirt</li>
+					<li>0.8 clo - thin trousers/skirt + long sleeved shirt + single breasted coat</li>
+				</ul>					
+			</li>
+			<li class="footnote" id="fn:5">
+				Metabolic rate of the occupants
+				<ul>
+					<li>1 met - seated resting</li>
+					<li>1.2 met - typing or standing</li>
+				</ul>					
+			</li>
+			<li class="footnote" id="fn:6">
+				Average shortwave absorptivity
+				<ul>
+					<li>0.20 - white clothing</li>
+					<li>0.57 - khaki clothing or white skin></li>
+					<li>0.65 - brown skin</li>
+					<li>0.84 - black skin</li>
+					<li>0.88 - black clothing</li>
+				</ul>
+			<!-- <li class="footnote" id="fn:7">
+				<p>
+				</p>
+			</li> -->
+			<li class="footnote" id="fn:8">
+				Horizontal plain of analysis, typically at the height of an occupant’s body core
+				<ul>
+					<li>3.0 ft - seated</li>
+					<li>3.5 ft - standing</li>
+				</ul>
+			</li>
+			<li class="footnote" id="fn:9">
+				<p>Window assembly thermal performance.</p>
+			</li>
+			<!-- <li class="footnote" id="fn:10">
+				<p>
+				</p>
+			</li> -->
+			<li class="footnote" id="fn:11">
+				<p>The Predicted Mean Vote (PMV) thermal comfort model is currently the most widely used indoor comfort model for full-body thermal sensation. The greatest level of thermal comfort that the model accommodates is 5 Percent of People Dissatisfied (PPD) and the ASHRAE-55 thermal comfort standard recommends that indoor conditions for occupied spaces not exceed 10 PPD.</p>
+			</li>
+			<!-- <li class="footnote" id="fn:12">
+				<p>
+				</p>
+			</li> -->
+			<li class="footnote" id="fn:13">
+				<p>Floor to ceiling height louvers</p>
+			</li>
+			<li class="footnote" id="fn:14">
+				<figure class="footnotefigurecaption">
+					<img  src="static/images/tooltips/ceiling_height.png" alt="ceiling height" />
+					<figcaption>Ceiling Height (ft)</figcaption>
+				</figure>
+			</li>
+			<li class="footnote" id="fn:15">
+				<figure class="footnotefigurecaption">
+					<img  src="static/images/tooltips/room_length.png" alt="room length" />
+					<figcaption>Room Length (ft)</figcaption>
+				</figure>
+				<p>Length of the room along the window side in feet.</p>
+			</li>
+			<li class="footnote" id="fn:16">
+				<figure class="footnotefigurecaption">
+					<img  src="static/images/tooltips/window_height_from_sill.png" alt="window height from sill" />
+					<figcaption>Window Height from Sill (ft)</figcaption>
+				</figure>
+			</li>
+			<li class="footnote" id="fn:17">
+				<figure class="footnotefigurecaption">
+					<img  src="static/images/tooltips/sill_height.png" alt="sill height" />
+					<figcaption>Sill Height (ft)</figcaption>
+				</figure>
+				<p>Distance between the floor and the bottom of the window in feet.</p>
+			</li>
+			<li class="footnote" id="fn:18">
+				<figure class="footnotefigurecaption">
+					<img  src="static/images/tooltips/window_width.png" alt="window width" />
+					<figcaption>Window Width (ft)</figcaption>
+				</figure>
+			</li>
+			<li class="footnote" id="fn:19">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/window_to_wall_ratio.png" alt="window to wall ratio" /></div>
+					<figcaption>Window to Wall Ratio (%)</figcaption>
+				</figure>
+			</li>
+			<li class="footnote" id="fn:20">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/window_separation.png" alt="window separation" /></div>
+					<figcaption>Window Separation (ft)</figcaption>
+				</figure>
+				<p>Distance between center of windows in feet.</p>
+			</li>
+			<li class="footnote" id="fn:21">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/spacing_horizontal.png" alt="spacing of shades" /></div>
+					<figcaption>Spacing (ft)</figcaption>
+				</figure>
+				<p>Distance between shades in feet.</p>
+			</li>1
+			<li class="footnote" id="fn:22">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/distance_from_facade.png" alt="distance from facade" /></div>
+					<figcaption>Distance from Facade (ft)</figcaption>
+				</figure>
+			</li>
+			<li class="footnote" id="fn:23">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/height_above_window.png" alt="height above window" /></div>
+					<figcaption>Height Above Window (ft)</figcaption>
+				</figure>
+			</li>
+			<li class="footnote" id="fn:24">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/angle.png" alt="shade angle" /></div>
+					<figcaption>Angle (ft)</figcaption>
+				</figure>
+			</li>
+			<li class="footnote" id="fn:25">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/spacing_vertical.png" alt="spacing vertical shades" /></div>
+					<figcaption>Spacing (ft)</figcaption>
+				</figure>
+				<p>Distance between shades in feet.</p>
+			</li>
+			<li class="footnote" id="fn:26">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/vertical_shade_depth.png" alt="shade depth" /></div>
+					<figcaption>Depth (ft)</figcaption>
+				</figure>
+			</li>
+			<li class="footnote" id="fn:27">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/left_right.png" alt="left right" /></div>
+					<figcaption>Left or Right</figcaption>
+				</figure>
+				<p>Start laying out shades from the left or right side of the window as viewed from outside to building.</p>
+			</li>
+			<li class="footnote" id="fn:28">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/left_right_shift.png" alt="left right shift" /></div>
+					<figcaption>Horizontal Shift (ft)</figcaption>
+				</figure>
+				<p>Shift the position of the shades left or right a distance in feet.</p>
+			</li>
+			<li class="footnote" id="fn:29">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/height_above_window_vertical.png" alt="height above window" /></div>
+					<figcaption>Offset from Window Top (ft)</figcaption>
+				</figure>
+				<p>Distance between the top of the shade and the top of the window in feet.</p>
+			</li>
+			<li class="footnote" id="fn:30">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/height_relative_to_window.png" alt="height relative to window" /></div>
+					<figcaption>Offset from Sill (ft)</figcaption>
+				</figure>
+				<p>Distance between the bottom of the shade and the bottom of the window (sill) in feet.</p>
+			</li>
+			<li class="footnote" id="fn:31">
+				<figure class="footnotefigurecaption">
+					<div><img  src="static/images/tooltips/distance_from_facade_vertical.png" alt="distance from facade" /></div>
+					<figcaption>Distance from Facade (ft)</figcaption>
+				</figure>
+			</li>
+
+
+			<li class="footnote" id="fn:101">
+				<p>Window Orientation in degrees, 0—360°. The default, 180° means the window(s) face South (180°). Note the 3D room graphic will not rotate as the window orientation input is changed but the position of the sun relative to the room is changing and will be reflected on the floor graphics.</p>
+			</li>
+			<li class="footnote" id="fn:102">
+				<p>Room Depth in feet. The distance between the wall with windows opposite wall.</p>
+			</li>
+		</ol>
+	</div>
+
+	<div id="visualizationhoverstats" class="visualizationhoverstats hidefromall">
+		<ul>
+			<li>
+				[<b class="stat_x">0</b>, <b class="stat_y">0</b>]
+			</li>
+			<li>
+				<span class="stat_ppd">0</span> PPD
+			</li>
+			<li>
+				<span class="stat_pmv">0</span> PMV
+			</li>
+			<li>
+				<span class="stat_longwave_mrt">0</span> Longwave MRT °F
+			</li>
+			<li>
+				<span class="stat_shortwave_mrt">0</span> Shortwave dMRT °F
+			</li>
+			<li>
+				<span class="stat_mrt">0</span> MRT °F
+			</li>
+			<!-- <li>
+				<span class="stat_cbe_mrt">0</span> deltaMRT °F (CBE)
+			</li> -->
+		</ul>
+	</div>
+	<div id="visualizationhoverstats1" class="visualizationhoverstats hidefromall">
+		<ul>
+			<li>
+				[<b class="stat_x">0</b>, <b class="stat_y">0</b>]
+			</li>
+			<li>
+				<span class="stat_ppd">0</span> PPD
+			</li>
+			<li>
+				<span class="stat_pmv">0</span> PMV
+			</li>
+			<li>
+				<span class="stat_longwave_mrt">0</span> Longwave MRT °F
+			</li>
+			<li>
+				<span class="stat_shortwave_mrt">0</span> Shortwave dMRT °F
+			</li>
+			<li>
+				<span class="stat_mrt">0</span> MRT °F
+			</li>
+			<!-- <li>
+				<span class="stat_cbe_mrt">0</span> deltaMRT °F (CBE)
+			</li> -->
+		</ul>
+	</div>
+
+	<!-- <script type="text/javascript" charset="utf-8" src="static/js/GlazingAmount.js"></script> -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+	<script type="text/javascript" src="static/js/utilities.js"></script>
+	<script type="text/javascript" src="static/js/units.js"></script>
+	<script type="text/javascript" src="static/js/erf.js"></script>
+	<script type="text/javascript" src="static/js/CoolingSTAT.js"></script>
+	<script type="text/javascript" src="static/js/geo.js"></script>
+	<script type="text/javascript" src="static/js/PPDCalc.js"></script>
+	<script type="text/javascript" src="static/js/ladybug.js"></script>
+	<script type="text/javascript" src="static/js/deltaMRT.js"></script>
+	<script type="text/javascript" src="static/js/locationData.js"></script>
+	<script type="text/javascript" src="static/js/render.js"></script>
+	<script type="text/javascript" src="static/js/createCSV.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/solarCalculator.js"></script>
+	<script type="text/javascript" charset="utf-8" src="libraries/bigfoot.min.js"></script>
+
+	<script>
+		$.bigfoot({
+			activateOnHover: false,
+			deleteOnUnhover: false,
+			popoverDeleteDelay: 250,
+			buttonMarkup: "<div class=\"bigfoot-footnote__container\"> <button class=\"bigfoot-footnote__button\" rel=\"footnote\" id=\"{{SUP:data-footnote-backlink-ref}}\" data-footnote-number=\"{{FOOTNOTENUM}}\" data-footnote-identifier=\"{{FOOTNOTEID}}\" alt=\"See Footnote {{FOOTNOTENUM}}\" data-bigfoot-footnote=\"{{FOOTNOTECONTENT}}\">?</button></div>"
+		});
+	</script>
+
+</body>
+
+</html>
