@@ -75,7 +75,7 @@ window.SOLAR_COMFORT.ERF_solar_f = (feff, fsvv, Idir, beta, fp, SHGC, alpha_sw, 
 }
 
 
-window.SOLAR_COMFORT.f_bes_f = (d, j, beta, solar_azimuth, sillHeight, h, w, room_width) => { 
+window.SOLAR_COMFORT.f_bes_f = (d, j, beta, solar_azimuth, sillHeight, h, w, room_width,glzCoords) => { 
     let h_si = to_m(h);
     let w_si = to_m(w);
     let d_si = to_m(d);
@@ -95,20 +95,20 @@ window.SOLAR_COMFORT.f_bes_f = (d, j, beta, solar_azimuth, sillHeight, h, w, roo
     let p1 = (room_width_si - w_si)/2 - d_si/tan_azi;
     let p2 = (room_width_si + w_si)/2 - d_si/tan_azi;
     //console.log (`p1: ${p1}`,`p2: ${p2}`,`ray0: ${ray0}`,`ray1: ${ray1}`);
+    let windowCount = glzCoords.length;
+    //console.log (`windowCount: ${windowCount}`,`glzCoords: ${glzCoords[0][1][0]}`)
 
-    //1.73 is average human height (m)
-    if ( ((room_width_si - w_si)/2 - d_si/tan_azi) < j_si && j_si < ((room_width_si + w_si)/2 - d_si/tan_azi) ){
-        if (dia < (sillHeight_si / tan_beta)) {
-            return Math.min(1, Math.max(0, (1.73 + dia * tan_beta - sillHeight_si)/1.73));
-        } else if (dia >= (sillHeight_si / tan_beta) && dia < ((sillHeight_si + h_si) / tan_beta)){
-            return Math.min(1, Math.max(0, (h_si - dia * tan_beta + sillHeight_si)/1.73));
-        } else if (dia >= (sillHeight_si + h_si) / tan_beta) {
-            return 0;
-        }
-    } else {
+    // //1.73 is average human height (m)
+    if (dia < (sillHeight_si / tan_beta)) {
+        return Math.min(1, Math.max(0, (1.73 + dia * tan_beta - sillHeight_si)/1.73));
+    } else if (dia >= (sillHeight_si / tan_beta) && dia < ((sillHeight_si + h_si) / tan_beta)){
+        return Math.min(1, Math.max(0, (h_si - dia * tan_beta + sillHeight_si)/1.73));
+    } else if (dia >= (sillHeight_si + h_si) / tan_beta) {
         return 0;
     }
+
 }
+
 
 
 
@@ -148,7 +148,7 @@ window.SOLAR_COMFORT.calculateDeltaMRT = (position_body, h, w, d, beta, solar_az
         let glzCoord = glzCoords[g]
         let center_x = room_width_si/2 + to_m(glzCoord[0][0]) + w_si/2;
         let d_at_grid = Math.max(1, Math.sqrt(Math.pow(center_x - j_si, 2) + Math.pow(0 - d_si, 2))); // Euclidean distance
-
+        
         fsvv += window.SOLAR_COMFORT.fsvv_f(h_si, w_si, d_at_grid);
         
     }
@@ -157,9 +157,9 @@ window.SOLAR_COMFORT.calculateDeltaMRT = (position_body, h, w, d, beta, solar_az
     }
 
     ////////////////////////////////////////////// calculate using 1d depth value, avarage height for human is 1.73m
-    
-    let f_bes = window.SOLAR_COMFORT.f_bes_f(d, j, beta, solar_azimuth, sillHeight, h, w, room_width);
-    //let f_bes = window.SOLAR_COMFORT.f_bes_f(d, beta, sillHeight, h);
+
+
+    let f_bes = window.SOLAR_COMFORT.f_bes_f(d, j, beta, solar_azimuth, sillHeight, h, w, room_width,glzCoords);
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -193,7 +193,7 @@ window.SOLAR_COMFORT.calculateDeltaMRT = (position_body, h, w, d, beta, solar_az
     let erf = ERF(beta, SHARP, position_body, Idir, t_sol, fsvv, f_bes, alpha_sw);
     console.log(`our dMRT: ${delta_MRT} vs berkeley tool: ${erf.dMRT}`,`different: ${erf.dMRT-delta_MRT}`);
     //console.log(f_bes);
-    console.log(d, beta, f_bes);
+    console.log(d,j, beta, f_bes);
     //console.log (`Idir: ${Idir}`)
     
     

@@ -121,6 +121,7 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 				windowCoord.push([line[1][0], 0, line[1][2] + winHeightFinal])
 				finalGlzCoords.push(windowCoord)
 			}
+			
 
 		} else {
 			//Find the window geometry in the case that the target area is above that of the maximum acceptable area for breaking up the window in which case we have to make one big window.
@@ -208,6 +209,7 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 				var distCentLine = divDist
 			} else{
 				var distCentLine = wallLength
+				
 			}
 
 			var winLineScale = windowWidth / divDist
@@ -258,8 +260,9 @@ geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, window
 		}
 		//Calculate the glazing ratio.
 		var glazingRatio = glzArea/(wallLength*rectHeight)
+		
 	}
-
+    
 	//Return the coordinates of the wall.
 	var r = {}
 	r.glzRatio = glazingRatio;
@@ -366,6 +369,7 @@ geo.calcViewFacs = function(srfCoords, locPts) {
     }
 
     return viewFact
+	
 }
 
 
@@ -441,5 +445,8 @@ geo.computeAllViewFac = function(wallCoords, glazingCoords, occDistToWall, occDi
     r.glzViews = glzViewFac;
 	r.facadeDist = facadeDist;
 	r.windIntervals = windIntervals;
+	
 	return r
+	
 }
+
