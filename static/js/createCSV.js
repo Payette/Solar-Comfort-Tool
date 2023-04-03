@@ -8,8 +8,8 @@ function gatherGlobalInputs() {
     }
     return {
         studyType: {label: "Study Type", value: selectedStudyType.val()},
-        valFal: {label: "Floor Area Loss", value: $("input#fal").val() + "%"},
-        valMDST: {label: "Max Direct Sun Time", value: $("input#mdst").val() + " hr"}
+        valFal: {label: "Floor Area Limit", value: $("input#fal").val() + "%"},
+        valMDST: {label: "Max Allowable Direct Sun", value: $("input#mdst").val() + "hr/day"}
     }
 }
 
@@ -41,7 +41,7 @@ function gatherCase1Inputs() {
         sill: {label: "Sill Height (ft)", value: $("input#sill").val()},
         windowWidth: {label: "Window Width (ft)", value: $("input#windowWidth").val()},
         glzRatio: {label: "Window-to-Wall Ratio (%)", value: $("input#glazing").val()},
-        distanceWindows: {label: "Window Seperation (ft)", value: $("input#distWindow").val()},
+        distanceWindows: {label: "Window Separation (ft)", value: $("input#distWindow").val()},
         windowU: {label: "Window U-Value (Btu/ft²hr°F)", value: $("input#windowU").val()},
         solarHeatGainCo: {label: "Solar Heat Gain Coefficient (shgc)", value: $("input#shgc").val()},
         horzShadeDep: {label: "Horizontal Shade Depth (ft)", value: $("input#hShadeDep").val()},
@@ -90,7 +90,7 @@ function gatherCase2Inputs() {
         sill: {label: "Sill Height (ft)", value: $("input#sill1").val()},
         windowWidth: {label: "Window Width (ft)", value: $("input#windowWidth1").val()},
         glzRatio: {label: "Window-to-Wall Ratio (%)", value: $("input#glazing1").val()},
-        distanceWindows: {label: "Window Seperation (ft)", value: $("input#distWindow1").val()},
+        distanceWindows: {label: "Window Separation (ft)", value: $("input#distWindow1").val()},
         windowU: {label: "Window U-Value (Btu/ft²hr°F)", value: $("input#windowU1").val()},
         solarHeatGainCo: {label: "Solar Heat Gain Coefficient (shgc)", value: $("input#shgc1").val()},
         horzShadeDep: {label: "Horizontal Shade Depth (ft)", value: $("input#hShadeDep1").val()},

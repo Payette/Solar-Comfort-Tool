@@ -218,19 +218,21 @@
 					<form id="occupantSliders" autocomplete="off">
 						<fieldset class="inputgroup">
 							<div id="caseWrapper">
+								<!-- <legend class="heading">Visualize</legend> -->
 								<legend class="heading">Visualize</legend>
 							</div>
 									<!-- <legend>Occupancy Thresholds</legend>
 							<hr> -->
-							<label for="fal"> Floor Area Loss</label>
-							<div class="occSlider"><input type="range" name="fal" id="fal" value="40" min="1" max="99">
-								<p id="ppdOutput">40%</p>
+							<label for="fal"> Floor Area Limit</label>
+							<div class="occSlider"><input type="range" name="fal" id="fal" value="10" min="1" max="99">
+								<p id="ppdOutput">10%</p>
 							</div>
 
-							<label for="mdst">Max Direct Sun Time</label>
+							<label for="mdst">Max Allowable Direct Sun</label>
 							<div class="occSlider"><input type="range" name="mdst" id="mdst" value="3" min="1" max="12">
-								<p id="ppdOutput2"> 0.75 Hr</p>
+								<p id="ppdOutput2"> 0.75 hr/day</p>
 							</div>
+							<sup id="fnref:33"><a href="#fn:33" rel="footnote">?</a></sup>
 
 						</fieldset>
 
@@ -291,8 +293,10 @@
 							<label for="dsDay"><input type="radio" id="dsDay" name="studyType" value="Direct Sun - Day"
 									onclick="msg2()">Day</label><br>
 		
+							<!-- <label for="dsAnnual"><input type="tooglecheckbox" id="dsAnnual" name="studyType"
+									 onclick="checkAnnual(this)">Annual</label><br> -->
 							<label for="dsAnnual"><input type="checkbox" id="dsAnnual" name="studyType"
-									value="Direct Sun - Annual" onclick="checkAnnual(this)">Annual</label><br>
+								value="Direct Sun - Annual" onclick="checkAnnual(this)">Annual</label><br>
 							<span id="annualWarning" style="font-size: 9px; color: orange; display: inline-block; padding-left: 14px;"></span>
 						</div>
 						<div class="col-12">
@@ -300,7 +304,7 @@
 								<label id="timeConfigLabel" style="width: 220px !important;"><strong>Time Configuration</strong></label>
 							</div><br>
 		
-							<label for="mon">Month</label>
+							<label for="mon">Month<sup id="fnref:32"><a href="#fn:32" rel="footnote">?</a></sup></label>
 							<input type="number" name="mon" id="mon" min="1" max="12" value="7" step="1"><br>
 		
 							<label for="day">Day</label>
@@ -310,11 +314,13 @@
 							<label for="hour">Hour</label>
 							<input type="number" name="hour" id="hour" min="0" max="24" value="12" step="1"><br>
 		
-							<label for="timeStep">Time Step per Hour</label>
+							<!-- <label for="timeStep">Time Step per Hour</label> -->
+							<label for="timeStep"> </label>
 							<input type="number" name="timeStep" id="timeStep" min="1" max="8" value="4" step="1"
 								disabled style="visibility: hidden;"><br>
 							<!-- <input type="number" name="timeStep1" id="timeStep1" min="1" max="8"  value="2" step="1"><br> -->
 							</span><br>
+
 						</div>					
 						<div class="col-12">
 						<fieldset class="inputgroup">
@@ -437,14 +443,14 @@
 						step="1"><br>
 
 					<label>Room Length (ft) <sup id="fnref:15"><a href="#fn:15" rel="footnote">?</a></sup></label>
-					<input type="number" name="wallDep" id="wallDep" min="1" max="60" value="40" step="1">
+					<input type="number" name="wallDep" id="wallDep" min="1" max="60" value="40" step="1" oninput="this.value = Math.floor(this.value)">
 					<input type="number" name="wallDep1" id="wallDep1" class="case2" min="1" max="60" value="40"
-						step="1"><br>
+						step="1" oninput="this.value = Math.floor(this.value)"><br>
 
 					<label>Room Depth (ft) <sup id="fnref:102"><a href="#fn:102" rel="footnote">?</a></sup></label>
-					<input type="number" name="wallWidth" id="wallWidth" min="1" max="60" value="30" step="1">
+					<input type="number" name="wallWidth" id="wallWidth" min="1" max="60" value="30" step="1" oninput="this.value = Math.floor(this.value)">
 					<input type="number" name="wallWidth1" id="wallWidth1" class="case2" min="1" max="60" value="30"
-						step="1"><br>
+						step="1" oninput="this.value = Math.floor(this.value)"><br>
 
 					<!-- Required for PPD -->
 					<label>Wall R-Value (ft²hr°F/Btu)</label>
@@ -505,7 +511,7 @@
 					<input type="number" name="glazing1" id="glazing1" class="case2" min="1" max="95" value="39"
 						step="1"><br>
 					<!-- </div><br> -->
-					<label>Window Seperation (ft) <sup id="fnref:20"><a href="#fn:20" rel="footnote">?</a></sup></label>
+					<label>Window Separation (ft) <sup id="fnref:20"><a href="#fn:20" rel="footnote">?</a></sup></label>
 					<input type="number" name="distWindow" id="distWindow" min="0" value="12" step="1">
 					<input type="number" name="distWindow1" id="distWindow1" class="case2" min="0" value="12"
 						step="1"><br>
@@ -603,7 +609,7 @@
 					<input type="checkbox" name="vShadeOn" id="vShadeOn" checked>
 					<input type="checkbox" name="vShadeOn1" id="vShadeOn1" class="case2" checked><br>
 
-					<label for="vShadeHeight">&emsp;&emsp;&emsp;&emsp;Offset from Window Top (ft) <sup id="fnref:29"><a href="#fn:29" rel="footnote">?</a></sup></label>
+					<label for="vShadeHeight">&emsp;&emsp;&emsp;&emsp;Offset from Head (ft) <sup id="fnref:29"><a href="#fn:29" rel="footnote">?</a></sup></label>
 					<input type="number" name="vShadeHeight" id="vShadeHeight" min="-10" max="10" value="0" step="1">
 					<input type="number" name="vShadeHeight1" id="vShadeHeight1" class="case2" min="0" max="10"
 						value="0" step="1"><br>
@@ -782,7 +788,7 @@
 			<li class="footnote" id="fn:29">
 				<figure class="footnotefigurecaption">
 					<div><img  src="static/images/tooltips/height_above_window_vertical.png" alt="height above window" /></div>
-					<figcaption>Offset from Window Top (ft)</figcaption>
+					<figcaption>Offset from Head (ft)</figcaption>
 				</figure>
 				<p>Distance between the top of the shade and the top of the window in feet.</p>
 			</li>
@@ -799,10 +805,19 @@
 					<figcaption>Distance from Facade (ft)</figcaption>
 				</figure>
 			</li>
+			<li class="footnote" id="fn:32">
+				<p>Default month is set to July corresponding to summer in the northern hemisphere. </p>
+			</li>
+			<li class="footnote" id="fn:33">
+				<p>The default settings of 0.75 hr/d and maximum floor area limit are based on the Annual Sun Exposure (ASE) metric from LEED v4.1 which limits ASE to less than 250 hours per year (an average of 0.75 hours per day) and 10% of floor area for regularly occupied spaces. </p>
+			</li>
+			<li class="footnote" id="fn:34">
+				<p>Percent of floor area with more hours of direct sun than the Max Allowable Direct Sun set by user. </p>
+			</li>
 
 
 			<li class="footnote" id="fn:101">
-				<p>Window Orientation in degrees, 0—360°. The default, 180° means the window(s) face South (180°). Note the 3D room graphic will not rotate as the window orientation input is changed but the position of the sun relative to the room is changing and will be reflected on the floor graphics.</p>
+				<p>Window Orientation in degrees, 0—360°. The default, 180° means the window(s) face South (180°); 0° faces North, 90° faces East, and 270° faces West. Note the 3D room graphic will not rotate as the window orientation input is changed but the position of the sun relative to the room is changing and will be reflected on the floor graphics.</p>
 			</li>
 			<li class="footnote" id="fn:102">
 				<p>Room Depth in feet. The distance between the wall with windows opposite wall.</p>
@@ -830,6 +845,9 @@
 			<li>
 				<span class="stat_mrt">0</span> MRT °F
 			</li>
+			<li>
+				<span class="stat_ope_temp">0</span> Operative Temperature °F
+			</li>
 			<!-- <li>
 				<span class="stat_cbe_mrt">0</span> deltaMRT °F (CBE)
 			</li> -->
@@ -854,6 +872,9 @@
 			</li>
 			<li>
 				<span class="stat_mrt">0</span> MRT °F
+			</li>
+			<li>
+				<span class="stat_ope_temp">0</span> Operative Temperature °F
 			</li>
 			<!-- <li>
 				<span class="stat_cbe_mrt">0</span> deltaMRT °F (CBE)

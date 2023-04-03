@@ -13,6 +13,7 @@ w           - window width
 d           - distance from window to person
 position_body - position of person near window either sit or stand
 */
+
 const feff_seated = 0.696;
 const feff_standing = 0.725;
 const DEG_TO_RAD = 0.0174532925;

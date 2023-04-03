@@ -325,9 +325,9 @@ window.SOLAR_COMFORT.updateSettings = function(c) {
 
   window.SOLAR_COMFORT[`settings${c}`].vertShadeScale = document.getElementById(`vShadeScale${c}`).value;
 
-  window.SOLAR_COMFORT[`settings${c}`].valFal = document.getElementById(`fal`).value; //FLOOR AREA LOSS
+  window.SOLAR_COMFORT[`settings${c}`].valFal = document.getElementById(`fal`).value; //Floor Area Limit
 
-  window.SOLAR_COMFORT[`settings${c}`].valMDST = document.getElementById(`mdst`).value; // MAX DIRECT SUN TIME
+  window.SOLAR_COMFORT[`settings${c}`].valMDST = document.getElementById(`mdst`).value; // Max Allowable Direct Sun
 
   var selectedStudyType;
   if($('#dsAnnual').is(':checked')) {
@@ -466,6 +466,7 @@ window.SOLAR_COMFORT.handleMouseHover = function(p, c) {
           document.querySelector(`#visualizationhoverstats${c} .stat_longwave_mrt`).innerHTML = mrtValues.mrt;
           document.querySelector(`#visualizationhoverstats${c} .stat_shortwave_mrt`).innerHTML = isNaN(mrtValues.deltaMRT) ? 0 : mrtValues.deltaMRT;
           document.querySelector(`#visualizationhoverstats${c} .stat_mrt`).innerHTML = mrtValues.solarAdjustedMRT;
+          document.querySelector(`#visualizationhoverstats${c} .stat_ope_temp`).innerHTML = mrtValues.solarAdjustedMRT;
           //document.querySelector(`#visualizationhoverstats${c} .stat_cbe_mrt`).innerHTML =  isNaN(mrtValues.erfMRT) ? 0 : mrtValues.cbeMRT;
         }
       }

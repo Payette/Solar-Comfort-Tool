@@ -1,4 +1,4 @@
-//THIS UPDATES THE FLOOR AREA LOSS, MAX DIRECT SUNTIME AND TIMESTEP PER HOUR VALUES
+//THIS UPDATES THE Floor Area Limit, MAX DIRECT SUNTIME AND TIMESTEP PER HOUR VALUES
 //IT ALSO REMEMBERS THEM SO THEY CAN BE USED IN THE D3 COLOR CHART BEFORE THE DRAW LOOP
 
 let singleHour = 1;
@@ -408,9 +408,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
     let bigArrayColor = [];
     var imgCheck;
     var imgNope;
+    let sunImage;
+
     p.preload = function () {
       imgCheck = p.loadImage('static/images/check.png');
       imgNope = p.loadImage('static/images/x.png');
+      sunImage = p.loadImage('static/images/Sun.png');
     }
 
     p.setup = function () {
@@ -522,9 +525,11 @@ renderGraphicsAndRunSimulation = caseNumber => {
         p.strokeWeight(1);
         p.rect(5, 345, 367, 11);
         p.strokeWeight(0);
-        if (currentFrame > 365) {
+        if (currentFrame >= 365) {
           p.fill('#61bb4c');
           p.rect(5, 345, 367, 11);
+          p.fill('#ffffff'); 
+          p.text("ANALYSIS COMPLETE", 105, 355);
         } else {
           p.fill(150);
           p.rect(5, 345, currentFrame, 11);
@@ -665,6 +670,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       // North label
       p.strokeWeight(1);
+      p.fill(0); 
       p.text("N", (SUN_PATH_RADIUS + NORTH_LABEL_OFFSET) * p.sin((roomOrientationValueNeg) * (-Math.PI / 180)), (SUN_PATH_RADIUS + NORTH_LABEL_OFFSET) * p.cos((roomOrientationValueNeg) * (-Math.PI / 180)));
 
       // Draw sun positions (azimuth)
@@ -674,9 +680,17 @@ renderGraphicsAndRunSimulation = caseNumber => {
         let azimuthRoomAndGraphicAdjusted = (azimuth + roomOrientationValueNeg) % 360;
 
         if (elevation >= 0) {
-          p.strokeWeight(4);
-          p.stroke(0);
-          p.point(SUN_PATH_RADIUS * p.sin((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)));
+
+          //change point to sun image
+          p.push();
+          p.translate(SUN_PATH_RADIUS * p.sin((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)));
+          p.imageMode(p.CENTER);
+          p.image(sunImage, 0, 0, 10, 10);
+          p.pop();
+
+          // p.strokeWeight(4);
+          // p.stroke(0);
+          // p.point(SUN_PATH_RADIUS * p.sin((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)));
         }
 
         if (window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`].length === 1) {
@@ -703,16 +717,25 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.fill(light_black + 50);
       p.noStroke();
       p.textAlign(p.LEFT, p.CENTER);
-      p.text("ELEVATION", 0, 2 * NORTH_LABEL_OFFSET);
+      //original is ELEVATION,change to ALTITUDE
+      p.text("ALTITUDE", 0, 2 * NORTH_LABEL_OFFSET);
 
       // Draw sun positions (elevation)
       window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`].forEach(sunCoordinate => {
         let elevation = sunCoordinate[1];
 
         if (elevation >= 0) {
-          p.strokeWeight(4);
-          p.stroke(0);
-          p.point(SUN_PATH_DIAMETER * p.sin((270 - elevation) * (-Math.PI / 180)), SUN_PATH_DIAMETER * p.cos((270 - elevation) * (-Math.PI / 180)));
+
+          //change point to sun image
+          p.push();
+          p.translate(SUN_PATH_DIAMETER * p.sin((270 - elevation) * (-Math.PI / 180)), SUN_PATH_DIAMETER * p.cos((270 - elevation) * (-Math.PI / 180)));
+          p.imageMode(p.CENTER);
+          p.image(sunImage, 0, 0, 10, 10);
+          p.pop();
+
+          // p.strokeWeight(4);
+          // p.stroke(0);
+          // p.point(SUN_PATH_DIAMETER * p.sin((270 - elevation) * (-Math.PI / 180)), SUN_PATH_DIAMETER * p.cos((270 - elevation) * (-Math.PI / 180)));
         }
 
         if (window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`].length === 1) {
@@ -2114,7 +2137,8 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
       //console.log(p.frameCount);
 
-      window.SOLAR_COMFORT[`MDTResult${c}`] = "% > max direct sun time, " + MDTPercentage + "%, ";
+      window.SOLAR_COMFORT[`MDTResult${c}`] = "% > max allowable direct sun, " + MDTPercentage + "%, ";
+      // window.SOLAR_COMFORT[`MDTResult${c}`] = "% > max allowable direct sun, " + MDTPercentage + "%<sup id='fnref:34'><a href='#fn:34' rel='footnote'>?</a></sup>, ";
 
       p.push();
 
@@ -2138,7 +2162,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       if (!window.SOLAR_COMFORT[`settings${c}`].thermalComfortSingleHour) {
         p.text(MDTPercentage + "%", 340, 38);
         p.textSize(10);
-        p.text("> max direct sun time", 340, 50);
+        p.text("> max allowable direct sun", 340, 50);
       } else {
         let solarCoolingLoad = Math.round(window.SOLAR_COMFORT[`windowSolarCoolingLoad${c}`]);
         p.textSize(30);

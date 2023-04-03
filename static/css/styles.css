@@ -76,7 +76,7 @@ input:checked + .slider:before {
 }
 
 form#occupantSliders div.occSlider {
-	width: 203px;
+	width: 223px;
 	height: 20px;
 	float: left;
 	padding: 0px;
@@ -543,6 +543,11 @@ br.glzBR {
 	width: 15px;
 }
 
+/* custom checkbox styling for toggleCheckbox class */
+.inputs label input.toggleCheckbox {
+	width: 15px;
+}
+
 /* input[type=checkbox] {
 	visibility: hidden;
 } */
@@ -578,6 +583,36 @@ br.glzBR {
 	left: 0;
 	/* background: rgb(245, 245, 245); */
 }
+
+
+
+/* box for the checkbox */
+.inputs div.customCheckStyle label.toggleCheckbox, .inputs div.customCheckStyleCentered label.toggleCheckbox {
+	cursor: pointer;
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	padding: 1px;
+	top: 1px;
+	left: 0;
+	/* background: rgb(245, 245, 245); */
+}
+
+/* add toggle text to custom checkbox for toggleCheckbox class */
+.inputs label input.toggleCheckbox::before {
+	display: block;
+	position: absolute;
+	left: 1px;
+	top: -1px;
+	font-size: 12px;
+	content: "on";
+}
+
+/* add 'off' text to custom checkbox when checked */
+.inputs label input.toggleCheckbox:checked::before {
+	content: "off";
+}
+
 
 
 /* .inputs div.customCheckStyle label.unselected, .inputs div.customCheckStyleCentered label.unselected {

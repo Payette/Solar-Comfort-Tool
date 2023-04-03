@@ -29,7 +29,7 @@ Window Height from Sill (ft),9.5
 Sill Height (ft),4
 Window Width (ft),30
 Window-to-Wall Ratio (%),55
-Window Seperation (ft),12
+Window Separation (ft),12
 Window U-Value (Btu/ft²hr°F),0.35
 Solar Heat Gain Coefficient (shgc),0.35
 Horizontal Shade Depth (ft),1
@@ -143,7 +143,7 @@ Window Height from Sill (ft),5
 Sill Height (ft),2.0
 Window Width (ft),8
 Window-to-Wall Ratio (%),20
-Window Seperation (ft),12
+Window Separation (ft),12
 Window U-Value (Btu/ft²hr°F),0.35
 Solar Heat Gain Coefficient (shgc),0.35
 Horizontal Shade Depth (ft),1

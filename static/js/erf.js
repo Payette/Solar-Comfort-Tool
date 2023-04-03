@@ -87,9 +87,15 @@ function find_span(arr, x) {
     let fp;
     const alt_range = [0, 15, 30, 45, 60, 75, 90];
     const az_range = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180];
+
+    //SHARP default to 90 deg instead of 0 deg??? 135 deg???
+    //az_rotate is original default SHARP setting rotate 135 degree
+    let az_rotate = az + 135
   
     const alt_i = find_span(alt_range, alt);
-    const az_i = find_span(az_range, az);
+    const az_i = find_span(az_range, az_rotate);
+
+    console.log("-------",az,az_rotate,az_i);
   
     const fp11 = fp_table[az_i][alt_i];
     const fp12 = fp_table[az_i][alt_i + 1];
