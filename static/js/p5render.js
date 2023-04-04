@@ -144,7 +144,8 @@ checkAnnual = function (target) { // Check If Annual Button is Pressed
     document.getElementsByName("button1").forEach(e => e.disabled = false);
   } else {
     // Annual simulation is running, disable all fields
-    document.getElementById(`annualWarning`).innerHTML = 'Chages to inputs are disabled.<br>Turn off Annual to enable changes.';
+    //document.getElementById(`annualWarning`).innerHTML = 'Chages to inputs are disabled.<br>Turn off Annual to enable changes.';
+    document.getElementById(`annualWarning`).innerHTML = 'Uncheck to enable changing other settings.';
 
     for (let i = 0; i < window.SOLAR_COMFORT.globalInputFieldNames.length; i++) {
       document.getElementById(window.SOLAR_COMFORT.globalInputFieldNames[i]).disabled = true;
@@ -410,14 +411,20 @@ renderGraphicsAndRunSimulation = caseNumber => {
     var imgNope;
     let sunImage;
 
+
     p.preload = function () {
       imgCheck = p.loadImage('static/images/check.png');
       imgNope = p.loadImage('static/images/x.png');
       sunImage = p.loadImage('static/images/Sun.png');
+      seatedPersonImage = p.loadImage('static/images/SeatedPerson.png');
+      standPersonImage = p.loadImage('static/images/StandPerson2.png');
     }
 
     p.setup = function () {
-      p.cnv = p.createCanvas(440, 375);
+      
+
+      //position of the canvas is 0,0, width=440orignal, add 30 to show whole text!
+      p.cnv = p.createCanvas(470, 375);
       p.cnv.mouseOver(() => window.SOLAR_COMFORT[`mouseOver${c}`] = true);
       p.cnv.mouseOut(() => {
         window.SOLAR_COMFORT[`mouseOver${c}`] = false;
@@ -425,7 +432,6 @@ renderGraphicsAndRunSimulation = caseNumber => {
       });
       // Move the canvas so it’s inside the <div id="sketch-holder">.
       p.cnv.parent(`sketch${c}`);
-
 
       p.noStroke();
 
@@ -477,9 +483,15 @@ renderGraphicsAndRunSimulation = caseNumber => {
       document.getElementsByName("vShadeScale")[0].addEventListener('input', p.reload);
       document.getElementsByName("fal")[0].addEventListener('input', p.reload1);
       document.getElementsByName("mdst")[0].addEventListener('input', p.reload1);
+      
+
+
     };
 
+
+
     p.draw = function () {
+      
       window.SOLAR_COMFORT.frameCount = p.frameCount;
 
       if (caseNumber === 1) {
@@ -762,6 +774,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       let Ceil = window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue * 120;
       let yShift = 0; //x * gridY
 
+
       //SINGLE GRID BLOCK - NOT VISIBLE
       //CLOCKWISE STARTING @ TOP LEFT
       let x1 = x + yShift;
@@ -820,7 +833,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.line((x2 + (xNext * (gridX))) + 10 - (x / 2), (y2 + (y * (gridX))) + 6 - (y / 2), ((x3 + (xNext * (gridX))) - (x * (gridY))) + 10 - (x / 2), ((y3 + (y * (gridX))) + (yNext * (gridY))) + 6 - (y / 2));
       p.line(((x3 + (xNext * (gridX))) - (x * (gridY))) - 10 + (x / 2), ((y3 + (y * (gridX))) + (yNext * (gridY))) + 6 - (y / 2), x - 10 + (x / 2), (y * (gridY + 2)) + Ceil + 6 - (y / 2));
 
-
+      
       //XY GRID LEGEND ALONG BOTTOM AND RIGHT EDGE OF ROOM
       //p.line(((x3+(xNext*(gridX)))-(x*(gridY)))-10, ((y3+(y*(gridX)))+(yNext*(gridY)))+6, x-10, (y*(gridY+2))+Ceil+6);
       p.textSize(10);
@@ -2138,7 +2151,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
       //console.log(p.frameCount);
 
       window.SOLAR_COMFORT[`MDTResult${c}`] = "% > max allowable direct sun, " + MDTPercentage + "%, ";
-      // window.SOLAR_COMFORT[`MDTResult${c}`] = "% > max allowable direct sun, " + MDTPercentage + "%<sup id='fnref:34'><a href='#fn:34' rel='footnote'>?</a></sup>, ";
+      //<sup id='fnref:34'><a href='#fn:34' rel='footnote'>?</a></sup>
 
       p.push();
 
@@ -2159,10 +2172,14 @@ renderGraphicsAndRunSimulation = caseNumber => {
       p.fill(0);
       p.textSize(50);
 
+
+
       if (!window.SOLAR_COMFORT[`settings${c}`].thermalComfortSingleHour) {
+
         p.text(MDTPercentage + "%", 340, 38);
         p.textSize(10);
         p.text("> max allowable direct sun", 340, 50);
+
       } else {
         let solarCoolingLoad = Math.round(window.SOLAR_COMFORT[`windowSolarCoolingLoad${c}`]);
         p.textSize(30);
@@ -2175,6 +2192,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
         p.text("SOLAR COOLING LOAD", 375, 10);
       }
       p.textAlign(p.CENTER, p.CENTER);
+
 
       // p.pop();
       //
@@ -2193,6 +2211,17 @@ renderGraphicsAndRunSimulation = caseNumber => {
       // }
 
       window.SOLAR_COMFORT[`settings${c}_prev`] = _.cloneDeep(window.SOLAR_COMFORT[`settings${c}`]);
+
+      //add a person to compare
+      //p.image(personImage, 380, 133, 25, 35);
+      //floor right point: (x2 + (xNext * (gridX))) + 10 - (x / 2), (y2 + (y * (gridX))) + 6 - (y / 2)
+      //console.log("posture",window.SOLAR_COMFORT[`settings${c}`].Posture)
+      if (window.SOLAR_COMFORT[`settings${c}`].Posture === "seated"){
+        p.image(seatedPersonImage,((x2 + (xNext * (gridX))) + 10 - (x / 2))-5, ((y2 + (y * (gridX))) + 6 - (y / 2))-40, 25, 35);
+      } else {
+        p.image(standPersonImage,((x2 + (xNext * (gridX))) + 10 - (x / 2)), ((y2 + (y * (gridX))) + 6 - (y / 2))-46, 12, 43);
+      }
+      
     }
 
     p.reload = function () {
@@ -2206,6 +2235,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
     p.mouseMoved = function () {
       window.SOLAR_COMFORT.handleMouseHover(p, c);
+    }
+
+    p.mouseMoved = function () {
+      window.SOLAR_COMFORT.handleMouseHover(f, g);
     }
 
     // p.checkButton = function () {
