@@ -487,4 +487,19 @@ if(debug) {
   }, 250)
 }
 
+// print to PDF
+$(".optionButton#PDF").click(function(event) {
+  window.print();
+})
 
+
+// show URL in modal alert
+$(".optionButton#URL").click(function(event) {
+  var urlresult = createURL(false);
+
+  $("#URLpop textarea").empty();
+  $("#URLpop textarea").append(urlresult);
+
+  $("#URLpop").dialog("open");
+  $("#URLpop textarea").select();
+})

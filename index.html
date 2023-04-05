@@ -22,6 +22,9 @@
 	<script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
 	<script language="javascript" type="text/javascript" src="libraries/p5.svg.js"></script>
 	<script language="javascript" type="text/javascript" src="libraries/p5.collide2d.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/createurl.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/urlobject.js"></script>
+	<script type="text/javascript" charset="utf-8" src="static/js/shortenURL.js"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
@@ -263,6 +266,8 @@
 						</div>
 						<div id="citySearch">
 							<input type="button" name="csv" id="csv" value="CSV" class="optionButton unselected">
+							<input type="button" name="PDF" id="PDF" value="PDF" class="optionButton unselected">
+							<input type="button" name="URL" id="URL" value="Copy URL" class="optionButton unselected">
 							<div style="clear:both;"></div>
 						</div>
 					</fieldset>
@@ -314,8 +319,8 @@
 							<label for="hour">Hour</label>
 							<input type="number" name="hour" id="hour" min="0" max="24" value="12" step="1"><br>
 		
-							<!-- <label for="timeStep">Time Step per Hour</label> -->
-							<label for="timeStep"> </label>
+							<label for="timeStep">Time Step per Hour</label>
+							<!-- <label for="timeStep"> </label> -->
 							<input type="number" name="timeStep" id="timeStep" min="1" max="8" value="4" step="1"
 								disabled style="visibility: hidden;"><br>
 							<!-- <input type="number" name="timeStep1" id="timeStep1" min="1" max="8"  value="2" step="1"><br> -->
@@ -898,6 +903,7 @@
 	<script type="text/javascript" charset="utf-8" src="static/js/p5render.js"></script>
 	<script type="text/javascript" charset="utf-8" src="static/js/solarCalculator.js"></script>
 	<script type="text/javascript" charset="utf-8" src="libraries/bigfoot.min.js"></script>
+	<script type="text/javascript" src="static/js/urlparse.js"></script>
 
 	<script>
 		$.bigfoot({
@@ -907,6 +913,8 @@
 			buttonMarkup: "<div class=\"bigfoot-footnote__container\"> <button class=\"bigfoot-footnote__button\" rel=\"footnote\" id=\"{{SUP:data-footnote-backlink-ref}}\" data-footnote-number=\"{{FOOTNOTENUM}}\" data-footnote-identifier=\"{{FOOTNOTEID}}\" alt=\"See Footnote {{FOOTNOTENUM}}\" data-bigfoot-footnote=\"{{FOOTNOTECONTENT}}\">?</button></div>"
 		});
 	</script>
+
+
 
 </body>
 
