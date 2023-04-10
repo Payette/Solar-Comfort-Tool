@@ -89,15 +89,13 @@ function find_span(arr, x) {
     const az_range = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180];
 
     //SHARP default to 90 deg instead of 0 deg??? 135 deg???
-    //az_r is original default SHARP setting rotate 135 degree
-    let az_r = az + 135
-    //since default change to 135,some will out of range [0,180], if it's bigger than 180, use 360-az_r
-    az_r = az_r > 180 ? 360 - az_r : az_r;
+    //az_rotate is original default SHARP setting rotate 135 degree
+    let az_rotate = az + 135
   
     const alt_i = find_span(alt_range, alt);
-    const az_i = find_span(az_range, az_r);
+    const az_i = find_span(az_range, az_rotate);
 
-    
+    console.log("-------",az,az_rotate,az_i);
   
     const fp11 = fp_table[az_i][alt_i];
     const fp12 = fp_table[az_i][alt_i + 1];
@@ -108,18 +106,15 @@ function find_span(arr, x) {
     const az2 = az_range[az_i + 1];
     const alt1 = alt_range[alt_i];
     const alt2 = alt_range[alt_i + 1];
-    
-    
+  
     // bi-linear interpolation
-    fp = fp11 * (az2 - az_r) * (alt2 - alt);
-    fp += fp21 * (az_r - az1) * (alt2 - alt);
-    fp += fp12 * (az2 - az_r) * (alt - alt1);
-    fp += fp22 * (az_r - az1) * (alt - alt1);
+    fp = fp11 * (az2 - az) * (alt2 - alt);
+    fp += fp21 * (az - az1) * (alt2 - alt);
+    fp += fp12 * (az2 - az) * (alt - alt1);
+    fp += fp22 * (az - az1) * (alt - alt1);
     fp /= (az2 - az1) * (alt2 - alt1);
-     
-    //console.log("-------",az,az_r,az_i,az1,az2,fp,"****",alt,alt_i,alt1,alt2)
+  
     return fp;
-    
   }
   
   function ERF(alt, az, posture, I_dir, t_sol, f_svv, f_bes, asa) {

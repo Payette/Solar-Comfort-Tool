@@ -438,6 +438,7 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
 
   let solarAdjustedMRT = isNaN(deltaMRT) ? ptMRT : ptMRT + deltaMRT;
 
+
   //Compute the PMV at the point
   var mrtResult = comf.pmvElevatedAirspeed(airTemp, solarAdjustedMRT, vel, rh, met, clo, 0)
 	if (mrtResult.pmv > 0){
@@ -447,9 +448,14 @@ comf.calcFullMRTppd = function(winView, opaView, winFilmCoeff, airTemp, outdoorT
 		var finalMRTPPD = mrtResult.ppd
   }
 
+  //Operative Temp
+  let operativetemp = (solarAdjustedMRT + airTemp)/2
+  //console.log("!!!!!!",operativetemp) 
+
   var r = {}
   r.mrt = ptMRT;
   r.solarAdjustedMRT = solarAdjustedMRT;
+  r.operativetemp = operativetemp;
   r.ppd = finalMRTPPD;
 	r.windowTemp = windowTemp;
 	r.pmv = mrtResult.pmv
@@ -487,6 +493,7 @@ comf.calcFulldonwDppd = function(distSI, mrtpmv, windowHeadHgt, filmCoeff, airTe
 comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal, intLowE, lowEmissivity, clo, met, airSpeed, rh, deltaMRT){
 	var MRT = []
 	var solarAdjustedMRT = []
+  var operativetemp = []
 	var mrtPPD = []
 	var mrtPMV = []
 	//Caclulate an MRT and the average temperature of the wall for the point
@@ -496,6 +503,7 @@ comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, ou
 		var ptValue = comf.calcFullMRTppd(winView, opaView, winFilmCoeff, airTemp, outdoorTemp, indoorSrfTemp, wallRVal, windowUVal, intLowE, lowEmissivity, clo, met, airSpeed, rh, deltaMRT)
 		MRT.push(ptValue.mrt)
 		solarAdjustedMRT.push(ptValue.solarAdjustedMRT)
+    operativetemp.push(ptValue.operativetemp)
 		mrtPPD.push(ptValue.ppd)
 		mrtPMV.push(ptValue.pmv)
 		var windowTemp = ptValue.windowTemp
@@ -506,7 +514,7 @@ comf.getMRTPPD = function(winViewFacs, opaqueViewFacs, winFilmCoeff, airTemp, ou
   r.mrt = MRT;
   r.deltaMRT = [deltaMRT];
   r.solarAdjustedMRT = solarAdjustedMRT;
-
+  r.operativetemp = operativetemp;
   r.ppd = mrtPPD;
 	r.pmv = mrtPMV;
 	r.windowTemp = windowTemp;
@@ -647,11 +655,13 @@ comf.getFullPPD = function(wallViewFac, glzViewFac, facadeDist, windIntervals, o
     if (unitSys == "IP") {
       ptInfo.mrt = round1Decimal(units.C2F(mrtPPDResult.mrt[i]))
       ptInfo.solarAdjustedMRT = round1Decimal(units.C2F(mrtPPDResult.solarAdjustedMRT[i]))
+      ptInfo.operativetemp = round1Decimal(units.C2F(mrtPPDResult.operativetemp[i]))
       ptInfo.deltaMRT = round1Decimal(units.C2FDeltaMRT(mrtPPDResult.deltaMRT[i]))
     } else {
 
       ptInfo.mrt = round1Decimal(mrtPPDResult.mrt[i]);
       ptInfo.solarAdjustedMRT = round1Decimal(mrtPPDResult.solarAdjustedMRT[i]);
+      ptInfo.operativetemp = round1Decimal(mrtPPDResult.operativetemp[i]);
       ptInfo.deltaMRT = round1Decimal(mrtPPDResult.deltaMRT[i]);
     }
 

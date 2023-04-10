@@ -41,7 +41,8 @@ let THERMAL_COMFORT_VIZ_PPD = "ppd";
 let THERMAL_COMFORT_VIZ_PMV = "pmv";
 let THERMAL_COMFORT_VIZ_MRT = "mrt";
 let THERMAL_COMFORT_VIZ_DELTAMRT = "deltamrt";
-let THERMAL_COMFORT_VIZ_SOLARADJUSTEDMRT = "solaradjustedmrt"
+let THERMAL_COMFORT_VIZ_SOLARADJUSTEDMRT = "solaradjustedmrt";
+//let THERMAL_COMFORT_VIZ_OPERATIVETEMP = "operativetemp";
 
 /* Given the azimuth of the sun, relative to the 
  * window direction, we know that since our room is a box
@@ -95,6 +96,7 @@ function thermalComfortVisualizationChangeHandler() {
   document.getElementById("pmvlegend").classList.add('hidefromall');
   document.getElementById("deltamrtlegend").classList.add('hidefromall');
   document.getElementById("solaradjustedmrtlegend").classList.add('hidefromall');
+  //document.getElementById("operativetemplegend").classList.add('hidefromall');
 
   if(thermalComfortVisualization === THERMAL_COMFORT_VIZ_PPD) {
     document.getElementById("ppdlegend").classList.remove('hidefromall');
@@ -107,6 +109,9 @@ function thermalComfortVisualizationChangeHandler() {
   } else if(thermalComfortVisualization === THERMAL_COMFORT_VIZ_SOLARADJUSTEDMRT) {
     document.getElementById("solaradjustedmrtlegend").classList.remove('hidefromall');
   }
+  // } else if(thermalComfortVisualization === THERMAL_COMFORT_VIZ_OPERATIVETEMP) {
+  //   document.getElementById("operativetemplegend").classList.remove('hidefromall');
+  // }
 }
 
 window.SOLAR_COMFORT.checkButton = function () {
@@ -2009,7 +2014,10 @@ renderGraphicsAndRunSimulation = caseNumber => {
               gridColor = deltaMRTColorScale0to50(mrtValues.deltaMRT);
             } else if(window.SOLAR_COMFORT.settings.thermalComfortVisualization === THERMAL_COMFORT_VIZ_SOLARADJUSTEDMRT && !isNaN(mrtValues.solarAdjustedMRT)) {
               gridColor = mrtColorScale50to100(mrtValues.solarAdjustedMRT);
-            }
+            } 
+            // else if(window.SOLAR_COMFORT.settings.thermalComfortVisualization === THERMAL_COMFORT_VIZ_OPERATIVETEMP && !isNaN(mrtValues.operativetemp)) {
+            //   gridColor = mrtColorScale50to100(mrtValues.operativetemp);
+            // }
             p.fill(gridColor);
           } else {
             p.fill(ColorScaleArray[mySun].r, ColorScaleArray[mySun].g, ColorScaleArray[mySun].b, 200);
@@ -2237,9 +2245,9 @@ renderGraphicsAndRunSimulation = caseNumber => {
       window.SOLAR_COMFORT.handleMouseHover(p, c);
     }
 
-    p.mouseMoved = function () {
-      window.SOLAR_COMFORT.handleMouseHover(f, g);
-    }
+    // p.mouseMoved = function () {
+    //   window.SOLAR_COMFORT.handleMouseHover(f, g);
+    // }
 
     // p.checkButton = function () {
     //   if (myButton == 1) {

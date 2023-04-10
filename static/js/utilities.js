@@ -466,7 +466,7 @@ window.SOLAR_COMFORT.handleMouseHover = function(p, c) {
           document.querySelector(`#visualizationhoverstats${c} .stat_longwave_mrt`).innerHTML = mrtValues.mrt;
           document.querySelector(`#visualizationhoverstats${c} .stat_shortwave_mrt`).innerHTML = isNaN(mrtValues.deltaMRT) ? 0 : mrtValues.deltaMRT;
           document.querySelector(`#visualizationhoverstats${c} .stat_mrt`).innerHTML = mrtValues.solarAdjustedMRT;
-          document.querySelector(`#visualizationhoverstats${c} .stat_ope_temp`).innerHTML = mrtValues.solarAdjustedMRT;
+          document.querySelector(`#visualizationhoverstats${c} .stat_ope_temp`).innerHTML = mrtValues.operativetemp;
           //document.querySelector(`#visualizationhoverstats${c} .stat_cbe_mrt`).innerHTML =  isNaN(mrtValues.erfMRT) ? 0 : mrtValues.cbeMRT;
         }
       }
