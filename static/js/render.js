@@ -377,13 +377,27 @@ if ($("#dsDay").is(":checked")) {
   $("#hideTime").hide();
 }
 
+if ($("#dsMonth").is(":checked")) {
+  $("#hideTime").hide();
+  $("#hideday").hide();
+}
+
 // Show/hide Hour, Time Step inputs when a study type is selected
 $("#dsDay").on("change", function() {
   $("#hideTime").hide()
 })
 
+$("#dsMonth").on("change", function() {
+  $("#hideTime").hide();
+  $("#hideday").hide();
+})
+
 $("#ppdRadio, #dsHour").on("change", function() {
   $("#hideTime").show()
+});
+
+$("#ppdRadio, #dsDay").on("change", function() {
+  $("#hideday").show()
 });
 
 
@@ -473,18 +487,37 @@ if(debug) {
     }
   }
 
-  // wait for everything to load
-  // wait for our tests to finish updating the UI inputs
-  // then grab our CSV exports and display on the page
-  var allInputsSet = setInterval(function() {
-    testingDoneButtonEl = document.getElementById('all_testing_inputs_set');
-    if(testingDoneButtonEl.classList.contains('all_inputs_set')) {
-      clearInterval(allInputsSet);
-      setTimeout(() => {
-        showCsvIfSimulationDone();
-      }, 250)
-    }    
-  }, 250)
+  //Monthly +++++++++++++
+  // function showCsvIfSimulationDone() {
+  //   if($("#dsMonthly").is(":checked")) {
+  //     // wait until monthly simulation has completed
+  //     // then wait a tad more, and grab our CSV export
+  //     var monthlyDoneCheck = setInterval(function() {
+  //       let simulationCase1Done = window.SOLAR_COMFORT.monthlySimulationDone;
+  //       let simulationCase2Done = window.SOLAR_COMFORT.Case2Button === 1 ? window.SOLAR_COMFORT.monthlySimulationDone1 : true;
+
+  //       if (simulationCase1Done && simulationCase2Done) {
+  //         setTimeout(showCSVOnPage, 500);
+  //         clearInterval(monthlyDoneCheck);
+  //       }
+  //    }, 5000);
+  //   } else {
+  //     showCSVOnPage();
+  //   }
+  // }
+
+  // // wait for everything to load
+  // // wait for our tests to finish updating the UI inputs
+  // // then grab our CSV exports and display on the page
+  // var allInputsSet = setInterval(function() {
+  //   testingDoneButtonEl = document.getElementById('all_testing_inputs_set');
+  //   if(testingDoneButtonEl.classList.contains('all_inputs_set')) {
+  //     clearInterval(allInputsSet);
+  //     setTimeout(() => {
+  //       showCsvIfSimulationDone();
+  //     }, 250)
+  //   }    
+  // }, 250)
 }
 
 // print to PDF

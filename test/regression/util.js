@@ -91,6 +91,14 @@ exports.updateInput = async (page, input) => {
     else if(input.command === "click") {
         await delay(3000);
     }
+
+    //Monthly +++++++++
+    if(input.id === "dsMonthly") {
+        await delay(1500);
+    }
+    else if(input.command === "click") {
+        await delay(3000);
+    }
 }
 
 exports.regressionTests = [
@@ -319,5 +327,31 @@ exports.regressionTests = [
             { id: "hShadeAngle", value: 81 },
             { id: "dsAnnual", command: "click" },
         ]
-    }
+    },
+
+    //Monthly +++++++
+    // {
+    //     name: "monthly-defaults",
+    //     inputs: [
+    //         { id: "mon", value: 9 },
+    //         { id: "day", value: 21 },
+
+    //         { id: "dsMonthly", command: "click" }
+    //     ]
+    // },
+    // {
+    //     name: "monthly",
+    //     inputs: [
+    //         { id: "mon", value: 10 },
+    //         { id: "day", value: 24 },
+    //         { id: "lat", value: 39 },
+    //         { id: "north", value: (180+72) },
+    //         { id: "wallDep", value: 38 },
+    //         { id: "windowHeight", value: 8 },
+    //         { id: "windowWidth", value: 17.5 },
+    //         { id: "hShadeNum", value: 2 },
+    //         { id: "hShadeAngle", value: 81 },
+    //         { id: "dsMonthly", command: "click" },
+    //     ]
+    // }
 ]

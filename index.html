@@ -296,13 +296,19 @@
 									value="Direct Sun - Single Hour" onclick="msg()">Single Hour</label><br>
 		
 							<label for="dsDay"><input type="radio" id="dsDay" name="studyType" value="Direct Sun - Day"
-									onclick="msg2()">Month / Day</label><br>
-		
-							<!-- <label for="dsAnnual"><input type="tooglecheckbox" id="dsAnnual" name="studyType"
-									 onclick="checkAnnual(this)">Annual</label><br> -->
+									onclick="msg2()">Day</label><br>
+
+							<label for="dsMonth"><input type="radio" id="dsMonth" name="studyType" value="Direct Sun - Day"
+								onclick="msg2()">Month</label><br>
+	
 							<label for="dsAnnual"><input type="checkbox" id="dsAnnual" name="studyType"
 								value="Direct Sun - Annual" onclick="checkAnnual(this)">Annual</label><br>
 							<span id="annualWarning" style="font-size: 9px; color: #c73932; display: inline-block; padding-left: 14px;font-weight: bold;"></span>
+							
+							<!-- Monthly +++++++++++++ -->
+							<!-- <label for="dsMonthly"><input type="checkbox" id="dsMonthly" name="studyType"
+								value="Direct Sun - Monthly" onclick="checkMonthly(this)">Monthly</label><br>
+							<span id="annualWarning" style="font-size: 9px; color: #c73932; display: inline-block; padding-left: 14px;font-weight: bold;"></span> -->
 						</div>
 						<div class="col-12">
 							<div id="caseWrapper">
@@ -311,7 +317,8 @@
 		
 							<label for="mon">Month<sup id="fnref:32"><a href="#fn:32" rel="footnote">?</a></sup></label>
 							<input type="number" name="mon" id="mon" min="1" max="12" value="7" step="1"><br>
-		
+		   
+							<span id="hideday">
 							<label for="day">Day</label>
 							<input type="number" name="day" id="day" min="1" max="31" value="21" step="1"><br>
 		

@@ -15,6 +15,7 @@ window.SOLAR_COMFORT.globalInputFieldNames = [
   `ppdRadio`,
   `dsHour`,
   `dsDay`,
+  `dsMonth`,
   `windowWidthCheck`,
   `glazingRatioCheck`,
   `long`,
@@ -328,14 +329,16 @@ window.SOLAR_COMFORT.updateSettings = function(c) {
   window.SOLAR_COMFORT[`settings${c}`].valFal = document.getElementById(`fal`).value; //Floor Area Limit
 
   window.SOLAR_COMFORT[`settings${c}`].valMDST = document.getElementById(`mdst`).value; // Max Allowable Direct Sun
-
+  
+  //Monthly 
   var selectedStudyType;
   if($('#dsAnnual').is(':checked')) {
       selectedStudyType = $('#dsAnnual');
-  } else {
+  }else{
       selectedStudyType = $("input[name=studyType]:checked")
   }
   window.SOLAR_COMFORT[`settings${c}`].studyType = selectedStudyType.val();
+
 }
 
 window.SOLAR_COMFORT.copyCase1ToCase2 = function() {

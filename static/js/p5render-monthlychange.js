@@ -5,6 +5,7 @@ let singleHour = 1;
 let fullDay = 0;
 let currentFrame = 0;
 let annualOn = false; // Check If Annual Button is Pressed
+let monthlyOn = false; // Check If Monthly Button is Pressed
 
 window.SOLAR_COMFORT.settings.thermalComfortSingleHour = !!document.getElementById(`ppdRadio`).checked;
 window.SOLAR_COMFORT.settings1.thermalComfortSingleHour = window.SOLAR_COMFORT.settings.thermalComfortSingleHour
@@ -30,12 +31,15 @@ document.getElementsByName(`studyType`).forEach(e => e.addEventListener('click',
 
 window.SOLAR_COMFORT.annualSimulationDone = false;
 window.SOLAR_COMFORT.annualSimulationDone1 = false;
+window.SOLAR_COMFORT.monthlySimulationDone = false;
+window.SOLAR_COMFORT.monthlySimulationDone1 = false;
 
 window.SOLAR_COMFORT.Case2Button = 0;
 
 let TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION = 9;
 let TIME_STEPS_PER_HOUR_DAY_SIMULATION = 4;
 let TIME_STEPS_PER_HOUR_ANNUAL_SIMULATION = 1;
+let TIME_STEPS_PER_HOUR_MONTHLY_SIMULATION = 1;
 
 let THERMAL_COMFORT_VIZ_PPD = "ppd";
 let THERMAL_COMFORT_VIZ_PMV = "pmv";
@@ -58,6 +62,8 @@ let windowGetsSun = roomSunAzimuth => {
 
 window.SOLAR_COMFORT.dateCounter = 0;
 window.SOLAR_COMFORT.dateCounter1 = 0;
+window.SOLAR_COMFORT.monthlyCounter = 0;
+window.SOLAR_COMFORT.monthlyCounter1 = 0;
 
 window.SOLAR_COMFORT.MDTResult = 0;
 window.SOLAR_COMFORT.MDTResult1 = 0;
@@ -66,6 +72,8 @@ window.SOLAR_COMFORT.globalGridColor1 = undefined;
 
 window.SOLAR_COMFORT.solarCoordinatesHourly = [];
 window.SOLAR_COMFORT.solarCoordinatesHourly1 = [];
+window.SOLAR_COMFORT.solarCoordinatesMonthly = [];
+window.SOLAR_COMFORT.solarCoordinatesMonthly1 = [];
 
 let Month_Debug_Case2 = undefined;
 let Day_Debug_Case2 = undefined;
@@ -163,6 +171,44 @@ checkAnnual = function (target) { // Check If Annual Button is Pressed
   }
 }
 
+//Monthly ++++++++
+checkMonthly = function (target) { // Check If Monthly Button is Pressed
+  monthlyOn = target.checked;
+  currentFrame = 0;
+  singleHour = 2;
+  window.SOLAR_COMFORT.monthlyCounter = 0;
+  window.SOLAR_COMFORT.monthlyCounter1 = 0;
+  window.SOLAR_COMFORT.monthlySimulationDone = false;
+  window.SOLAR_COMFORT.monthlySimulationDone1 = false;
+
+  if (!monthlyOn) {
+    // Monthly simulation is not running, enable all fields
+    document.getElementById(`annualWarning`).innerHTML = '';
+
+    for (let i = 0; i < window.SOLAR_COMFORT.globalInputFieldNames.length; i++) {
+      document.getElementById(window.SOLAR_COMFORT.globalInputFieldNames[i]).disabled = false;
+    }
+    for (let i = 0; i < window.SOLAR_COMFORT.caseInputFieldNames.length; i++) {
+      document.getElementById(window.SOLAR_COMFORT.caseInputFieldNames[i]).disabled = false;
+      document.getElementById(`${window.SOLAR_COMFORT.caseInputFieldNames[i]}1`).disabled = false; // case 2
+    }
+    document.getElementsByName("button1").forEach(e => e.disabled = false);
+  } else {
+    // Monthly simulation is running, disable all fields
+    //document.getElementById(`annualWarning`).innerHTML = 'Chages to inputs are disabled.<br>Turn off Annual to enable changes.';
+    document.getElementById(`annualWarning`).innerHTML = 'Uncheck to enable changing other settings.';
+
+    for (let i = 0; i < window.SOLAR_COMFORT.globalInputFieldNames.length; i++) {
+      document.getElementById(window.SOLAR_COMFORT.globalInputFieldNames[i]).disabled = true;
+    }
+    for (let i = 0; i < window.SOLAR_COMFORT.caseInputFieldNames.length; i++) {
+      document.getElementById(window.SOLAR_COMFORT.caseInputFieldNames[i]).disabled = true;
+      document.getElementById(`${window.SOLAR_COMFORT.caseInputFieldNames[i]}1`).disabled = true; // case 2
+    }
+    document.getElementsByName("button1").forEach(e => e.disabled = true);
+  }
+}
+
 let timeStepValue = 4;
 let ppdValue1 = 4;
 $("#timeStep").on("input", function (event) {
@@ -231,67 +277,9 @@ let pmvColorScaleNeg3to3 = d3.scale.quantize().domain([-3, 3]).range(pmvColorsNe
 var ColorScaleArray = [];
 
 // Direct Sun Legend
-// function directSunLegend() {
-//   d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class', 'directsunlegend hidefromall')
-//   var vis = d3.select(".directsunlegend")
-//   var arr = d3.range(13 * timeStepValue)
-//   var dataset = [0, 2, 4, 6, 8, 10, 12];
-
-//   //position scale
-//   var xScale = d3.scale.linear().domain([0, 13]).range([0, 325])
-
-//   var colorScale = d3.scale.linear().domain([0, 6, 13])
-//     .range(["#ffffff", "#e2706a", "#893132"])
-
-//   vis.selectAll('rect').data(arr).enter()
-//     .append('rect')
-//     .attr({
-//       x: function (d) { return xScale(d) + 1 },
-//       y: 16,
-//       height: 12,
-//       width: 25,
-//       stroke: d3.rgb(0, 0, 0),
-//       fill: function (d) { ColorScaleArray.push(d3.rgb(colorScale(d))); return colorScale(d) }
-//     });
-
-//   vis.selectAll("text") // <-- Note "text", not "circle" or "rect"
-//     .data(dataset)
-//     .enter()
-//     .append("text") // <-- Same here!
-//     .text(function (d) { return d; })
-//     .attr("text-anchor", "middle")
-//     .attr("font-family", "sans-serif")
-//     .attr("font-size", "9px")
-//     .attr({
-//       x: function (d) { return xScale(d) + 12 },
-//       y: 40
-//     });
-
-//   vis.append("text")
-//     .attr("x", 0)
-//     .attr("y", 12)
-//     .text("Hours of Day in Direct Sun")
-//     .attr("font-family", "sans-serif")
-//     .attr("font-size", "12px")
-// }
-// directSunLegend();
 function directSunLegend() {
-  let svgWidth = 327;
-
-  let id = "directsunlegend";
-  let container = document.createElement("div");
-  container.setAttribute("id", id);
-  container.setAttribute('class', 'directsunlegend hidefromall')
-
-  let label = document.createElement("span");
-  label.setAttribute("class", "legendlabel");
-  label.innerHTML = 'Hours of Day in Direct Sun <sup id="fnref:34"><a href="#fn:34" rel="footnote">?</a></sup>';
-  container.appendChild(label)
-
-  document.getElementById("visualization").appendChild(container);
-
-  d3.select(`#${id}`).append('svg').attr("height", 80).attr("width", svgWidth)
-  var vis = d3.select("#directsunlegend svg")
+  d3.select("#visualization").append('svg').attr("height", 80).attr("width", 327).attr('class', 'directsunlegend hidefromall')
+  var vis = d3.select(".directsunlegend")
   var arr = d3.range(13 * timeStepValue)
   var dataset = [0, 2, 4, 6, 8, 10, 12];
 
@@ -324,6 +312,13 @@ function directSunLegend() {
       x: function (d) { return xScale(d) + 12 },
       y: 40
     });
+
+  vis.append("text")
+    .attr("x", 0)
+    .attr("y", 12)
+    .text("Hours of Day in Direct Sun")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "12px")
 }
 directSunLegend();
 
@@ -579,6 +574,15 @@ renderGraphicsAndRunSimulation = caseNumber => {
         }
       }
 
+      if (_.isEqual(window.SOLAR_COMFORT[`settings${c}`], window.SOLAR_COMFORT[`settings${c}_prev`])) {
+        if (!(monthlyOn && window.SOLAR_COMFORT[`monthlySimulationDone${c}`] === false)) {
+          // settings have not changed and we are not in the middle of running an annual simulation
+          // just return, everthing is up-to-date
+          return;
+        }
+      }
+
+
       p.clear();
       p.background(255);
 
@@ -608,6 +612,8 @@ renderGraphicsAndRunSimulation = caseNumber => {
 
         p.pop();
       }
+      
+
 
       if (annualOn) { // Check If Annual Button is Pressed
         var dates1 = [];
@@ -690,6 +696,126 @@ renderGraphicsAndRunSimulation = caseNumber => {
         }
       }
 
+      //Monthly +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      if (monthlyOn) { // Check If Monthly Button is Pressed
+
+        if (currentFrame < 367) {
+          currentFrame += 1;
+        }
+        p.push()
+        p.noFill();
+        p.stroke(150);
+        p.strokeWeight(1);
+        p.rect(5, 345, 367, 11);
+        p.strokeWeight(0);
+        if (currentFrame >= 365) {
+          p.fill('#61bb4c');
+          p.rect(5, 345, 367, 11);
+          p.fill('#ffffff'); 
+          p.text("ANALYSIS COMPLETE", 105, 355);
+        } else {
+          p.fill(150);
+          p.rect(5, 345, currentFrame, 11);
+          p.fill(100);
+          p.text("CALCULATING MONTHLY DAYLIGHTING FACTOR", 55, 355);
+
+        }
+
+        p.pop();
+      }
+
+      if (monthlyOn) { // Check If monthly Button is Pressed
+        var dates1 = [];
+
+        if (window.SOLAR_COMFORT[`monthlyCounter${c}`] < 12) {
+          for (let i = 0; i < 24; i++) {
+            let date1 = new Date(Date.UTC(2000, 0, 1, 12)); // January 1st 2000 at Noon
+            date1 = javascriptDateAddHours(date1, parseInt(i + TimeZone) - 12);
+            date1 = javascriptDateAddDays(date1, parseInt(window.SOLAR_COMFORT[`monthlyCounter${c}`]));
+
+            dates1.push(date1);
+          }
+
+          window.SOLAR_COMFORT[`monthlyCounter${c}`] += 1; // monthlyCounter will end at 12
+        }
+
+        // [ azimuth in degress, elevation in degrees ]
+        // daily & monthly
+        solarCoordinates = [];
+        for (let i = 0; i < dates1.length; i++) {
+          solarCoordinates.push(solarCalculator([Lon, Lat]).position(dates1[i]));
+        }
+      } else {
+        Lon = window.SOLAR_COMFORT[`settings${c}`].Lon1;
+        Lat = window.SOLAR_COMFORT[`settings${c}`].Lat1;
+        Hour = window.SOLAR_COMFORT[`settings${c}`].Hour1;
+        Day = window.SOLAR_COMFORT[`settings${c}`].Day1;
+        Month = window.SOLAR_COMFORT[`settings${c}`].Month1;
+        TimeZone = window.SOLAR_COMFORT[`settings${c}`].TimeZone1;
+        roomOrientationValue = (parseFloat(window.SOLAR_COMFORT[`settings${c}`].windowOrientationValue1) + 180) % 360;
+        currentStudy = singleHour;
+
+        window.SOLAR_COMFORT[`monthlyCounter${c}`] = 0;
+        monthlyCoordinates = [];
+        currentFrame = 0;
+
+        var dates = []
+        for (i = 1; i <= 24 * window.SOLAR_COMFORT[`settings${c}`].timestep; i++) {
+          let hourI = (i - 1) / window.SOLAR_COMFORT[`settings${c}`].timestep;
+          let minutes = Math.floor(((i - 1) / window.SOLAR_COMFORT[`settings${c}`].timestep - Math.floor((i - 1) / window.SOLAR_COMFORT[`settings${c}`].timestep)) * 60.0);
+          let newDate = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
+          newDate = javascriptDateAddDays(newDate, parseInt(Day) - 1);
+          newDate = javascriptDateAddHours(newDate, Math.floor(hourI) + parseInt(TimeZone) - 12);
+          newDate = javascriptDateAddMinutes(newDate, minutes);
+
+          dates.push(newDate);
+        }
+
+        // var dates = [];
+        // for (i = 1; i <= 365; i++) { //loop over days in year
+        //   for (j = 1; j <= 12; j++) { //loop over months in year
+        //     let newDate = new Date(Date.UTC(2000, j - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
+        //     newDate = javascriptDateAddDays(newDate, parseInt(i) - 1); // add day offset
+        //     dates.push(newDate); // add to array of dates
+        //   }
+        // }
+
+        // 95 coordinate locations
+        // 24 hours * 4 timesteps -1???? = 95
+        // TODO fix shouldn't be -1?
+        solarCoordinates = [];
+        let solarCoordinatesMonthly = [];
+        for (let i = 1; i <= (24 * TIME_STEPS_PER_HOUR_DAY_SIMULATION) - 1; i++) {
+          let newCoordinate = solarCalculator([Lon, Lat]).position(dates[i]);
+          solarCoordinates.push(newCoordinate);
+          if ((i - 1) % TIME_STEPS_PER_HOUR_DAY_SIMULATION === 0) {
+            solarCoordinatesMonthly.push(newCoordinate);
+          }
+        }
+        window.SOLAR_COMFORT[`solarCoordinatesMonthly${c}`] = solarCoordinatesMonthly;
+
+        // Single hour, re-calculate solarCoordinates just for a single hour
+        if (singleHour == 1) {
+          let date = new Date(Date.UTC(2000, Month - 1, 1, 12)); // January 1st 2000 at Noon (but adjusted for correct month)
+          let hourOffset = parseInt(Hour) - parseInt(TimeZone) - 12;
+          date = javascriptDateAddHours(date, hourOffset);
+          date = javascriptDateAddDays(date, parseInt(Day) - 1);
+
+          solarCoordinates = [];
+          for (let i = 1; i <= TIME_STEPS_PER_HOUR_SINGLE_HOUR_SIMULATION; i++) {
+            solarCoordinates.push(solarCalculator([Lon, Lat]).position(date));
+          }
+          window.SOLAR_COMFORT[`solarCoordinatesMonthly${c}`] = [solarCoordinates[0]];
+
+          // Calculate sun path graphic info            
+          let solarCoordinatesForDate = solarCalculator([Lon, Lat]).position(date); // returns: [ azimuth in degress, elevation in degress ]
+          let solarAzimuth = solarCoordinatesForDate[0];
+          let solarElevation = solarCoordinatesForDate[1];
+        }
+      }
+      
+      // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
       //GEO Result - TAKES DATA FROM THE GEO.JS FILE
       //geo.createGlazingForRect = function(rectHeight, wallLength, glazingRatio, windowWidth, winHeight, silHeight, distBreakup, ratioOrWidth, changedVar)
       var geoResult = geo.createGlazingForRect(parseFloat(window.SOLAR_COMFORT[`settings${c}`].ceilingHeightValue), parseFloat(window.SOLAR_COMFORT[`settings${c}`].wallDepVal), window.SOLAR_COMFORT[`settings${c}`].glzRatioValue / 100, parseFloat(window.SOLAR_COMFORT[`settings${c}`].windowWidthValue), parseFloat(window.SOLAR_COMFORT[`settings${c}`].windowHeightValue), parseFloat(window.SOLAR_COMFORT[`settings${c}`].sillHeightValue), parseFloat(window.SOLAR_COMFORT[`settings${c}`].distanceWindows), window.SOLAR_COMFORT[`settings${c}`].glzOrWidth);
@@ -768,6 +894,34 @@ renderGraphicsAndRunSimulation = caseNumber => {
         }
       });
 
+      //Monthly ++++++++++++
+      // Draw sun positions (azimuth)
+      window.SOLAR_COMFORT[`solarCoordinatesMonthly${c}`].forEach(sunCoordinate => {
+        let azimuth = sunCoordinate[0];
+        let elevation = sunCoordinate[1];
+        let azimuthRoomAndGraphicAdjusted = (azimuth + roomOrientationValueNeg) % 360;
+
+        if (elevation >= 0) {
+
+          //change point to sun image
+          p.push();
+          p.translate(SUN_PATH_RADIUS * p.sin((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)));
+          p.imageMode(p.CENTER);
+          p.image(sunImage, 0, 0, 10, 10);
+          p.pop();
+
+          // p.strokeWeight(4);
+          // p.stroke(0);
+          // p.point(SUN_PATH_RADIUS * p.sin((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)), SUN_PATH_RADIUS * p.cos((azimuthRoomAndGraphicAdjusted) * (-Math.PI / 180)));
+        }
+
+        if (window.SOLAR_COMFORT[`solarCoordinatesMonthly${c}`].length === 1) {
+          p.fill(light_black + 50);
+          p.noStroke();
+          p.text(`${Math.round(azimuth)}°`, 0, SUN_PATH_RADIUS + 3 * NORTH_LABEL_OFFSET);
+        }
+      });
+
       // Elevation graphic
       p.translate(50, SUN_PATH_RADIUS);
       p.noFill();
@@ -807,6 +961,32 @@ renderGraphicsAndRunSimulation = caseNumber => {
         }
 
         if (window.SOLAR_COMFORT[`solarCoordinatesHourly${c}`].length === 1) {
+          p.fill(light_black + 50);
+          p.noStroke();
+          p.text(`${Math.round(elevation)}°`, 20, 3 * NORTH_LABEL_OFFSET);
+        }
+      });
+
+      //Monthly ++++++++
+      // Draw sun positions (elevation)
+      window.SOLAR_COMFORT[`solarCoordinatesMonthly${c}`].forEach(sunCoordinate => {
+        let elevation = sunCoordinate[1];
+
+        if (elevation >= 0) {
+
+          //change point to sun image
+          p.push();
+          p.translate(SUN_PATH_DIAMETER * p.sin((270 - elevation) * (-Math.PI / 180)), SUN_PATH_DIAMETER * p.cos((270 - elevation) * (-Math.PI / 180)));
+          p.imageMode(p.CENTER);
+          p.image(sunImage, 0, 0, 10, 10);
+          p.pop();
+
+          // p.strokeWeight(4);
+          // p.stroke(0);
+          // p.point(SUN_PATH_DIAMETER * p.sin((270 - elevation) * (-Math.PI / 180)), SUN_PATH_DIAMETER * p.cos((270 - elevation) * (-Math.PI / 180)));
+        }
+
+        if (window.SOLAR_COMFORT[`solarCoordinatesMonthly${c}`].length === 1) {
           p.fill(light_black + 50);
           p.noStroke();
           p.text(`${Math.round(elevation)}°`, 20, 3 * NORTH_LABEL_OFFSET);
@@ -1159,6 +1339,79 @@ renderGraphicsAndRunSimulation = caseNumber => {
         //console.log(filledListI);
 
 
+        //Monthly ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        if (monthlyOn) {
+          // VERTICAL SHADES XY
+          let b1;
+          let Xloc1 = [];
+          let XYtest1 = [];
+          let AWArray1 = [];
+          let ZAdd = [];
+          let bigB = 0;
+          let superB = [];
+          let superD = [];
+          let filledList = [];
+          for (let i = 0; i < gridX; i++) {
+            let YdistanceFromWall = (i + 1); // grid distance from window wall in Y direction
+            b1 = 0;
+            filledList.push(0);
+            for (let j = 0; j < gridY; j++) {
+              b1 = 0;
+              for (let k = 0; k < solarCoordinates.length; k++) {
+                let XYLouver1 = 0;
+                let XlocationOnWall = 180; // this is a safe angle for the point to start from.. 180 means that it is perpindicular from the point (towards the wall?)
+                if (windowGetsSun(solarCoordinatesRoomOrientationAdjusted[k])) {
+                  XlocationOnWall = Math.tan(solarCoordinatesRoomOrientationAdjusted[k] * (3.1415926 / 180)) * YdistanceFromWall; //this is real point at the window wall relative to the grid point. Add j to get the real location on the window wall
+                }
+                AWArray1.push(XlocationOnWall);
+                let xCoord = 0;
+                let bigBArray = [];
+                let superC = [];
+  
+                for (let n = 0; n < r.glzCoords.length; n++) { //cycle through each window
+                  // if (XlocationOnWall+(j+1) > r.glzCoords[n][0][0]+(wallDepVal/2)  && XlocationOnWall+(j+1) < r.glzCoords[n][1][0]+(wallDepVal/2)){ //cycle through all the windows, check if the wall position exists within the bounds of the window
+                  //   xCoord = n+1; //we really only care about if a point gets hit 1x per timestep so this number could go crazy high, but it only needs to go up by 1 to count.. if it gets sun from multiple windows it doesnt really matter
+                  // }
+                  // xCoord = 1;
+                  //}if(xCoord > 0){ //if this specific gridpoint and sun angle goes through a window...
+                  let newBigBArray = [];
+                  for (let p = 0; p < parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeNum); p++) { //for each shade in this window...
+  
+                    let angleA = abs(solarCoordinatesRoomOrientationAdjusted[k]);
+                    let angleB = 90.0 - abs(solarCoordinatesRoomOrientationAdjusted[k]);
+                    if (solarCoordinatesRoomOrientationAdjusted[k] > 0) {
+                      angleB = angleB * -1;
+                    }
+                    let bigA;
+                    if (window.SOLAR_COMFORT[`settings${c}`].vertShadeStart == "L") {
+                      bigA = ((XlocationOnWall + (j + 1) + (r.glzCoords[n][0][0] - (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) + (p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - window.SOLAR_COMFORT[`settings${c}`].vertShadeShift)));
+                    } else {
+                      bigA = ((XlocationOnWall + (j + 1) - (r.glzCoords[n][0][0] + (window.SOLAR_COMFORT[`settings${c}`].wallDepVal / 2)) + (-p * parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeSpace) - window.SOLAR_COMFORT[`settings${c}`].vertShadeShift)));
+                    }
+                    bigB = ((Math.sin(angleB * (3.1415926 / 180)) * bigA) / (Math.sin(angleA * (3.1415926 / 180))));
+                    bigBArray.push(bigB);
+                    newBigBArray.push(bigB);
+                  } superC.push(newBigBArray);
+                }//console.log(bigBArray.length);
+                superB.push(bigBArray);
+                superD.push(superC);
+                for (let q = 0; q < superC.length; q++) { // I think the problem exists here... need a second layer of for loop?
+                  for (let g = 0; g < superC[0].length; g++) {
+                    if (superC[q][g] > parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) && superC[q][g] < (parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDist) + parseInt(window.SOLAR_COMFORT[`settings${c}`].vertShadeDep))) {
+                      XYLouver1 = XYLouver1 + 1;
+                    } else {
+                    }
+                  }
+                }//ZAdd.push(bigB)
+                if (XYLouver1 > 0) {
+                  b1 = 1;
+                } else {
+                  b1 = 0;
+                } LouverList1.push(b1);
+              }
+            }
+          }
+        }
         //END OF VERTICAL SHADES
 
 
@@ -1289,6 +1542,28 @@ renderGraphicsAndRunSimulation = caseNumber => {
           let annualGridColorAverage = bigArrayColor.map(v => round4Decimals(v / 365.0));
           window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(annualGridColorAverage, parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal), 1);
         }
+
+        // Monthly
+        // keep track of each day of the year
+        // NOTE at this point in the code monthlyCounter actually ranges from 1-12 
+        if (window.SOLAR_COMFORT[`monthlyCounter${c}`] <= 12 && monthlyOn && window.SOLAR_COMFORT[`monthlySimulationDone${c}`] === false) {
+          for (let i = 0; i < gridColorArray.length; i++) {
+            if (window.SOLAR_COMFORT[`monthlyCounter${c}`] == 1) {
+              // first loop
+              bigArrayColor[i] = gridColorArray[i];
+            } else {
+              bigArrayColor[i] += gridColorArray[i];
+            }
+          }
+        }
+
+        // Monthly
+        // do this 1 time once monthly simulation has completed
+        if (window.SOLAR_COMFORT[`monthlyCounter${c}`] === 12 && monthlyOn && window.SOLAR_COMFORT[`monthlySimulationDone${c}`] === false) {
+          let monthlyGridColorAverage = bigArrayColor.map(v => round4Decimals(v / 12.0));
+          window.SOLAR_COMFORT[`globalGridColor${c}`] = twoDimensionalRoomArrayFromOneDimensional(monthlyGridColorAverage, parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal), 1);
+        }
+        
       } else {
         // day and hour simulation
         bigArrayColor = [];
@@ -1919,6 +2194,24 @@ renderGraphicsAndRunSimulation = caseNumber => {
           }
         }
 
+        if (monthlyOn && window.SOLAR_COMFORT[`monthlyCounter${c}`] > 11) {
+          if (i == 0) {
+            // mySun = (p.int(gridColorArray[1*gridY]/timestep));
+            mySun = (bigArrayColor[1 * gridY] / 12);
+          } else {
+            // mySun = (p.int(gridColorArray[i*gridY]/timestep));
+            mySun = (bigArrayColor[i * gridY] / 12);
+          }
+        } else {
+          if (i == 0) {
+            // mySun = (p.int(gridColorArray[1*gridY]/timestep));
+            mySun = gridColorArray[1 * gridY];
+          } else {
+            // mySun = (p.int(gridColorArray[i*gridY]/timestep));
+            mySun = gridColorArray[i * gridY];
+          }
+        }
+
 
         if (annualOn) {
           if (mySun > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
@@ -1930,6 +2223,18 @@ renderGraphicsAndRunSimulation = caseNumber => {
           }
           mySun = p.int(mySun / window.SOLAR_COMFORT[`settings${c}`].timestep);
         }
+
+        if (monthlyOn) {
+          if (mySun > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+            // MDT = MDT + 1;
+          }
+        } else {
+          if (mySun > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+            // MDT = MDT + 1;
+          }
+          mySun = p.int(mySun / window.SOLAR_COMFORT[`settings${c}`].timestep);
+        }
+
         if (mySun == null) {
           mySun = 0;
         }
@@ -1951,6 +2256,54 @@ renderGraphicsAndRunSimulation = caseNumber => {
         // }
 
         if (annualOn) {
+
+          if (gridColorArray[i * gridY] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST && gridColorArray[(i * gridY) + 1] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST) {
+            p.push();
+            p.strokeWeight(1);
+            p.stroke(0);
+            p.line(X3, Y3 - GridHt, X4, Y4 - GridHt);
+            p.pop();
+          }
+          if (gridColorArray[(i * gridY)] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST && gridColorArray[(i * gridY) + gridY] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST) {
+            p.push();
+            p.strokeWeight(1);
+            p.stroke(0);
+            p.line(X2, Y2 - GridHt, X3, Y3 - GridHt);
+            p.pop();
+          }
+          if (gridColorArray[(i * gridY)] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST && gridColorArray[(i * gridY) + gridY] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST) {
+            p.push();
+            p.strokeWeight(1);
+            p.stroke(0);
+            p.line(X2, Y2 - GridHt, X3, Y3 - GridHt);
+            p.pop();
+          }
+        } else {
+          // single day or single hour
+          if (gridColorArray[i * gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + 1] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+            p.push();
+            p.strokeWeight(1);
+            p.stroke(0);
+            p.line(X3, Y3 - GridHt, X4, Y4 - GridHt);
+            p.pop();
+          }
+          if (gridColorArray[(i * gridY)] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+            p.push();
+            p.strokeWeight(1);
+            p.stroke(0);
+            p.line(X2, Y2 - GridHt, X3, Y3 - GridHt);
+            p.pop();
+          }
+          if (gridColorArray[(i * gridY)] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+            p.push();
+            p.strokeWeight(1);
+            p.stroke(0);
+            p.line(X2, Y2 - GridHt, X3, Y3 - GridHt);
+            p.pop();
+          }
+        }
+
+        if (monthlyOn) {
 
           if (gridColorArray[i * gridY] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST && gridColorArray[(i * gridY) + 1] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST) {
             p.push();
@@ -2026,6 +2379,25 @@ renderGraphicsAndRunSimulation = caseNumber => {
             }
           }
 
+          if (monthlyOn && window.SOLAR_COMFORT[`monthlyCounter${c}`] > 11) {
+            if (j == 0) {
+              // mySun = (p.int(gridColorArray[1*gridY]/timestep));
+              mySun = (bigArrayColor[(i * gridY) + 1] / 12);
+            } else {
+              // mySun = (p.int(gridColorArray[i*gridY]/timestep));
+              mySun = (bigArrayColor[(i * gridY) + j] / 12);
+            }
+          } else {
+            if (j == 0) {
+              // mySun = (p.int(gridColorArray[(i*gridY)+1]/timestep));
+              mySun = gridColorArray[(i * gridY) + 1];
+            } else {
+              // mySun = p.int(gridColorArray[(i*gridY)+j]/timestep);
+              mySun = gridColorArray[(i * gridY) + j];
+            }
+          }
+
+
           //console.log(mySun);
           if (annualOn) {
             if (mySun > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
@@ -2037,6 +2409,18 @@ renderGraphicsAndRunSimulation = caseNumber => {
             }
             mySun = p.int(mySun / window.SOLAR_COMFORT[`settings${c}`].timestep);
           }
+
+          if (monthlyOn) {
+            if (mySun > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              MDT = p.int(MDT) + 1;
+            }
+          } else {
+            if (mySun / window.SOLAR_COMFORT[`settings${c}`].timestep > Percentage / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              MDT = p.int(MDT) + 1;
+            }
+            mySun = p.int(mySun / window.SOLAR_COMFORT[`settings${c}`].timestep);
+          }
+
           if (mySun == null) {
             mySun = 0;
           }
@@ -2163,6 +2547,95 @@ renderGraphicsAndRunSimulation = caseNumber => {
               p.pop();
             }
           }
+
+          if (monthlyOn && window.SOLAR_COMFORT[`monthlyCounter${c}`] > 11) {
+            if (bigArrayColor[(i * gridY) + j] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365 && bigArrayColor[(i * gridY) + j + 1] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
+              p.pop();
+            }
+            if (bigArrayColor[(i * gridY) + j] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365 && bigArrayColor[(i * gridY) + j + 1] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
+              p.pop();
+            }
+            if (bigArrayColor[(i * gridY) + j] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365 && bigArrayColor[(i * gridY) + j + gridY] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX2, newY2 - GridHt, newX3, newY3 - GridHt);
+              p.pop();
+            }
+            if (bigArrayColor[(i * gridY) + j] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365 && bigArrayColor[(i * gridY) + j + gridY] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep * 365) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX2, newY2 - GridHt, newX3, newY3 - GridHt);
+              p.pop();
+            }
+          } else if (monthlyOn) {
+            if (gridColorArray[(i * gridY) + j] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + 1] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
+              p.pop();
+            }
+            if (gridColorArray[(i * gridY) + j] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + 1] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
+              p.pop();
+            }
+            if (gridColorArray[(i * gridY) + j] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + gridY] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX2, newY2 - GridHt, newX3, newY3 - GridHt);
+              p.pop();
+            }
+            if (gridColorArray[(i * gridY) + j] / .99 > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + gridY] / .99 < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX2, newY2 - GridHt, newX3, newY3 - GridHt);
+              p.pop();
+            }
+          } else {
+            if (gridColorArray[(i * gridY) + j] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + 1] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
+              p.pop();
+            }
+            if (gridColorArray[(i * gridY) + j] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + 1] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX3, newY3 - GridHt, newX4, newY4 - GridHt);
+              p.pop();
+            }
+            if (gridColorArray[(i * gridY) + j] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX2, newY2 - GridHt, newX3, newY3 - GridHt);
+              p.pop();
+            }
+            if (gridColorArray[(i * gridY) + j] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) > window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep && gridColorArray[(i * gridY) + j + gridY] / (window.SOLAR_COMFORT[`settings${c}`].timestep - .1) < window.SOLAR_COMFORT[`settings${c}`].valMDST / window.SOLAR_COMFORT[`settings${c}`].timestep) {
+              p.push();
+              p.strokeWeight(1);
+              p.stroke(0);
+              p.line(newX2, newY2 - GridHt, newX3, newY3 - GridHt);
+              p.pop();
+            }
+          }
         }
       }
 
@@ -2195,6 +2668,12 @@ renderGraphicsAndRunSimulation = caseNumber => {
       //CHECK IF MEETS CONDITION TEXT
       let MDTPercentage = 0;
       if (annualOn) {
+        MDTPercentage = p.int((p.float(MDT) / (parseInt(window.SOLAR_COMFORT[`settings${c}`].wallLen) * parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal))) * 100);
+      } else {
+        MDTPercentage = p.int((p.float(MDT) / (parseInt(window.SOLAR_COMFORT[`settings${c}`].wallLen) * parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal))) * 100);
+      }
+
+      if (monthlyOn) {
         MDTPercentage = p.int((p.float(MDT) / (parseInt(window.SOLAR_COMFORT[`settings${c}`].wallLen) * parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal))) * 100);
       } else {
         MDTPercentage = p.int((p.float(MDT) / (parseInt(window.SOLAR_COMFORT[`settings${c}`].wallLen) * parseInt(window.SOLAR_COMFORT[`settings${c}`].wallDepVal))) * 100);
@@ -2265,11 +2744,16 @@ renderGraphicsAndRunSimulation = caseNumber => {
         window.SOLAR_COMFORT[`annualSimulationDone${c}`] = true;
       }
 
+      if (window.SOLAR_COMFORT[`monthlyCounter${c}`] === 12 && monthlyOn) {
+        window.SOLAR_COMFORT[`monthlySimulationDone${c}`] = true;
+      }
+
       // if(p.frameCount === 60*1 && caseNumber === 1) {
       //   console.log(solarCoordinates.map(c => c[1]));
       // }
 
       window.SOLAR_COMFORT[`settings${c}_prev`] = _.cloneDeep(window.SOLAR_COMFORT[`settings${c}`]);
+      
 
       //add a person to compare
       //p.image(personImage, 380, 133, 25, 35);
