@@ -258,7 +258,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParameters.case3 == 'hide') {
 
 	showCase2();
-	sizeButton();
+	//sizeButton();
 
     if (typeof urlParameters.month != 'undefined') {
 		$("#month, #month3").val(urlParameters.month);
@@ -581,7 +581,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParameters.case3 == 'show') {
 
 	showCase3();
-	sizeButton();
+	//sizeButton();
 
 
     if (typeof urlParameters.month != 'undefined') {
@@ -904,7 +904,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 
 	showCase2();
 	showCase3();
-	sizeButton();
+	//sizeButton();
 
 
     if (typeof urlParameters.month != 'undefined') {
