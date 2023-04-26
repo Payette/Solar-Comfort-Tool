@@ -528,7 +528,8 @@ $(".optionButton#PDF").click(function(event) {
 
 // show URL in modal alert
 $(".optionButton#URL").click(function(event) {
-  var urlresult = createURL(false);
+  //var urlresult = createURL(false);
+  var urlresult = createURL();
 
   $("#URLpop textarea").empty();
   $("#URLpop textarea").append(urlresult);

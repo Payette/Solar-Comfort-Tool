@@ -65,6 +65,14 @@ function urlObject(options) {
             } else {
                 url_get_params[key].push(val);
             }
+            // if (url_get_params[key] === undefined) {
+            //     url_get_params[key] = val;
+            // } else {
+            //     if (!Array.isArray(url_get_params[key])) {
+            //         url_get_params[key] = [url_get_params[key]];
+            //     }
+            //     url_get_params[key].push(val);
+            // }
 
             get_param = [];
         }
