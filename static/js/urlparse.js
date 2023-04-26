@@ -4,6 +4,7 @@ var thisURL = location.href;
 
 //call URL parser function
 var urlParameters = urlObject({'url':thisURL}).parameters;
+// console.log("****",urlParameters);
 
 // // determine units
 // if (typeof urlParameters.units != 'undefined') {
@@ -231,9 +232,18 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 	if (typeof urlParameters.vertShadeDist !== 'undefined') {
 		$('#vertShadeDist,#vertShadeDist2,#vertShadeDist3').val(urlParameters.vertShadeDist);
 	}	
-	if (typeof urlParameters.ertShadeOn !== 'undefined') {
-		$('#ertShadeOn,#ertShadeOn2,#ertShadeOn3').val(urlParameters.ertShadeOn);
-	}	
+
+	// if (typeof urlParameters.vertShadeOn !== 'undefined') {
+	// 	$('#vertShadeOn,#vertShadeOn2,#vertShadeOn3').val(urlParameters.vertShadeOn);
+	// }	
+
+	if (urlParameters.vertShadeOn != '') {
+		$("#vertShadeOn,#vertShadeOn2,#vertShadeOn3").val(urlParameters.vertShadeOn);
+		$("#vertShadeOn,#vertShadeOn2,#vertShadeOn3").removeClass("inactive");
+		$("#vertShadeOnLabel, #vertShadeOnLabel2, #vertShadeOnLabel3").removeClass("inactive");
+		$("#checkvertShadeOn, #checkvertShadeOn2, #checkvertShadeOn3").removeClass("unselected");
+	}
+
 	if (typeof urlParameters.vertShadeHeight !== 'undefined') {
 		$('#vertShadeHeight,#vertShadeHeight2,#vertShadeHeight3').val(urlParameters.vertShadeHeight);
 	}	
@@ -530,12 +540,25 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$('#vertShadeDist2').val(urlParameters.vertShadeDist2);
 	}	
 
-	if (typeof urlParameters.ertShadeOn !== 'undefined') {
-		$('#ertShadeOn,#ertShadeOn3').val(urlParameters.ertShadeOn);
-	}	
-	if (typeof urlParameters.ertShadeOn2 !== 'undefined') {
-		$('#ertShadeOn2').val(urlParameters.ertShadeOn2);
-	}	
+	// if (typeof urlParameters.vertShadeOn !== 'undefined') {
+	// 	$('#vertShadeOn,#vertShadeOn3').val(urlParameters.vertShadeOn);
+	// }	
+	// if (typeof urlParameters.vertShadeOn2 !== 'undefined') {
+	// 	$('#vertShadeOn2').val(urlParameters.vertShadeOn2);
+	// }	
+
+	if (urlParameters.vertShadeOn != '') {
+		$("#vertShadeOn,#vertShadeOn3").val(urlParameters.vertShadeOn);
+		$("#vertShadeOn,#vertShadeOn3").removeClass("inactive");
+		$("#vertShadeOnLabel, #vertShadeOnLabel3").removeClass("inactive");
+		$("#checkvertShadeOn, #checkvertShadeOn3").removeClass("unselected");
+	}
+	if (urlParameters.vertShadeOn2 != '') {
+		$("#vertShadeOn2").val(urlParameters.vertShadeOn2);
+		$("#vertShadeOn2").removeClass("inactive");
+		$("#vertShadeOnLabel2").removeClass("inactive");
+		$("#checkvertShadeOn2").removeClass("unselected");
+	}
 
 	if (typeof urlParameters.vertShadeHeight !== 'undefined') {
 		$('#vertShadeHeight,#vertShadeHeight3').val(urlParameters.vertShadeHeight);
@@ -841,12 +864,24 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 		$('#vertShadeDist3').val(urlParameters.vertShadeDist3);
 	}	
 
-	if (typeof urlParameters.ertShadeOn !== 'undefined') {
-		$('#ertShadeOn,#ertShadeOn2').val(urlParameters.ertShadeOn);
-	}	
-	if (typeof urlParameters.ertShadeOn3 !== 'undefined') {
-		$('#ertShadeOn3').val(urlParameters.ertShadeOn3);
-	}	
+	// if (typeof urlParameters.vertShadeOn !== 'undefined') {
+	// 	$('#vertShadeOn,#vertShadeOn2').val(urlParameters.vertShadeOn);
+	// }	
+	// if (typeof urlParameters.vertShadeOn3 !== 'undefined') {
+	// 	$('#vertShadeOn3').val(urlParameters.vertShadeOn3);
+	// }	
+	if (urlParameters.vertShadeOn != '') {
+		$("#vertShadeOn,#vertShadeOn2").val(urlParameters.vertShadeOn);
+		$("#vertShadeOn,#vertShadeOn2").removeClass("inactive");
+		$("#vertShadeOnLabel, #vertShadeOnLabel2").removeClass("inactive");
+		$("#checkvertShadeOn, #checkvertShadeOn2").removeClass("unselected");
+	}
+	if (urlParameters.vertShadeOn3 != '') {
+		$("#vertShadeOn3").val(urlParameters.vertShadeOn3);
+		$("#vertShadeOn3").removeClass("inactive");
+		$("#vertShadeOnLabel3").removeClass("inactive");
+		$("#checkvertShadeOn3").removeClass("unselected");
+	}
 
 	if (typeof urlParameters.vertShadeHeight !== 'undefined') {
 		$('#vertShadeHeight,#vertShadeHeight2').val(urlParameters.vertShadeHeight);
@@ -1272,15 +1307,33 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$('#vertShadeDist3').val(urlParameters.vertShadeDist3);
 	}	
 
-	if (typeof urlParameters.ertShadeOn !== 'undefined') {
-		$('#ertShadeOn').val(urlParameters.ertShadeOn);
-	}	
-	if (typeof urlParameters.ertShadeOn2 !== 'undefined') {
-		$('#ertShadeOn2').val(urlParameters.ertShadeOn2);
-	}	
-	if (typeof urlParameters.ertShadeOn3 !== 'undefined') {
-		$('#ertShadeOn3').val(urlParameters.ertShadeOn3);
-	}	
+	// if (typeof urlParameters.vertShadeOn !== 'undefined') {
+	// 	$('#vertShadeOn').val(urlParameters.vertShadeOn);
+	// }	
+	// if (typeof urlParameters.vertShadeOn2 !== 'undefined') {
+	// 	$('#vertShadeOn2').val(urlParameters.vertShadeOn2);
+	// }	
+	// if (typeof urlParameters.vertShadeOn3 !== 'undefined') {
+	// 	$('#vertShadeOn3').val(urlParameters.vertShadeOn3);
+	// }	
+	if (urlParameters.vertShadeOn != '') {
+		$("#vertShadeOn").val(urlParameters.vertShadeOn);
+		$("#vertShadeOn").removeClass("inactive");
+		$("#vertShadeOnLabel").removeClass("inactive");
+		$("#checkvertShadeOn").removeClass("unselected");
+	}
+	if (urlParameters.vertShadeOn2 != '') {
+		$("#vertShadeOn2").val(urlParameters.vertShadeOn2);
+		$("#vertShadeOn2").removeClass("inactive");
+		$("#vertShadeOnLabel2").removeClass("inactive");
+		$("#checkvertShadeOn2").removeClass("unselected");
+	}
+	if (urlParameters.vertShadeOn3 != '') {
+		$("#vertShadeOn3").val(urlParameters.vertShadeOn3);
+		$("#vertShadeOn3").removeClass("inactive");
+		$("#vertShadeOnLabel3").removeClass("inactive");
+		$("#checkvertShadeOn3").removeClass("unselected");
+	}
 
 	if (typeof urlParameters.vertShadeHeight !== 'undefined') {
 		$('#vertShadeHeight').val(urlParameters.vertShadeHeight);
@@ -1305,9 +1358,9 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 
 
 function showCase2() {
-	$("#caseSelection #case2Label").removeClass("unselected");
+	$("#caseSelection #maincasetwobutton").removeClass("button1OFF");
 	$("#case2Heading").removeClass("greyText").addClass("case2Text");
-    $("#case2Button").removeClass("unselected");
+    $("#case2Button").removeClass("button1OFF");
 
     $("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
 	$("hr.case2").css("display","block");
