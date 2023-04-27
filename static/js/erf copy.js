@@ -95,7 +95,7 @@ function find_span(arr, x) {
     const alt_i = find_span(alt_range, alt);
     const az_i = find_span(az_range, az_rotate);
 
-    console.log("-------",az,az_rotate,az_i);
+    //console.log("-------",az,az_rotate,az_i);
   
     const fp11 = fp_table[az_i][alt_i];
     const fp12 = fp_table[az_i][alt_i + 1];
@@ -146,7 +146,7 @@ function find_span(arr, x) {
       return;
     }
 
-    console.log(f_svv, f_eff, f_bes);
+    //console.log(f_svv, f_eff, f_bes);
 
     const sw_abs = asa;
     const lw_abs = 0.95;

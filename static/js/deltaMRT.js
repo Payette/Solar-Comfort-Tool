@@ -192,10 +192,10 @@ window.SOLAR_COMFORT.calculateDeltaMRT = (position_body, h, w, d, beta, solar_az
     let t_sol = SHGC;
     // let erf = ERF(beta, SHARP, position_body, Idir, t_sol, fsvv, feff, alpha_sw);
     let erf = ERF(beta, SHARP, position_body, Idir, t_sol, fsvv, f_bes, alpha_sw);
-    console.log(`our dMRT: ${delta_MRT} vs berkeley tool: ${erf.dMRT}`,`different: ${erf.dMRT-delta_MRT}`);
-    //console.log(f_bes);
-    console.log(d,j, beta, f_bes);
-    //console.log (`Idir: ${Idir}`)
+    // console.log(`our dMRT: ${delta_MRT} vs berkeley tool: ${erf.dMRT}`,`different: ${erf.dMRT-delta_MRT}`);
+    // //console.log(f_bes);
+    // console.log(d,j, beta, f_bes);
+    // //console.log (`Idir: ${Idir}`)
     
     
     //return round1Decimal(delta_MRT);
