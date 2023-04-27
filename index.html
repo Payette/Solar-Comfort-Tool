@@ -44,28 +44,28 @@
 				draggable: false,
 				closeOnEscape: true,
 				buttons: [
-					{
-						text: "Short URL",
-						click: function () {
-							var urlToShorten = $("#URLpop textarea").val();
-							shorten(urlToShorten, function (response) {
-								// replace long url with shortened url
-								$("#URLpop textarea").empty();
-								$("#URLpop textarea").append(response.data.url);
-								$("#URLpop textarea").select();
-							});
-						}
-					},
-					{
-						text: "Standard URL",
-						click: function () {
-							var standardURL = createURL(false)
-							// replace long url with shortened url
-							$("#URLpop textarea").empty();
-							$("#URLpop textarea").append(standardURL);
-							$("#URLpop textarea").select();
-						}
-					},
+					// {
+					// 	text: "Short URL",
+					// 	click: function () {
+					// 		var urlToShorten = $("#URLpop textarea").val();
+					// 		shorten(urlToShorten, function (response) {
+					// 			// replace long url with shortened url
+					// 			$("#URLpop textarea").empty();
+					// 			$("#URLpop textarea").append(response.data.url);
+					// 			$("#URLpop textarea").select();
+					// 		});
+					// 	}
+					// },
+					// {
+					// 	text: "Standard URL",
+					// 	click: function () {
+					// 		var standardURL = createURL(false)
+					// 		// replace long url with shortened url
+					// 		$("#URLpop textarea").empty();
+					// 		$("#URLpop textarea").append(standardURL);
+					// 		$("#URLpop textarea").select();
+					// 	}
+					// },
 					{
 						text: "Full URL",
 						click: function () {
