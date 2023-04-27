@@ -116,10 +116,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$("#month, #month1, #month3").val(urlParameters.month);
 	}
 	if (typeof urlParameters.day !== 'undefined') {
-		$('#day, #day1, #day3').val(urlParameters.day);
+		$('#day, #day1, #day3').val(parseInt(urlParameters.day));
 	}
 	if (typeof urlParameters.hour !== 'undefined') {
-		$('#hour, #hour1, #hour3').val(urlParameters.hour);
+		$('#hour, #hour1, #hour3').val(parseInt(urlParameters.hour));
 	}
 	if (typeof urlParameters.timeStep !== 'undefined') {
 		$('#timeStep,#timeStep1,#timeStep3').val(urlParameters.timeStep);
