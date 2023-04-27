@@ -4,7 +4,7 @@ var thisURL = location.href;
 
 //call URL parser function
 var urlParameters = urlObject({'url':thisURL}).parameters;
-// console.log("****",urlParameters);
+console.log("****",urlParameters);
 
 // // determine units
 // if (typeof urlParameters.units != 'undefined') {
