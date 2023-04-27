@@ -271,70 +271,70 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$('#day, #day3').val(parseInt(urlParameters.day));
 	}
 	if (typeof urlParameters.day2 !== 'undefined') {
-		$('#day1').val(urlParameters.day2);
+		$('#day1').val(parseInt(urlParameters.day2));
 	}
 
 	if (typeof urlParameters.hour !== 'undefined') {
-		$('#hour, #hour3').val(urlParameters.hour);
+		$('#hour, #hour3').val(parseInt(urlParameters.hour));
 	}
 	if (typeof urlParameters.hour2 !== 'undefined') {
-		$('#hour1').val(urlParameters.hour2);
+		$('#hour1').val(parseInt(urlParameters.hour2));
 	}
 
 	if (typeof urlParameters.timeStep !== 'undefined') {
-		$('#timeStep,#timeStep3').val(urlParameters.timeStep);
+		$('#timeStep,#timeStep3').val(parseInt(urlParameters.timeStep));
 	}
 	if (typeof urlParameters.timeStep2 !== 'undefined') {
-		$('#timeStep1').val(urlParameters.timeStep2);
+		$('#timeStep1').val(parseInt(urlParameters.timeStep2));
 	}
 
 	if (typeof urlParameters.long !== 'undefined') {
-		$('#long,#long3').val(urlParameters.long);
+		$('#long,#long3').val(parseInt(urlParameters.long));
 	}
 	if (typeof urlParameters.long2 !== 'undefined') {
-		$('#long1').val(urlParameters.long2);
+		$('#long1').val(parseInt(urlParameters.long2));
 	}
 
 	if (typeof urlParameters.lat !== 'undefined') {
-		$('#lat,#lat3').val(urlParameters.lat);
+		$('#lat,#lat3').val(parseInt(urlParameters.lat));
 	}
 	if (typeof urlParameters.lat2 !== 'undefined') {
-		$('#lat1').val(urlParameters.lat2);
+		$('#lat1').val(parseInt(urlParameters.lat2));
 	}
 
 	if (typeof urlParameters.timeZone !== 'undefined') {
-		$('#timeZone,#timeZone3').val(urlParameters.timeZone);
+		$('#timeZone,#timeZone3').val(parseInt(urlParameters.timeZone));
 	}
 	if (typeof urlParameters.timeZone2 !== 'undefined') {
-		$('#timeZone1').val(urlParameters.timeZone2);
+		$('#timeZone1').val(parseInt(urlParameters.timeZone2));
 	}
 
 	if (typeof urlParameters.outdoorTemp !== 'undefined') {
-		$('#outdoorTemp,#outdoorTemp3').val(urlParameters.outdoorTemp);
+		$('#outdoorTemp,#outdoorTemp3').val(parseInt(urlParameters.outdoorTemp));
 	}
 	if (typeof urlParameters.outdoorTemp2 !== 'undefined') {
-		$('#outdoorTemp1').val(urlParameters.outdoorTemp2);
+		$('#outdoorTemp1').val(parseInt(urlParameters.outdoorTemp2));
 	}
 
 	if (typeof urlParameters.airTemp !== 'undefined') {
-		$('#airTemp,#airTemp3').val(urlParameters.airTemp);
+		$('#airTemp,#airTemp3').val(parseInt(urlParameters.airTemp));
 	}
 	if (typeof urlParameters.airTemp2 !== 'undefined') {
-		$('#airTemp1').val(urlParameters.airTemp2);
+		$('#airTemp1').val(parseInt(urlParameters.airTemp2));
 	}
 
 	if (typeof urlParameters.humidity !== 'undefined') {
-		$('#humidity,#humidity3').val(urlParameters.humidity);
+		$('#humidity,#humidity3').val(parseInt(urlParameters.humidity));
 	}
 	if (typeof urlParameters.humidity2 !== 'undefined') {
-		$('#humidity1').val(urlParameters.humidity2);
+		$('#humidity1').val(parseInt(urlParameters.humidity2));
 	}
 
 	if (typeof urlParameters.airSpeed !== 'undefined') {
-		$('#airSpeed,#airSpeed3').val(urlParameters.airSpeed);
+		$('#airSpeed,#airSpeed3').val(parseInt(urlParameters.airSpeed));
 	}
 	if (typeof urlParameters.airSpeed2 !== 'undefined') {
-		$('#airSpeed1').val(urlParameters.airSpeed2);
+		$('#airSpeed1').val(parseInt(urlParameters.airSpeed2));
 	}
 
 	if (typeof urlParameters.cloting !== 'undefined') {
@@ -345,10 +345,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.metabolic !== 'undefined') {
-		$('#metabolic,#metabolic3').val(urlParameters.metabolic);
+		$('#metabolic,#metabolic3').val(parseInt(urlParameters.metabolic));
 	}
 	if (typeof urlParameters.metabolic2 !== 'undefined') {
-		$('#metabolic1').val(urlParameters.metabolic2);
+		$('#metabolic1').val(parseInt(urlParameters.metabolic2));
 	}
 
 	if (typeof urlParameters.posture !== 'undefined') {
@@ -373,10 +373,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.ceiling !== 'undefined') {
-		$('#ceiling,#ceiling3').val(urlParameters.ceiling);
+		$('#ceiling,#ceiling3').val(parseInt(urlParameters.ceiling));
 	}
 	if (typeof urlParameters.ceiling2 !== 'undefined') {
-		$('#ceiling1').val(urlParameters.ceiling2);
+		$('#ceiling1').val(parseInt(urlParameters.ceiling2));
 	}
 
 	if (typeof urlParameters.gridHeight !== 'undefined') {
@@ -387,45 +387,45 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.wallDep !== 'undefined') {
-		$('#wallDep,#wallDep3').val(urlParameters.wallDep);
+		$('#wallDep,#wallDep3').val(Math.floor(parseInt(urlParameters.wallDep)));
 	}
 	if (typeof urlParameters.wallDep2 !== 'undefined') {
-		$('#wallDep1').val(urlParameters.wallDep2);
+		$('#wallDep1').val(Math.floor(parseInt(urlParameters.wallDep2)));
 	}
 
 	if (typeof urlParameters.wallLen !== 'undefined') {
-		$('#wallLen,#wallLen3').val(urlParameters.wallLen);
+		$('#wallLen,#wallLen3').val(Math.floor(parseInt(urlParameters.wallLen)));
 	}
 	if (typeof urlParameters.wallLen2 !== 'undefined') {
-		$('#wallLen1').val(urlParameters.wallLen2);
+		$('#wallLen1').val(Math.floor(parseInt(urlParameters.wallLen2)));
 	}
 
 	if (typeof urlParameters.wallR !== 'undefined') {
-		$('#wallR,#wallR3').val(urlParameters.wallR);
+		$('#wallR,#wallR3').val(parseInt(urlParameters.wallR));
 	}
 	if (typeof urlParameters.wallR2 !== 'undefined') {
-		$('#wallR1').val(urlParameters.wallR2);
+		$('#wallR1').val(parseInt(urlParameters.wallR2));
 	}
 
 	if (typeof urlParameters.windowHeight !== 'undefined') {
-		$('#windowHeight,#windowHeight3').val(urlParameters.windowHeight);
+		$('#windowHeight,#windowHeight3').val(parseInt(urlParameters.windowHeight));
 	}
 	if (typeof urlParameters.windowHeight2 !== 'undefined') {
-		$('#windowHeight1').val(urlParameters.windowHeight2);
+		$('#windowHeight1').val(parseInt(urlParameters.windowHeight2));
 	}
 
 	if (typeof urlParameters.sill !== 'undefined') {
-		$('#sill,#sill3').val(urlParameters.sill);
+		$('#sill,#sill3').val(parseInt(urlParameters.sill));
 	}
 	if (typeof urlParameters.sill2 !== 'undefined') {
-		$('#sill1').val(urlParameters.sill2);
+		$('#sill1').val(parseInt(urlParameters.sill2));
 	}
 
 	if (typeof urlParameters.windowWidth !== 'undefined') {
-		$('#windowWidth,#windowWidth3').val(urlParameters.windowWidth);
+		$('#windowWidth,#windowWidth3').val(parseInt(urlParameters.windowWidth));
 	}
 	if (typeof urlParameters.windowWidth2 !== 'undefined') {
-		$('#windowWidth1').val(urlParameters.windowWidth2);
+		$('#windowWidth1').val(parseInt(urlParameters.windowWidth2));
 	}
 
 	if (typeof urlParameters.glzRatio !== 'undefined') {
@@ -443,10 +443,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.windowU !== 'undefined') {
-		$('#windowU,#windowU3').val(urlParameters.windowU);
+		$('#windowU,#windowU3').val(parseInt(urlParameters.windowU));
 	}
 	if (typeof urlParameters.windowU2 !== 'undefined') {
-		$('#windowU1').val(urlParameters.windowU2);
+		$('#windowU1').val(parseInt(urlParameters.windowU2));
 	}
 
 	if (typeof urlParameters.solarHeatGainCo !== 'undefined') {
@@ -561,17 +561,17 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.vertShadeHeight !== 'undefined') {
-		$('#vertShadeHeight,#vertShadeHeight3').val(urlParameters.vertShadeHeight);
+		$('#vertShadeHeight,#vertShadeHeight3').val(parseInt(urlParameters.vertShadeHeight));
 	}	
 	if (typeof urlParameters.vertShadeHeight2 !== 'undefined') {
-		$('#vertShadeHeight1').val(urlParameters.vertShadeHeight2);
+		$('#vertShadeHeight1').val(parseInt(urlParameters.vertShadeHeight2));
 	}	
 
 	if (typeof urlParameters.vertShadeScale !== 'undefined') {
-		$('#vertShadeScale,#vertShadeScale3').val(urlParameters.vertShadeScale);
+		$('#vertShadeScale,#vertShadeScale3').val(parseInt(urlParameters.vertShadeScale));
 	}
 	if (typeof urlParameters.vertShadeScale2 !== 'undefined') {
-		$('#vertShadeScale1').val(urlParameters.vertShadeScale2);
+		$('#vertShadeScale1').val(parseInt(urlParameters.vertShadeScale2));
 	}
 
 }
@@ -595,70 +595,70 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 		$('#day, #day1').val(parseInt(urlParameters.day));
 	}
 	if (typeof urlParameters.day3 !== 'undefined') {
-		$('#day3').val(urlParameters.day3);
+		$('#day3').val(parseInt(urlParameters.day3));
 	}
 
 	if (typeof urlParameters.hour !== 'undefined') {
-		$('#hour, #hour1').val(urlParameters.hour);
+		$('#hour, #hour1').val(parseInt(urlParameters.hour));
 	}
 	if (typeof urlParameters.hour3 !== 'undefined') {
-		$('#hour3').val(urlParameters.hour3);
+		$('#hour3').val(parseInt(urlParameters.hour3));
 	}
 
 	if (typeof urlParameters.timeStep !== 'undefined') {
-		$('#timeStep,#timeStep1').val(urlParameters.timeStep);
+		$('#timeStep,#timeStep1').val(parseInt(urlParameters.timeStep));
 	}
 	if (typeof urlParameters.timeStep3 !== 'undefined') {
-		$('#timeStep3').val(urlParameters.timeStep3);
+		$('#timeStep3').val(parseInt(urlParameters.timeStep3));
 	}
 
 	if (typeof urlParameters.long !== 'undefined') {
-		$('#long,#long1').val(urlParameters.long);
+		$('#long,#long1').val(parseInt(urlParameters.long));
 	}
 	if (typeof urlParameters.long3 !== 'undefined') {
-		$('#long3').val(urlParameters.long3);
+		$('#long3').val(parseInt(urlParameters.long3));
 	}
 
 	if (typeof urlParameters.lat !== 'undefined') {
-		$('#lat,#lat1').val(urlParameters.lat);
+		$('#lat,#lat1').val(parseInt(urlParameters.lat));
 	}
 	if (typeof urlParameters.lat3 !== 'undefined') {
-		$('#lat3').val(urlParameters.lat3);
+		$('#lat3').val(parseInt(urlParameters.lat3));
 	}
 
 	if (typeof urlParameters.timeZone !== 'undefined') {
-		$('#timeZone,#timeZone1').val(urlParameters.timeZone);
+		$('#timeZone,#timeZone1').val(parseInt(urlParameters.timeZone));
 	}
 	if (typeof urlParameters.timeZone3 !== 'undefined') {
-		$('#timeZone3').val(urlParameters.timeZone3);
+		$('#timeZone3').val(parseInt(urlParameters.timeZone3));
 	}
 
 	if (typeof urlParameters.outdoorTemp !== 'undefined') {
-		$('#outdoorTemp,#outdoorTemp1').val(urlParameters.outdoorTemp);
+		$('#outdoorTemp,#outdoorTemp1').val(parseInt(urlParameters.outdoorTemp));
 	}
 	if (typeof urlParameters.outdoorTemp3 !== 'undefined') {
-		$('#outdoorTemp3').val(urlParameters.outdoorTemp3);
+		$('#outdoorTemp3').val(parseInt(urlParameters.outdoorTemp3));
 	}
 
 	if (typeof urlParameters.airTemp !== 'undefined') {
-		$('#airTemp,#airTemp1').val(urlParameters.airTemp);
+		$('#airTemp,#airTemp1').val(parseInt(urlParameters.airTemp));
 	}
 	if (typeof urlParameters.airTemp3 !== 'undefined') {
-		$('#airTemp3').val(urlParameters.airTemp3);
+		$('#airTemp3').val(parseInt(urlParameters.airTemp3));
 	}
 
 	if (typeof urlParameters.humidity !== 'undefined') {
-		$('#humidity,#humidity1').val(urlParameters.humidity);
+		$('#humidity,#humidity1').val(parseInt(urlParameters.humidity));
 	}
 	if (typeof urlParameters.humidity3 !== 'undefined') {
-		$('#humidity3').val(urlParameters.humidity3);
+		$('#humidity3').val(parseInt(urlParameters.humidity3));
 	}
 
 	if (typeof urlParameters.airSpeed !== 'undefined') {
-		$('#airSpeed,#airSpeed1').val(urlParameters.airSpeed);
+		$('#airSpeed,#airSpeed1').val(parseInt(urlParameters.airSpeed));
 	}
 	if (typeof urlParameters.airSpeed3 !== 'undefined') {
-		$('#airSpeed3').val(urlParameters.airSpeed3);
+		$('#airSpeed3').val(parseInt(urlParameters.airSpeed3));
 	}
 
 	if (typeof urlParameters.cloting !== 'undefined') {
@@ -669,10 +669,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 	}
 
 	if (typeof urlParameters.metabolic !== 'undefined') {
-		$('#metabolic,#metabolic1').val(urlParameters.metabolic);
+		$('#metabolic,#metabolic1').val(parseInt(urlParameters.metabolic));
 	}
 	if (typeof urlParameters.metabolic3 !== 'undefined') {
-		$('#metabolic3').val(urlParameters.metabolic3);
+		$('#metabolic3').val(parseInt(urlParameters.metabolic3));
 	}
 
 	if (typeof urlParameters.posture !== 'undefined') {
@@ -697,10 +697,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 	}
 
 	if (typeof urlParameters.ceiling !== 'undefined') {
-		$('#ceiling,#ceiling1').val(urlParameters.ceiling);
+		$('#ceiling,#ceiling1').val(parseInt(urlParameters.ceiling));
 	}
 	if (typeof urlParameters.ceiling3 !== 'undefined') {
-		$('#ceiling3').val(urlParameters.ceiling3);
+		$('#ceiling3').val(parseInt(urlParameters.ceiling3));
 	}
 
 	if (typeof urlParameters.gridHeight !== 'undefined') {
@@ -711,45 +711,45 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 	}
 
 	if (typeof urlParameters.wallDep !== 'undefined') {
-		$('#wallDep,#wallDep1').val(urlParameters.wallDep);
+		$('#wallDep,#wallDep1').val(Math.floor(parseInt(urlParameters.wallDep)));
 	}
 	if (typeof urlParameters.wallDep3 !== 'undefined') {
-		$('#wallDep3').val(urlParameters.wallDep3);
+		$('#wallDep3').val(Math.floor(parseInt(urlParameters.wallDep3)));
 	}
 
 	if (typeof urlParameters.wallLen !== 'undefined') {
-		$('#wallLen,#wallLen1').val(urlParameters.wallLen);
+		$('#wallLen,#wallLen1').val(Math.floor(parseInt(urlParameters.wallLen)));
 	}
 	if (typeof urlParameters.wallLen3 !== 'undefined') {
-		$('#wallLen3').val(urlParameters.wallLen3);
+		$('#wallLen3').val(Math.floor(parseInt(urlParameters.wallLen3)));
 	}
 
 	if (typeof urlParameters.wallR !== 'undefined') {
-		$('#wallR,#wallR1').val(urlParameters.wallR);
+		$('#wallR,#wallR1').val(parseInt(urlParameters.wallR));
 	}
 	if (typeof urlParameters.wallR3 !== 'undefined') {
-		$('#wallR3').val(urlParameters.wallR3);
+		$('#wallR3').val(parseInt(urlParameters.wallR3));
 	}
 
 	if (typeof urlParameters.windowHeight !== 'undefined') {
-		$('#windowHeight,#windowHeight1').val(urlParameters.windowHeight);
+		$('#windowHeight,#windowHeight1').val(parseInt(urlParameters.windowHeight));
 	}
 	if (typeof urlParameters.windowHeight3 !== 'undefined') {
-		$('#windowHeight3').val(urlParameters.windowHeight3);
+		$('#windowHeight3').val(parseInt(urlParameters.windowHeight3));
 	}
 
 	if (typeof urlParameters.sill !== 'undefined') {
-		$('#sill,#sill1').val(urlParameters.sill);
+		$('#sill,#sill1').val(parseInt(urlParameters.sill));
 	}
 	if (typeof urlParameters.sill3 !== 'undefined') {
-		$('#sill3').val(urlParameters.sill3);
+		$('#sill3').val(parseInt(urlParameters.sill3));
 	}
 
 	if (typeof urlParameters.windowWidth !== 'undefined') {
-		$('#windowWidth,#windowWidth1').val(urlParameters.windowWidth);
+		$('#windowWidth,#windowWidth1').val(parseInt(urlParameters.windowWidth));
 	}
 	if (typeof urlParameters.windowWidth3 !== 'undefined') {
-		$('#windowWidth3').val(urlParameters.windowWidth3);
+		$('#windowWidth3').val(parseInt(urlParameters.windowWidth3));
 	}
 
 	if (typeof urlParameters.glzRatio !== 'undefined') {
@@ -767,10 +767,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 	}
 
 	if (typeof urlParameters.windowU !== 'undefined') {
-		$('#windowU,#windowU1').val(urlParameters.windowU);
+		$('#windowU,#windowU1').val(parseInt(urlParameters.windowU));
 	}
 	if (typeof urlParameters.windowU3 !== 'undefined') {
-		$('#windowU3').val(urlParameters.windowU3);
+		$('#windowU3').val(parseInt(urlParameters.windowU3));
 	}
 
 	if (typeof urlParameters.solarHeatGainCo !== 'undefined') {
@@ -884,17 +884,17 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 	}
 
 	if (typeof urlParameters.vertShadeHeight !== 'undefined') {
-		$('#vertShadeHeight,#vertShadeHeight1').val(urlParameters.vertShadeHeight);
+		$('#vertShadeHeight,#vertShadeHeight1').val(parseInt(urlParameters.vertShadeHeight));
 	}	
 	if (typeof urlParameters.vertShadeHeight3 !== 'undefined') {
-		$('#vertShadeHeight3').val(urlParameters.vertShadeHeight3);
+		$('#vertShadeHeight3').val(parseInt(urlParameters.vertShadeHeight3));
 	}	
 
 	if (typeof urlParameters.vertShadeScale !== 'undefined') {
-		$('#vertShadeScale,#vertShadeScale1').val(urlParameters.vertShadeScale);
+		$('#vertShadeScale,#vertShadeScale1').val(parseInt(urlParameters.vertShadeScale));
 	}
 	if (typeof urlParameters.vertShadeScale3 !== 'undefined') {
-		$('#vertShadeScale3').val(urlParameters.vertShadeScale3);
+		$('#vertShadeScale3').val(parseInt(urlParameters.vertShadeScale3));
 	}
 }
 
@@ -921,100 +921,100 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 		$('#day').val(parseInt(urlParameters.day));
 	}
 	if (typeof urlParameters.day2 !== 'undefined') {
-		$('#day1').val(urlParameters.day2);
+		$('#day1').val(parseInt(urlParameters.day2));
 	}
 	if (typeof urlParameters.day3 !== 'undefined') {
-		$('#day3').val(urlParameters.day3);
+		$('#day3').val(parseInt(urlParameters.day3));
 	}
 
 	if (typeof urlParameters.hour !== 'undefined') {
-		$('#hour').val(urlParameters.hour);
+		$('#hour').val(parseInt(urlParameters.hour));
 	}
 	if (typeof urlParameters.hour2 !== 'undefined') {
-		$('#hour1').val(urlParameters.hour2);
+		$('#hour1').val(parseInt(urlParameters.hour2));
 	}
 	if (typeof urlParameters.hour3 !== 'undefined') {
-		$('#hour3').val(urlParameters.hour3);
+		$('#hour3').val(parseInt(urlParameters.hour3));
 	}
 
 	if (typeof urlParameters.timeStep !== 'undefined') {
-		$('#timeStep').val(urlParameters.timeStep);
+		$('#timeStep').val(parseInt(urlParameters.timeStep));
 	}
 	if (typeof urlParameters.timeStep2 !== 'undefined') {
-		$('#timeStep1').val(urlParameters.timeStep2);
+		$('#timeStep1').val(parseInt(urlParameters.timeStep2));
 	}
 	if (typeof urlParameters.timeStep3 !== 'undefined') {
-		$('#timeStep3').val(urlParameters.timeStep3);
+		$('#timeStep3').val(parseInt(urlParameters.timeStep3));
 	}
 
 	if (typeof urlParameters.long !== 'undefined') {
-		$('#long').val(urlParameters.long);
+		$('#long').val(parseInt(urlParameters.long));
 	}
 	if (typeof urlParameters.long2 !== 'undefined') {
-		$('#long1').val(urlParameters.long2);
+		$('#long1').val(parseInt(urlParameters.long2));
 	}
 	if (typeof urlParameters.long3 !== 'undefined') {
-		$('#long3').val(urlParameters.long3);
+		$('#long3').val(parseInt(urlParameters.long3));
 	}
 
 	if (typeof urlParameters.lat !== 'undefined') {
-		$('#lat').val(urlParameters.lat);
+		$('#lat').val(parseInt(urlParameters.lat));
 	}
 	if (typeof urlParameters.lat2 !== 'undefined') {
-		$('#lat1').val(urlParameters.lat2);
+		$('#lat1').val(parseInt(urlParameters.lat2));
 	}
 	if (typeof urlParameters.lat3 !== 'undefined') {
-		$('#lat3').val(urlParameters.lat3);
+		$('#lat3').val(parseInt(urlParameters.lat3));
 	}
 
 	if (typeof urlParameters.timeZone !== 'undefined') {
-		$('#timeZone').val(urlParameters.timeZone);
+		$('#timeZone').val(parseInt(urlParameters.timeZone));
 	}
 	if (typeof urlParameters.timeZone2 !== 'undefined') {
-		$('#timeZone1').val(urlParameters.timeZone2);
+		$('#timeZone1').val(parseInt(urlParameters.timeZone2));
 	}
 	if (typeof urlParameters.timeZone3 !== 'undefined') {
-		$('#timeZone3').val(urlParameters.timeZone3);
+		$('#timeZone3').val(parseInt(urlParameters.timeZone3));
 	}
 
 	if (typeof urlParameters.outdoorTemp !== 'undefined') {
-		$('#outdoorTemp').val(urlParameters.outdoorTemp);
+		$('#outdoorTemp').val(parseInt(urlParameters.outdoorTemp));
 	}
 	if (typeof urlParameters.outdoorTemp2 !== 'undefined') {
-		$('#outdoorTemp1').val(urlParameters.outdoorTemp2);
+		$('#outdoorTemp1').val(parseInt(urlParameters.outdoorTemp2));
 	}
 	if (typeof urlParameters.outdoorTemp3 !== 'undefined') {
-		$('#outdoorTemp3').val(urlParameters.outdoorTemp3);
+		$('#outdoorTemp3').val(parseInt(urlParameters.outdoorTemp3));
 	}
 
 	if (typeof urlParameters.airTemp !== 'undefined') {
-		$('#airTemp').val(urlParameters.airTemp);
+		$('#airTemp').val(parseInt(urlParameters.airTemp));
 	}
 	if (typeof urlParameters.airTemp2 !== 'undefined') {
-		$('#airTemp1').val(urlParameters.airTemp2);
+		$('#airTemp1').val(parseInt(urlParameters.airTemp2));
 	}
 	if (typeof urlParameters.airTemp3 !== 'undefined') {
-		$('#airTemp3').val(urlParameters.airTemp3);
+		$('#airTemp3').val(parseInt(urlParameters.airTemp3));
 	}
 
 	if (typeof urlParameters.humidity !== 'undefined') {
-		$('#humidity').val(urlParameters.humidity);
+		$('#humidity').val(parseInt(urlParameters.humidity));
 	}
 	if (typeof urlParameters.humidity2 !== 'undefined') {
-		$('#humidity1').val(urlParameters.humidity2);
+		$('#humidity1').val(parseInt(urlParameters.humidity2));
 	}
 	if (typeof urlParameters.humidity3 !== 'undefined') {
-		$('#humidity3').val(urlParameters.humidity3);
+		$('#humidity3').val(parseInt(urlParameters.humidity3));
 	}
 
 	if (typeof urlParameters.airSpeed !== 'undefined') {
-		$('#airSpeed').val(urlParameters.airSpeed);
+		$('#airSpeed').val(parseInt(urlParameters.airSpeed));
 	}
 	if (typeof urlParameters.airSpeed2 !== 'undefined') {
-		$('#airSpeed1').val(urlParameters.airSpeed2);
+		$('#airSpeed1').val(parseInt(urlParameters.airSpeed2));
 	}
 	if (typeof urlParameters.airSpeed3 !== 'undefined') {
-		$('#airSpeed3').val(urlParameters.airSpeed3);
+		$('#airSpeed3').val(parseInt(urlParameters.airSpeed3));
 	}
 
 	if (typeof urlParameters.cloting !== 'undefined') {
@@ -1028,13 +1028,13 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.metabolic !== 'undefined') {
-		$('#metabolic').val(urlParameters.metabolic);
+		$('#metabolic').val(parseInt(urlParameters.metabolic));
 	}
 	if (typeof urlParameters.metabolic2 !== 'undefined') {
-		$('#metabolic1').val(urlParameters.metabolic2);
+		$('#metabolic1').val(parseInt(urlParameters.metabolic2));
 	}
 	if (typeof urlParameters.metabolic3 !== 'undefined') {
-		$('#metabolic3').val(urlParameters.metabolic3);
+		$('#metabolic3').val(parseInt(urlParameters.metabolic3));
 	}
 
 	if (typeof urlParameters.posture !== 'undefined') {
@@ -1068,13 +1068,13 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.ceiling !== 'undefined') {
-		$('#ceiling').val(urlParameters.ceiling);
+		$('#ceiling').val(parseInt(urlParameters.ceiling));
 	}
 	if (typeof urlParameters.ceiling2 !== 'undefined') {
-		$('#ceiling1').val(urlParameters.ceiling2);
+		$('#ceiling1').val(parseInt(urlParameters.ceiling2));
 	}
 	if (typeof urlParameters.ceiling3 !== 'undefined') {
-		$('#ceiling3').val(urlParameters.ceiling3);
+		$('#ceiling3').val(parseInt(urlParameters.ceiling3));
 	}
 
 	if (typeof urlParameters.gridHeight !== 'undefined') {
@@ -1088,63 +1088,63 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.wallDep !== 'undefined') {
-		$('#wallDep').val(urlParameters.wallDep);
+		$('#wallDep').val(Math.floor(parseInt(urlParameters.wallDep)));
 	}
 	if (typeof urlParameters.wallDep2 !== 'undefined') {
-		$('#wallDep1').val(urlParameters.wallDep2);
+		$('#wallDep1').val(Math.floor(parseInt(urlParameters.wallDep2)));
 	}
 	if (typeof urlParameters.wallDep3 !== 'undefined') {
-		$('#wallDep3').val(urlParameters.wallDep3);
+		$('#wallDep3').val(Math.floor(parseInt(urlParameters.wallDep3)));
 	}
 
 	if (typeof urlParameters.wallLen !== 'undefined') {
-		$('#wallLen').val(urlParameters.wallLen);
+		$('#wallLen').val(Math.floor(parseInt(urlParameters.wallLen)));
 	}
 	if (typeof urlParameters.wallLen2 !== 'undefined') {
-		$('#wallLen1').val(urlParameters.wallLen2);
+		$('#wallLen1').val(Math.floor(parseInt(urlParameters.wallLen2)));
 	}
 	if (typeof urlParameters.wallLen3 !== 'undefined') {
-		$('#wallLen3').val(urlParameters.wallLen3);
+		$('#wallLen3').val(Math.floor(parseInt(urlParameters.wallLen3)));
 	}
 
 	if (typeof urlParameters.wallR !== 'undefined') {
-		$('#wallR').val(urlParameters.wallR);
+		$('#wallR').val(parseInt(urlParameters.wallR));
 	}
 	if (typeof urlParameters.wallR2 !== 'undefined') {
-		$('#wallR1').val(urlParameters.wallR2);
+		$('#wallR1').val(parseInt(urlParameters.wallR2));
 	}
 	if (typeof urlParameters.wallR3 !== 'undefined') {
-		$('#wallR3').val(urlParameters.wallR3);
+		$('#wallR3').val(parseInt(urlParameters.wallR3));
 	}
 
 	if (typeof urlParameters.windowHeight !== 'undefined') {
-		$('#windowHeight').val(urlParameters.windowHeight);
+		$('#windowHeight').val(parseInt(urlParameters.windowHeight));
 	}
 	if (typeof urlParameters.windowHeight2 !== 'undefined') {
-		$('#windowHeight1').val(urlParameters.windowHeight2);
+		$('#windowHeight1').val(parseInt(urlParameters.windowHeight2));
 	}
 	if (typeof urlParameters.windowHeight3 !== 'undefined') {
-		$('#windowHeight3').val(urlParameters.windowHeight3);
+		$('#windowHeight3').val(parseInt(urlParameters.windowHeight3));
 	}
 
 	if (typeof urlParameters.sill !== 'undefined') {
-		$('#sill').val(urlParameters.sill);
+		$('#sill').val(parseInt(urlParameters.sill));
 	}
 	if (typeof urlParameters.sill2 !== 'undefined') {
-		$('#sill1').val(urlParameters.sill2);
+		$('#sill1').val(parseInt(urlParameters.sill2));
 	}
 	if (typeof urlParameters.sill3 !== 'undefined') {
-		$('#sill3').val(urlParameters.sill3);
+		$('#sill3').val(parseInt(urlParameters.sill3));
 	}
 
 	if (typeof urlParameters.windowWidth !== 'undefined') {
-		$('#windowWidth').val(urlParameters.windowWidth);
+		$('#windowWidth').val(parseInt(urlParameters.windowWidth));
 	}
 	if (typeof urlParameters.windowWidth2 !== 'undefined') {
-		$('#windowWidth1').val(urlParameters.windowWidth2);
+		$('#windowWidth1').val(parseInt(urlParameters.windowWidth2));
 	}
 	if (typeof urlParameters.windowWidth3 !== 'undefined') {
-		$('#windowWidth3').val(urlParameters.windowWidth3);
+		$('#windowWidth3').val(parseInt(urlParameters.windowWidth3));
 	}
 
 	if (typeof urlParameters.glzRatio !== 'undefined') {
@@ -1168,13 +1168,13 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.windowU !== 'undefined') {
-		$('#windowU').val(urlParameters.windowU);
+		$('#windowU').val(parseInt(urlParameters.windowU));
 	}
 	if (typeof urlParameters.windowU2 !== 'undefined') {
-		$('#windowU1').val(urlParameters.windowU2);
+		$('#windowU1').val(parseInt(urlParameters.windowU2));
 	}
 	if (typeof urlParameters.windowU3 !== 'undefined') {
-		$('#windowU3').val(urlParameters.windowU3);
+		$('#windowU3').val(parseInt(urlParameters.windowU3));
 	}
 
 	if (typeof urlParameters.solarHeatGainCo !== 'undefined') {
@@ -1336,23 +1336,23 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.vertShadeHeight !== 'undefined') {
-		$('#vertShadeHeight').val(urlParameters.vertShadeHeight);
+		$('#vertShadeHeight').val(parseInt(urlParameters.vertShadeHeight));
 	}	
 	if (typeof urlParameters.vertShadeHeight2 !== 'undefined') {
-		$('#vertShadeHeight1').val(urlParameters.vertShadeHeight2);
+		$('#vertShadeHeight1').val(parseInt(urlParameters.vertShadeHeight2));
 	}	
 	if (typeof urlParameters.vertShadeHeight3 !== 'undefined') {
-		$('#vertShadeHeight3').val(urlParameters.vertShadeHeight3);
+		$('#vertShadeHeight3').val(parseInt(urlParameters.vertShadeHeight3));
 	}	
 
 	if (typeof urlParameters.vertShadeScale !== 'undefined') {
-		$('#vertShadeScale').val(urlParameters.vertShadeScale);
+		$('#vertShadeScale').val(parseInt(urlParameters.vertShadeScale));
 	}
 	if (typeof urlParameters.vertShadeScale2 !== 'undefined') {
-		$('#vertShadeScale1').val(urlParameters.vertShadeScale2);
+		$('#vertShadeScale1').val(parseInt(urlParameters.vertShadeScale2));
 	}
 	if (typeof urlParameters.vertShadeScale3 !== 'undefined') {
-		$('#vertShadeScale3').val(urlParameters.vertShadeScale3);
+		$('#vertShadeScale3').val(parseInt(urlParameters.vertShadeScale3));
 	}
 }
 
