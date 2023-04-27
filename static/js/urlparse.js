@@ -1358,9 +1358,9 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 
 
 function showCase2() {
-	$("#caseSelection #maincasetwobutton").removeClass("button1OFF");
+	$("#caseSelection #maincasetwobutton").removeClass("button1OFF").addClass("button1ON");
 	$("#case2Heading").removeClass("greyText").addClass("case2Text");
-    $("#case2Button").removeClass("button1OFF");
+    $("#case2Button").removeClass("button1OFF").addClass("button1ON");
 
     $("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
 	$("hr.case2").css("display","block");
