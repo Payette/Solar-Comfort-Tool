@@ -1359,13 +1359,14 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 }
 
-console.log("test2")
+console.log("test3")
 function showCase2() {
 	$("#caseSelection #maincasetwobutton").removeClass("button1OFF").addClass("button1ON");
-	$("#caseSelection #maincasetwobutton2").removeClass("button1OFF").addClass("button1ON");
-	$("#caseSelection #maincasetwobutton3").removeClass("button1OFF").addClass("button1ON");
 	$("#case2Heading").removeClass("greyText").addClass("case2Text");
     $("#case2Button").removeClass("button1OFF").addClass("button1ON");
+	
+	var maincasetwobuttonClassList = $("#caseSelection #maincasetwobutton").attr("class");
+	console.log("maincasetwobutton now class: ", maincasetwobuttonClassList);
 
 
     $("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
