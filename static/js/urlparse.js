@@ -592,7 +592,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 	}
 
 	if (typeof urlParameters.day !== 'undefined') {
-		$('#day, #day1').valparseInt(urlParameters.day));
+		$('#day, #day1').val(parseInt(urlParameters.day));
 	}
 	if (typeof urlParameters.day3 !== 'undefined') {
 		$('#day3').val(urlParameters.day3);
