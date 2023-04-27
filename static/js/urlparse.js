@@ -1359,7 +1359,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 }
 
-console.log("test")
+console.log("test1")
 function showCase2() {
 	// $("#caseSelection #maincasetwobutton").removeClass("button1OFF").addClass("button1ON");
 	//$("#case2Heading").removeClass("greyText").addClass("case2Text");
