@@ -106,18 +106,6 @@ var case1visability = urlParameters.case1;
 var case2visability = urlParameters.case2;
 var case3visability = urlParameters.case3;
 
-if ('case1' in urlParameters) {
-	console.log("case1的值为: ", urlParameters.case1);
-} else {
-	console.log("case1不存在于urlParameters对象中");
-}
-
-if ('case2' in urlParameters) {
-	console.log("case2的值为: ", urlParameters.case2);
-} else {
-	console.log("case2不存在于urlParameters对象中");
-}
-
 
 
 // first check should be which cases are shown - therefore if only case 1, dont need values for other cases, just fill with the same...
@@ -1374,8 +1362,8 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 
 function showCase2() {
 	$("#caseSelection #maincasetwobutton").removeClass("button1OFF").addClass("button1ON");
-	$("#case2Heading").removeClass("greyText").addClass("case2Text");
-    $("#case2Button").removeClass("button1OFF").addClass("button1ON");
+	//$("#case2Heading").removeClass("greyText").addClass("case2Text");
+    //$("#case2Button").removeClass("button1OFF").addClass("button1ON");
 
 
     $("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
