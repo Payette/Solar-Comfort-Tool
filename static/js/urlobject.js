@@ -91,11 +91,11 @@ function urlObject(options) {
         parameters: url_get_params
     };
 
-    //console.log("??????",url_get_params);
+    console.log("??????",url_get_params);
 
     return urlObj;
 }
 
-var testUrl = "https://payette.github.io/Solar-Comfort-Tool/?case1=show&case2=show&case3=hide&month=7&day=21&hour=12&timeStep=4&long=-71&lat=42&timeZone=-5&outdoorTemp=90.9&airTemp=76&humidity=60&airSpeed=10&cloting=0.5&metabolic=1.2&posture=seated&aveShortwave=0.7&windowOrientation=180&ceiling=12&gridHeight=3&wallDep=40&wallLen=30&wallR=15&windowHeight=7.0&sill=2.0&windowWidth=14&glzRatio=39&distanceWindows=12&windowU=0.35&solarHeatGainCo=0.35&horzShadeDep=1&horzShadeNum=0&horzShadeSpace=3&horzShadeDist=0&horzShadeHeight=0&horzShadeAngle=90&vertShadeDep=3&vertShadeNum=0&vertShadeSpace=3&vertShadeStart=L&vertShadeShift=0&vertShadeDist=0&vertShadeOn=on&vertShadeHeight=3&vertShadeScale=5&month=7&day=21&hour=12&timeStep=4&long=-71&lat=42&timeZone=-5&outdoorTemp=90.9&airTemp=71&humidity=60&airSpeed=10&cloting=0.5&metabolic=1.2&posture=seated&aveShortwave=0.7&windowOrientation=180&ceiling=12&gridHeight=3&wallDep=40&wallLen=30&wallR=15&windowHeight=7.0&sill=2.0&windowWidth=9&glzRatio=39&distanceWindows=12&windowU=0.35&solarHeatGainCo=0.35&horzShadeDep=1&horzShadeNum=0&horzShadeSpace=3&horzShadeDist=0&horzShadeHeight=0&horzShadeAngle=90&vertShadeDep=3&vertShadeNum=0&vertShadeSpace=3&vertShadeStart=L&vertShadeShift=0&vertShadeDist=0&vertShadeOn=on&vertShadeHeight=3&vertShadeScale=5";
-var result = urlObject({ url: testUrl });
-console.log(result);
+// var testUrl = "https://payette.github.io/Solar-Comfort-Tool/?case1=show&case2=show&case3=hide&month=7&day=21&hour=12&timeStep=4&long=-71&lat=42&timeZone=-5&outdoorTemp=90.9&airTemp=76&humidity=60&airSpeed=10&cloting=0.5&metabolic=1.2&posture=seated&aveShortwave=0.7&windowOrientation=180&ceiling=12&gridHeight=3&wallDep=40&wallLen=30&wallR=15&windowHeight=7.0&sill=2.0&windowWidth=14&glzRatio=39&distanceWindows=12&windowU=0.35&solarHeatGainCo=0.35&horzShadeDep=1&horzShadeNum=0&horzShadeSpace=3&horzShadeDist=0&horzShadeHeight=0&horzShadeAngle=90&vertShadeDep=3&vertShadeNum=0&vertShadeSpace=3&vertShadeStart=L&vertShadeShift=0&vertShadeDist=0&vertShadeOn=on&vertShadeHeight=3&vertShadeScale=5&month=7&day=21&hour=12&timeStep=4&long=-71&lat=42&timeZone=-5&outdoorTemp=90.9&airTemp=71&humidity=60&airSpeed=10&cloting=0.5&metabolic=1.2&posture=seated&aveShortwave=0.7&windowOrientation=180&ceiling=12&gridHeight=3&wallDep=40&wallLen=30&wallR=15&windowHeight=7.0&sill=2.0&windowWidth=9&glzRatio=39&distanceWindows=12&windowU=0.35&solarHeatGainCo=0.35&horzShadeDep=1&horzShadeNum=0&horzShadeSpace=3&horzShadeDist=0&horzShadeHeight=0&horzShadeAngle=90&vertShadeDep=3&vertShadeNum=0&vertShadeSpace=3&vertShadeStart=L&vertShadeShift=0&vertShadeDist=0&vertShadeOn=on&vertShadeHeight=3&vertShadeScale=5";
+// var result = urlObject({ url: testUrl });
+// console.log(result);

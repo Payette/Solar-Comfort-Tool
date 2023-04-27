@@ -918,7 +918,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.day !== 'undefined') {
-		$('#day').valparseInt(urlParameters.day));
+		$('#day').val(parseInt(urlParameters.day));
 	}
 	if (typeof urlParameters.day2 !== 'undefined') {
 		$('#day1').val(urlParameters.day2);
