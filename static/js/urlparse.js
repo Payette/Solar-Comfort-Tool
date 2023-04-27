@@ -167,10 +167,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$('#gridHeight,#gridHeight1,#gridHeight3').val(urlParameters.gridHeight);
 	}
 	if (typeof urlParameters.wallDep !== 'undefined') {
-		$('#wallDep,#wallDep1,#wallDep3').val(parseInt(urlParameters.wallDep));
+		$('#wallDep,#wallDep1,#wallDep3').val(Math.floor(parseInt(urlParameters.wallDep)));
 	}
 	if (typeof urlParameters.wallLen !== 'undefined') {
-		$('#wallLen,#wallLen1,#wallLen3').val(parseInt(urlParameters.wallLen));
+		$('#wallLen,#wallLen1,#wallLen3').val(Math.floor(parseInt(urlParameters.wallLen)));
 	}
 	if (typeof urlParameters.wallR !== 'undefined') {
 		$('#wallR,#wallR1,#wallR3').val(parseInt(urlParameters.wallR));
