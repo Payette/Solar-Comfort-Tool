@@ -4,7 +4,7 @@ var thisURL = location.href;
 
 //call URL parser function
 var urlParameters = urlObject({'url':thisURL}).parameters;
-console.log("****",urlParameters);
+console.log("urlParameters: ", urlParameters);
 
 // // determine units
 // if (typeof urlParameters.units != 'undefined') {
@@ -105,6 +105,19 @@ console.log("****",urlParameters);
 var case1visability = urlParameters.case1;
 var case2visability = urlParameters.case2;
 var case3visability = urlParameters.case3;
+
+if ('case1' in urlParameters) {
+	console.log("case1的值为: ", urlParameters.case1);
+} else {
+	console.log("case1不存在于urlParameters对象中");
+}
+
+if ('case2' in urlParameters) {
+	console.log("case2的值为: ", urlParameters.case2);
+} else {
+	console.log("case2不存在于urlParameters对象中");
+}
+
 
 
 // first check should be which cases are shown - therefore if only case 1, dont need values for other cases, just fill with the same...
@@ -252,6 +265,8 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 	}
 
 }
+
+
 
 // show only case 1 and 2
 // case 3 to match case 1
@@ -1358,11 +1373,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 
 
 function showCase2() {
-	// $("#caseSelection #maincasetwobutton").removeClass("button1OFF").addClass("button1ON");
-	// $("#case2Heading").removeClass("greyText").addClass("case2Text");
-    // $("#case2Button").removeClass("button1OFF").addClass("button1ON");
-	document.getElementsByName("button1").forEach(e => e.className = "button1ON");
-	$("input.case2, select.case2").css("visibility", "visible");
+	$("#caseSelection #maincasetwobutton").removeClass("button1OFF").addClass("button1ON");
+	$("#case2Heading").removeClass("greyText").addClass("case2Text");
+    $("#case2Button").removeClass("button1OFF").addClass("button1ON");
+
 
     $("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
 	$("hr.case2").css("display","block");
