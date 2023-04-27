@@ -122,34 +122,34 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$('#hour, #hour1, #hour3').val(parseInt(urlParameters.hour));
 	}
 	if (typeof urlParameters.timeStep !== 'undefined') {
-		$('#timeStep,#timeStep1,#timeStep3').val(urlParameters.timeStep);
+		$('#timeStep,#timeStep1,#timeStep3').val(parseInt(urlParameters.timeStep));
 	}
 	if (typeof urlParameters.long !== 'undefined') {
-		$('#long,#long1,#long3').val(urlParameters.long);
+		$('#long,#long1,#long3').val(parseInt(urlParameters.long));
 	}
 	if (typeof urlParameters.lat !== 'undefined') {
-		$('#lat,#lat1,#lat3').val(urlParameters.lat);
+		$('#lat,#lat1,#lat3').val(parseInt(urlParameters.lat));
 	}
 	if (typeof urlParameters.timeZone !== 'undefined') {
-		$('#timeZone,#timeZone1,#timeZone3').val(urlParameters.timeZone);
+		$('#timeZone,#timeZone1,#timeZone3').val(parseInt(urlParameters.timeZone));
 	}
 	if (typeof urlParameters.outdoorTemp !== 'undefined') {
-		$('#outdoorTemp,#outdoorTemp1,#outdoorTemp3').val(urlParameters.outdoorTemp);
+		$('#outdoorTemp,#outdoorTemp1,#outdoorTemp3').val(parseInt(urlParameters.outdoorTemp));
 	}
 	if (typeof urlParameters.airTemp !== 'undefined') {
-		$('#airTemp,#airTemp1,#airTemp3').val(urlParameters.airTemp);
+		$('#airTemp,#airTemp1,#airTemp3').val(parseInt(urlParameters.airTemp));
 	}
 	if (typeof urlParameters.humidity !== 'undefined') {
-		$('#humidity,#humidity1,#humidity3').val(urlParameters.humidity);
+		$('#humidity,#humidity1,#humidity3').val(parseInt(urlParameters.humidity));
 	}
 	if (typeof urlParameters.airSpeed !== 'undefined') {
-		$('#airSpeed,#airSpeed1,#airSpeed3').val(urlParameters.airSpeed);
+		$('#airSpeed,#airSpeed1,#airSpeed3').val(parseInt(urlParameters.airSpeed));
 	}
 	if (typeof urlParameters.cloting !== 'undefined') {
 		$('#cloting,#cloting1,#cloting3').val(urlParameters.cloting);
 	}
 	if (typeof urlParameters.metabolic !== 'undefined') {
-		$('#metabolic,#metabolic1,#metabolic3').val(urlParameters.metabolic);
+		$('#metabolic,#metabolic1,#metabolic3').val(parseInt(urlParameters.metabolic));
 	}
 	if (typeof urlParameters.posture !== 'undefined') {
 		$('#posture,#posture1,#posture3').val(urlParameters.posture);
@@ -161,7 +161,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$('#windowOrientation,#windowOrientation1,#windowOrientation3').val(urlParameters.windowOrientation);
 	}
 	if (typeof urlParameters.ceiling !== 'undefined') {
-		$('#ceiling,#ceiling1,#ceiling3').val(urlParameters.ceiling);
+		$('#ceiling,#ceiling1,#ceiling3').val(parseInt(urlParameters.ceiling));
 	}
 	if (typeof urlParameters.gridHeight !== 'undefined') {
 		$('#gridHeight,#gridHeight1,#gridHeight3').val(urlParameters.gridHeight);
@@ -170,19 +170,19 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$('#wallDep,#wallDep1,#wallDep3').val(urlParameters.wallDep);
 	}
 	if (typeof urlParameters.wallLen !== 'undefined') {
-		$('#wallLen,#wallLen1,#wallLen3').val(urlParameters.wallLen);
+		$('#wallLen,#wallLen1,#wallLen3').val(parseInt(urlParameters.wallLen));
 	}
 	if (typeof urlParameters.wallR !== 'undefined') {
-		$('#wallR,#wallR1,#wallR3').val(urlParameters.wallR);
+		$('#wallR,#wallR1,#wallR3').val(parseInt(urlParameters.wallR));
 	}
 	if (typeof urlParameters.windowHeight !== 'undefined') {
-		$('#windowHeight,#windowHeight1,#windowHeight3').val(urlParameters.windowHeight);
+		$('#windowHeight,#windowHeight1,#windowHeight3').val(parseInt(urlParameters.windowHeight));
 	}
 	if (typeof urlParameters.sill !== 'undefined') {
-		$('#sill,#sill1,#sill3').val(urlParameters.sill);
+		$('#sill,#sill1,#sill3').val(parseInt(urlParameters.sill));
 	}
 	if (typeof urlParameters.windowWidth !== 'undefined') {
-		$('#windowWidth,#windowWidth1,#windowWidth3').val(urlParameters.windowWidth);
+		$('#windowWidth,#windowWidth1,#windowWidth3').val(parseInt(urlParameters.windowWidth));
 	}
 	if (typeof urlParameters.glzRatio !== 'undefined') {
 		$('#glzRatio,#glzRatio1,#glzRatio3').val(urlParameters.glzRatio);
@@ -191,7 +191,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 		$('#distanceWindows,#distanceWindows1,#distanceWindows3').val(urlParameters.distanceWindows);
 	}
 	if (typeof urlParameters.windowU !== 'undefined') {
-		$('#windowU,#windowU1,#windowU3').val(urlParameters.windowU);
+		$('#windowU,#windowU1,#windowU3').val(parseInt(urlParameters.windowU));
 	}
 	if (typeof urlParameters.solarHeatGainCo !== 'undefined') {
 		$('#solarHeatGainCo,#solarHeatGainCo1,#solarHeatGainCo3').val(urlParameters.solarHeatGainCo);
@@ -245,10 +245,10 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' && urlParamet
 	}
 
 	if (typeof urlParameters.vertShadeHeight !== 'undefined') {
-		$('#vertShadeHeight,#vertShadeHeight1,#vertShadeHeight3').val(urlParameters.vertShadeHeight);
+		$('#vertShadeHeight,#vertShadeHeight1,#vertShadeHeight3').val(parseInt(urlParameters.vertShadeHeight));
 	}	
 	if (typeof urlParameters.vertShadeScale !== 'undefined') {
-		$('#vertShadeScale,#vertShadeScale1,#vertShadeScale3').val(urlParameters.vertShadeScale);
+		$('#vertShadeScale,#vertShadeScale1,#vertShadeScale3').val(parseInt(urlParameters.vertShadeScale));
 	}
 
 }
@@ -268,7 +268,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.day !== 'undefined') {
-		$('#day, #day3').val(urlParameters.day);
+		$('#day, #day3').val(parseInt(urlParameters.day));
 	}
 	if (typeof urlParameters.day2 !== 'undefined') {
 		$('#day1').val(urlParameters.day2);
@@ -592,7 +592,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'hide' &&  urlParame
 	}
 
 	if (typeof urlParameters.day !== 'undefined') {
-		$('#day, #day1').val(urlParameters.day);
+		$('#day, #day1').valparseInt(urlParameters.day));
 	}
 	if (typeof urlParameters.day3 !== 'undefined') {
 		$('#day3').val(urlParameters.day3);
@@ -918,7 +918,7 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 
 	if (typeof urlParameters.day !== 'undefined') {
-		$('#day').val(urlParameters.day);
+		$('#day').valparseInt(urlParameters.day));
 	}
 	if (typeof urlParameters.day2 !== 'undefined') {
 		$('#day1').val(urlParameters.day2);
