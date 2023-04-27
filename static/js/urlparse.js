@@ -1359,13 +1359,13 @@ if (urlParameters.case1 == 'show' && urlParameters.case2 == 'show' &&  urlParame
 	}
 }
 
-console.log("test1")
+console.log("test2")
 function showCase2() {
-	// $("#caseSelection #maincasetwobutton").removeClass("button1OFF").addClass("button1ON");
-	//$("#case2Heading").removeClass("greyText").addClass("case2Text");
-    //$("#case2Button").removeClass("button1OFF").addClass("button1ON");
-	document.getElementsByName("button1").forEach(e => e.className = "button1ON");
-	$("input.case2, select.case2").css("visibility", "visible");
+	$("#caseSelection #maincasetwobutton").removeClass("button1OFF").addClass("button1ON");
+	$("#caseSelection #maincasetwobutton2").removeClass("button1OFF").addClass("button1ON");
+	$("#caseSelection #maincasetwobutton3").removeClass("button1OFF").addClass("button1ON");
+	$("#case2Heading").removeClass("greyText").addClass("case2Text");
+    $("#case2Button").removeClass("button1OFF").addClass("button1ON");
 
 
     $("#inputs input.case2, div.case2, #sliderWrapper2, .connectLine2, .dotCase2, .occdot2").css("display","inline-block");
