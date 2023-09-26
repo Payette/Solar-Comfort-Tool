@@ -1822,7 +1822,63 @@ renderGraphicsAndRunSimulation = caseNumber => {
               }
             }
             let iDir = window.SOLAR_COMFORT.Idir_f(solarElevation);
-            windowSolarCoolingLoad = units.wattsPerMeterSquaredToBtuPerHourPerFootSquared(iDir) * windowAreaDirectSun * window.SOLAR_COMFORT[`settings${c}`].shgc;
+            //change solar cooling load formula(2023.9.22)
+            //windowSolarCoolingLoad = units.wattsPerMeterSquaredToBtuPerHourPerFootSquared(iDir) * windowAreaDirectSun * window.SOLAR_COMFORT[`settings${c}`].shgc;
+            let shgc = window.SOLAR_COMFORT[`settings${c}`].shgc;
+            console.log("shgc:", shgc);
+            
+            let windowU = window.SOLAR_COMFORT[`settings${c}`].windowU;
+            console.log("windowU:", windowU);
+            
+            let Tsol = 0;
+            if (windowU > 4.5) {
+                if (shgc < 0.7206) {
+                    Tsol = 0.939998 * Math.pow(shgc, 2) + 0.20332 * shgc;
+                } else if (shgc >= 0.7206) {
+                    Tsol = 1.30415 * shgc - 0.30515;
+                }
+            } else if (windowU < 3.4) {
+                if (shgc <= 0.15) {
+                    Tsol = 0.41040 * shgc;
+                } else if (shgc > 0.15) {
+                    Tsol = 0.085775 * Math.pow(shgc, 2) + 0.963954 * shgc - 0.084958;
+                }
+            } else {
+                Tsol = null;
+            }
+            console.log("Tsol:", Tsol);
+            
+            let surface_azimuth = window.SOLAR_COMFORT[`settings${c}`].windowOrientationValue1;
+            console.log("surface_azimuth:", surface_azimuth);
+            
+            let solar_azimuth = window.SOLAR_COMFORT[`solarAzimuthDegrees`];
+            console.log("solar_azimuth:", solar_azimuth);
+            
+            let solar_altitude = window.SOLAR_COMFORT[`solarElevationDegrees`];
+            console.log("solar_altitude:", solar_altitude);
+
+            let rad1=(surface_azimuth - solar_azimuth) * (Math.PI / 180);
+            let rad2=solar_altitude * (Math.PI / 180);
+            console.log("rad1:", rad1);
+            console.log("rad2:", rad2);
+            
+            let Cos_I = Math.cos(rad1) * Math.cos(rad2);
+            console.log("Cos_I:", Cos_I);
+
+            
+            let x = Tsol;
+            let y = Math. acos(Cos_I);
+            console.log("y:", y);
+            
+            let Tsol_I = x * Math.cos(y) * (1 + (0.768 + (0.817 * Math.pow(shgc, 4)))) * Math.pow(Math.sin(y), 3);
+            console.log("Tsol_I:", Tsol_I);
+
+            let changeshgc=Cos_I * Tsol_I;
+            console.log("changeshgc:", changeshgc);
+            
+            windowSolarCoolingLoad = units.wattsPerMeterSquaredToBtuPerHourPerFootSquared(iDir) * windowAreaDirectSun * changeshgc;
+            console.log("windowSolarCoolingLoad:", windowSolarCoolingLoad);
+            
           }
         }
         window.SOLAR_COMFORT[`windowAreaDirectSun${c}`] = windowAreaDirectSun;
