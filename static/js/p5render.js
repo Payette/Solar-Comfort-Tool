@@ -1827,7 +1827,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             let shgc = window.SOLAR_COMFORT[`settings${c}`].shgc;
             console.log("shgc:", shgc);
             
-            let windowU = window.SOLAR_COMFORT[`settings${c}`].windowU;
+            let windowU = window.SOLAR_COMFORT[`settings${c}`].windowU * 5.67826334112335;
             console.log("windowU:", windowU);
             
             let Tsol = 0;
