@@ -1,6 +1,18 @@
 # Solar Comfort Tool
-A web tool for assessing the impact of facade choices on occupant comfort in sunny conditions. <https://payette.github.io/Solar-Comfort-Tool/>
+ <https://payette.github.io/Solar-Comfort-Tool/>
+The **Solar Comfort Tool** is a web-based assessment platform for evaluating the impact of glazing and shading decisions on occupant comfort in sunlit spaces. This tool simulates key comfort indicators under sunny conditions and supports real-time design exploration.
 
+Features:
+
+- Built-in comfort simulation for solar gain and glare exposure
+- Regression testing suite for ensuring simulation consistency
+- Fully open-source with reproducible workflows and detailed developer setup
+- Designed to integrate with broader environmental simulation tools (e.g., Ladybug, EnergyPlus)
+
+As part of a growing suite of performance analysis tools, this platform demonstrates how detailed comfort analysis can be embedded directly into schematic design workflows. Its modular testing architecture allows others to validate and customize outputs for their own design contexts.
+
+ This tool is also intended to connect to the proposed **Sustainability Module** in the AI-integrated design platform, enabling unified daylight, thermal, and LEED impact tracking.
+ 
 [![Solar Comfort Tool Tests](https://github.com/Payette/Solar-Comfort-Tool/actions/workflows/regression.test.yml/badge.svg)](https://github.com/Payette/Solar-Comfort-Tool/actions/workflows/regression.test.yml)
 
 
