@@ -220,12 +220,12 @@ let pmvColorsNeg3to3 = ['#006ce1', '#5f87e5', '#8aa3e8', '#aec1eb', '#cfdfed', '
 let pmvDataLabels = [-3, 0, 3];
 
 // https://andrewringler.github.io/palettes/#/11|s|eeffee,6561d7||1|1|0|
-let deltaMRTColors0to50 = ['#eeffee', '#e2eeec', '#d6deea', '#cacde8', '#bdbde6', '#b1ade4', '#a39de2', '#958edf', '#867fdc', '#7770da', '#6561d7'];
-let deltaMRTDataLabels = [0, 50, 100];
+let deltaMRTColors0to40 = ['#eeffee', '#e2eeec', '#d6deea', '#cacde8', '#bdbde6', '#b1ade4', '#a39de2', '#958edf', '#867fdc', '#7770da', '#6561d7'];
+let deltaMRTDataLabels = [0, 20, 40];
 
 let ppdColorScale0to30 = d3.scale.quantize().domain([0, 30]).range(ppdColors0to30);
 let mrtColorScale50to100 = d3.scale.quantize().domain([50, 100]).range(mrtColors50to100);
-let deltaMRTColorScale0to50 = d3.scale.quantize().domain([0, 100]).range(deltaMRTColors0to50);
+let deltaMRTColorScale0to40 = d3.scale.quantize().domain([0, 40]).range(deltaMRTColors0to40);
 let pmvColorScaleNeg3to3 = d3.scale.quantize().domain([-3, 3]).range(pmvColorsNeg3to3);
 
 var ColorScaleArray = [];
@@ -443,7 +443,7 @@ function mrtLegend(id, name, colorScale, colorList, dataLabels) {
 }
 mrtLegend("mrtlegend", "Longwave MRT °F", mrtColorScale50to100, mrtColors50to100, mrtDataLabels);
 mrtLegend("solaradjustedmrtlegend", "Mean Radiant Temperature °F", mrtColorScale50to100, mrtColors50to100, mrtDataLabels);
-mrtLegend("deltamrtlegend", "Shortwave dMRT °F", deltaMRTColorScale0to50, deltaMRTColors0to50, deltaMRTDataLabels);
+mrtLegend("deltamrtlegend", "Shortwave dMRT °F", deltaMRTColorScale0to40, deltaMRTColors0to40, deltaMRTDataLabels);
 mrtLegend("pmvlegend", "Predicted Mean Vote (PMV)", pmvColorScaleNeg3to3, pmvColorsNeg3to3, pmvDataLabels);
 
 //INIT SKETCH1 P5 CANVAS
@@ -2118,7 +2118,7 @@ renderGraphicsAndRunSimulation = caseNumber => {
             } else if(window.SOLAR_COMFORT.settings.thermalComfortVisualization === THERMAL_COMFORT_VIZ_MRT && !isNaN(mrtValues.mrt)) {
               gridColor = mrtColorScale50to100(mrtValues.mrt);
             } else if(window.SOLAR_COMFORT.settings.thermalComfortVisualization === THERMAL_COMFORT_VIZ_DELTAMRT && !isNaN(mrtValues.deltaMRT)) {
-              gridColor = deltaMRTColorScale0to50(mrtValues.deltaMRT);
+              gridColor = deltaMRTColorScale0to40(mrtValues.deltaMRT);
             } else if(window.SOLAR_COMFORT.settings.thermalComfortVisualization === THERMAL_COMFORT_VIZ_SOLARADJUSTEDMRT && !isNaN(mrtValues.solarAdjustedMRT)) {
               gridColor = mrtColorScale50to100(mrtValues.solarAdjustedMRT);
             } 
